@@ -1,0 +1,117 @@
+<!-- Visual prototype only; no real product prices, stock or payments; all visible products demo-only. -->
+<!doctype html>
+<html lang="en-GB">
+<head>
+ <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+ <title>ToolCart — Brand & Storefront Concept (Not Live)</title>
+ <meta name="robots" content="noindex,nofollow">
+ <link rel="stylesheet" href="../design/tokens.css">
+ <style>
+  :root{--tc-max:1240px;--tc-display:'Manrope',system-ui,sans-serif;--tc-secondary:var(--tc-text-secondary);--tc-cobalt:var(--tc-primary)}
+  *,*::before,*::after{box-sizing:border-box}
+  html{scroll-behavior:smooth}body{margin:0;color:var(--tc-ink);background:var(--tc-canvas);font:16px/1.5 'IBM Plex Sans',system-ui,Arial,sans-serif}
+  .wrap{width:min(var(--tc-max),calc(100% - 36px));margin-inline:auto}
+  .notice{background:var(--tc-ink);color:#fff;text-align:center;padding:10px;font-size:12px;letter-spacing:.055em;font-weight:700}
+  .microbar{background:var(--tc-surface-soft);color:var(--tc-ink);font-size:12px;padding:8px 0}
+  .microbar .wrap{display:flex;justify-content:space-between;gap:16px}
+  .top{background:var(--tc-surface);border-bottom:1px solid var(--tc-border)}
+  .top .wrap{display:flex;align-items:center;gap:26px;padding:17px 0}
+  .brand{font-family:var(--tc-display);color:var(--tc-ink);font-weight:850;font-size:30px;letter-spacing:-.04em;white-space:nowrap;line-height:1}
+  .brand span{background:var(--tc-action-lime);padding:4px 6px;border-radius:6px;margin-right:8px;display:inline-flex;align-items:center}
+  .brand span svg{width:20px;height:20px;stroke:var(--tc-ink)}
+  .search{display:flex;flex:1;align-items:center;border:1.8px solid #B8C5D6;border-radius:10px;overflow:hidden;background:#fff}
+  .search input{border:0;flex:1;min-width:20px;padding:13px 15px;background:#fff;outline:0;font:inherit}
+  .search:focus-within{outline:3px solid var(--tc-blue-light);border-color:var(--tc-primary)}
+  .search button{border:0;background:var(--tc-primary);color:white;padding:14px 20px;font-weight:700;cursor:pointer;min-height:46px}
+  .links{display:flex;gap:17px;font-size:14px;align-items:center;white-space:nowrap}
+  .links a{text-decoration:none;color:var(--tc-ink);font-weight:650}
+  .nav{background:var(--tc-primary);border-bottom:1px solid var(--tc-primary-hover)}
+  .nav .wrap{display:flex;gap:25px;overflow-x:auto;white-space:nowrap;padding:12px 0;font-weight:650;font-size:13px}
+  .nav a{text-decoration:none;color:#fff}
+  .hero{background:var(--tc-surface-soft);color:var(--tc-ink);padding:51px 0 56px;border-bottom:1px solid #D9E6FC}
+  .hero .wrap{display:grid;grid-template-columns:1.28fr .72fr;gap:40px;align-items:center}
+  .eyebrow{font-size:12px;letter-spacing:.15em;font-weight:850;text-transform:uppercase;color:var(--tc-primary)}
+  h1,h2,h3{margin:0;line-height:1.14}h1,h2{font-family:var(--tc-display);font-weight:800;letter-spacing:-.038em}
+  h1{font-size:clamp(39px,5.2vw,70px);max-width:760px;margin-top:15px}
+  h2{font-size:clamp(28px,3vw,42px)}
+  .lead{max-width:620px;color:#394961;font-size:17px;margin-top:18px}
+  .ctas{display:flex;gap:12px;flex-wrap:wrap;margin-top:26px}
+  .btn{display:inline-flex;align-items:center;justify-content:center;min-height:47px;border-radius:10px;padding:12px 19px;text-decoration:none;border:1.5px solid transparent;font-weight:750;font-size:14px}
+  .btn.primary{background:var(--tc-primary);color:#fff}
+  .btn.outline{background:#fff;color:var(--tc-primary);border-color:var(--tc-primary)}
+  .btn.accent{background:var(--tc-action-lime);color:var(--tc-ink);border:2px solid var(--tc-ink)}
+  .btn.accent{background:var(--tc-action-lime);color:var(--tc-ink);border:2px solid var(--tc-ink)}
+  .hero-card{border:1px solid #C8D9F9;background:#fff;padding:26px;border-radius:18px;box-shadow:0 12px 40px #1823360A}
+  .hero-card b{color:var(--tc-primary);font-size:12px;letter-spacing:.11em}
+  .hero-card h3{font-size:25px;margin:11px 0 10px}.hero-card p{color:#42516A;font-size:14px;margin:0}
+  .tip{margin-top:17px;padding:14px;background:var(--tc-surface-soft);border:1px solid #C8D9F9;border-radius:10px;font-size:13px;color:var(--tc-ink)}
+  .tip strong{color:var(--tc-primary)}section{padding:48px 0}
+  .section-head{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;margin-bottom:23px}
+  .section-head p{color:var(--tc-text-secondary);margin:7px 0 0;max-width:650px;font-size:14px}
+  .catgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  .category{background:#fff;border:1px solid var(--tc-border);border-radius:14px;padding:22px;text-decoration:none;color:var(--tc-ink);display:flex;align-items:center;gap:18px}
+  .category:hover,.product:hover{border-color:#94A8C9;box-shadow:0 7px 25px #1823360D}
+  .caticon{background:#EAF0FF;border-radius:12px;min-width:58px;height:58px;display:flex;justify-content:center;align-items:center;font-size:29px}
+  .category strong{display:block;line-height:1.25}.category small{display:block;color:var(--tc-text-secondary);margin-top:4px}
+  .panel{background:#fff;border:1px solid var(--tc-border);border-radius:16px;padding:25px}
+  .panel-head{display:flex;align-items:center;gap:12px;justify-content:space-between;flex-wrap:wrap;margin-bottom:22px}
+  .subtle{color:var(--tc-text-secondary);font-size:14px}
+  .filters{display:flex;flex-wrap:wrap;gap:8px}
+  .pill{padding:9px 15px;border:1px solid var(--tc-border);border-radius:100px;background:#fff;color:var(--tc-ink);font-size:13px;font-weight:650;cursor:pointer}
+  .pill[aria-pressed="true"]{background:var(--tc-primary);color:#fff;border-color:var(--tc-primary)}
+  .products{display:grid;grid-template-columns:repeat(4,1fr);gap:13px}
+  .product{border:1px solid var(--tc-border);border-radius:13px;background:white;overflow:hidden;transition:.2s}
+  .product-visual{background:#EDF1F7;height:151px;display:grid;place-items:center;position:relative}
+  .product-visual span{font-size:55px;opacity:.75}.product-visual small{position:absolute;bottom:9px;right:10px;font-size:10px;color:#4D5B6E}
+  .product-info{padding:15px}.item-type{color:var(--tc-primary);text-transform:uppercase;font-size:10px;font-weight:750;letter-spacing:.13em}
+  .product-info h3{font-size:14px;min-height:43px;line-height:1.4;margin-top:5px}
+  .tag{background:#EFF3FA;color:#394B68;display:inline-block;font-size:11px;border-radius:5px;padding:4px 7px;margin:5px 0 10px}
+  .no-price{font-weight:800;font-size:14px}
+  .demo-cta{margin-top:11px;width:100%;min-height:41px;border-radius:8px;border:1px solid #CAD4E2;background:#F3F5F9;color:#526173;font-size:12px;font-weight:750;cursor:not-allowed}
+  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.step{padding:23px;border:1px solid var(--tc-border);border-radius:14px;background:#fff}
+  .num{background:var(--tc-primary);border-radius:50%;color:#fff;width:31px;height:31px;display:grid;place-items:center;font-weight:800;margin-bottom:16px}
+  .step h3{margin-bottom:6px;font-size:17px}.step p{font-size:13px;color:var(--tc-text-secondary);margin:0}
+  footer{background:var(--tc-ink);color:#fff;padding:40px 0}footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+  footer p{color:#E1E7F0;font-size:13px;max-width:480px}.footnote{font-size:12px;color:#DFE8F6}
+  .notice2{background:#FFF7E8;border:1px solid #E8CB91;color:#6F480C;border-radius:10px;padding:12px 15px;margin-top:22px;font-size:13px}
+  #count{color:var(--tc-text-secondary);font-size:13px}
+  a:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid var(--tc-primary);outline-offset:3px}
+  @media(max-width:900px){.catgrid{grid-template-columns:repeat(2,1fr)}.products{grid-template-columns:repeat(2,1fr)}.hero .wrap{grid-template-columns:1fr}.links{display:none}}
+  @media(max-width:590px){.wrap{width:calc(100% - 30px)}.top .wrap{display:grid;grid-template-columns:1fr auto;gap:14px}.brand{font-size:29px}.search{grid-column:1/-1;grid-row:2}.hero{padding:36px 0}.hero .wrap{gap:23px}.hero-card{padding:17px}.lead{font-size:15px}.catgrid{grid-template-columns:1fr 1fr;gap:8px}.category{padding:13px;display:block}.caticon{height:45px;width:45px;min-width:45px;font-size:24px;margin-bottom:10px}.category strong{font-size:13px}.category small{font-size:11px}.panel{padding:14px}.products{gap:8px}.product-visual{height:120px}.product-info{padding:11px}.product-info h3{font-size:12px;min-height:50px}.steps{grid-template-columns:1fr}section{padding:34px 0}.section-head{display:block}}
+</style>
+</head>
+<body>
+<div class="notice">UI CONCEPT ONLY · NOT A LIVE STORE · TOOLCART BRAND NOT YET CLEARED</div>
+<div class="microbar"><div class="wrap"><span>Practical tools, hardware &amp; help for the job</span><span>UK storefront concept · Availability not verified</span></div></div>
+<header class="top"><div class="wrap"><a href="#top" class="brand" style="text-decoration:none"><span aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#182336" stroke-width="2.7"><path d="M7 5h10l-1.5 11H8.5L7 5Zm-2-2h2l1 2m1 15h1m5 0h1"/></svg></span>TOOLCART</a><div class="search"><label class="sr" for="main-search" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)">Search products</label><input id="main-search" placeholder="Search products, brands or codes..." autocomplete="off"/><button id="clear-search" type="button">Search</button></div><div class="links"><a href="#categories">Categories</a><a href="#products">Products</a><a href="#how">Help me choose</a></div></div></header>
+<nav class="nav" aria-label="Product categories"><div class="wrap"><a href="#categories">Tools</a><a href="#categories">Bits &amp; Accessories</a><a href="#categories">Fixings &amp; Security</a><a href="#categories">Decorating</a><a href="#categories">Measuring</a><a href="#categories">Workwear &amp; Safety</a><a href="#categories">Tapes &amp; Consumables</a></div></nav>
+<main id="top"><div class="hero"><div class="wrap"><div><div class="eyebrow">TOOLS • HARDWARE • DIY • TRADE</div><h1>The right tools.<br>The right advice.</h1><p class="lead">Find the hardware and everyday supplies you need for your next project. Browse by product type—or start with the job you're working on.</p><div class="ctas"><a class="btn primary" href="#categories">Shop tools &amp; hardware</a><a class="btn accent" href="#how">Help me choose</a></div></div><aside class="hero-card"><b>OUR CUSTOMER PROMISE — PROPOSED</b><h3>Less guesswork. Better choices.</h3><p>Clear product sizes, pack quantities and relevant options help you make an informed choice before you order.</p><div class="tip"><strong>Ask ToolCart (planned)</strong><br>“I need fixings for a shelf—what should I check?”<br><small>Product-grounded assistant to be built after catalogue verification.</small></div></aside></div></div>
+<section id="categories"><div class="wrap"><div class="section-head"><div><h2>Shop by category</h2><p>Based on the actual product families in the October 2026 supplier quotation. Retail availability is not yet confirmed.</p></div></div><div class="catgrid">
+<a class="category" href="#products"><span class="caticon" aria-hidden="true">🔧</span><span><strong>Hand tools</strong><small>Screwdrivers, pliers &amp; saws</small></span></a>
+<a class="category" href="#products"><span class="caticon" aria-hidden="true">🪛</span><span><strong>Bits &amp; accessories</strong><small>Drill bits, blades &amp; abrasives</small></span></a>
+<a class="category" href="#products"><span class="caticon" aria-hidden="true">🔩</span><span><strong>Fixings &amp; security</strong><small>Wall plugs, bolts &amp; padlocks</small></span></a>
+<a class="category" href="#products"><span class="caticon" aria-hidden="true">🖌️</span><span><strong>Decorating</strong><small>Brushes, rollers &amp; prep</small></span></a>
+<a class="category" href="#products"><span class="caticon" aria-hidden="true">📏</span><span><strong>Measuring</strong><small>Tape measures &amp; levels</small></span></a>
+<a class="category" href="#products"><span class="caticon" aria-hidden="true">🧤</span><span><strong>Workwear &amp; safety</strong><small>Gloves &amp; protection</small></span></a>
+</div></div></section>
+<section id="products" style="padding-top:0"><div class="wrap"><div class="panel"><div class="panel-head"><div><h2>Explore the range</h2><p class="subtle">Example products taken from your wholesale quotation. No prices or stock claims until approved.</p></div><div id="count" aria-live="polite"></div></div><div class="filters" role="group" aria-label="Product category filters"><button class="pill" aria-pressed="true" data-category="all">All</button><button class="pill" aria-pressed="false" data-category="tools">Tools</button><button class="pill" aria-pressed="false" data-category="fixings">Fixings</button><button class="pill" aria-pressed="false" data-category="decorating">Decorating</button><button class="pill" aria-pressed="false" data-category="measuring">Measuring</button></div><div class="products" id="productGrid" style="margin-top:20px"></div><div class="notice2"><strong>Important:</strong> This is a concept preview—not a functioning cart. Any real public store must verify the selling company, payment provider, exact stock, delivery price, product data, compliance and image rights.</div></div></div></section>
+<section id="how" style="padding-top:0"><div class="wrap"><div class="section-head"><div><h2>Choosing tools shouldn't be the hard part.</h2><p>Future intelligent product finding, based on real specifications and supplier availability.</p></div></div><div class="steps"><div class="step"><span class="num">1</span><h3>Tell us about the job</h3><p>Describe what you're fixing, building or decorating in normal language.</p></div><div class="step"><span class="num">2</span><h3>Check what fits</h3><p>Compare verified sizes, materials, compatibility and product details.</p></div><div class="step"><span class="num">3</span><h3>Choose with confidence</h3><p>Review product options, true availability and final delivery costs before you pay.</p></div></div></div></section></main>
+<footer><div class="wrap"><div><div class="brand" style="color:#fff;font-size:32px">TOOLCART</div><p>Proposed online tools, hardware and trade-supplies brand. The legal merchant, domains, warehouse availability, delivery and policies still require confirmation.</p></div><div class="footnote">Prototype created for founder / development-agent review. Not for public commercial launch.<br>Palette: Industrial Cobalt + Action Lime · Fonts: Manrope + IBM Plex Sans</div></div></footer>
+<script>
+ const demoItems=[
+  {title:'IONOS 36-piece Screwdriver Set',sku:'ION36PCSDSET1P6',category:'tools',icon:'🪛',detail:'36 pieces'},
+  {title:'IONOS 4-piece Screwdriver Set',sku:'IONSDRIVERS4P10',category:'tools',icon:'🪛',detail:'4-piece set'},
+  {title:'IONOS 200-piece Wall Plug Assortment',sku:'IONWPLUGS200P10',category:'fixings',icon:'🔩',detail:'200 pieces'},
+  {title:'IONOS Picture Hanging Kit',sku:'IONPHANGKIT1P10',category:'fixings',icon:'🖼️',detail:'75 pieces'},
+  {title:'IONOS 5-piece Paintbrush Set',sku:'IONPBRUSH5P10',category:'decorating',icon:'🖌️',detail:'5-piece set'},
+  {title:'IONOS 4-inch Paint Roller & Tray Set',sku:'IONROLLTRAY41P10',category:'decorating',icon:'🎨',detail:'4-inch'},
+  {title:'IONOS 5m Tape Measure',sku:'IONTAPEM5M1P12',category:'measuring',icon:'📏',detail:'5 metres'},
+  {title:'IONOS 600mm Spirit Level',sku:'IONSPIRITL1P10',category:'measuring',icon:'📐',detail:'600 mm'}
+ ];
+ let chosen='all'; const grid=document.querySelector('#productGrid'), count=document.querySelector('#count'), input=document.querySelector('#main-search');
+ function render(){const query=input.value.toLowerCase().trim();const shown=demoItems.filter(p=>(chosen==='all'||p.category===chosen)&&(p.title+' '+p.sku+' '+p.detail).toLowerCase().includes(query));grid.innerHTML=shown.map(p=>`<article class="product"><div class="product-visual"><span aria-hidden="true">${p.icon}</span><small>Graphic placeholder</small></div><div class="product-info"><span class="item-type">${p.category}</span><h3>${p.title}</h3><div class="tag">${p.detail}</div><div class="no-price">Price pending</div><button type="button" class="demo-cta" disabled title="Supplier status and legal merchant not yet verified">Not yet available</button></div></article>`).join('')||'<p role="status">No matching preview products. Try a different search.</p>';count.textContent=`${shown.length} example products`}
+ document.querySelectorAll('[data-category]').forEach(b=>b.addEventListener('click',()=>{chosen=b.dataset.category;document.querySelectorAll('[data-category]').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));render();}));
+ input.addEventListener('input',render);
+ document.querySelector('#clear-search').addEventListener('click',()=>{if(input.value){input.value='';render();}else document.querySelector('#products').scrollIntoView({behavior:'smooth'});});render();
+</script>
+</body></html>

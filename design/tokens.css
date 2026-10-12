@@ -1,0 +1,36 @@
+/* ToolCart brand v3 | single source of truth | no copper/purple/teal. */
+:root {
+  --tc-ink: #182336;
+  --tc-primary: #2450B8;
+  --tc-primary-hover: #193F99;
+  --tc-action-lime: #DDF16A;
+  --tc-lime-hover: #CFDE53;
+  --tc-canvas: #F7F8F5;
+  --tc-chalk: #F7F5F1;
+  --tc-surface: #FFFFFF;
+  --tc-surface-soft: #EAF0FF;
+  --tc-blue-light: #D7EFFF;
+  --tc-graphite: #252D30;
+  --tc-text-secondary: #596B70;
+  --tc-steel-grey-on-white-only: #66767A;
+  --tc-border: #D8E0E5; /* decorative only */
+  --tc-border-strong: #7C8A94; /* functional component outline */
+  --tc-warning: #B45309;
+  --tc-success: #176447;
+  --tc-error: #B42318;
+  --tc-focus: #2450B8;
+  --font-heading: 'Manrope', system-ui, sans-serif;
+  --font-body: 'IBM Plex Sans', system-ui, sans-serif;
+  --radius-card: 14px;
+  --radius-button: 10px;
+}
+/* Primary: white text on cobalt = 7.21:1.
+   Secondary accent: ink on lime = 12.66:1.
+   No white text on lime (1.25:1), no Steel Grey on Workshop White (4.44:1).
+   An actionable lime control on white MUST also have a visible dark outline. */
+.tc-btn-primary {background:var(--tc-primary); color:#fff; border:2px solid var(--tc-primary)}
+.tc-btn-primary:hover {background:var(--tc-primary-hover);border-color:var(--tc-primary-hover)}
+.tc-btn-accent {background:var(--tc-action-lime);color:var(--tc-ink);border:2px solid var(--tc-ink)}
+.tc-btn-accent:hover {background:var(--tc-lime-hover)}
+.tc-btn-primary:focus-visible,.tc-btn-accent:focus-visible {outline:3px solid var(--tc-ink);outline-offset:3px}
+.tc-ai-panel {background:var(--tc-surface-soft); color:var(--tc-ink)}

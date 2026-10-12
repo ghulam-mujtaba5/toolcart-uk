@@ -1,0 +1,154 @@
+[
+  {
+    "use": "Headings",
+    "foreground": "#182336",
+    "background": "#FFFFFF",
+    "ratio": 15.76,
+    "threshold": 4.5,
+    "pass_wcag": true
+  },
+  {
+    "use": "Body on canvas",
+    "foreground": "#252D30",
+    "background": "#F7F8F5",
+    "ratio": 13.16,
+    "threshold": 4.5,
+    "pass_wcag": true
+  },
+  {
+    "use": "Primary CTA",
+    "foreground": "#FFFFFF",
+    "background": "#2450B8",
+    "ratio": 7.21,
+    "threshold": 4.5,
+    "pass_wcag": true
+  },
+  {
+    "use": "Cobalt hover",
+    "foreground": "#FFFFFF",
+    "background": "#193F99",
+    "ratio": 9.49,
+    "threshold": 4.5,
+    "pass_wcag": true
+  },
+  {
+    "use": "Lime accent CTA",
+    "foreground": "#182336",
+    "background": "#DDF16A",
+    "ratio": 12.66,
+    "threshold": 4.5,
+    "pass_wcag": true
+  },
+  {
+    "use": "Secondary text on pure white",
+    "foreground": "#66767A",
+    "background": "#FFFFFF",
+    "ratio": 4.73,
+    "threshold": 4.5,
+    "pass_wcag": true
+  },
+  {
+    "use": "Secondary text on workshop",
+    "foreground": "#596B70",
+    "background": "#F7F8F5",
+    "ratio": 5.24,
+    "threshold": 4.5,
+    "pass_wcag": true
+  },
+  {
+    "use": "Secondary text on AI panel",
+    "foreground": "#596B70",
+    "background": "#EAF0FF",
+    "ratio": 4.89,
+    "threshold": 4.5,
+    "pass_wcag": true
+  },
+  {
+    "use": "Ink on AI panel",
+    "foreground": "#182336",
+    "background": "#EAF0FF",
+    "ratio": 13.81,
+    "threshold": 4.5,
+    "pass_wcag": true
+  },
+  {
+    "use": "Amber warnings on canvas",
+    "foreground": "#B45309",
+    "background": "#F7F8F5",
+    "ratio": 4.71,
+    "threshold": 4.5,
+    "pass_wcag": true
+  },
+  {
+    "use": "Success on white",
+    "foreground": "#176447",
+    "background": "#FFFFFF",
+    "ratio": 7.12,
+    "threshold": 4.5,
+    "pass_wcag": true
+  },
+  {
+    "use": "Error on white",
+    "foreground": "#B42318",
+    "background": "#FFFFFF",
+    "ratio": 6.57,
+    "threshold": 4.5,
+    "pass_wcag": true
+  },
+  {
+    "use": "Strong border on cloud",
+    "foreground": "#7C8A94",
+    "background": "#EAF0FF",
+    "ratio": 3.11,
+    "threshold": 3,
+    "pass_wcag": true
+  },
+  {
+    "use": "Strong border on white",
+    "foreground": "#7C8A94",
+    "background": "#FFFFFF",
+    "ratio": 3.55,
+    "threshold": 3,
+    "pass_wcag": true
+  },
+  {
+    "use": "Focus ring cobalt on white",
+    "foreground": "#2450B8",
+    "background": "#FFFFFF",
+    "ratio": 7.21,
+    "threshold": 3,
+    "pass_wcag": true
+  },
+  {
+    "use": "Lime alone on white (do not use)",
+    "foreground": "#DDF16A",
+    "background": "#FFFFFF",
+    "ratio": 1.25,
+    "threshold": 3,
+    "pass_wcag": false
+  },
+  {
+    "use": "Steel Grey on canvas (do not use)",
+    "foreground": "#66767A",
+    "background": "#F7F8F5",
+    "ratio": 4.44,
+    "threshold": 4.5,
+    "pass_wcag": false
+  },
+  {
+    "use": "Steel Grey on Cloud (do not use)",
+    "foreground": "#66767A",
+    "background": "#EAF0FF",
+    "ratio": 4.15,
+    "threshold": 4.5,
+    "pass_wcag": false
+  },
+  {
+    "use": "White on Lime (do not use)",
+    "foreground": "#FFFFFF",
+    "background": "#DDF16A",
+    "ratio": 1.25,
+    "threshold": 4.5,
+    "pass_wcag": false
+  }
+]

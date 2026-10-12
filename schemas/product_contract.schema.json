@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ToolCart supplier-backed product import review record",
+  "type": "object",
+  "required": ["supplier_sku", "title", "supplier", "unit_cost_ex_vat_gbp", "units_per_case", "sellability_status"],
+  "properties": {
+    "supplier_sku": {"type": "string", "minLength": 1},
+    "merchant_sku": {"type": ["string", "null"]},
+    "gtin": {"type": ["string", "null"]},
+    "mpn": {"type": ["string", "null"]},
+    "title": {"type": "string", "minLength": 1},
+    "description": {"type": ["string", "null"]},
+    "supplier": {"type": "string"},
+    "unit_cost_ex_vat_gbp": {"type": "number", "minimum": 0},
+    "units_per_case": {"type": "integer", "minimum": 1},
+    "minimum_purchase_cases": {"type": ["integer", "null"], "minimum": 1},
+    "retail_price_inc_vat_gbp": {"type": ["number", "null"], "minimum": 0},
+    "supplier_stock_qty": {"type": ["integer", "null"], "minimum": 0},
+    "stock_snapshot_at": {"type": ["string", "null"], "format": "date-time"},
+    "weight_grams": {"type": ["number", "null"], "minimum": 0},
+    "dimensions_mm": {"type": ["object", "null"], "properties": {"width": {"type":"number"}, "height":{"type":"number"},"depth":{"type":"number"}}},
+    "image_license_verified": {"type": "boolean", "default": false},
+    "compliance_verified": {"type": "boolean", "default": false},
+    "supplier_direct_dispatch_verified": {"type": "boolean", "default": false},
+    "sellability_status": {"type": "string", "enum": ["draft", "needs_review", "approved", "blocked"], "default": "draft"}
+  },
+  "additionalProperties": false
+}

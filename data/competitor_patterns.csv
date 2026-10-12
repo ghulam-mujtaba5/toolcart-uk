@@ -1,0 +1,7 @@
+Competitor,Pattern type,Actual reference,Action for developer,Restrictions
+Toolstation,Search/category taxonomy,https://www.toolstation.com/,Prominent SKU capable search and relevant categories,Do not copy HTML imagery slogan or site architecture verbatim
+Screwfix,Stock status,https://www.screwfix.com/help/stockcheck,Stale supplier stock should not be shown as live,No false collect or warehouse claims
+Screwfix,Order updates,https://www.screwfix.com/help/clickandcollect,Explicit states and notifications,Only promise service levels contractually confirmed
+B&Q,Project-led browse,https://www.diy.com/,Shop-by-job entry for first-time buyers,Do not reproduce promotions/homepage art
+Axminster,Education and expert advice,https://www.axminstertools.com/,Original guides and technical manuals,Do not fabricate own testing/expertise
+Baymard,Listing/filter UX,https://baymard.com/research-articles/current-state-product-list-and-filtering,Multi-select facets visible unit prices product attributes,Use public guidance no copying proprietary premium examples

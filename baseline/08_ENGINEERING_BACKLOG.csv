@@ -1,0 +1,42 @@
+Priority,Workstream,Story,Definition of done,Owner,Status
+P0,Legal,Identify legal seller and VAT registration status,Recorded accountant/legal determination and Stripe KYC status,Unassigned,Not started
+P0,Supplier,Obtain signed supplier direct-dispatch terms,"Written confirmation of prices, SLA, carriage, returns, images, data feed",Unassigned,Not started
+P0,Supplier,Run sample supplier order,Correct item/tracking and verified UK delivered price,Unassigned,Not started
+P0,Brand,Clear brand trademark/domain,"Legal/registrar verified, ownership assigned",Unassigned,Not started
+P0,Catalog,Import quote SKUs as draft,"115 quoted lines imported as unverified, none purchasable automatically",Unassigned,Not started
+P0,Catalog,Build product/supplier-offer separation,"Same product may map to 2 suppliers, cost/qty per offer",Unassigned,Not started
+P0,Catalog,Add GTIN/pack quantity validation,Invalid barcodes and inconsistent packs held for review,Unassigned,Not started
+P0,Infra,Provision Medusa service and worker,Health checks and migrations pass in staging,Unassigned,Not started
+P0,Infra,Provision Postgres/Redis & backup,"Tested connection, migration and restore path",Unassigned,Not started
+P0,Infra,Set up Vercel Pro commercial storefront,"Preview/prod environments secured, successful deploy",Unassigned,Not started
+P0,Admin,Enable Medusa Admin roles,Only authorized operators access costs/orders,Unassigned,Not started
+P0,Frontend,Homepage and mobile navigation,"Product paths discoverable, keyboard accessible",Unassigned,Not started
+P0,Frontend,Category and product pages,"Accurate variant details, price, dispatch status and disclaimers",Unassigned,Not started
+P0,Search,Exact SKU and text search,"GTIN/code search, synonyms, zero-result UX",Unassigned,Not started
+P0,Cart,Cart add/update/remove,"Quantity, price, stock revalidation, shipping reconciliation",Unassigned,Not started
+P0,Payments,Stripe test integration,"Webhook signature, 3DS, duplicate event, refund cases tested",Unassigned,Not started
+P0,Checkout,Delivery quote before order,Correct customer postcode and basket supplier split fees,Unassigned,Not started
+P0,Orders,Supplier pending workflow,No dispatch promise without supplier approval,Unassigned,Not started
+P0,Orders,Manual purchase order approval,"Audited POs, duplicate prevention",Unassigned,Not started
+P0,Orders,Supplier reject and payment reversal,"Failure triggers alert, customer notified and void/refund",Unassigned,Not started
+P0,Orders,Tracking and status emails,"Verified carrier tracking, no false shipping status",Unassigned,Not started
+P0,Returns,Admin refund & RMA,Full/partial cases reconcile with gateway and supplier,Unassigned,Not started
+P0,Compliance,Publish real business policies,"Privacy, returns, cancellation, legal contact and cookies vetted",Unassigned,Not started
+P0,Compliance,Restrict age/safety products,No restricted listings before legal review,Unassigned,Not started
+P0,Observability,Monitor purchase funnel and errors,Sentry + payment/supplier alerts tested,Unassigned,Not started
+P0,SEO,Public crawl/index parity,"SSR, canonical, robots/sitemap, structured price/stock parity",Unassigned,Not started
+P0,SEO,Merchant Center feed,"Selected products valid, GTIN and images correctly licensed",Unassigned,Not started
+P1,Supplier,Automate scheduled feed sync,"Idempotent import, stale feed alert, errors exportable",Unassigned,Not started
+P1,Catalog,Supplier candidate routing,All-in cost and SLA used; unknown stocks blocked,Unassigned,Not started
+P1,UX,Project bundles,At least 3 verified basket bundles with cost-aware shipping,Unassigned,Not started
+P1,AI,Grounded AI product finder,Can only suggest existing products and cite validated attributes,Unassigned,Not started
+P1,AI,AI chat fail-safe,Cannot order/charge without consent; unavailable model does not block checkout,Unassigned,Not started
+P1,SEO,Five reviewed job guides,Manual fact review and links to in-catalog relevant products,Unassigned,Not started
+P1,Analytics,Contribution per order dashboard,"VAT, supplier costs, carriage, payment cost, returns and CAC",Unassigned,Not started
+P1,CX,Delivery/order tracking page,"Customer verifies secure link or account, no order enumeration",Unassigned,Not started
+P1,Trust,Genuine reviews and customer support,"Reviews verified, complaints and product safety escalation",Unassigned,Not started
+P2,Channels,eBay sync after supplier SLA proven,"Compliant listings, no oversell, fee model tested",Unassigned,Not started
+P2,Trade,Trade account/quotes,"Prices correct ex VAT, business identity, manual approval",Unassigned,Not started
+P2,Marketplace,Amazon/TikTok feasibility,"Eligibility, product safety, commission and shipping profitable",Unassigned,Not started
+P2,Growth,Ads with contribution guardrails,"Budget hard cap, SKU CAC within contribution",Unassigned,Not started
+P2,Search,Faceted technical compatibility filter,Category-specific attrs sourced with evidence,Unassigned,Not started

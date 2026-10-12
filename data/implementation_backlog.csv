@@ -1,0 +1,49 @@
+ID,Priority,Workstream,Story,Acceptance Criteria,Owner,Status,Dependency
+TC-001,P0,Brand,Make site name/domain/colors config driven,Changing brand config updates metadata/logo/name without code sweep,Unassigned,Not started,Approvals required where applicable
+TC-002,P0,Brand,Legal name clearance gate,Owner has documented UK trademark company and registrar checks,Unassigned,Not started,Approvals required where applicable
+TC-003,P1,Brand,Build brand components,Primary/neutral button logo text inputs fonts tokens match spec,Unassigned,Not started,Approvals required where applicable
+TC-004,P1,Brand,Run 10-person UK test,Record unprompted brand interpretation and task success,Unassigned,Not started,Approvals required where applicable
+TC-005,P0,Supplier,Obtain supplier written dispatch terms,Signed SLA includes cost pick pack returns stock source and image rights,Unassigned,Not started,Approvals required where applicable
+TC-006,P0,Supplier,Import source quote into draft catalogue,115 lines imported no item purchasable; source lineage retained,Unassigned,Not started,Approvals required where applicable
+TC-007,P0,Supplier,Test supplier sample order,Actual dispatch cost packaging ETA and tracking recorded,Unassigned,Not started,Approvals required where applicable
+TC-008,P1,Supplier,Define stock TTL policy,Feed older than TTL cannot advertise immediate availability,Unassigned,Not started,Approvals required where applicable
+TC-009,P1,Supplier,Implement CSV parse validation,Bad units/case cost GTIN mapped to reject report,Unassigned,Not started,Approvals required where applicable
+TC-010,P1,Supplier,Implement supplier stock snapshots,Each record has as_of expires_at source and confidence,Unassigned,Not started,Approvals required where applicable
+TC-011,P1,Supplier,Implement supplier availability quote,Postcode and quantity included; no invented promise,Unassigned,Not started,Approvals required where applicable
+TC-012,P1,Supplier,Implement idempotent supplier PO,Duplicates cannot create multiple paid supplier POs,Unassigned,Not started,Approvals required where applicable
+TC-013,P1,Supplier,Implement supplier rejection compensation,Payment auth void/refund customer notice audit row,Unassigned,Not started,Approvals required where applicable
+TC-014,P1,Supplier,Implement split supplier fulfilment,Correct summed shipping and split ETA displayed,Unassigned,Not started,Approvals required where applicable
+TC-015,P2,Supplier,Supplier reconciliation report,Daily mismatch/stale feeds/late dispatch dashboard,Unassigned,Not started,Approvals required where applicable
+TC-016,P0,Commerce,Deploy Medusa staging,API Admin DB Redis worker reachable via secure staging,Unassigned,Not started,Approvals required where applicable
+TC-017,P1,Commerce,Create Medusa product models,Variants SKU GTIN brand and approved attributes import,Unassigned,Not started,Approvals required where applicable
+TC-018,P1,Commerce,Create full cart lifecycle,Cart survives reload and calculates taxes/delivery,Unassigned,Not started,Approvals required where applicable
+TC-019,P1,Commerce,Integrate Stripe test payments,Signed webhook idempotency and SCA happy/error paths,Unassigned,Not started,Approvals required where applicable
+TC-020,P1,Commerce,Support guest checkout,No account required and receipt secure,Unassigned,Not started,Approvals required where applicable
+TC-021,P1,Commerce,Returns/refunds workflow,Partial/full refund and associated stock adjustment tested,Unassigned,Not started,Approvals required where applicable
+TC-022,P2,Commerce,Trade invoice discovery,Account requirements recorded no unsupported net terms at launch,Unassigned,Not started,Approvals required where applicable
+TC-023,P1,Frontend,Responsive shell,Header nav footer and search at 360/390/768/1440 px,Unassigned,Not started,Approvals required where applicable
+TC-024,P1,Frontend,Category PLP,Facets/sort chips no dead-end filtering,Unassigned,Not started,Approvals required where applicable
+TC-025,P1,Frontend,Product detail PDP,Verified title GTIN variation size VAT shipping and safety,Unassigned,Not started,Approvals required where applicable
+TC-026,P1,Frontend,Search autocomplete,SKU/GTIN/name/synonym search and zero result handling,Unassigned,Not started,Approvals required where applicable
+TC-027,P1,Frontend,Cart and shipping disclosure,Complete landed consumer price displayed before pay,Unassigned,Not started,Approvals required where applicable
+TC-028,P2,Frontend,Shop by job templates,Project pages cite evidence and only purchasable products,Unassigned,Not started,Approvals required where applicable
+TC-029,P1,Frontend,Accessibility QA,Visible focus meaningful labels contrast >=AA and keyboard checkout,Unassigned,Not started,Approvals required where applicable
+TC-030,P1,SEO/GEO,SSR and metadata,Canonical titles and full text without JS,Unassigned,Not started,Approvals required where applicable
+TC-031,P1,SEO/GEO,Product structured data,Matches real price availability and merchant policy,Unassigned,Not started,Approvals required where applicable
+TC-032,P1,SEO/GEO,Sitemap and robots,Draft/noindex segregated; OAI SearchBot public policy set,Unassigned,Not started,Approvals required where applicable
+TC-033,P1,SEO/GEO,Merchant Center feed,GB feed validates price/availability/image/shipping,Unassigned,Not started,Approvals required where applicable
+TC-034,P1,SEO/GEO,Search Console/Bing,Properties verified with initial indexing diagnostics,Unassigned,Not started,Approvals required where applicable
+TC-035,P2,SEO/GEO,Publish 5 verified guides,Original author-reviewed real product content,Unassigned,Not started,Approvals required where applicable
+TC-036,P2,SEO/GEO,Track AI referral traffic,Attributed sources and conversion recorded honestly,Unassigned,Not started,Approvals required where applicable
+TC-037,P2,AI,Build tool-grounded assistant,All recommendations backed by catalog API,Unassigned,Not started,Approvals required where applicable
+TC-038,P2,AI,Handle unsupported queries,No made-up stock/compatibility or dangerous assurances,Unassigned,Not started,Approvals required where applicable
+TC-039,P2,AI,Basket proposal approval,AI cannot charge or add products without consent,Unassigned,Not started,Approvals required where applicable
+TC-040,P2,AI,Track AI interactions,Events for open rec click assisted checkout; privacy reviewed,Unassigned,Not started,Approvals required where applicable
+TC-041,P0,Ops,Determine legal UK seller/VAT,Accountant/merchant of record decisions written,Unassigned,Not started,Approvals required where applicable
+TC-042,P0,Ops,Get verified carrier rate card,Real weights postcodes and restricted items tested,Unassigned,Not started,Approvals required where applicable
+TC-043,P0,Ops,Register payment merchant legitimately,Stripe approval and bank verified by lawful owner,Unassigned,Not started,Approvals required where applicable
+TC-044,P1,Ops,Implement order status emails,Templates tested SPF DKIM DMARC,Unassigned,Not started,Approvals required where applicable
+TC-045,P1,Ops,Implement consent and policies,Policy pages approved with cookies controls,Unassigned,Not started,Approvals required where applicable
+TC-046,P1,Ops,Set up monitoring/backup,Alert and restore test demonstrated,Unassigned,Not started,Approvals required where applicable
+TC-047,P1,Ops,Set up CI and E2E tests,lint build browser tests and deployment gates pass,Unassigned,Not started,Approvals required where applicable
+TC-048,P2,Ops,Post launch 4-week daily watch,Supplier rejection delays and contribution review daily,Unassigned,Not started,Approvals required where applicable

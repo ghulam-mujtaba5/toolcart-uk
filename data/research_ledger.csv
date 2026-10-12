@@ -1,0 +1,17 @@
+Evidence_ID,Source,Verified fact or observation,Implication for ToolCart,Confidence,URL
+E01,Toolstation official site,"Large product search, multi-department taxonomy, help guides and trade account",Prominent search plus category and guide navigation,High,https://www.toolstation.com/
+E02,Screwfix official help,"Stock checking and store-based availability with customer communications",Treat stock as operational promise,High,https://www.screwfix.com/help/stockcheck
+E03,Screwfix official help,"Explicit click and collect service states and time-dependent fulfilment promises",Show delivery dates only from contracted SLA,High,https://www.screwfix.com/help/clickandcollect
+E04,B&Q official homepage,"Home improvement categories and project/seasonal browsing",Build customer job navigation as an alternative to taxonomy,High,https://www.diy.com/
+E05,Axminster official homepage,"Expertise, guides, specialist categories and product education",Pair commerce with editorial technical guides,High,https://www.axminstertools.com/
+E06,Baymard research,"58% desktop and 78% mobile studied PLPs mediocre or worse in 2025",Invest in mobile filters/spec visibility,High,https://baymard.com/research-articles/current-state-product-list-and-filtering
+E07,Baymard filters 2026,"Mobile modal/apply filtering and relevant facets matter",Category-specific filters and apply button,High,https://baymard.com/blog/ecommerce-filter-ui
+E08,Google Search Central,"AI Overviews/Mode use regular search fundamentals; no special schema needed",Prioritise indexing/useful text/merchant data,High,https://developers.google.com/search/docs/appearance/ai-features
+E09,Google Merchant,"Free listings eligible across Google properties including Gemini",Configure UK Merchant Center feed,High,https://support.google.com/merchants/answer/13889434
+E10,Google merchant listing,"Product/Offer structured data can expose price availability and shipping",Server-render JSON-LD matching PDP,High,https://developers.google.com/search/docs/appearance/structured-data/merchant-listing
+E11,OpenAI developers,"OAI-SearchBot is separate from GPTBot",Allow public discovery independently of training preference,High,https://developers.openai.com/api/docs/bots
+E12,OpenAI help,"ChatGPT search referrals may include utm_source=chatgpt.com",Measure AI-referral traffic separately,High,https://help.openai.com/en/articles/12627856-publishers-and-developers-faq
+E13,Medusa official docs,"PostgreSQL Redis and server/worker instances required in production",No Turso main DB; separate Medusa Node from Vercel storefront,High,https://docs.medusajs.com/learn/deployment/general
+E14,Source supplier quotation,"15 pages dated 09 Oct 2026; £1,567.95 ex VAT for quoted assortment; not stock/fulfilment contract",Draft catalogue only pending commercial confirmation,High,USER_UPLOADED_PDF
+E15,ToolCart brand risks,"ToolCart prior name usage in tools products and elsewhere; domain/IP not conclusively cleared",Brand as placeholder until UK counsel/registrar approve,Medium,https://www.gov.uk/search-for-trademark
+E16,Current work,"Deep teal/lime palette and Inter/Barlow Condensed are proposed design concepts, not conversion-tested facts",Test variants with real UK buyer sample,Design hypothesis,LOCAL_BRAND_SPEC

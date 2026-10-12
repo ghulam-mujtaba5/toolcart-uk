@@ -1,0 +1,64 @@
+--- qa/check_static.py
++++ qa/check_static.py
+@@ -1,33 +1,41 @@
+ from pathlib import Path
+-import json,re,subprocess,sys
++import json, re, shutil, subprocess, sys
+ from bs4 import BeautifulSoup
+-root=Path('/mnt/data/toolcart_v3_work')
+-css=(root/'design/tokens.css').read_text()
+-proto=(root/'prototype/index.html').read_text()
++
++root = Path(__file__).resolve().parent.parent
++css = (root / 'design/tokens.css').read_text(encoding='utf-8')
++proto = (root / 'prototype/index.html').read_text(encoding='utf-8')
+ assert '#B84C32' not in css and '#B84C32' not in proto
+ assert '--tc-copper' not in css and '--tc-copper' not in proto
+ assert 'Worksite Cobalt + Copper' not in proto
+ assert '#DDF16A' in css and '#2450B8' in css
+ assert '#F7F8F5' in css
+ assert 'ToolCart' in proto
+-properties=set(re.findall(r'--tc-[\w-]+(?=\s*:)',css+'\n'+proto))
+-refs=set(re.findall(r'var\((--tc-[\w-]+)',proto))
+-missing=refs-properties
+-assert not missing, f'missing CSS vars: {missing}'
+-soup=BeautifulSoup(proto,'html.parser')
+-assert len(soup.select('button[data-category]'))>=4
++properties = set(re.findall(r'--tc-[\w-]+(?=\s*:)', css + '\n' + proto))
++refs = set(re.findall(r'var\((--tc-[\w-]+)', proto))
++missing = refs - properties
++assert not missing, f'missing CSS vars: {missing}'
++soup = BeautifulSoup(proto, 'html.parser')
++assert len(soup.select('button[data-category]')) >= 4
+ assert soup.select_one('#productGrid')
+ assert soup.select_one('#main-search')
+ assert soup.select_one('title')
+-scripts=[tag.string for tag in soup.select('script') if tag.string]
+-js='\n'.join(scripts)
+-file=root/'qa/prototype_inline.js';file.write_text(js)
+-if subprocess.call(['which','node'],stdout=subprocess.DEVNULL)==0:
+- r=subprocess.run(['node','--check',str(file)],capture_output=True,text=True)
+- assert r.returncode==0, r.stderr
+-results=json.loads((root/'qa/contrast_matrix.json').read_text())
++scripts = [tag.string for tag in soup.select('script') if tag.string]
++js = '\n'.join(scripts)
++file = root / 'qa/prototype_inline.js'
++file.write_text(js, encoding='utf-8')
++try:
++    node_bin = shutil.which('node')
++    if node_bin:
++        r = subprocess.run([node_bin, '--check', str(file)], capture_output=True, text=True)
++        assert r.returncode == 0, r.stderr
++finally:
++    if file.exists():
++        file.unlink()
++results = json.loads((root / 'qa/contrast_matrix.json').read_text(encoding='utf-8'))
+ for item in results:
+- if 'do not use' in item['use'].lower(): assert not item['pass_wcag'],item
+- else: assert item['pass_wcag'],item
++    if 'do not use' in item['use'].lower():
++        assert not item['pass_wcag'], item
++    else:
++        assert item['pass_wcag'], item
+ print('PASS: CSS palette, references, retired-colour scan, DOM shape, JS syntax, WCAG usage matrix')
+ print('browser automated UI check: BLOCKED BY ENVIRONMENT; visual prototype viewport not independently verified')

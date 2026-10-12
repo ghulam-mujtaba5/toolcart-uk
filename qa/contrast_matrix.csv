@@ -1,0 +1,20 @@
+use,foreground,background,ratio,threshold,pass_wcag
+Headings,#182336,#FFFFFF,15.76,4.5,True
+Body on canvas,#252D30,#F7F8F5,13.16,4.5,True
+Primary CTA,#FFFFFF,#2450B8,7.21,4.5,True
+Cobalt hover,#FFFFFF,#193F99,9.49,4.5,True
+Lime accent CTA,#182336,#DDF16A,12.66,4.5,True
+Secondary text on pure white,#66767A,#FFFFFF,4.73,4.5,True
+Secondary text on workshop,#596B70,#F7F8F5,5.24,4.5,True
+Secondary text on AI panel,#596B70,#EAF0FF,4.89,4.5,True
+Ink on AI panel,#182336,#EAF0FF,13.81,4.5,True
+Amber warnings on canvas,#B45309,#F7F8F5,4.71,4.5,True
+Success on white,#176447,#FFFFFF,7.12,4.5,True
+Error on white,#B42318,#FFFFFF,6.57,4.5,True
+Strong border on cloud,#7C8A94,#EAF0FF,3.11,3,True
+Strong border on white,#7C8A94,#FFFFFF,3.55,3,True
+Focus ring cobalt on white,#2450B8,#FFFFFF,7.21,3,True
+Lime alone on white (do not use),#DDF16A,#FFFFFF,1.25,3,False
+Steel Grey on canvas (do not use),#66767A,#F7F8F5,4.44,4.5,False
+Steel Grey on Cloud (do not use),#66767A,#EAF0FF,4.15,4.5,False
+White on Lime (do not use),#FFFFFF,#DDF16A,1.25,4.5,False

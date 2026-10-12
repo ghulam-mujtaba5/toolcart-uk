@@ -1,0 +1,39 @@
+@import "../design/tokens.css";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    background-color: var(--tc-canvas);
+    color: var(--tc-graphite);
+    font-family: var(--font-body);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+    color: var(--tc-ink);
+    font-weight: 700;
+  }
+}
+
+@layer utilities {
+  /* Action Lime accent button with strict 2px Ink outline */
+  .tc-btn-accent {
+    background-color: var(--tc-action-lime);
+    color: var(--tc-ink);
+    border: 2px solid var(--tc-ink);
+    border-radius: var(--radius-button);
+  }
+  .tc-btn-accent:hover {
+    background-color: var(--tc-lime-hover);
+  }
+
+  /* Tabular numbers for specs, prices, and SKUs */
+  .tabular-nums {
+    font-variant-numeric: tabular-nums;
+  }
+}

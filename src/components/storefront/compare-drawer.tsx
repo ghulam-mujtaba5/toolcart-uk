@@ -164,6 +164,16 @@ export function CompareDrawer() {
                             </button>
                           </div>
 
+                          <div className="w-full h-24 rounded-lg bg-white border border-tc-border mb-2 flex items-center justify-center p-2">
+                            {/* eslint-disable-next-line @next/next/no-img-element */}
+                            <img
+                              src={`/images/products/${p.supplier_sku}.png`}
+                              alt={p.title}
+                              className="max-h-full max-w-full object-contain"
+                              loading="lazy"
+                            />
+                          </div>
+
                           <Link
                             href={`/products/${p.slug}`}
                             onClick={closeCompare}

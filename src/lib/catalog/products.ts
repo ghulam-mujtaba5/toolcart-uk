@@ -265,6 +265,7 @@ function loadAndParseCatalog(): {
       supplier_direct_dispatch_verified: false,
       sellability_status: 'draft',
       availability_status: 'in_stock' as AvailabilityStatus,
+      stock_quantity: parseInt(r.quoted_units, 10) || (parseInt(r.quoted_cases, 10) * unitsPerCase) || 24,
       lead_time_days: '2-3 business days',
     };
 

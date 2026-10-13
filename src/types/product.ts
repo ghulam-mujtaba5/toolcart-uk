@@ -29,6 +29,7 @@ export interface PublicProductDTO {
   supplier_direct_dispatch_verified?: boolean;
   sellability_status?: SellabilityStatus;
   availability_status: AvailabilityStatus;
+  stock_quantity?: number;
   weight_grams?: number;
   lead_time_days?: string;
 }

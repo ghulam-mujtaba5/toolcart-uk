@@ -155,6 +155,16 @@ export function ProjectKitCard({ kit }: ProjectKitCardProps) {
                     {isChecked && <Check className="w-3.5 h-3.5 stroke-[3]" />}
                   </div>
 
+                  <div className="w-10 h-10 rounded-lg bg-tc-surface-soft border border-tc-border flex items-center justify-center shrink-0 p-1">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={`/images/products/${item.sku}.png`}
+                      alt={item.title}
+                      className="max-h-full max-w-full object-contain"
+                      loading="lazy"
+                    />
+                  </div>
+
                   <div className="min-w-0">
                     <p className="text-xs sm:text-sm font-semibold text-tc-ink truncate">
                       {item.title}

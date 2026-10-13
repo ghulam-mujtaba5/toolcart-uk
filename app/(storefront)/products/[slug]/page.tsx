@@ -106,18 +106,36 @@ export default async function ProductPage({ params }: ProductPageProps) {
               </span>
             </div>
 
-            {/* Visual Icon Illustration */}
-            <div className="w-28 h-28 sm:w-36 sm:h-36 rounded-3xl bg-white border border-[#C8D9F9] shadow-sm flex items-center justify-center text-tc-primary">
-              <Icon className="w-16 h-16 sm:w-20 sm:h-20 stroke-[1.75]" />
+            {/* Visual Real Product Photography with Fallback */}
+            <div className="relative w-full h-56 sm:h-72 flex items-center justify-center p-4">
+              {product.images && product.images[0] ? (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
+                  src={product.images[0]}
+                  alt={product.title}
+                  className="max-h-full max-w-full object-contain filter drop-shadow-md transition-transform duration-200"
+                />
+              ) : (
+                <div className="w-28 h-28 sm:w-36 sm:h-36 rounded-3xl bg-white border border-[#C8D9F9] shadow-sm flex items-center justify-center text-tc-primary">
+                  <Icon className="w-16 h-16 sm:w-20 sm:h-20 stroke-[1.75]" />
+                </div>
+              )}
             </div>
 
-            <div className="mt-4 text-center">
-              <span className="text-xs font-mono font-bold text-tc-text-secondary tracking-widest uppercase">
-                {product.supplier_sku}
-              </span>
-              <p className="text-[11px] text-tc-text-secondary mt-0.5">
-                EAN-13: {product.gtin}
-              </p>
+            <div className="mt-2 text-center">
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white border border-tc-border text-xs font-semibold text-tc-ink shadow-2xs mb-2">
+                <span className="w-2 h-2 rounded-full bg-tc-success animate-pulse" />
+                <span>{product.stock_quantity ? `${product.stock_quantity} units in stock ready for dispatch` : 'In stock'}</span>
+              </div>
+              <div>
+                <span className="text-xs font-mono font-bold text-tc-text-secondary tracking-widest uppercase">
+                  {product.supplier_sku}
+                </span>
+                <span className="mx-2 text-tc-border-strong">•</span>
+                <span className="text-[11px] text-tc-text-secondary">
+                  EAN-13: {product.gtin}
+                </span>
+              </div>
             </div>
           </div>
 

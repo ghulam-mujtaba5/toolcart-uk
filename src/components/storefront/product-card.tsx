@@ -106,10 +106,22 @@ export function ProductCard({ product, className }: ProductCardProps) {
             <span>Compare</span>
           </button>
 
-          {/* Category Graphic / Illustration in Brand V3 Cloud Blue & Cobalt */}
-          <Link href={`/products/${product.slug}`} className="w-full h-full flex flex-col items-center justify-center group-hover:scale-105 transition-transform">
-            <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-white border border-[#C8D9F9] shadow-xs flex items-center justify-center text-tc-primary">
-              <Icon className="w-9 h-9 sm:w-11 sm:h-11 stroke-[1.75]" />
+          {/* Real Product Photography with Brand V3 Fallback */}
+          <Link href={`/products/${product.slug}`} className="w-full h-full flex flex-col items-center justify-center group-hover:scale-105 transition-transform p-2">
+            <div className="relative w-full h-36 sm:h-40 flex items-center justify-center">
+              {product.images && product.images[0] ? (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
+                  src={product.images[0]}
+                  alt={product.title}
+                  className="max-h-full max-w-full object-contain filter drop-shadow-sm transition-transform duration-200"
+                  loading="lazy"
+                />
+              ) : (
+                <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-white border border-[#C8D9F9] shadow-xs flex items-center justify-center text-tc-primary">
+                  <Icon className="w-9 h-9 sm:w-11 sm:h-11 stroke-[1.75]" />
+                </div>
+              )}
             </div>
             <span className="mt-2 text-[10px] uppercase font-mono font-bold text-tc-text-secondary tracking-widest">
               {product.supplier_sku}
@@ -141,7 +153,12 @@ export function ProductCard({ product, className }: ProductCardProps) {
                 : 'Single retail unit'}
               {' '}<span className="text-tc-text-secondary">({product.units_per_case} per case)</span>
             </span>
-            <span className="text-[11px]">Dispatch: 2–3 business days</span>
+            <div className="flex items-center justify-between text-[11px] mt-0.5">
+              <span className="text-tc-success font-semibold">
+                {product.stock_quantity ? `${product.stock_quantity} units available` : 'In stock'}
+              </span>
+              <span>Dispatch: 2–3 business days</span>
+            </div>
           </div>
         </div>
       </div>

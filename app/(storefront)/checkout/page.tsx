@@ -339,11 +339,22 @@ export default function CheckoutPage() {
                     <span className="font-mono">Carriage: £{group.carriage_fee_ex_vat_gbp.toFixed(2)}</span>
                   </div>
                   {group.items.map((i) => (
-                    <div key={i.product_id} className="flex justify-between text-tc-ink pl-2">
-                      <span className="truncate max-w-[200px]">
-                        {i.quantity}x {i.title}
-                      </span>
-                      <span className="font-mono tabular-nums text-tc-text-secondary">
+                    <div key={i.product_id} className="flex items-center justify-between text-tc-ink pl-1 gap-2">
+                      <div className="flex items-center gap-2 min-w-0">
+                        <div className="w-8 h-8 rounded bg-tc-surface-soft border border-tc-border flex items-center justify-center shrink-0 p-0.5">
+                          {/* eslint-disable-next-line @next/next/no-img-element */}
+                          <img
+                            src={`/images/products/${i.supplier_sku}.png`}
+                            alt={i.title}
+                            className="max-h-full max-w-full object-contain"
+                            loading="lazy"
+                          />
+                        </div>
+                        <span className="truncate max-w-[190px] text-[11px] font-medium">
+                          {i.quantity}x {i.title}
+                        </span>
+                      </div>
+                      <span className="font-mono tabular-nums text-tc-text-secondary text-xs shrink-0">
                         £{(i.retail_price_inc_vat_gbp * i.quantity).toFixed(2)}
                       </span>
                     </div>

@@ -129,13 +129,23 @@ export default function BasketPage() {
                           key={`${item.product_id}_${item.is_case_quantity}`}
                           className="py-4 first:pt-0 last:pb-0 flex flex-col sm:flex-row sm:items-center justify-between gap-4"
                         >
-                          <div className="flex-1 min-w-0">
-                            <Link
-                              href={`/products/${item.slug}`}
-                              className="font-heading font-bold text-sm sm:text-base text-tc-ink hover:text-tc-primary transition-colors"
-                            >
-                              {item.title}
-                            </Link>
+                          <div className="flex items-start gap-3.5 flex-1 min-w-0">
+                            <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-xl bg-tc-surface-soft border border-tc-border flex items-center justify-center shrink-0 p-1.5">
+                              {/* eslint-disable-next-line @next/next/no-img-element */}
+                              <img
+                                src={`/images/products/${item.supplier_sku}.png`}
+                                alt={item.title}
+                                className="max-h-full max-w-full object-contain"
+                                loading="lazy"
+                              />
+                            </div>
+                            <div className="flex-1 min-w-0">
+                              <Link
+                                href={`/products/${item.slug}`}
+                                className="font-heading font-bold text-sm sm:text-base text-tc-ink hover:text-tc-primary transition-colors"
+                              >
+                                {item.title}
+                              </Link>
 
                             <div className="flex flex-wrap items-center gap-3 text-xs text-tc-text-secondary mt-1">
                               <span className="font-mono">{item.supplier_sku}</span>
@@ -151,6 +161,7 @@ export default function BasketPage() {
                               </span>
                             </div>
                           </div>
+                        </div>
 
                           {/* Controls & Line Total */}
                           <div className="flex items-center justify-between sm:justify-end gap-6">

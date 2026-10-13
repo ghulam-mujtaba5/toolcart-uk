@@ -201,11 +201,25 @@ export function ProductTable({ products, wholesaleOffers = {} }: ProductTablePro
                   return (
                     <tr key={p.id} className="hover:bg-tc-surface-soft/60 transition-colors">
                       <td className="py-3 px-4 max-w-xs">
-                        <div className="flex flex-col">
-                          <span className="font-mono font-bold text-tc-primary text-[11px]">
-                            {p.supplier_sku}
-                          </span>
-                          <span className="font-semibold text-tc-ink line-clamp-1">{p.title}</span>
+                        <div className="flex items-center gap-3">
+                          <div className="w-10 h-10 rounded-lg bg-tc-surface-soft border border-tc-border flex items-center justify-center shrink-0 p-1">
+                            {/* eslint-disable-next-line @next/next/no-img-element */}
+                            <img
+                              src={`/images/products/${p.supplier_sku}.png`}
+                              alt={p.title}
+                              className="max-h-full max-w-full object-contain"
+                              loading="lazy"
+                            />
+                          </div>
+                          <div className="flex flex-col min-w-0">
+                            <span className="font-mono font-bold text-tc-primary text-[11px]">
+                              {p.supplier_sku}
+                            </span>
+                            <span className="font-semibold text-tc-ink line-clamp-1">{p.title}</span>
+                            <span className="text-[10px] text-tc-success font-semibold mt-0.5">
+                              {p.stock_quantity ? `${p.stock_quantity} in stock` : 'In stock'}
+                            </span>
+                          </div>
                         </div>
                       </td>
                       <td className="py-3 px-4 text-tc-text-secondary whitespace-nowrap">

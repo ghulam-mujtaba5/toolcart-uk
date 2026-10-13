@@ -123,6 +123,15 @@ export function MiniBasket() {
                       return (
                         <li key={`${item.product_id}_${item.is_case_quantity}`} className="p-3.5 space-y-2">
                           <div className="flex items-start justify-between gap-3">
+                            <div className="w-12 h-12 rounded-lg bg-tc-surface-soft border border-tc-border flex items-center justify-center shrink-0 p-1">
+                              {/* eslint-disable-next-line @next/next/no-img-element */}
+                              <img
+                                src={`/images/products/${item.supplier_sku}.png`}
+                                alt={item.title}
+                                className="max-h-full max-w-full object-contain"
+                                loading="lazy"
+                              />
+                            </div>
                             <div className="flex-1 min-w-0">
                               <Link
                                 href={`/products/${item.slug}`}

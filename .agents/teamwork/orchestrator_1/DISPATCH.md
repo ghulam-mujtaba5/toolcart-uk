@@ -37,3 +37,9 @@ The browser inspector retrieved the live cloud account configurations for `toolc
 
 Please ensure `.env.example` and `.env.local` (gitignored) are configured with these non-secret public identifiers (`NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, `CLOUDFLARE_ACCOUNT_ID`, `RESEND_FROM_EMAIL=onboarding@resend.dev`, `ADMIN_NOTIFICATION_EMAIL=toolcartuk@gmail.com`, `STAGING_ONLY=true`), and that the data layer works seamlessly out-of-the-box with automatic local seeded storage fallback whenever `SUPABASE_SERVICE_ROLE_KEY` or `RESEND_API_KEY` are not yet set.
 These details have also been appended to `ORIGINAL_REQUEST.md`.
+
+## 2026-10-13T07:30:41Z
+Status check: Milestone 3 gate audit is running with reviewer_m3_1 and auditor_m3_1. Please provide progress update upon receiving their reports.
+
+## 2026-10-13T07:50:30Z
+Liveness ping: Please update progress.md to reflect active monitoring of worker_m3_2 remediation.

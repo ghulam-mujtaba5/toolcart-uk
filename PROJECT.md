@@ -85,11 +85,11 @@ Every feature identified during the Survey phase is mapped to an implementation 
 
 | # | Name | Scope | Dependencies | Status |
 |---|------|-------|-------------|--------|
-| M1 | Foundation & Brand V3 Design System | Next.js bootstrap, Tailwind tokens, typography, UI primitives, cross-platform QA check | None | IN_PROGRESS |
-| M2 | Customer Storefront Experience | All storefront routes, VAT toggle, search/facets, PDP, compare, guides, basket, AI assistant | M1 | PLANNED |
-| M3 | Commerce Engine, Catalog Seed & Admin Portal | 115 SKU catalog ingestion, state machine, wholesale isolation, audit logs, full `/admin` | M1 | PLANNED |
-| M4 | Cloud Infrastructure & Service Adapters | Supabase schema/RLS + local fallback, Cloudflare R2, Resend, Stripe checkout, dynamic SEO | M2, M3 | PLANNED |
-| M5 | Dual-Track E2E Test Suite & Hardening | 100% E2E test pass (Tiers 1-4), Tier 5 adversarial hardening, zero leaks, clean audit | M4, TEST_READY | PLANNED |
+| M1 | Foundation & Brand V3 Design System | Next.js bootstrap, Tailwind tokens, typography, UI primitives, cross-platform QA check | None | DONE |
+| M2 | Customer Storefront Experience | All storefront routes, VAT toggle, search/facets, PDP, compare, guides, basket, AI assistant | M1 | DONE |
+| M3 | Commerce Engine, Catalog Seed & Admin Portal | 115 SKU catalog ingestion, state machine, wholesale isolation, audit logs, full `/admin` | M1 | DONE |
+| M4 | Cloud Infrastructure & Service Adapters | Supabase schema/RLS + local fallback, Cloudflare R2, Resend, Stripe checkout, dynamic SEO | M2, M3 | DONE |
+| M5 | Dual-Track E2E Test Suite & Hardening | 100% E2E test pass (Tiers 1-4), Tier 5 adversarial hardening, zero leaks, clean audit | M4, TEST_READY | DONE |
 
 ---
 

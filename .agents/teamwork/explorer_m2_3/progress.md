@@ -1,0 +1,31 @@
+# Progress: Explorer M2 (Instance 3)
+Last visited: 2026-10-12T18:11:00Z
+
+- [x] Investigate and design Catalog Data Loader (`src/lib/catalog/`):
+  - [x] Verified baseline CSV (all 115 rows from Status International UK Ltd, math checks, unit costs £0.35 - £13.85)
+  - [x] Unicode ligature normalization identified: U+FB01 (15 occurrences), U+FB02 (5 occurrences), U+00D8 (1 occurrence)
+  - [x] Verified nullable carton barcode on bulky single ladder unit (ION3SFLADDER1P1)
+  - [x] Designed PublicProductDTO projection strictly omitting wholesale costs (`unit_cost_ex_vat_gbp`, `case_cost_ex_vat_gbp`)
+  - [x] Mapped all 115 SKUs into 7 hardware categories (Hand tools: 26, Bits & accessories: 15, Fixings & security: 28, Decorating: 14, Measuring: 3, Workwear & safety: 8, Tapes & consumables: 21)
+  - [x] Designed helper functions: `getAllProducts()`, `getProductBySlug(slug)`, `getProductsByCategory(category)`, `searchProducts(query, filters)`, `getProjectKits()`
+  - [x] Designed 3 verified project kits from real SKUs in catalog
+- [x] Investigate and design Cart & Mini-Basket (`/basket` & slide-over drawer):
+  - [x] Line items with title, thumbnail, pack breakdown, and quantity selector
+  - [x] Multi-supplier delivery grouping architecture (distinct delivery estimates and shipping fees)
+  - [x] Exact UK 20% standard VAT breakdown math (net subtotal, VAT amount, shipping carriage, total landed cost)
+  - [x] Drawer integration using existing Radix-based Brand V3 Drawer component
+- [x] Investigate and design Customer Checkout Flow (`/checkout`):
+  - [x] Guest checkout flow without forced registration
+  - [x] UK delivery address with UK postcode regex validation and remote region advisory
+  - [x] Total landed cost summary with split supplier carriage disclosure
+  - [x] Stripe test-mode Elements integration gated by `STAGING_ONLY` and sellability checks
+- [x] Investigate and design Trade Account Portal (`/trade`):
+  - [x] B2B Trade proposition and copy deck alignment
+  - [x] Registration form fields: Company Name, Companies House number, UK VAT number, trade type, credit terms
+  - [x] Validation rules and verification workflow
+- [x] Investigate and design Customer Account & Order Tracking (`/account`, `/account/orders/[id]`):
+  - [x] State machine mapping for all 13 states from `architecture/SUPPLIER_ORDER_STATE_MACHINE.md`
+  - [x] Interactive visual timeline stepper (`cart_pending` -> `supplier_accepted` -> `dispatched` -> `delivered`)
+  - [x] Exceptional path handling (`supplier_rejected`, `refund_pending`, `refunded`)
+  - [x] Test-mode transition simulator for staging verification
+- [x] Synthesizing findings and writing 5-component handoff report (`handoff.md`)

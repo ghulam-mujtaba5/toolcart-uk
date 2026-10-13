@@ -1,0 +1,45 @@
+# Progress: Worker M3
+Last visited: 2026-10-13T07:20:00Z
+- [x] Implement Supplier Order State Machine (`src/lib/state-machine/`)
+  - [x] types.ts, transitions.ts, side-effects.ts, engine.ts, index.ts
+  - [x] All 15 states, DAG transition matrix, idempotency key (order_id#supplier_id), auto-refund on rejection/timeout, auto-capture payment, append-only order_audit_logs
+- [x] Implement Catalog Ingestion & Contract Schema Validator (`src/lib/catalog/`)
+  - [x] contract-schema.ts: Zod schema enforcing Draft 2020-12 product_contract.schema.json
+  - [x] importer.ts: Batch CSV/JSON parser with case-vs-unit math check, dry-run diagnostics, nullable carton barcode handling
+  - [x] unicode.ts: Normalization for fi (\ufb01), fl (\ufb02), and Ø (\u00d8)
+  - [x] pricing.ts: Margin control tiers and retail price calculations
+- [x] Implement Unified Database Repositories & In-Memory/Seed Store (`src/lib/db/`)
+  - [x] types.ts: Repository interfaces (ProductRepository, OrderRepository, SupplierRepository, PricingRepository, CustomerRepository)
+  - [x] seed-data.ts: Initial suppliers, orders, markup rules, trade customers
+  - [x] memory-store.ts: Global singleton store (globalThis.__toolcart_db__) auto-seeding all 115 baseline catalog products
+  - [x] repositories: product-repo.ts, order-repo.ts, supplier-repo.ts, pricing-repo.ts, customer-repo.ts
+- [x] Implement Admin Portal UI components (`src/components/admin/`) and routes (`app/admin/`)
+  - [x] admin-sidebar.tsx & admin-layout.tsx with Brand V3 theme and STAGING_ONLY badge
+  - [x] kpi-card.tsx, product-table.tsx, order-action-bar.tsx, audit-timeline.tsx, import-preview-table.tsx
+  - [x] app/admin/page.tsx: KPI dashboard & Launch Gate matrix
+  - [x] app/admin/products/page.tsx: Product catalog directory with sellability filters
+  - [x] app/admin/products/[id]/page.tsx: Product editor with specifications and margin calculator
+  - [x] app/admin/orders/page.tsx: Orders table with 15-state badges
+  - [x] app/admin/orders/[id]/page.tsx: Fulfillment console, PO generator, and audit timeline
+  - [x] app/admin/suppliers/page.tsx: Supplier directory and stock feed TTL indicator
+  - [x] app/admin/import/page.tsx: Ingestion UI with drag-and-drop & dry run validation
+  - [x] app/admin/pricing/page.tsx: Margin rules and 30% floor monitoring
+  - [x] app/admin/customers/page.tsx: Trade credit account approval queue
+  - [x] app/admin/settings/page.tsx: Governance and cloud provider health
+- [x] Implement Admin API endpoints (`app/api/admin/`)
+  - [x] POST /api/admin/import
+  - [x] GET / POST /api/admin/orders
+  - [x] GET /api/admin/orders/[id]
+  - [x] POST /api/admin/orders/[id]/transition
+  - [x] GET / POST /api/admin/products
+  - [x] GET / PUT / DELETE /api/admin/products/[id]
+- [x] Implement test suites (`tests/state-machine/` & `tests/catalog/`)
+  - [x] tests/state-machine/state-machine.test.ts (6 tests passing)
+  - [x] tests/catalog/catalog-ingestion.test.ts (6 tests passing)
+- [x] Verify test suite, typecheck, lint, build, and static checks
+  - [x] python qa/check_static.py -> 0 violations
+  - [x] python -m pytest tests/brand/ -> 9/9 passed
+  - [x] npm run typecheck -> 0 errors
+  - [x] npm run lint -> 0 errors / 0 warnings
+  - [x] npm test -> 11 test files, 120 tests passed
+  - [x] npm run build -> 28 routes compiled successfully

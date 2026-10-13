@@ -1,25 +1,26 @@
-## 2026-10-12T17:51:07Z
-You are Challenger M1 (Instance 1).
+# Dispatch: Challenger 1 (Milestone 1 — CSS Foundations & Bespoke SVGs)
+
+- Working Directory: `e:\ToolCart\.agents\teamwork\challenger_m1_1`
+- Original Request: `e:\ToolCart\.agents\teamwork\ORIGINAL_REQUEST.md` (read section `## 2026-10-13T16:36:41Z`)
+- Project Root: `e:\ToolCart`
+- Scope Document: `e:\ToolCart\PROJECT.md`
+- Worker Handoff: `e:\ToolCart\.agents\teamwork\worker_m1_1\handoff.md`
+
+## Mission:
+Empirically challenge and stress-test the Milestone 1 deliverables:
+1. Challenge the pure-CSS patterns (`.tc-bg-dots`, `.tc-bg-blueprint`, `.tc-card-machined`): test contrast on various backgrounds, check rendering under extreme container widths, test print media or dark mode compatibility.
+2. Challenge the bespoke SVG vector components (`src/components/ui/vectors/*`): test with undefined classNames, extreme dimensions (width=0, width=5000px), rapid mount/unmount in JSDOM, and check for SVG viewBox distortion.
+3. Run verification tests:
+   - `npm test`
+   - `python qa/check_static.py`
+4. Render a clear verdict: **APPROVE** or **REQUEST_CHANGES**.
+Write your challenge report to `e:\ToolCart\.agents\teamwork\challenger_m1_1\challenge_report.md` and `handoff.md`. Communicate your verdict back via send_message.
+
+## 2026-10-13T17:33:48Z
+You are Challenger 1 for Milestone 1 of the ToolCart UK Revamp.
 Your working directory is: `e:\ToolCart\.agents\teamwork\challenger_m1_1`
-Project root: `e:\ToolCart`
-Parent conversation ID: `311a2f36-0bc9-4d2c-ad1b-812679b4333e`
+Read instructions in `e:\ToolCart\.agents\teamwork\challenger_m1_1\DISPATCH.md` and `e:\ToolCart\.agents\teamwork\ORIGINAL_REQUEST.md` (section `## 2026-10-13T16:36:41Z`).
+Read Worker M1's handoff at `e:\ToolCart\.agents\teamwork\worker_m1_1\handoff.md`.
+Stress-test pure-CSS patterns and bespoke SVG vector components under extreme inputs and edge cases.
+Run tests and report your verdict (APPROVE or REQUEST_CHANGES) in `e:\ToolCart\.agents\teamwork\challenger_m1_1\handoff.md` and report via send_message.
 
-Authoritative User Request: Read `e:\ToolCart\.agents\teamwork\ORIGINAL_REQUEST.md`.
-Master Project Scope: Read `e:\ToolCart\PROJECT.md`.
-Worker M1 Handoff: Read `e:\ToolCart\.agents\teamwork\worker_m1_1\handoff.md`.
-
-Mission:
-Adversarially challenge and stress-test the Milestone 1 work product:
-1. Scan the entire repository for forbidden tokens/colors:
-   - Case-insensitive search for `#b84c32`, `rgb(184, 76, 50)`, `--tc-copper`, `copper`.
-   - Scan for unauthorized purple, violet, lavender, or teal brand usages.
-   - Scan for any button or badge pairing Action Lime with white text (`text-white`, `#ffffff`, `#fff`).
-2. Adversarially test UI primitives:
-   - Mount/render components with unexpected or extreme props (empty labels, long strings, disabled states).
-   - Check contrast ratio calculations.
-3. State your verdict (APPROVE or CHALLENGE_FAILED) in handoff.md.
-
-Output requirements:
-- Write challenge report to `e:\ToolCart\.agents\teamwork\challenger_m1_1\handoff.md`.
-- Keep `progress.md` updated.
-- Message parent (`311a2f36-0bc9-4d2c-ad1b-812679b4333e`) when done.

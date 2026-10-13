@@ -16,6 +16,10 @@ import {
   Send,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import {
+  FulfillmentStepperMotion,
+  type FulfillmentMotionStage,
+} from '@/components/motion';
 
 interface OrderTimelineStepperProps {
   orderId: string;
@@ -193,24 +197,36 @@ export function OrderTimelineStepper({
     <div className="space-y-8">
       {/* Current State Card */}
       <div className="bg-white rounded-card border border-tc-border p-6 shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-        <div>
-          <span className="text-[11px] font-mono font-bold text-tc-text-secondary uppercase">
-            Order Status State Machine
-          </span>
-          <div className="flex items-center gap-3 mt-1">
-            <h2 className="font-heading font-extrabold text-2xl text-tc-ink">
-              {details.label}
-            </h2>
-            <span
-              className={cn(
-                'px-2.5 py-0.5 rounded-full text-xs font-bold border',
-                details.color
-              )}
-            >
-              {details.badge}
+        <div className="flex items-center gap-4">
+          <FulfillmentStepperMotion
+            stage={
+              currentState === 'dispatched' || currentState === 'partial_dispatch'
+                ? 'transit'
+                : currentState === 'delivered'
+                ? 'delivered'
+                : 'packing'
+            }
+            size={56}
+          />
+          <div>
+            <span className="text-[11px] font-mono font-bold text-tc-text-secondary uppercase">
+              Order Status State Machine
             </span>
+            <div className="flex items-center gap-3 mt-1">
+              <h2 className="font-heading font-extrabold text-2xl text-tc-ink">
+                {details.label}
+              </h2>
+              <span
+                className={cn(
+                  'px-2.5 py-0.5 rounded-full text-xs font-bold border',
+                  details.color
+                )}
+              >
+                {details.badge}
+              </span>
+            </div>
+            <p className="text-xs text-tc-text-secondary mt-1">{details.description}</p>
           </div>
-          <p className="text-xs text-tc-text-secondary mt-1">{details.description}</p>
         </div>
 
         <div className="text-xs text-tc-text-secondary text-right shrink-0">

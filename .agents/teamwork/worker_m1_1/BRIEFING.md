@@ -1,7 +1,7 @@
-# BRIEFING — 2026-10-12T17:49:00Z
+# BRIEFING — 2026-10-13T17:28:30Z
 
 ## Mission
-Implement Milestone 1: Foundation & Brand V3 Design System for ToolCart storefront.
+Milestone 1 Revamp: Implement pure-CSS CAD blueprint patterns, bespoke Brand V3 SVG vector scenes, storefront integrations, untokenized fixes, and comprehensive unit tests.
 
 ## 🔒 My Identity
 - Archetype: worker
@@ -9,61 +9,60 @@ Implement Milestone 1: Foundation & Brand V3 Design System for ToolCart storefro
 - Working directory: e:\ToolCart\.agents\teamwork\worker_m1_1
 - Original parent: 311a2f36-0bc9-4d2c-ad1b-812679b4333e
 - Milestone: Milestone 1 (Foundation & Brand V3 Design System)
+- Revamp Parent: 080a93ac-e184-4734-a107-f062151cd3dc
+- Revamp Milestone: Milestone 1 (CSS Foundations & Bespoke SVGs)
 
 ## 🔒 Key Constraints
 - Brand V3: Industrial Cobalt (#2450B8) + Action Lime (#DDF16A). Zero white text on lime. No copper, purple/violet/lavender, teal.
 - On off-white/Cloud Blue use accessible Steel Text #596B70.
 - Respect genuine implementations (no shortcuts, facades, or hardcoded tests).
 - All tests and verification gates must pass: check_static.py, pytest tests/brand/, npm run typecheck, lint, build, test.
+- Revamp Constraints: Pure-CSS CAD patterns (.tc-bg-dots, .tc-bg-blueprint, .tc-card-machined) in app/globals.css with zero runtime overhead.
+- Bespoke SVG vector scenes in src/components/ui/vectors/ with Brand V3 palette.
+- Replace generic icons in not-found, basket, mini-basket, search, trade, and category pages.
 
 ## Current Parent
-- Conversation ID: 311a2f36-0bc9-4d2c-ad1b-812679b4333e
-- Updated: 2026-10-12T17:49:00Z
+- Conversation ID: 080a93ac-e184-4734-a107-f062151cd3dc
+- Updated: 2026-10-13T17:28:30Z
 
 ## Task Summary
-- **What to build**: Next.js 14 App Router project initialization, Tailwind CSS wired to Brand V3 design tokens, Radix UI accessible primitives, cross-platform QA check patch, and automated Brand V3 compliance test suites.
-- **Success criteria**: 100% clean passes on `python qa/check_static.py`, `python -m pytest tests/brand/`, `npm run typecheck`, `npm run lint`, `npm run build`, and `npm test`.
-- **Interface contracts**: PROJECT.md, design/tokens.css, design/tokens.json.
-- **Code layout**: e:\ToolCart root layout, app/, src/components/ui/, src/lib/, qa/, tests/.
+- **What to build**: Pure-CSS CAD blueprint patterns and machined card styling (`app/globals.css`), bespoke Brand V3 SVG vector scenes (`src/components/ui/vectors/`), storefront page integrations (`app/not-found.tsx`, `app/(storefront)/basket/page.tsx`, `src/components/storefront/mini-basket.tsx`, `app/(storefront)/search/page.tsx`, `app/(storefront)/trade/page.tsx`, `app/(storefront)/categories/[slug]/page.tsx`), untokenized style remediation, and vector unit testing (`tests/ui/vector-scenes.test.tsx`).
+- **Success criteria**: 100% clean passes across `npm test`, `python qa/check_static.py`, `npx tsc --noEmit`, and `npm run lint`.
+- **Interface contracts**: `PROJECT.md`, `design/tokens.css`, `design/tokens.json`, `docs/02_BRAND_IDENTITY.md`.
+- **Code layout**: `app/globals.css`, `src/components/ui/vectors/*`, `app/(storefront)/*`, `tests/ui/*`.
 
 ## Change Tracker
 - **Files modified**:
-  - `package.json`, `package-lock.json`: Dependencies installed including `@testing-library/dom`
-  - `tsconfig.json`: TypeScript paths for `@/*`, `@/components/*`, `@/lib/*`, `@/types/*`, `@/app/*`
-  - `tailwind.config.ts`: Tailwind theme extensions mapped to `var(--tc-*)` tokens
-  - `postcss.config.mjs`: PostCSS configuration for Tailwind & Autoprefixer
-  - `vitest.config.ts`, `tests/setup.ts`: Vitest ESM/JSDOM configuration with path aliases
-  - `qa/check_static.py`: Cross-platform dynamic root, UTF-8 encoding, and shutil.which node check
-  - `app/globals.css`: Imports `../design/tokens.css`, sets up base styles and utility classes
-  - `app/layout.tsx`: Root layout with Manrope & IBM Plex Sans fonts and Brand V3 metadata
-  - `app/(storefront)/page.tsx`: Initial storefront landing layout
-  - `src/lib/utils.ts`: `cn` class merger helper
-  - `src/components/ui/button.tsx`: Brand V3 button with Cobalt primary & Action Lime accent
-  - `src/components/ui/input.tsx`, `src/components/ui/search-input.tsx`: 1.8px border & focus ring
-  - `src/components/ui/badge.tsx`: Lime, success, warning, danger, neutral variants
-  - `src/components/ui/card.tsx`: 14px radius with white, canvas, and AI surface variants
-  - `src/components/ui/dialog.tsx`, `src/components/ui/drawer.tsx`: Radix UI dialog & directional drawer
-  - `src/components/ui/spec-table.tsx`: Alternating rows with strict `tabular-nums`
-  - `src/components/ui/tabs.tsx`, `src/components/ui/filter-pill.tsx`: Radix tabs and filter pills
-  - `src/components/ui/index.ts`: UI components export index
-  - `tests/brand/brand-compliance.test.ts`: Vitest Brand V3 compliance test suite
-  - `tests/brand/test_brand_compliance.py`: Pytest Brand V3 compliance test suite
-  - `tests/ui/primitives.test.tsx`: UI primitives unit tests (14 tests)
-- **Build status**: PASS (`next build` compiled cleanly, static pages generated)
-- **Pending issues**: None
+  - `app/globals.css`: Added `.tc-bg-dots`, `.tc-bg-dots-dark`, `.tc-bg-blueprint`, `.tc-bg-blueprint-dark`, `.tc-card-machined`, `.tc-chamfer-corner`.
+  - `src/components/ui/vectors/empty-tool-chest-vector.tsx`: 3-tier cantilever chest with open lid, foam cutout, dashed silhouettes, Action Lime latch with Ink border.
+  - `src/components/ui/vectors/not-found-vector.tsx`: Snapped measuring tape at 404mm, recoil spring, dimension error callout.
+  - `src/components/ui/vectors/trade-pro-vector.tsx`: Vernier caliper clamped on Net 30 trade verification crest with UK TRADE PRO badge.
+  - `src/components/ui/vectors/category-cad-accents.tsx`: 6 bespoke technical wireframe motifs (tools, fixings, decorating, measuring, ppe, site-equipment).
+  - `src/components/ui/vectors/index.ts`: Barrel export.
+  - `app/not-found.tsx`: Integrated `NotFoundVector`, `.tc-bg-blueprint`, `.tc-card-machined`, fixed untokenized `bg-tc-cloud` -> `bg-tc-surface-soft`.
+  - `app/(storefront)/basket/page.tsx`: Integrated `EmptyToolChestVector`, `.tc-card-machined`, replaced hardcoded `#C8D9F9` with `border-tc-primary/20`.
+  - `src/components/storefront/mini-basket.tsx`: Integrated `EmptyToolChestVector`, replaced `#C8D9F9` with `border-tc-primary/20`.
+  - `app/(storefront)/search/page.tsx`: Integrated `EmptyToolChestVector`, `.tc-card-machined`, replaced `#C8D9F9` with `border-tc-primary/20`.
+  - `app/(storefront)/trade/page.tsx`: Integrated `TradeProHeroVector`, `.tc-card-machined`, replaced `#E8F5E9` with tokenized style, replaced `#C8D9F9`.
+  - `app/(storefront)/categories/[slug]/page.tsx`: Integrated `CategoryCadAccent`, `.tc-card-machined`, replaced `#C8D9F9` with `border-tc-primary/20`.
+  - `tests/ui/vector-scenes.test.tsx`: 17 new unit tests for all vector components and aliases.
+- **Build status**: All verification suites pass (19/19 test files, 443/443 tests passed, clean lint & typecheck).
+- **Pending issues**: None.
 
 ## Quality Status
-- **Build/test result**: All 6 verification suites pass (100% pass)
-- **Lint status**: 0 warnings, 0 errors
-- **Tests added/modified**: 40 tests total (9 pytest, 16 Vitest brand compliance, 14 Vitest UI primitives, 1 static QA suite)
+- **Build/test result**: 443 tests passed (100% pass)
+- **Lint status**: 0 warnings, 0 errors (`next lint`)
+- **Typecheck status**: 0 errors (`tsc --noEmit`)
+- **Brand static check**: 0 violations (`qa/check_static.py`)
+- **Tests added/modified**: 17 new Vitest tests in `tests/ui/vector-scenes.test.tsx`
 
 ## Loaded Skills
 - None requested
 
 ## Key Decisions Made
-- Handled Radix UI `Slot` in `Button` by branching `asChild` so child element receives props directly without React Fragment interference.
-- Added `@testing-library/dom` to resolve TypeScript typing for `screen` and `fireEvent` in Vitest tests.
-- Replaced `vite-tsconfig-paths` ESM loader dependency in `vitest.config.ts` with native Vite `resolve.alias` paths.
+- Used exact Explorer survey CSS parameters for `.tc-bg-dots` (24px pitch, 12% opacity), `.tc-bg-blueprint` (20px/100px dual-pitch grid), and `.tc-card-machined` (1px border-strong, inset metallic highlights, index notch).
+- Enforced strict dark Ink `#182336` typography on all Action Lime `#DDF16A` SVG elements (such as tape measure centimeter markings and Trade Pro badge).
+- Tokenized all legacy hardcoded colors (`bg-tc-cloud` -> `bg-tc-surface-soft`, `#E8F5E9` -> `bg-tc-surface-soft border border-tc-primary/20`, `#C8D9F9` -> `border-tc-primary/20`).
 
 ## Artifact Index
 - DISPATCH.md — Assignment instructions

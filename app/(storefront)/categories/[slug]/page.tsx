@@ -5,6 +5,7 @@ import { searchProducts } from '@/lib/catalog';
 import { ProductCard } from '@/components/storefront/product-card';
 import { FilterSidebar } from '@/components/storefront/filter-sidebar';
 import { SearchFilterChips } from '@/components/storefront/search-filter-chips';
+import { CategoryCadAccent } from '@/components/ui/vectors';
 import { ArrowUpDown, ShieldCheck } from 'lucide-react';
 
 export const dynamic = 'force-dynamic';
@@ -93,13 +94,13 @@ export default async function CategoryPage({ params, searchParams }: CategoryPag
       </div>
 
       {/* Header Banner */}
-      <div className="bg-white rounded-card border border-tc-border p-6 sm:p-8 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-        <div>
+      <div className="bg-white rounded-card tc-card-machined p-6 sm:p-8 flex flex-col sm:flex-row sm:items-center justify-between gap-6 overflow-hidden">
+        <div className="flex-1">
           <div className="flex items-center gap-2 mb-2">
             <span className="text-[11px] font-extrabold uppercase tracking-widest text-tc-primary font-mono">
               CATEGORY ARCHIVE
             </span>
-            <span className="text-xs px-2 py-0.5 rounded-full bg-tc-surface-soft text-tc-primary font-bold border border-[#C8D9F9]">
+            <span className="text-xs px-2 py-0.5 rounded-full bg-tc-surface-soft text-tc-primary font-bold border border-tc-primary/20">
               {result.total} {result.total === 1 ? 'Product' : 'Products'}
             </span>
           </div>
@@ -111,26 +112,31 @@ export default async function CategoryPage({ params, searchParams }: CategoryPag
           </p>
         </div>
 
-        {/* Sort */}
-        <div className="flex items-center gap-2 shrink-0 self-start sm:self-auto">
-          <span className="text-xs text-tc-text-secondary font-medium flex items-center gap-1">
-            <ArrowUpDown className="w-3.5 h-3.5" />
-            Sort:
-          </span>
-          <form method="GET">
-            {brand && <input type="hidden" name="brand" value={brand} />}
-            <select
-              name="sort"
-              defaultValue={sort}
-              onChange={(e) => e.target.form?.submit()}
-              className="h-9 px-3 rounded-lg border border-tc-border bg-white text-xs text-tc-ink font-semibold focus:outline-none focus:ring-2 focus:ring-tc-primary"
-            >
-              <option value="relevance">Relevance</option>
-              <option value="price_asc">Price: Low to High</option>
-              <option value="price_desc">Price: High to Low</option>
-              <option value="title_asc">Name: A to Z</option>
-            </select>
-          </form>
+        {/* CAD Accent Motif & Sort */}
+        <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 shrink-0">
+          <CategoryCadAccent categorySlug={catSlug} className="w-36 h-20 sm:w-44 sm:h-22 opacity-75 shrink-0 hidden md:block" />
+
+          {/* Sort */}
+          <div className="flex items-center gap-2 shrink-0 self-start sm:self-auto">
+            <span className="text-xs text-tc-text-secondary font-medium flex items-center gap-1">
+              <ArrowUpDown className="w-3.5 h-3.5" />
+              Sort:
+            </span>
+            <form method="GET">
+              {brand && <input type="hidden" name="brand" value={brand} />}
+              <select
+                name="sort"
+                defaultValue={sort}
+                onChange={(e) => e.target.form?.submit()}
+                className="h-9 px-3 rounded-lg border border-tc-border bg-white text-xs text-tc-ink font-semibold focus:outline-none focus:ring-2 focus:ring-tc-primary"
+              >
+                <option value="relevance">Relevance</option>
+                <option value="price_asc">Price: Low to High</option>
+                <option value="price_desc">Price: High to Low</option>
+                <option value="title_asc">Name: A to Z</option>
+              </select>
+            </form>
+          </div>
         </div>
       </div>
 

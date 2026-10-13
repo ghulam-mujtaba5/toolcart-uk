@@ -87,3 +87,69 @@ The browser inspector retrieved the live cloud account configurations for `toolc
 
 Please ensure `.env.example` and `.env.local` (gitignored) are configured with these non-secret public identifiers (`NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, `CLOUDFLARE_ACCOUNT_ID`, `RESEND_FROM_EMAIL=onboarding@resend.dev`, `ADMIN_NOTIFICATION_EMAIL=toolcartuk@gmail.com`, `STAGING_ONLY=true`), and that the data layer works seamlessly out-of-the-box with automatic local seeded storage fallback whenever `SUPABASE_SERVICE_ROLE_KEY` or `RESEND_API_KEY` are not yet set.
 
+
+
+## 2026-10-13T16:36:41Z
+
+Revamp ToolCart UK into a visually elite, modern trade & hardware e-commerce platform incorporating 2026 industrial design trends: CAD blueprint dot grids, machined tactile chamfers, adaptive duotone icons, lightweight Lottie trade animations, and responsive micro-interactions.
+
+Working directory: e:\ToolCart
+Integrity mode: development
+
+## Requirements
+
+### R1. Brand V3 Vector Visual System & Blueprint CAD Foundations
+- Implement pure-CSS engineering patterns (`.tc-bg-dots`, `.tc-bg-blueprint`, `.tc-card-machined`) in `app/globals.css` with zero runtime overhead.
+- Design and integrate original, bespoke SVG vector scenes for:
+  - Empty Basket / Empty Search (`Empty Tool Chest` with dashed tool silhouettes)
+  - 404 Error page (measuring tape snapped / lost in workshop)
+  - Trade Pro verification header (`Industrial Shield & Caliper` motif)
+  - Category headers with subtle CAD wireframe accents for Hand Tools, Fixings, Decorating, Measuring, PPE, and Site Equipment.
+- Strictly adhere to Brand V3 tokens (`design/tokens.css`): Industrial Cobalt (`#2450B8`), Action Lime (`#DDF16A` with dark Ink `#182336` text), Ink (`#182336`), Workshop White (`#F7F8F5`), Cloud Blue (`#EAF0FF`), and Steel Text (`#596B70`). Completely prohibit legacy copper, purple, or teal.
+
+### R2. Adaptive Optical-Sized Duotone Icon System & Micro-Interactions
+- Build an adaptive duotone SVG icon set (`src/components/ui/trade-icons.tsx`) supporting 4 optical sizes (16px, 20px, 24px, 32px) with Brand V3 duotone fills:
+  - `IconToolbox`, `IconCaliper`, `IconTradeVerified`, `IconTapeMeasure`, `IconBolt`, `IconSpiritLevel`, `IconStockRadar`, `IconTruckFreight`.
+- Implement mechanical micro-interactions:
+  - "Snap-to-Cart" tactile button state with spring dampening curve (`cubic-bezier(0.34, 1.56, 0.64, 1)`) and celebratory checkmark burst.
+  - SKU / GTIN / MPN 1-click copy badge with instant `#DDF16A` high-vis "COPIED" feedback.
+  - Tactile physical rocker VAT switch with clear visual border and high-contrast pills.
+  - Live 24h stock freshness radar pulse ring (`"Stock verified < 24h"`).
+
+### R3. High-Impact Lightweight Lottie & Motion Graphics
+- Add lightweight, accessible animation components (`src/components/motion/`):
+  - **Cart Feedback**: Celebratory toolbox lock / tool chest snap when an item is added to the basket.
+  - **Order State Machine Stepper**: Animated fulfillment checkpoints on `/account/orders/[id]` and `/admin/orders/[id]` (package sealed -> logistics truck dispatch -> delivered checkmark).
+  - **AI Assistant**: Floating scanner pulse and blueprint radar waves when ToolCart AI is analyzing specifications.
+  - **Trade Pro Application**: Success ribbon and industrial approval stamp animation upon trade account application.
+  - **Empty States**: Animated idle tool chest and measuring tape recoil.
+- All animations must use `@dotlottie/react-player` or inline animated SVGs, remaining under 150KB total and honoring `prefers-reduced-motion`.
+
+### R4. Storefront & Admin Portal Visual Polishing
+- Elevate product cards, PDPs, and category pages with machined chamfers, hover-depth elevations, and floating spec chips.
+- Upgrade the Admin Portal (`/admin`) dashboard with industrial metric gauges, live order state badges, and supplier feed health cards.
+- Ensure 100% WCAG AA contrast compliance across all interactive elements, dark/light contrast pairs, and mobile viewports (360px & 1440px).
+
+## Verification Resources
+
+- Existing automated test suites: `npm test` (all 426 tests must remain green)
+- Brand V3 static validator: `qa/check_static.py`
+- Color contrast matrix: `qa/contrast_matrix.json`
+- Next.js build and TypeScript typecheck: `npm run build && npx tsc --noEmit`
+
+## Acceptance Criteria
+
+### Visual & Brand Integrity
+- [ ] Zero occurrences of retired copper `#B84C32`, purple, or teal in any new or modified file.
+- [ ] Action Lime `#DDF16A` is strictly paired with dark Ink `#182336` text.
+- [ ] All custom SVG vectors and duotone icons render cleanly at 360px mobile and 1440px desktop without clipping or layout shifts (CLS < 0.05).
+
+### Motion & Performance Quality
+- [ ] All animated components gracefully disable motion when `prefers-reduced-motion: reduce` is detected.
+- [ ] Total motion assets bundle footprint is strictly under 150KB gzip, with lazy-loading applied to non-critical animations.
+- [ ] Interactive buttons (Snap-to-Cart, Copy SKU, VAT rocker) respond in under 50ms with zero UI lag.
+
+### Codebase & Deployment
+- [ ] All 426+ existing unit, integration, and security tests pass (`npm test`).
+- [ ] TypeScript typecheck (`npx tsc --noEmit`) and Next.js production build (`npm run build`) exit with code 0.
+- [ ] Changes committed to GitHub (`master`) and deployed to live Vercel production (`https://toolcart-uk.vercel.app`).

@@ -1,21 +1,25 @@
-# Progress Tracking - Challenger M1 (Instance 2)
+# Progress Tracking - Challenger M1 (Instance 2 - Revamp)
 
-Last visited: 2026-10-12T17:59:30Z
+Last visited: 2026-10-13T17:35:00Z
 
-## Status: COMPLETED
+## Status: IN_PROGRESS
 
 ### Completed Steps
-- [x] Received dispatch message and created `DISPATCH.md`
-- [x] Initialized `BRIEFING.md` and `progress.md`
-- [x] Read authoritative documentation (`ORIGINAL_REQUEST.md`, `PROJECT.md`, `worker_m1_1/handoff.md`)
-- [x] Ran `python qa/check_static.py` -> PASS (exit 0)
-- [x] Ran `npm run typecheck` -> PASS (exit 0)
-- [x] Ran `npm run lint` -> PASS (exit 0)
-- [x] Ran `npm run build` -> PASS (exit 0, static pages generated)
-- [x] Ran `npm test` -> PASS (exit 0, 30 tests passed)
-- [x] Ran `python -m pytest tests/brand/` -> PASS (exit 0, 9 tests passed)
-- [x] Conducted 4 fault injection stress tests on `qa/check_static.py` (all caught, verified cleanup)
-- [x] Verified static build artifacts (.next/server/app/*.html and chunks) for zero leaks
-- [x] Updated BRIEFING.md
-- [x] Wrote `handoff.md` with final verdict (APPROVE)
-- [x] Notify parent agent via `send_message`
+- [x] Received dispatch message and updated `DISPATCH.md` with UTC timestamp
+- [x] Inspected `ORIGINAL_REQUEST.md` (section `## 2026-10-13T16:36:41Z`) and `worker_m1_1/handoff.md`
+- [x] Initialized current run state in `BRIEFING.md` and `progress.md`
+
+### In-Progress & Planned Steps
+- [ ] Run `npx vitest run tests/adversarial/brand-v3-storefront-scan.test.ts`
+- [ ] Run `npx vitest run tests/adversarial/responsive-viewport-challenge.test.tsx`
+- [ ] Adversarially scan all newly added vector scenes (`src/components/ui/vectors/*`), `app/globals.css`, and modified storefront pages for:
+  - Retired copper `#B84C32` or `--tc-copper`
+  - Unauthorized purple, violet, lavender, or teal
+  - White text on Action Lime (`#DDF16A`)
+- [ ] Adversarially test 360px mobile viewport responsiveness:
+  - Inspect SVG viewBox and dimensions (`max-w-full`, `w-full`, fixed pixel widths, overflow blowout risk)
+  - Inspect layout containers in `not-found.tsx`, `basket/page.tsx`, `search/page.tsx`, `trade/page.tsx`, `categories/[slug]/page.tsx`, and `mini-basket.tsx`
+  - Execute automated viewport challenge test verifying horizontal scroll safety
+- [ ] Stress-test edge cases & failure modes (missing category slugs, invalid dimensions, SSR hydration)
+- [ ] Produce `challenge_report.md` and `handoff.md`
+- [ ] Report verdict to orchestrator via `send_message`

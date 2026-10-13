@@ -16,6 +16,7 @@ import {
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { PublicProductDTO } from '@/types/product';
+import { AiScannerPulse } from '@/components/motion';
 
 interface Message {
   role: 'user' | 'assistant';
@@ -220,9 +221,12 @@ export function AIAssistantDrawer({ isOpen, onClose }: AIAssistantDrawerProps) {
           ))}
 
           {loading && (
-            <div className="mr-auto p-4 rounded-2xl bg-white border border-[#C8D9F9] rounded-bl-xs text-xs text-tc-text-secondary flex items-center gap-2 shadow-xs">
-              <Sparkles className="w-4 h-4 text-tc-primary animate-spin" />
-              <span>Consulting verified catalog specs & standards...</span>
+            <div className="mr-auto p-4 rounded-2xl bg-white border border-[#C8D9F9] rounded-bl-xs text-xs text-tc-text-secondary flex items-center gap-3 shadow-xs">
+              <AiScannerPulse size={40} className="shrink-0" />
+              <div>
+                <p className="font-bold text-tc-ink">Scanning catalog specifications...</p>
+                <span className="text-[11px] text-tc-text-secondary">Filtering 115 quoted trade lines with zero safety hallucinations</span>
+              </div>
             </div>
           )}
         </div>

@@ -5,7 +5,10 @@ import Link from 'next/link';
 import { useCart } from '@/context/cart-context';
 import { useVAT } from '@/context/vat-context';
 import { Button } from '@/components/ui/button';
-import { X, Plus, Minus, ShoppingBag, Truck, ArrowRight, ShieldCheck, Trash2 } from 'lucide-react';
+import { EmptyToolChestVector } from '@/components/ui/vectors';
+import { IconTruckFreight, IconTradeVerified, IconToolbox } from '@/components/ui/trade-icons';
+import { CopyBadge } from '@/components/ui/copy-badge';
+import { X, Plus, Minus, ArrowRight, Trash2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 export function MiniBasket() {
@@ -28,7 +31,7 @@ export function MiniBasket() {
         {/* Drawer Header */}
         <div className="p-4 sm:p-5 border-b border-tc-border flex items-center justify-between bg-tc-canvas shrink-0">
           <div className="flex items-center gap-2">
-            <ShoppingBag className="w-5 h-5 text-tc-primary" />
+            <IconToolbox size={20} className="text-tc-primary" />
             <h2 className="font-heading font-extrabold text-base sm:text-lg text-tc-ink">
               Your Basket
             </h2>
@@ -62,9 +65,7 @@ export function MiniBasket() {
         <div className="flex-1 overflow-y-auto p-4 sm:p-5 space-y-6">
           {items.length === 0 ? (
             <div className="h-full flex flex-col items-center justify-center text-center p-6 space-y-4">
-              <div className="w-16 h-16 rounded-full bg-tc-surface-soft flex items-center justify-center text-tc-primary">
-                <ShoppingBag className="w-8 h-8 opacity-60" />
-              </div>
+              <EmptyToolChestVector className="w-48 h-32 mx-auto" />
               <div>
                 <p className="font-heading font-bold text-base text-tc-ink">Your basket is empty</p>
                 <p className="text-xs text-tc-text-secondary mt-1">
@@ -84,11 +85,11 @@ export function MiniBasket() {
                   className="rounded-card border border-tc-border bg-white overflow-hidden shadow-xs"
                 >
                   {/* Supplier Group Header */}
-                  <div className="p-3 bg-tc-surface-soft border-b border-[#C8D9F9] flex flex-col gap-1">
+                  <div className="p-3 bg-tc-surface-soft border-b border-tc-primary/20 flex flex-col gap-1">
                     <div className="flex items-center justify-between text-xs">
                       <span className="font-bold text-tc-ink">{group.supplier_name}</span>
-                      <span className="text-[11px] font-medium text-tc-primary flex items-center gap-1">
-                        <Truck className="w-3 h-3" />
+                      <span className="text-[11px] font-medium text-tc-primary flex items-center gap-1.5">
+                        <IconTruckFreight size={16} className="text-tc-primary" />
                         {group.estimated_lead_time_days}
                       </span>
                     </div>
@@ -96,8 +97,8 @@ export function MiniBasket() {
                     {/* Free delivery threshold indicator */}
                     <div className="text-[11px] text-tc-text-secondary pt-0.5">
                       {group.is_free_carriage ? (
-                        <span className="text-tc-success font-semibold flex items-center gap-1">
-                          <ShieldCheck className="w-3 h-3" />
+                        <span className="text-tc-success font-semibold flex items-center gap-1.5">
+                          <IconTradeVerified size={16} className="text-tc-success" />
                           Qualified for FREE UK delivery
                         </span>
                       ) : (
@@ -140,8 +141,8 @@ export function MiniBasket() {
                               >
                                 {item.title}
                               </Link>
-                              <div className="text-[11px] text-tc-text-secondary mt-0.5 flex items-center gap-2">
-                                <span className="font-mono">{item.supplier_sku}</span>
+                              <div className="text-[11px] text-tc-text-secondary mt-1 flex flex-wrap items-center gap-2">
+                                <CopyBadge value={item.supplier_sku} size="xs" label="SKU" />
                                 <span>•</span>
                                 <span>
                                   {item.is_case_quantity

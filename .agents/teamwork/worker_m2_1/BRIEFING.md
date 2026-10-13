@@ -1,41 +1,43 @@
-# BRIEFING — 2026-10-12T18:46:00Z
+# BRIEFING — 2026-10-13T18:12:15Z
 
 ## Mission
-Implement Milestone 2: Customer Storefront Experience for ToolCart with complete catalog data provider, state contexts, components, pages, APIs, and tests.
+Revamp ToolCart UK Milestone 2: Build an adaptive duotone SVG icon system across 4 optical sizes (8 icons), mechanical micro-interactions (Snap-to-Cart button, SKU/GTIN 1-click copy badge with Action Lime feedback, tactile rocker VAT switch, 24h stock freshness radar ring), and integrate across storefront components.
 
 ## 🔒 My Identity
 - Archetype: worker
 - Roles: implementer, qa, specialist
 - Working directory: e:\ToolCart\.agents\teamwork\worker_m2_1
-- Original parent: 311a2f36-0bc9-4d2c-ad1b-812679b4333e
-- Milestone: Milestone 2 (Customer Storefront Experience)
+- Original parent: 080a93ac-e184-4734-a107-f062151cd3dc
+- Milestone: Milestone 2 Revamp (Adaptive Duotone Icons & Tactile Micro-Interactions)
 
 ## 🔒 Key Constraints
 - Brand V3: Use design/tokens.css exclusively. No copper (#B84C32), purple/violet/lavender or teal branding. Ink (#182336), Cobalt (#2450B8), Action Lime (#DDF16A), Workshop White (#F7F8F5), Cloud Blue (#EAF0FF), Graphite (#252D30).
-- No white text on lime; on pale surfaces use accessible Steel Text #596B70.
-- AI assistant uses Cobalt + Cloud Blue with Ink text.
-- Never claim supplier quote represents available stock, live prices or approved dropshipping. Unknown stock => unavailable / request confirmation.
-- Keep wholesale prices and trade terms strictly server-side. Do not export supplier cost data (`unit_cost_ex_vat_gbp`, `case_cost_ex_vat_gbp`) in public Next.js JS bundles or APIs.
-- Strict honest stock badge: 24h stock freshness TTL.
-- UK 20% VAT calculations with integer-pence precision and dual VAT display.
-- Pass `python qa/check_static.py`, `python -m pytest tests/brand/`, `npm run typecheck`, `npm run lint`, `npm run build`, `npm test`.
-- No cheating, no fake mocks. Full real implementations.
+- Action Lime (#DDF16A) must ALWAYS be paired with dark Ink (#182336) text and 2px dark outline on white. Never white text on lime.
+- On pale surfaces use accessible Steel Text #596B70.
+- Respect prefers-reduced-motion: reduce for all animations.
+- Mandatory integrity: No fake mocks, genuine implementations.
+- Zero Brand V3 static check violations (`python qa/check_static.py`).
+- TypeScript clean (`npx tsc --noEmit`).
+- All tests pass (`npm test`).
 
 ## Current Parent
-- Conversation ID: 311a2f36-0bc9-4d2c-ad1b-812679b4333e
-- Updated: 2026-10-12T18:46:00Z
+- Conversation ID: 080a93ac-e184-4734-a107-f062151cd3dc
+- Updated: 2026-10-13T18:12:15Z
 
 ## Task Summary
-- **What to build**: Full Milestone 2 storefront experience including catalog loader for 115 SKUs from baseline CSV, contexts (VAT, Cart, Compare), storefront UI components, all storefront pages (`/`, `/search`, `/categories/[slug]`, `/products/[slug]`, `/projects`, `/guides`, `/guides/[slug]`, `/basket`, `/checkout`, `/trade`, `/account`), public store APIs, and test suites.
-- **Success criteria**: All pages render cleanly, contracts strictly met, wholesale isolation verified, all builds, lint, static checks, and tests pass.
-- **Interface contracts**: `PROJECT.md`, `src/types/product.ts`, `docs/`
-- **Code layout**: `src/lib/catalog/`, `src/context/`, `src/components/storefront/`, `app/(storefront)/`, `app/api/store/`, `tests/`
+- **What to build**:
+  1. `src/components/ui/trade-icons.tsx`: 8 duotone icons (`IconToolbox`, `IconCaliper`, `IconTradeVerified`, `IconTapeMeasure`, `IconBolt`, `IconSpiritLevel`, `IconStockRadar`, `IconTruckFreight`) across 4 optical sizes (16px, 20px, 24px, 32px).
+  2. `src/components/ui/copy-badge.tsx`: Technical identifier badge with 1-click clipboard copy, instant Action Lime (`#DDF16A` + dark Ink `#182336`) "COPIED" state, and accessible live region.
+  3. `src/components/ui/stock-radar-badge.tsx`: Harmonic multi-ring radar pulse wave indicating stock freshness (<24h supply chain feed).
+  4. `src/components/storefront/tactile-vat-rocker.tsx` and updated `vat-toggle.tsx`: Industrial mechanical rocker VAT switch with physical depression groove and tactile switch feel.
+  5. Snap-to-Cart tactile button with spring dampening curve `cubic-bezier(0.34, 1.56, 0.64, 1)` and celebratory checkmark burst in `product-card.tsx` and `pdp-actions.tsx`.
+  6. Storefront wiring in `product-card.tsx`, `pdp-actions.tsx`, `app/(storefront)/products/[slug]/page.tsx`, `header.tsx`, `mini-basket.tsx`.
+  7. Tests in `tests/ui/trade-icons.test.tsx` and `tests/ui/micro-interactions.test.tsx`.
+- **Success criteria**: All new components genuine, tests pass, static checks pass, typechecking passes.
+- **Interface contracts**: `survey_report.md`, `DISPATCH.md`, `design/tokens.css`
 
 ## Key Decisions Made
-- Normalised all Unicode ligatures (`\ufb01` -> `fi`, `\ufb02` -> `fl`, `\u00d8` -> `Ø`) in catalog ingestion.
-- Wholesale pricing kept strictly server-side in internal offers map; `PublicProductDTO` projects only retail prices.
-- Multi-supplier delivery carriage rules implemented with integer-pence precision UK 20% VAT math.
-- Complete visual timeline stepper and simulator created for all 13 states from `architecture/SUPPLIER_ORDER_STATE_MACHINE.md`.
+- [Initial plan formulated based on survey_report.md]
 
 ## Artifact Index
 - `handoff.md` — Final handoff report
@@ -43,22 +45,14 @@ Implement Milestone 2: Customer Storefront Experience for ToolCart with complete
 - `DISPATCH.md` — Assigned instructions
 
 ## Change Tracker
-- **Files modified**:
-  - `src/types/product.ts`, `src/types/cart.ts`, `src/types/order.ts`, `src/types/guides.ts`
-  - `src/lib/catalog/` (`unicode.ts`, `pricing.ts`, `products.ts`, `kits.ts`, `guides.ts`, `synonyms.ts`, `index.ts`)
-  - `src/context/` (`vat-context.tsx`, `cart-context.tsx`, `compare-context.tsx`, `index.ts`)
-  - `src/components/storefront/` (`vat-toggle.tsx`, `microbar.tsx`, `nav-bar.tsx`, `header.tsx`, `footer.tsx`, `product-card.tsx`, `filter-sidebar.tsx`, `search-filter-chips.tsx`, `compare-drawer.tsx`, `mini-basket.tsx`, `ai-assistant-drawer.tsx`, `pdp-actions.tsx`, `project-kit-card.tsx`, `order-timeline-stepper.tsx`, `storefront-layout-client.tsx`, `index.ts`)
-  - `app/(storefront)/` (`layout.tsx`, `page.tsx`, `search/page.tsx`, `categories/[slug]/page.tsx`, `products/[slug]/page.tsx`, `projects/page.tsx`, `guides/page.tsx`, `guides/[slug]/page.tsx`, `basket/page.tsx`, `checkout/page.tsx`, `trade/page.tsx`, `account/page.tsx`, `account/orders/[id]/page.tsx`, shortcuts: `tools`, `fixings`, `decorating`, `measuring`, `ppe`, `site-equipment`)
-  - `app/api/store/` (`products/route.ts`, `cart/route.ts`, `assistant/route.ts`)
-  - `tests/` (`storefront/storefront.test.tsx`, `security/wholesale-isolation.test.ts`)
-  - `vitest.config.ts` (alias ordering)
-- **Build status**: PASS (`next build` exited code 0, 17/17 pages generated)
+- **Files modified**: [TBD]
+- **Build status**: [Pending]
 - **Pending issues**: None
 
 ## Quality Status
-- **Build/test result**: All 75 tests passing in Vitest, 9/9 passing in pytest, QA static pass, Next.js build pass.
-- **Lint status**: 0 ESLint warnings, 0 errors.
-- **Tests added/modified**: 20 new tests added (14 storefront integration tests + 6 wholesale security isolation tests).
+- **Build/test result**: [Pending]
+- **Lint status**: [Pending]
+- **Tests added/modified**: [TBD]
 
 ## Loaded Skills
 - None

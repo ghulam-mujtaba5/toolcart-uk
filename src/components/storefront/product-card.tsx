@@ -1,14 +1,23 @@
 'use client';
 
-import React from 'react';
+import React, { useState, useRef } from 'react';
 import Link from 'next/link';
 import { PublicProductDTO } from '@/types/product';
 import { useVAT } from '@/context/vat-context';
 import { useCart } from '@/context/cart-context';
 import { useCompare } from '@/context/compare-context';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { ShoppingCart, Check, Plus, Wrench, Shield, Paintbrush, Ruler, HardHat, Package } from 'lucide-react';
+import { StockRadarBadge } from '@/components/ui/stock-radar-badge';
+import { CopyBadge } from '@/components/ui/copy-badge';
+import {
+  IconToolbox,
+  IconCaliper,
+  IconTradeVerified,
+  IconSpiritLevel,
+  IconBolt,
+  IconTapeMeasure,
+} from '@/components/ui/trade-icons';
+import { ShoppingCart, Check, Plus } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 interface ProductCardProps {
@@ -16,20 +25,20 @@ interface ProductCardProps {
   className?: string;
 }
 
-function getCategoryIcon(categorySlug: string) {
+function getCategoryTradeIcon(categorySlug: string) {
   switch (categorySlug) {
     case 'tools':
-      return Wrench;
+      return IconToolbox;
     case 'fixings':
-      return Shield;
+      return IconBolt;
     case 'decorating':
-      return Paintbrush;
+      return IconSpiritLevel;
     case 'measuring':
-      return Ruler;
+      return IconCaliper;
     case 'ppe':
-      return HardHat;
+      return IconTradeVerified;
     default:
-      return Package;
+      return IconTapeMeasure;
   }
 }
 
@@ -38,8 +47,11 @@ export function ProductCard({ product, className }: ProductCardProps) {
   const { addItem } = useCart();
   const { isInCompare, addProduct, removeProduct, openCompare } = useCompare();
 
+  const [isSnapped, setIsSnapped] = useState(false);
+  const snapTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+
   const isCompared = isInCompare(product.id);
-  const Icon = getCategoryIcon(product.category_slug);
+  const CategoryIcon = getCategoryTradeIcon(product.category_slug);
 
   const price = formatPriceDisplay(
     product.retail_price_inc_vat_gbp,
@@ -61,6 +73,14 @@ export function ProductCard({ product, className }: ProductCardProps) {
     e.preventDefault();
     e.stopPropagation();
     addItem(product, 1);
+
+    setIsSnapped(true);
+    if (snapTimeoutRef.current) {
+      clearTimeout(snapTimeoutRef.current);
+    }
+    snapTimeoutRef.current = setTimeout(() => {
+      setIsSnapped(false);
+    }, 1800);
   };
 
   return (
@@ -73,24 +93,16 @@ export function ProductCard({ product, className }: ProductCardProps) {
       <div>
         {/* Top Image & Badge Box */}
         <div className="relative bg-tc-surface-soft p-6 flex items-center justify-center border-b border-tc-border/60 aspect-4/3 overflow-hidden">
-          {/* Honest stock badge */}
+          {/* Live 24h Stock Freshness Radar Pulse Ring */}
           <div className="absolute top-2.5 left-2.5 z-10">
-            {product.availability_status === 'in_stock' ? (
-              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-semibold bg-[#E8F5E9] text-tc-success border border-[#A3D9B5]">
-                Confirmed in stock
-              </span>
-            ) : product.availability_status === 'subject_to_confirmation' ? (
-              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-semibold bg-[#FFF7E8] text-tc-warning border border-[#E8CB91]">
-                Subject to confirmation
-              </span>
-            ) : (
-              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-semibold bg-[#FEECEB] text-tc-error border border-[#FECDCA]">
-                Unavailable
-              </span>
-            )}
+            <StockRadarBadge
+              status={product.availability_status}
+              stockQuantity={product.stock_quantity}
+              size="sm"
+            />
           </div>
 
-          {/* Compare toggle button */}
+          {/* Compare toggle button with precision caliper icon */}
           <button
             type="button"
             onClick={handleCompareToggle}
@@ -102,12 +114,19 @@ export function ProductCard({ product, className }: ProductCardProps) {
                 : 'bg-white text-tc-ink border-tc-border hover:border-tc-ink'
             )}
           >
-            {isCompared ? <Check className="w-3 h-3" /> : <Plus className="w-3 h-3" />}
+            {isCompared ? (
+              <Check className="w-3 h-3 text-white" />
+            ) : (
+              <IconCaliper size={16} className="text-tc-primary" />
+            )}
             <span>Compare</span>
           </button>
 
           {/* Real Product Photography with Brand V3 Fallback */}
-          <Link href={`/products/${product.slug}`} className="w-full h-full flex flex-col items-center justify-center group-hover:scale-105 transition-transform p-2">
+          <Link
+            href={`/products/${product.slug}`}
+            className="w-full h-full flex flex-col items-center justify-center group-hover:scale-105 transition-transform p-2"
+          >
             <div className="relative w-full h-36 sm:h-40 flex items-center justify-center">
               {product.images && product.images[0] ? (
                 // eslint-disable-next-line @next/next/no-img-element
@@ -119,13 +138,21 @@ export function ProductCard({ product, className }: ProductCardProps) {
                 />
               ) : (
                 <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-white border border-[#C8D9F9] shadow-xs flex items-center justify-center text-tc-primary">
-                  <Icon className="w-9 h-9 sm:w-11 sm:h-11 stroke-[1.75]" />
+                  <CategoryIcon size={32} />
                 </div>
               )}
             </div>
-            <span className="mt-2 text-[10px] uppercase font-mono font-bold text-tc-text-secondary tracking-widest">
-              {product.supplier_sku}
-            </span>
+
+            {/* 1-Click SKU Copy Badge */}
+            <div
+              className="mt-2"
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+              }}
+            >
+              <CopyBadge value={product.supplier_sku} size="xs" label="SKU" />
+            </div>
           </Link>
         </div>
 
@@ -163,7 +190,7 @@ export function ProductCard({ product, className }: ProductCardProps) {
         </div>
       </div>
 
-      {/* Pricing & Add to Basket Footer */}
+      {/* Pricing & Add to Basket Footer with Snap-to-Cart Tactile Button */}
       <div className="p-4 sm:p-5 pt-0">
         <div className="flex items-baseline justify-between mb-3">
           <div>
@@ -176,15 +203,44 @@ export function ProductCard({ product, className }: ProductCardProps) {
           </div>
         </div>
 
-        <Button
-          variant="primary"
-          size="sm"
+        {/* Snap-to-Cart Tactile Button */}
+        <button
+          type="button"
           onClick={handleAddCart}
-          className="w-full flex items-center justify-center gap-2 text-xs sm:text-sm font-semibold"
+          aria-live="polite"
+          aria-label={isSnapped ? `Added ${product.title} to your basket` : `Add ${product.title} to Basket`}
+          className={cn(
+            'relative w-full flex items-center justify-center gap-2 h-10 px-4 rounded-button text-xs sm:text-sm font-bold',
+            'transition-all duration-200 select-none outline-none focus-visible:ring-2 focus-visible:ring-tc-primary',
+            'active:scale-[0.94] active:translate-y-[2px] active:shadow-[inset_0_2px_4px_rgba(24,35,54,0.25)]',
+            isSnapped
+              ? 'bg-tc-action-lime text-tc-ink border-2 border-tc-ink font-extrabold shadow-sm'
+              : 'bg-tc-primary text-white hover:bg-tc-primary-hover shadow-xs'
+          )}
+          style={{
+            transitionTimingFunction: 'cubic-bezier(0.34, 1.56, 0.64, 1)',
+          }}
         >
-          <ShoppingCart className="w-4 h-4" />
-          <span>Add to Basket</span>
-        </Button>
+          {/* Shockwave Particle Ring */}
+          {isSnapped && (
+            <span
+              className="absolute inset-[-4px] rounded-button border-2 border-tc-action-lime animate-ping opacity-60 pointer-events-none motion-reduce:hidden"
+              style={{ animationDuration: '0.6s' }}
+            />
+          )}
+
+          {isSnapped ? (
+            <>
+              <IconTradeVerified size={16} className="text-tc-ink" />
+              <span>Added to ToolCart!</span>
+            </>
+          ) : (
+            <>
+              <ShoppingCart className="w-4 h-4 text-white" />
+              <span>Add to Basket</span>
+            </>
+          )}
+        </button>
       </div>
     </div>
   );

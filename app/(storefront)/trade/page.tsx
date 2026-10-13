@@ -3,6 +3,8 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
+import { TradeProHeroVector } from '@/components/ui/vectors';
+import { TradeStampMotion } from '@/components/motion';
 import {
   Building2,
   FileCheck2,
@@ -41,22 +43,30 @@ export default function TradePortalPage() {
       </div>
 
       {/* Hero Banner */}
-      <div className="bg-white rounded-card border border-tc-border p-8 sm:p-10 space-y-4 shadow-xs">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-tc-surface-soft border border-[#C8D9F9] text-xs font-bold text-tc-primary uppercase font-mono">
-          <Building2 className="w-4 h-4" />
-          <span>B2B TRADE &amp; CONTRACTOR ACCOUNTS</span>
+      <div className="bg-white rounded-card tc-card-machined p-8 sm:p-10 space-y-6 shadow-xs">
+        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-8">
+          <div className="space-y-4 flex-1">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-tc-surface-soft border border-tc-primary/20 text-xs font-bold text-tc-primary uppercase font-mono">
+              <Building2 className="w-4 h-4" />
+              <span>B2B TRADE &amp; CONTRACTOR ACCOUNTS</span>
+            </div>
+
+            <h1 className="font-heading font-extrabold text-3xl sm:text-4xl text-tc-ink tracking-tight">
+              Apply for a ToolCart UK Trade Account
+            </h1>
+
+            <p className="text-sm sm:text-base text-tc-graphite max-w-2xl leading-relaxed">
+              Designed for contractors, electrical installers, decorating firms, and site facility managers. Access 30-day net terms, ex-VAT pricing default, and direct pallet shipments.
+            </p>
+          </div>
+
+          <div className="shrink-0 flex justify-center">
+            <TradeProHeroVector className="w-64 h-44 sm:w-80 sm:h-52" />
+          </div>
         </div>
 
-        <h1 className="font-heading font-extrabold text-3xl sm:text-4xl text-tc-ink tracking-tight">
-          Apply for a ToolCart UK Trade Account
-        </h1>
-
-        <p className="text-sm sm:text-base text-tc-graphite max-w-2xl leading-relaxed">
-          Designed for contractors, electrical installers, decorating firms, and site facility managers. Access 30-day net terms, ex-VAT pricing default, and direct pallet shipments.
-        </p>
-
         {/* Trade Benefits Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-4">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-4 border-t border-tc-border/60">
           <div className="p-4 rounded-xl bg-tc-canvas border border-tc-border space-y-1.5">
             <Percent className="w-5 h-5 text-tc-primary" />
             <h3 className="font-heading font-bold text-sm text-tc-ink">Ex. VAT Invoicing</h3>
@@ -85,10 +95,8 @@ export default function TradePortalPage() {
 
       {/* Registration Form / Success Confirmation */}
       {submitted ? (
-        <div className="bg-white rounded-card border border-tc-border p-10 text-center space-y-6 max-w-lg mx-auto shadow-sm">
-          <div className="w-16 h-16 rounded-full bg-[#E8F5E9] text-tc-success mx-auto flex items-center justify-center">
-            <CheckCircle2 className="w-10 h-10 stroke-[2.5]" />
-          </div>
+        <div className="bg-white rounded-card tc-card-machined p-10 text-center space-y-6 max-w-lg mx-auto shadow-sm">
+          <TradeStampMotion size={80} className="mx-auto" />
 
           <div className="space-y-2">
             <h2 className="font-heading font-extrabold text-2xl text-tc-ink">
@@ -99,7 +107,7 @@ export default function TradePortalPage() {
             </p>
           </div>
 
-          <div className="p-4 rounded-xl bg-tc-surface-soft border border-[#C8D9F9] text-left text-xs text-tc-ink space-y-2">
+          <div className="p-4 rounded-xl bg-tc-surface-soft border border-tc-primary/20 text-left text-xs text-tc-ink space-y-2">
             <div className="flex justify-between">
               <span className="text-tc-text-secondary">Companies House:</span>
               <span className="font-mono font-bold">{companiesHouseNumber}</span>

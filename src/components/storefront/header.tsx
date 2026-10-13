@@ -20,6 +20,7 @@ import {
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { PublicProductDTO } from '@/types/product';
+import { IconToolbox, IconStockRadar, IconTradeVerified } from '@/components/ui/trade-icons';
 
 interface HeaderProps {
   onOpenAiAssistant?: () => void;
@@ -92,10 +93,10 @@ export function Header({ onOpenAiAssistant }: HeaderProps) {
             <Menu className="w-6 h-6" />
           </button>
 
-          {/* Brand Wordmark & Action Lime Cart Badge */}
+          {/* Brand Wordmark & Action Lime Cart Badge with IconToolbox Trade Emblem */}
           <Link href="/" className="flex items-center gap-2.5 shrink-0 group">
             <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-lg bg-tc-action-lime border-2 border-tc-ink flex items-center justify-center shadow-xs transition-transform group-hover:scale-105">
-              <ShoppingCart className="w-5 h-5 text-tc-ink stroke-[2.5]" />
+              <IconToolbox size={24} className="text-tc-ink" />
             </div>
             <div className="flex flex-col">
               <span className="font-heading font-extrabold text-2xl sm:text-3xl tracking-[-0.04em] text-tc-ink leading-none">
@@ -207,7 +208,7 @@ export function Header({ onOpenAiAssistant }: HeaderProps) {
 
           {/* Action Controls: AI Assistant, Account, Mini-Basket */}
           <div className="flex items-center gap-2 sm:gap-3">
-            {/* AI Finder trigger */}
+            {/* AI Finder trigger with duotone radar accent */}
             {onOpenAiAssistant && (
               <Button
                 variant="outline"
@@ -215,7 +216,7 @@ export function Header({ onOpenAiAssistant }: HeaderProps) {
                 onClick={onOpenAiAssistant}
                 className="hidden lg:inline-flex items-center gap-1.5 border-tc-primary/40 text-tc-primary hover:bg-tc-surface-soft"
               >
-                <Sparkles className="w-3.5 h-3.5 text-tc-primary" />
+                <IconStockRadar size={16} className="text-tc-primary" />
                 <span>Ask ToolCart AI</span>
               </Button>
             )}
@@ -235,13 +236,13 @@ export function Header({ onOpenAiAssistant }: HeaderProps) {
               type="button"
               onClick={openCart}
               aria-label={`Open Basket, ${summary.total_items_count} items`}
-              className="relative p-2 sm:px-3 sm:py-2 rounded-lg bg-tc-ink text-white hover:bg-tc-graphite transition-all flex items-center gap-2 shadow-xs group"
+              className="relative p-2 sm:px-3 sm:py-2 rounded-lg bg-tc-ink text-white hover:bg-tc-graphite transition-all flex items-center gap-2 shadow-xs group active:scale-95"
             >
               <ShoppingCart className="w-5 h-5 text-white stroke-[2]" />
               <span className="hidden sm:inline text-xs font-bold">Basket</span>
 
               {summary.total_items_count > 0 && (
-                <span className="absolute -top-1.5 -right-1.5 sm:static sm:top-auto sm:right-auto inline-flex items-center justify-center min-w-[20px] h-5 px-1.5 rounded-full bg-tc-action-lime text-tc-ink text-xs font-extrabold border border-tc-ink tabular-nums shadow-xs">
+                <span className="absolute -top-1.5 -right-1.5 sm:static sm:top-auto sm:right-auto inline-flex items-center justify-center min-w-[20px] h-5 px-1.5 rounded-full bg-tc-action-lime text-tc-ink text-xs font-extrabold border border-tc-ink tabular-nums shadow-xs animate-in zoom-in-75 duration-200">
                   {summary.total_items_count}
                 </span>
               )}
@@ -282,7 +283,7 @@ export function Header({ onOpenAiAssistant }: HeaderProps) {
             <div className="flex items-center justify-between pb-4 border-b border-tc-border">
               <div className="flex items-center gap-2">
                 <div className="w-7 h-7 rounded bg-tc-action-lime border border-tc-ink flex items-center justify-center">
-                  <ShoppingCart className="w-4 h-4 text-tc-ink" />
+                  <IconToolbox size={16} className="text-tc-ink" />
                 </div>
                 <span className="font-heading font-extrabold text-lg text-tc-ink">TOOLCART</span>
               </div>

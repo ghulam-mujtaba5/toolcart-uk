@@ -1,9 +1,31 @@
-# Progress: Worker M2 (Instance 1)
-Last visited: 2026-10-12T18:46:00Z
-- [x] Implement catalog data provider (115 SKUs from baseline/10_SAMPLE_SUPPLIER_CATALOG.csv with Unicode ligature normalization into PublicProductDTO, query functions, 3 project kits, 5 UK buying guides)
-- [x] Implement state contexts (VatContext with cookie persistence, CartContext with multi-supplier grouping and integer-pence VAT math, CompareContext)
-- [x] Implement storefront components in src/components/storefront/ (Header, Microbar, NavBar, Footer, ProductCard, FilterSidebar, SearchFilterChips, CompareDrawer, MiniBasket, AIAssistantDrawer, PdpActions, ProjectKitCard)
-- [x] Implement all storefront pages in app/(storefront)/ (Homepage, Search, Categories, Category shortcuts, PDP, Project Kits, Buying Guides directory & detail, Basket, Checkout, Trade Portal, Customer Account & Orders tracking)
-- [x] Implement public store APIs in app/api/store/ (products, cart, assistant)
-- [x] Implement storefront test suites (routing, search, VAT toggle, compare, kits, guides, AI modal, security wholesale cost isolation)
-- [x] Verify: python qa/check_static.py, python -m pytest tests/brand/, npm run typecheck, npm run lint, npm run build, npm test (All passing 100%)
+# Progress: Worker M2 — Adaptive Duotone Icons & Tactile Micro-Interactions
+
+Last visited: 2026-10-13T18:13:30Z
+Status: IN_PROGRESS
+
+## Phase 1: Investigation & Baseline Verification
+- [x] Received dispatch instructions and verified constraints
+- [x] Studied `survey_report.md` vector specs and micro-interaction mechanics
+- [ ] Run current test suite to verify baseline health
+
+## Phase 2: Core Components Implementation
+- [ ] Implement `src/components/ui/trade-icons.tsx` (8 icons, 4 optical sizes each: 16, 20, 24, 32)
+- [ ] Implement `src/components/ui/copy-badge.tsx` (1-click copy with Action Lime feedback)
+- [ ] Implement `src/components/ui/stock-radar-badge.tsx` (24h stock freshness radar pulse)
+- [ ] Implement `src/components/storefront/tactile-vat-rocker.tsx` & wrap `src/components/storefront/vat-toggle.tsx`
+- [ ] Implement Snap-to-Cart tactile button physics & checkmark burst
+
+## Phase 3: Storefront Integration
+- [ ] Update `src/components/storefront/product-card.tsx`
+- [ ] Update `src/components/storefront/pdp-actions.tsx`
+- [ ] Update `app/(storefront)/products/[slug]/page.tsx`
+- [ ] Update `src/components/storefront/header.tsx`
+- [ ] Update `src/components/storefront/mini-basket.tsx`
+
+## Phase 4: Verification & Testing
+- [ ] Write `tests/ui/trade-icons.test.tsx`
+- [ ] Write `tests/ui/micro-interactions.test.tsx`
+- [ ] Run `npm test`
+- [ ] Run `python qa/check_static.py`
+- [ ] Run `npx tsc --noEmit`
+- [ ] Write handoff report and notify caller

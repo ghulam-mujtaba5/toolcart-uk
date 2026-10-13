@@ -124,8 +124,8 @@ export default async function AdminDashboardPage() {
   return (
     <div className="space-y-6">
       {/* Top Welcome & Staging Alert */}
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 bg-white border border-tc-border rounded-xl p-6 shadow-xs">
-        <div>
+      <div className="relative flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 bg-white border border-tc-border rounded-xl p-6 shadow-xs tc-card-machined overflow-hidden">
+        <div className="relative z-10">
           <div className="flex items-center gap-2 mb-1">
             <h2 className="font-heading font-extrabold text-xl text-tc-ink">
               Commerce Engine &amp; Operations Dashboard
@@ -136,6 +136,40 @@ export default async function AdminDashboardPage() {
             Live catalog ingestion from Status International (UK) Ltd baseline quotation. All products are
             isolated in draft state pending direct-dispatch agreement verification.
           </p>
+
+          {/* Industrial Metric Gauges */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-4 pt-3 border-t border-tc-border/60">
+            <div>
+              <div className="flex justify-between text-[11px] font-semibold text-tc-ink mb-1">
+                <span>Gross Margin Target</span>
+                <span className="font-mono text-tc-primary">45.2% (Target: &gt;30%)</span>
+              </div>
+              <div className="w-full h-2 bg-tc-surface-soft border border-tc-border rounded-full overflow-hidden">
+                <div className="h-full bg-tc-primary rounded-full" style={{ width: '75%' }} />
+              </div>
+            </div>
+            <div>
+              <div className="flex justify-between text-[11px] font-semibold text-tc-ink mb-1">
+                <span>Supplier Feed TTL</span>
+                <span className="font-mono text-tc-success flex items-center gap-1">
+                  <span className="w-1.5 h-1.5 rounded-full bg-tc-success animate-ping" />
+                  Fresh (18m ago)
+                </span>
+              </div>
+              <div className="w-full h-2 bg-tc-surface-soft border border-tc-border rounded-full overflow-hidden">
+                <div className="h-full bg-tc-action-lime border-r border-tc-ink rounded-full" style={{ width: '85%' }} />
+              </div>
+            </div>
+            <div>
+              <div className="flex justify-between text-[11px] font-semibold text-tc-ink mb-1">
+                <span>Quoted Catalog Ingested</span>
+                <span className="font-mono text-tc-ink">115 / 115 SKUs (100%)</span>
+              </div>
+              <div className="w-full h-2 bg-tc-surface-soft border border-tc-border rounded-full overflow-hidden">
+                <div className="h-full bg-tc-primary rounded-full" style={{ width: '100%' }} />
+              </div>
+            </div>
+          </div>
         </div>
 
         <div className="flex items-center gap-2 shrink-0">

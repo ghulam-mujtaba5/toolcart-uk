@@ -36,4 +36,172 @@
   .tabular-nums {
     font-variant-numeric: tabular-nums;
   }
+
+  /* CAD Blueprint Dot Grid (Pure CSS, 24px pitch, zero runtime overhead) */
+  .tc-bg-dots {
+    background-image: radial-gradient(circle, rgba(36, 80, 184, 0.12) 1.25px, transparent 1.25px);
+    background-size: 24px 24px;
+    background-position: 0 0;
+  }
+
+  /* Dark-surface variant for Ink banners and hero headers */
+  .tc-bg-dots-dark {
+    background-image: radial-gradient(circle, rgba(221, 241, 106, 0.16) 1.25px, transparent 1.25px);
+    background-size: 24px 24px;
+    background-position: 0 0;
+  }
+
+  /* CAD Blueprint Engineering Grid (Dual-pitch orthogonal grid) */
+  .tc-bg-blueprint {
+    background-color: var(--tc-canvas);
+    background-image:
+      linear-gradient(to right, rgba(36, 80, 184, 0.05) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(36, 80, 184, 0.05) 1px, transparent 1px),
+      linear-gradient(to right, rgba(36, 80, 184, 0.12) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(36, 80, 184, 0.12) 1px, transparent 1px);
+    background-size:
+      20px 20px,
+      20px 20px,
+      100px 100px,
+      100px 100px;
+    background-position: -1px -1px;
+  }
+
+  /* Dark blueprint variant for technical specs, CAD modals, and Admin views */
+  .tc-bg-blueprint-dark {
+    background-color: var(--tc-ink);
+    background-image:
+      linear-gradient(to right, rgba(234, 240, 255, 0.04) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(234, 240, 255, 0.04) 1px, transparent 1px),
+      linear-gradient(to right, rgba(221, 241, 106, 0.10) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(221, 241, 106, 0.10) 1px, transparent 1px);
+    background-size:
+      20px 20px,
+      20px 20px,
+      100px 100px,
+      100px 100px;
+    background-position: -1px -1px;
+  }
+
+  /* Machined Tactile Chamfer Card */
+  .tc-card-machined {
+    position: relative;
+    background-color: var(--tc-surface);
+    border: 1px solid var(--tc-border-strong);
+    border-radius: 10px;
+    box-shadow:
+      inset 0 1px 0 0 rgba(255, 255, 255, 0.85),
+      inset 0 -1px 0 0 rgba(24, 35, 54, 0.04),
+      0 2px 6px -1px rgba(24, 35, 54, 0.05),
+      0 1px 3px 0 rgba(24, 35, 54, 0.03);
+    transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1),
+                box-shadow 0.2s cubic-bezier(0.16, 1, 0.3, 1),
+                border-color 0.2s ease;
+  }
+
+  /* Precision machined index notch / caliper tick mark */
+  .tc-card-machined::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 20px;
+    width: 28px;
+    height: 2.5px;
+    background-color: var(--tc-primary);
+    border-radius: 0 0 2px 2px;
+    pointer-events: none;
+    transition: width 0.2s ease, background-color 0.2s ease;
+  }
+
+  .tc-card-machined:hover {
+    border-color: var(--tc-primary);
+    box-shadow:
+      inset 0 1px 0 0 rgba(255, 255, 255, 0.95),
+      0 8px 24px -4px rgba(24, 35, 54, 0.10),
+      0 3px 8px -2px rgba(36, 80, 184, 0.08);
+    transform: translateY(-2px);
+  }
+
+  .tc-card-machined:hover::before {
+    width: 48px;
+    background-color: var(--tc-primary);
+  }
+
+  /* 45-degree Precision Chamfered Corner Polygon */
+  .tc-chamfer-corner {
+    clip-path: polygon(
+      0 12px,
+      12px 0,
+      calc(100% - 12px) 0,
+      100% 12px,
+      100% calc(100% - 12px),
+      calc(100% - 12px) 100%,
+      12px 100%,
+      0 calc(100% - 12px)
+    );
+  }
+
+  /* Mechanical Motion Keyframes & Utility Classes */
+  @keyframes tc-scan-sweep {
+    0% { transform: translateY(-100%); opacity: 0; }
+    30% { opacity: 0.8; }
+    70% { opacity: 0.8; }
+    100% { transform: translateY(100%); opacity: 0; }
+  }
+
+  @keyframes tc-stamp-press {
+    0% { transform: scale(1.4) rotate(-8deg); opacity: 0; }
+    60% { transform: scale(0.96) rotate(-2deg); opacity: 1; }
+    80% { transform: scale(1.02) rotate(-3deg); }
+    100% { transform: scale(1) rotate(-3deg); opacity: 1; }
+  }
+
+  @keyframes tc-box-snap {
+    0% { transform: scale(1); }
+    40% { transform: scale(1.12) translateY(-2px); }
+    70% { transform: scale(0.96) translateY(1px); }
+    100% { transform: scale(1) translateY(0); }
+  }
+
+  @keyframes tc-road-dash {
+    0% { stroke-dashoffset: 0; }
+    100% { stroke-dashoffset: -24; }
+  }
+
+  @keyframes tc-radar-ring {
+    0% { transform: scale(0.85); opacity: 0.9; }
+    70% { transform: scale(1.6); opacity: 0; }
+    100% { transform: scale(1.8); opacity: 0; }
+  }
+
+  .tc-animate-scan {
+    animation: tc-scan-sweep 2.4s ease-in-out infinite;
+  }
+
+  .tc-animate-stamp {
+    animation: tc-stamp-press 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+  }
+
+  .tc-animate-snap {
+    animation: tc-box-snap 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  .tc-animate-road {
+    animation: tc-road-dash 0.8s linear infinite;
+  }
+
+  .tc-animate-radar {
+    animation: tc-radar-ring 1.8s cubic-bezier(0, 0, 0.2, 1) infinite;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tc-animate-scan,
+  .tc-animate-stamp,
+  .tc-animate-snap,
+  .tc-animate-road,
+  .tc-animate-radar {
+    animation: none !important;
+    transform: none !important;
+  }
 }

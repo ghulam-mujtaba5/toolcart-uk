@@ -1,244 +1,108 @@
-# Project: ToolCart UK Platform
+# Project: ToolCart UK Modern Trade Platform Revamp
 
 ## Architecture
-ToolCart UK is a production-grade, Vercel-deployable UK tools, DIY, and hardware e-commerce platform and Medusa-grade Admin Portal built using Next.js App Router (TypeScript + Tailwind CSS), Supabase (PostgreSQL + Auth + RLS), Cloudflare R2 (S3-compatible object storage), Resend (transactional email), and Stripe (test-mode checkout & webhooks).
-
-### Architecture Principles & Layers
-1. **Presentation Layer (Storefront & Admin)**:
-   - Next.js App Router (`app/(storefront)/...` and `app/admin/...`).
-   - Tailwind CSS configured directly from `design/tokens.css` with strict Brand V3 palette (Ink `#182336`, Cobalt `#2450B8`, Cobalt Deep `#193F99`, Action Lime `#DDF16A` with 2px Ink outline, Workshop White `#F7F8F5`, Cloud Blue `#EAF0FF`, Graphite `#252D30`, Steel Text `#596B70`).
-   - Typography: Manrope (headings) and IBM Plex Sans (body, UI, and tabular numerals `tabular-nums` for prices/dimensions/SKUs).
-   - Zero tolerance on `#B84C32` copper, purple, or teal. Zero white text on lime.
-   - Accessible UI primitives: Radix UI / shadcn style.
-2. **Domain & Commerce Engine Layer**:
-   - Supplier Order State Machine (`architecture/SUPPLIER_ORDER_STATE_MACHINE.md`): `cart_pending -> checkout_authorized -> supplier_order_pending -> supplier_accepted -> payment_captured -> dispatched -> delivered`, plus exceptional flows (`supplier_rejected`, `supplier_timeout`, `refund_pending`, `refunded`, etc.).
-   - Idempotency control: PO key `order_id + supplier_id`, Stripe event idempotency.
-   - Append-only audit log: `order_audit_logs`.
-   - Catalog ingestion: Validates against `schemas/product_contract.schema.json`, normalizes Unicode ligatures (`fi`, `fl`, `Ø`), verifies case-vs-unit math (`case_cost == unit_cost * units_per_case`), ingests all 115 SKUs from `baseline/10_SAMPLE_SUPPLIER_CATALOG.csv`.
-3. **Security & Wholesale Isolation**:
-   - Server-only storage of wholesale costs (`unit_cost_ex_vat_gbp`, `case_cost_ex_vat_gbp`).
-   - Row-Level Security (RLS) in PostgreSQL protecting wholesale tables from public access.
-   - Public Storefront DTO (`PublicProductDTO`) strips wholesale pricing before serialization to client components or public `/api/store/*` routes.
-4. **Data & Storage Layer**:
-   - Supabase PostgreSQL schema with migrations (`supabase/migrations/*.sql`).
-   - Zero-config local repository fallback (`src/lib/db/` loading from seed CSV/JSON) ensuring full functionality in CI and offline local builds.
-5. **Adapters & Cloud Services**:
-   - Cloudflare R2: `@aws-sdk/client-s3` with local filesystem fallback in `public/uploads/`.
-   - Resend: Transactional emails (Order Confirmation, PO Dispatch, Tracking, Trade Approval) with sandbox/console log fallback.
-   - Stripe: Test mode Elements and signed webhook listener with mock fallback.
-   - SEO: Dynamic `sitemap.ts`, `robots.ts` (`STAGING_ONLY` aware), Schema.org JSON-LD (`Product`, `BreadcrumbList`, `Organization`).
-
----
+ToolCart UK is a Next.js 14 / TypeScript e-commerce platform for UK tradespeople (builders, electricians, plumbers). The architecture combines:
+- **Design Tokens**: Pure CSS variables in `design/tokens.css` enforcing Brand V3:
+  - Primary Industrial Cobalt: `#2450B8`
+  - Action Lime Accent: `#DDF16A` (paired strictly with dark Ink `#182336` text for 12.66:1 contrast)
+  - Ink (Primary Dark / Headings): `#182336`
+  - Canvas (Workshop White): `#F7F8F5`
+  - Surface Soft (Cloud Blue): `#EAF0FF`
+  - Secondary Text (Steel Text): `#596B70`
+  - Border Strong: `#7C8A94`
+  - Prohibited: Copper `#B84C32`, purple/violet/lavender, teal, white text on lime.
+- **CSS Engineering Foundations**: Pure-CSS patterns in `app/globals.css`:
+  - `.tc-bg-dots`: 24px pitch CAD dot grid with 12% opacity cobalt dots.
+  - `.tc-bg-blueprint`: 20px minor / 100px major orthogonal engineering grid.
+  - `.tc-card-machined`: Machined tactile chamfers with metallic highlights and hover depth.
+- **Iconography**: `src/components/ui/trade-icons.tsx` providing 8 trade icons across 4 optical sizes (16, 20, 24, 32px) using primary outlines and secondary duotone tints.
+- **Micro-Interactions**: Snap-to-Cart spring physics button, 1-click SKU/GTIN copy badge with `#DDF16A` feedback, tactile rocker VAT switch, 24h stock freshness radar.
+- **Motion System**: Inline animated SVGs in `src/components/motion/` (<15KB total footprint, zero external runtime, honoring `prefers-reduced-motion`).
+- **Storefront & Admin Portal**: Polished product cards with spec chips and chamfers, administrative dial gauges, live order state badges, and supplier feed health cards.
 
 ## Feature Inventory
-Every feature identified during the Survey phase is mapped to an implementation milestone.
-
 | # | Feature | Description | Milestone | Source |
 |---|---------|-------------|-----------|--------|
-| 1 | Brand V3 Design Tokens | CSS variables imported from `design/tokens.css`, zero copper/purple/teal | M1 | survey_brand |
-| 2 | Tailwind CSS Integration | Tailwind setup mapping theme variables to `--tc-*` tokens | M1 | survey_brand |
-| 3 | Typography Configuration | Manrope headings and IBM Plex Sans body + `tabular-nums` | M1 | survey_brand |
-| 4 | Accessible UI Primitives | Buttons (Cobalt primary, Lime accent with 2px Ink outline), Badges, Dialogs, Cards | M1 | survey_brand |
-| 5 | Cross-Platform QA Scripts | Patch `qa/check_static.py` for Windows UTF-8 and dynamic paths | M1 | survey_env |
-| 6 | Global VAT Toggle | Persistent Trade vs DIY (Inc VAT / Ex VAT) state/cookie | M2 | survey_brand |
-| 7 | Homepage (`/`) | Hero, category grid, kit builders, customer promise card, AI finder trigger | M2 | survey_brand |
-| 8 | Category & Search (`/search`, `/categories/[slug]`) | Lexical search + multi-attribute faceted filters, sort, URL sync | M2 | survey_brand |
-| 9 | Product Detail (`/products/[slug]`) | Technical specs table, GTIN/MPN, pack breakdown, honest stock, compare trigger | M2 | survey_brand |
-| 10 | Compare Product Drawer | Side-by-side spec comparison of up to 4 items | M2 | survey_brand |
-| 11 | Project Baskets (`/projects`) | 3 curated kits (Electrical Consumables, Painting Prep, Site Torch) with 1-click add | M2 | survey_brand |
-| 12 | UK Buying Guides (`/guides`, `/guides/[slug]`) | 5 original UK hardware guides with safety notes and product links | M2 | survey_brand |
-| 13 | AI Product & Project Assistant | Cloud Blue + Cobalt drawer, grounded catalog tools, zero safety hallucination | M2 | survey_brand |
-| 14 | Cart & Multi-Supplier Basket (`/basket`) | Slide-over and full basket with multi-supplier grouping and UK VAT math | M2 | survey_brand |
-| 15 | Customer Checkout Flow (`/checkout`) | Guest checkout, address entry, UK VAT, Stripe Elements, delivery estimation | M2 | survey_brand |
-| 16 | Trade Account Portal (`/trade`) | B2B trade account registration form (Companies House, VAT) | M2 | survey_brand |
-| 17 | Customer Order Tracking (`/account/orders/[id]`) | Real-time state machine order timeline visualization | M2 | survey_brand |
-| 18 | Product Contract Schema Validator | Schema validator implementing `schemas/product_contract.schema.json` | M3 | survey_commerce |
-| 19 | 115 SKU CSV Catalog Importer | Batch importer for `baseline/10_SAMPLE_SUPPLIER_CATALOG.csv` with case math | M3 | survey_commerce |
-| 20 | Unicode Ligature Normalization | Normalization of `ﬁ`, `ﬂ`, `Ø` in catalog text | M3 | survey_commerce |
-| 21 | Nullable Carton Barcode Support | Support single-unit items with missing carton barcode | M3 | survey_commerce |
-| 22 | Wholesale Cost Security Isolation | Strict server-side isolation of `unit_cost_ex_vat_gbp` and `case_cost_ex_vat_gbp` | M3 | survey_commerce |
-| 23 | Supplier Order State Machine | All 13 states and transitions from `architecture/SUPPLIER_ORDER_STATE_MACHINE.md` | M3 | survey_commerce |
-| 24 | State Machine Idempotency | PO idempotency (`order_id + supplier_id`) and webhook deduplication | M3 | survey_commerce |
-| 25 | Append-Only Audit Logging | `order_audit_logs` tracking state transitions, actor, timestamp, metadata | M3 | survey_commerce |
-| 26 | Auto-Refund / Cancellation Engine | Automatic payment void/refund on supplier rejection or SLA timeout | M3 | survey_commerce |
-| 27 | Margin & Pricing Engine | Category/supplier markups, retail price calculation, margin floor alerts | M3 | survey_commerce |
-| 28 | Admin Dashboard (`/admin`) | KPI cards (SKUs, draft vs approved, active orders, stale feed alerts) | M3 | survey_commerce |
-| 29 | Admin Product Manager (`/admin/products`, `[id]`) | Full product CRUD, spec editor, image licensing and compliance flags | M3 | survey_commerce |
-| 30 | Admin Order Manager (`/admin/orders`, `[id]`) | Order state transitions, PO generation, tracking numbers, audit log view | M3 | survey_commerce |
-| 31 | Admin Importer UI (`/admin/import`) | Interactive CSV/JSON importer with dry-run validation | M3 | survey_commerce |
-| 32 | Admin Pricing & Margin UI (`/admin/pricing`) | Wholesale markup editor and low-margin alerts | M3 | survey_commerce |
-| 33 | Admin Customers & Trade (`/admin/customers`) | Trade account approvals and customer directory | M3 | survey_commerce |
-| 34 | Admin Settings & Gates (`/admin/settings`) | `STAGING_ONLY` gate, shipping rates, cloud status | M3 | survey_commerce |
-| 35 | Supabase PostgreSQL Schema & RLS | 11 tables with RLS protecting wholesale costs | M4 | survey_commerce |
-| 36 | Zero-Config Local Storage Fallback | File/in-memory fallback repository for local dev and CI builds | M4 | survey_commerce |
-| 37 | Cloudflare R2 Storage Adapter | Media upload/signed URLs via `@aws-sdk/client-s3` with local fallback | M4 | survey_commerce |
-| 38 | Resend Email Service | Brand V3 transactional email templates with sandbox/log fallback | M4 | survey_commerce |
-| 39 | Stripe Payment Integration | PaymentIntent creation, webhook verification, test card support | M4 | survey_commerce |
-| 40 | Dynamic SEO & Structured Data | `sitemap.ts`, `robots.ts` (staging aware), Schema.org JSON-LD | M4 | survey_commerce |
-| 41 | E2E Testing Suite (Tiers 1-4) | Comprehensive opaque-box test suite published via `TEST_READY.md` | M5 | test_track |
-| 42 | Adversarial Hardening (Tier 5) | White-box stress tests, security leak verification, boundary testing | M5 | test_track |
-| 43 | Production Build & Lint Quality | `npm run build`, `npm run typecheck`, `npm run lint`, `npm test` passing | M5 | all |
-
----
+| 1 | CSS CAD Dot Grid (`.tc-bg-dots`) | Pure-CSS 24px pitch CAD engineering dot pattern | M1 | ORIGINAL_REQUEST R1 |
+| 2 | CSS Blueprint Grid (`.tc-bg-blueprint`) | Pure-CSS 20px/100px orthogonal engineering grid | M1 | ORIGINAL_REQUEST R1 |
+| 3 | CSS Machined Chamfer (`.tc-card-machined`) | CNC chamfered border effect with metallic highlight & depth | M1 | ORIGINAL_REQUEST R1 |
+| 4 | Bespoke Empty Tool Chest Vector | 3-tier steel cantilever chest with foam cutouts for empty states | M1 | ORIGINAL_REQUEST R1 |
+| 5 | Bespoke Snapped Tape Measure 404 Vector | Tape measure casing with blade snapped at 404mm for not-found | M1 | ORIGINAL_REQUEST R1 |
+| 6 | Bespoke Trade Pro Caliper Hero Vector | Vernier caliper clamped on Net-30 trade verification crest | M1 | ORIGINAL_REQUEST R1 |
+| 7 | Bespoke Category CAD Wireframe Accents | 6 technical wireframe motifs for product category banners | M1 | ORIGINAL_REQUEST R1 |
+| 8 | Storefront Vector Integration | Embed vectors in Basket, Search, 404, Trade, Categories | M1 | ORIGINAL_REQUEST R1 |
+| 9 | Token Remediation & Cleanup | Fix untokenized `bg-tc-cloud`, `#E8F5E9`, and hardcoded borders | M1 | Survey Finding |
+| 10 | Adaptive Duotone Trade Icon Set | 8 bespoke icons across 4 optical sizes (16/20/24/32px) in `trade-icons.tsx` | M2 | ORIGINAL_REQUEST R2 |
+| 11 | Snap-to-Cart Tactile Button | Button with spring depression, checkmark burst, and tactile click feel | M2 | ORIGINAL_REQUEST R2 |
+| 12 | SKU/GTIN 1-Click Copy Badge | Technical spec badge with instant `#DDF16A` high-vis copied feedback | M2 | ORIGINAL_REQUEST R2 |
+| 13 | Tactile Rocker VAT Switch | Realistic mechanical switch for Inc/Ex VAT toggle with tactile groove | M2 | ORIGINAL_REQUEST R2 |
+| 14 | 24h Stock Freshness Radar Ring | Multi-ring harmonic radar pulse indicating live warehouse stock | M2 | ORIGINAL_REQUEST R2 |
+| 15 | Storefront Icon & Micro-Interaction Wiring | Integrate icons and controls into ProductCard, PDP, Header, MiniBasket | M2 | ORIGINAL_REQUEST R2 |
+| 16 | Lightweight Motion Architecture | Inline animated SVGs in `src/components/motion/` (<15KB total, <150KB limit) | M3 | ORIGINAL_REQUEST R3 |
+| 17 | Cart Feedback Motion | Dynamic mechanical drop-in and badge pulse animation | M3 | ORIGINAL_REQUEST R3 |
+| 18 | Order State Machine Stepper | 15-state DAG stepper with animated progress line and milestone pulse | M3 | ORIGINAL_REQUEST R3 |
+| 19 | AI Assistant Scanner Waves | Radar wave scanning motion for AI Assistant widget | M3 | ORIGINAL_REQUEST R3 |
+| 20 | Trade Pro Stamp Motion | Industrial ink approval stamp seal animation | M3 | ORIGINAL_REQUEST R3 |
+| 21 | Empty States Motion | Gentle technical floating tool illustration animation | M3 | ORIGINAL_REQUEST R3 |
+| 22 | Reduced Motion Accessibility | Full `prefers-reduced-motion` compliance across all animations | M3 | ORIGINAL_REQUEST R3 |
+| 23 | Admin Metric Dial Gauges | Radial/arc industrial gauges for revenue, margin, orders | M4 | ORIGINAL_REQUEST R4 |
+| 24 | Admin Live Order State Badges | Real-time state badges with status indicators | M4 | ORIGINAL_REQUEST R4 |
+| 25 | Admin Supplier Feed Health Cards | Stock TTL countdown and carriage paid threshold monitoring | M4 | ORIGINAL_REQUEST R4 |
+| 26 | Storefront Machined Polishing | Chamfered product cards, floating spec chips, elevation on hover | M4 | ORIGINAL_REQUEST R4 |
+| 27 | WCAG AA Contrast Compliance | Full verification of 100% WCAG AA compliance at 360px & 1440px | M4 | ORIGINAL_REQUEST R4 |
+| 28 | Full Automated Verification Gate | Ensure all 426 tests pass (`npm test`) | M5 | Acceptance Criteria |
+| 29 | Brand V3 Static Gate | Zero violations in `python qa/check_static.py` | M5 | Acceptance Criteria |
+| 30 | Production Build & Typecheck Gate | Clean exit in `npm run build` and `npx tsc --noEmit` | M5 | Acceptance Criteria |
+| 31 | Git Commit & Live Vercel Deploy | Production deployment to https://toolcart-uk.vercel.app | M5 | Acceptance Criteria |
 
 ## Milestones
-
 | # | Name | Scope | Dependencies | Status |
 |---|------|-------|-------------|--------|
-| M1 | Foundation & Brand V3 Design System | Next.js bootstrap, Tailwind tokens, typography, UI primitives, cross-platform QA check | None | DONE |
-| M2 | Customer Storefront Experience | All storefront routes, VAT toggle, search/facets, PDP, compare, guides, basket, AI assistant | M1 | DONE |
-| M3 | Commerce Engine, Catalog Seed & Admin Portal | 115 SKU catalog ingestion, state machine, wholesale isolation, audit logs, full `/admin` | M1 | DONE |
-| M4 | Cloud Infrastructure & Service Adapters | Supabase schema/RLS + local fallback, Cloudflare R2, Resend, Stripe checkout, dynamic SEO | M2, M3 | DONE |
-| M5 | Dual-Track E2E Test Suite & Hardening | 100% E2E test pass (Tiers 1-4), Tier 5 adversarial hardening, zero leaks, clean audit | M4, TEST_READY | DONE |
-
----
+| M1 | CSS Foundations & Bespoke SVGs | Features 1–9: Pure-CSS patterns, bespoke SVG vectors, storefront embedding, token cleanup | None | DONE |
+| M2 | Adaptive Icons & Micro-Interactions | Features 10–15: 8 duotone trade icons (4 optical sizes), Snap-to-Cart, copy badge, VAT rocker, radar pulse | M1 | IN_PROGRESS |
+| M3 | Motion System & Admin Portal Visuals | Features 16–25: 5 motion components (<15KB), `useReducedMotion`, Admin dials/gauges, order state badges, supplier cards | M2 | PLANNED |
+| M4 | Storefront Polishing & WCAG Audit | Features 26–27: Chamfered cards, floating spec chips, responsive 360/1440px layout & WCAG AA checks | M3 | PLANNED |
+| M5 | E2E Verification, Build & Vercel Deploy | Features 28–31: 426 tests pass, static check, build, typecheck, git commit & Vercel live deploy | M4 | PLANNED |
 
 ## Interface Contracts
+### `app/globals.css` ↔ Components
+- Classes:
+  - `.tc-bg-dots`: Radial gradient background for CAD engineering grid.
+  - `.tc-bg-blueprint`: Linear gradient background for technical blueprint grid.
+  - `.tc-card-machined`: Border and shadow styles creating CNC chamfer and metallic bevel.
 
-### Product Domain Contracts (`src/types/product.ts`)
-```typescript
-export type SellabilityStatus = 'draft' | 'needs_review' | 'approved' | 'blocked';
+### `src/components/ui/vectors/` ↔ Storefront Pages
+- Components:
+  - `EmptyToolChestVector`: React SVG component accepting `{ className?: string }`.
+  - `NotFoundVector`: React SVG component accepting `{ className?: string }`.
+  - `TradeProHeroVector`: React SVG component accepting `{ className?: string }`.
+  - `CategoryCadAccent`: React SVG component accepting `{ categorySlug: string, className?: string }`.
 
-// Public DTO: Safe for storefront and client components
-export interface PublicProductDTO {
-  id: string;
-  slug: string;
-  title: string;
-  description: string;
-  brand: string;
-  gtin: string; // barcode EAN-13
-  mpn?: string;
-  supplier_sku: string;
-  category: string;
-  images: string[];
-  retail_price_inc_vat_gbp: number;
-  retail_price_ex_vat_gbp: number;
-  units_per_pack: number;
-  units_per_case: number;
-  case_pack_description: string;
-  specifications: Record<string, string>;
-  compliance_verified: boolean;
-  image_license_verified: boolean;
-  availability_status: 'in_stock' | 'subject_to_confirmation' | 'out_of_stock';
-  weight_grams?: number;
-}
+### `src/components/ui/trade-icons.tsx` ↔ Storefront & Admin
+- Props:
+  - `size?: 16 | 20 | 24 | 32` (optical size)
+  - `className?: string`
+  - `aria-hidden?: boolean`
+  - `aria-label?: string`
+- Exported Icons:
+  - `IconToolbox`, `IconCaliper`, `IconTradeVerified`, `IconTapeMeasure`, `IconBolt`, `IconSpiritLevel`, `IconStockRadar`, `IconTruckFreight`
 
-// Private Wholesale Model: Strictly server-side
-export interface WholesaleSupplierOffer {
-  id: string;
-  product_id: string;
-  supplier_id: string;
-  supplier_sku: string;
-  unit_cost_ex_vat_gbp: number;
-  case_cost_ex_vat_gbp: number;
-  units_per_case: number;
-  minimum_purchase_cases: number;
-  stock_quantity: number;
-  stock_freshness_timestamp: string;
-}
-```
-
-### Order & State Machine Contracts (`src/types/order.ts`)
-```typescript
-export type OrderState =
-  | 'cart_pending'
-  | 'checkout_authorized'
-  | 'supplier_order_pending'
-  | 'supplier_accepted'
-  | 'payment_captured'
-  | 'dispatched'
-  | 'delivered'
-  | 'supplier_rejected'
-  | 'supplier_timeout'
-  | 'payment_authorization_expired'
-  | 'partial_supplier_acceptance'
-  | 'partial_dispatch'
-  | 'refund_pending'
-  | 'refunded'
-  | 'manual_review';
-
-export interface OrderAuditLog {
-  id: string;
-  order_id: string;
-  from_state: OrderState;
-  to_state: OrderState;
-  trigger: string;
-  actor: string;
-  metadata?: Record<string, unknown>;
-  created_at: string;
-}
-```
-
----
+### `src/components/motion/` ↔ UI Components
+- Components:
+  - `CartFeedbackMotion({ active: boolean, className?: string })`
+  - `OrderStateStepperMotion({ currentState: string, steps: OrderStep[], className?: string })`
+  - `AIAssistantScannerMotion({ scanning: boolean, className?: string })`
+  - `TradeProStampMotion({ approved: boolean, className?: string })`
+  - `EmptyStatesMotion({ type: 'cart' | 'search' | 'generic', className?: string })`
+  - Hook: `useReducedMotion(): boolean`
 
 ## Code Layout
-```
-e:\ToolCart\
-├── app/
-│   ├── (storefront)/
-│   │   ├── page.tsx                          # Homepage
-│   │   ├── search/page.tsx                   # Search discovery
-│   │   ├── categories/[slug]/page.tsx        # Category PLP
-│   │   ├── products/[slug]/page.tsx          # Product PDP
-│   │   ├── projects/page.tsx                 # Project kits
-│   │   ├── guides/page.tsx                   # Buying guides directory
-│   │   ├── guides/[slug]/page.tsx            # Buying guide detail
-│   │   ├── basket/page.tsx                   # Basket
-│   │   ├── checkout/page.tsx                 # Checkout
-│   │   ├── account/page.tsx                  # Customer account
-│   │   ├── account/orders/[id]/page.tsx      # Order state tracking
-│   │   └── trade/page.tsx                    # Trade account registration
-│   ├── admin/
-│   │   ├── page.tsx                          # KPI Dashboard
-│   │   ├── products/page.tsx                 # Product manager
-│   │   ├── products/[id]/page.tsx            # Product editor
-│   │   ├── orders/page.tsx                   # Order operations
-│   │   ├── orders/[id]/page.tsx              # Order fulfillment detail
-│   │   ├── suppliers/page.tsx                # Supplier directory
-│   │   ├── import/page.tsx                   # CSV/JSON Importer
-│   │   ├── pricing/page.tsx                  # Margin & pricing engine
-│   │   ├── customers/page.tsx                # Trade approvals
-│   │   └── settings/page.tsx                 # Governance & settings
-│   ├── api/
-│   │   ├── store/
-│   │   │   ├── products/route.ts             # Public products (sanitized DTO)
-│   │   │   ├── cart/route.ts                 # Public basket operations
-│   │   │   └── assistant/route.ts            # AI Assistant tool caller
-│   │   ├── admin/
-│   │   │   ├── import/route.ts               # Admin batch import
-│   │   │   ├── orders/[id]/transition/route.ts # Order state transition
-│   │   │   └── products/route.ts             # Admin product CRUD
-│   │   └── webhooks/
-│   │       ├── stripe/route.ts               # Stripe webhook
-│   │       └── supplier/route.ts             # Supplier webhook
-│   ├── layout.tsx
-│   ├── globals.css
-│   ├── sitemap.ts
-│   └── robots.ts
-├── src/
-│   ├── components/
-│   │   ├── ui/                               # Radix/Tailwind primitives (Button, Input, Badge, Dialog)
-│   │   ├── storefront/                       # Storefront components (Header, Footer, VATToggle, AIModal)
-│   │   └── admin/                            # Admin layout & forms
-│   ├── lib/
-│   │   ├── db/                               # Database client & local seed fallback
-│   │   ├── state-machine/                    # Supplier order state machine
-│   │   ├── catalog/                          # Importer, validator, case math, Unicode normalizer
-│   │   ├── pricing/                          # Margin engine & DTO sanitizers
-│   │   ├── adapters/                         # Cloud adapters (R2, Resend, Stripe)
-│   │   └── ai/                               # AI project assistant catalog tools
-│   └── types/                                # TypeScript schemas & DTOs
-├── supabase/
-│   └── migrations/                           # SQL schema migrations & RLS policies
-├── tests/
-│   ├── brand/                                # Brand static & contrast tests
-│   ├── security/                             # Wholesale cost leak tests
-│   ├── catalog/                              # 115 SKU ingestion & case math tests
-│   └── state-machine/                        # State machine transition & refund tests
-├── qa/
-│   ├── check_static.py                       # Cross-platform static validation script
-│   └── contrast_matrix.json                  # Authoritative WCAG contrast matrix
-├── package.json
-├── tsconfig.json
-└── tailwind.config.ts
-```
+- `app/globals.css` — Core CSS variables, utilities, CAD grid and machined card classes
+- `src/components/ui/vectors/` — Bespoke Brand V3 SVG vector scenes
+- `src/components/ui/trade-icons.tsx` — Adaptive optical-sized duotone SVG icons
+- `src/components/ui/copy-badge.tsx` — 1-click technical identifier copy badge
+- `src/components/ui/stock-radar-badge.tsx` — 24h harmonic stock radar indicator
+- `src/components/storefront/tactile-vat-rocker.tsx` — Heavy-duty mechanical VAT switch
+- `src/components/motion/` — Lightweight inline animated SVGs and `useReducedMotion` hook
+- `src/components/admin/` — Admin gauges, order state badges, and supplier feed health cards
+- `tests/` — Automated test suites (unit, integration, adversarial, viewport)

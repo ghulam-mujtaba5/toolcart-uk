@@ -1,8 +1,12 @@
 # Progress: Challenger M1 (Instance 1)
-Last visited: 2026-10-12T18:03:30Z
-- [x] Initialized DISPATCH.md and BRIEFING.md
-- [x] Step 1: Scan entire repository for forbidden tokens/colors (#b84c32, rgb(184, 76, 50), --tc-copper, copper, purple, violet, lavender, teal, white on lime) -> 0 violations
-- [x] Step 2: Validate existing verification suites (check_static.py, pytest tests/brand/, vitest, typecheck, lint, build) -> All pass
-- [x] Step 3: Adversarially stress-test UI primitives (extreme inputs, boundary conditions, unexpected props) -> 25 new adversarial tests created & passed
-- [x] Step 4: Adversarially verify contrast ratio calculations -> 19 matrix items verified against WCAG formula (0.00 diff)
-- [x] Step 5: Produce final verdict and handoff report in handoff.md -> Complete (APPROVE)
+Last visited: 2026-10-13T17:39:30Z
+
+- [x] Initialized DISPATCH.md and reviewed Milestone 1 handoff & scope
+- [x] Executed baseline verification:
+  - `python qa/check_static.py`: PASS
+  - `npm test`: 19 suites, 443 tests passed cleanly
+- [/] Verifying TypeScript typecheck (`npx tsc --noEmit`) and build
+- [ ] Adversarially stress-test pure-CSS engineering patterns (`.tc-bg-dots`, `.tc-bg-blueprint`, `.tc-card-machined`, `.tc-chamfer-corner`)
+- [ ] Adversarially stress-test bespoke SVG vector components (`EmptyToolChestVector`, `NotFoundVector`, `TradeProHeroVector`, `CategoryCadAccent`) under extreme props, undefined classes, dimension extremes, rapid mount/unmount cycles
+- [ ] Independent WCAG relative luminance oracle for SVG elements & dark/light backgrounds
+- [ ] Produce challenge report and handoff report with verdict (APPROVE / REQUEST_CHANGES)

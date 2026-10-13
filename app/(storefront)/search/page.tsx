@@ -4,6 +4,7 @@ import { searchProducts } from '@/lib/catalog';
 import { ProductCard } from '@/components/storefront/product-card';
 import { FilterSidebar } from '@/components/storefront/filter-sidebar';
 import { SearchFilterChips } from '@/components/storefront/search-filter-chips';
+import { EmptyToolChestVector } from '@/components/ui/vectors';
 import { Search, AlertCircle, ArrowUpDown } from 'lucide-react';
 
 export const dynamic = 'force-dynamic';
@@ -86,7 +87,7 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
 
       {/* Zero-Results UK Synonym Notice */}
       {result.didYouMean && (
-        <div className="p-4 rounded-xl bg-tc-surface-soft border border-[#C8D9F9] flex items-center gap-3 text-xs sm:text-sm text-tc-ink">
+        <div className="p-4 rounded-xl bg-tc-surface-soft border border-tc-primary/20 flex items-center gap-3 text-xs sm:text-sm text-tc-ink">
           <AlertCircle className="w-5 h-5 text-tc-primary shrink-0" />
           <div>
             Zero direct matches found for &quot;<span className="font-semibold">{query}</span>&quot;. Showing results for UK hardware synonym: &quot;<span className="font-bold text-tc-primary">{result.didYouMean}</span>&quot;.
@@ -113,10 +114,8 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
               ))}
             </div>
           ) : (
-            <div className="bg-white rounded-card border border-tc-border p-12 text-center space-y-4">
-              <div className="w-14 h-14 rounded-full bg-tc-surface-soft mx-auto flex items-center justify-center text-tc-primary">
-                <Search className="w-6 h-6 opacity-60" />
-              </div>
+            <div className="bg-white rounded-card tc-card-machined p-10 sm:p-12 text-center space-y-4">
+              <EmptyToolChestVector className="w-56 h-36 sm:w-64 sm:h-40 mx-auto" />
               <h3 className="font-heading font-bold text-lg text-tc-ink">
                 No matching hardware products
               </h3>

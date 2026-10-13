@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useCart } from '@/context/cart-context';
 import { useVAT } from '@/context/vat-context';
 import { Button } from '@/components/ui/button';
+import { EmptyToolChestVector } from '@/components/ui/vectors';
 import {
   ShoppingBag,
   Plus,
@@ -55,10 +56,8 @@ export default function BasketPage() {
       </div>
 
       {items.length === 0 ? (
-        <div className="bg-white rounded-card border border-tc-border p-12 text-center space-y-4 max-w-lg mx-auto">
-          <div className="w-16 h-16 rounded-full bg-tc-surface-soft mx-auto flex items-center justify-center text-tc-primary">
-            <ShoppingBag className="w-8 h-8 opacity-60" />
-          </div>
+        <div className="bg-white rounded-card tc-card-machined p-10 sm:p-12 text-center space-y-4 max-w-lg mx-auto">
+          <EmptyToolChestVector className="w-56 h-36 sm:w-64 sm:h-40 mx-auto" />
           <h2 className="font-heading font-bold text-xl text-tc-ink">
             Your basket is currently empty
           </h2>
@@ -83,7 +82,7 @@ export default function BasketPage() {
                   className="bg-white rounded-card border border-tc-border overflow-hidden shadow-xs"
                 >
                   {/* Supplier Header */}
-                  <div className="p-4 bg-tc-surface-soft border-b border-[#C8D9F9] flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                  <div className="p-4 bg-tc-surface-soft border-b border-tc-primary/20 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
                     <div>
                       <span className="text-[10px] uppercase font-mono font-bold text-tc-primary tracking-wider">
                         DISPATCH HUB
@@ -298,7 +297,7 @@ export default function BasketPage() {
                   </Link>
                 </Button>
 
-                <div className="p-3 rounded-lg bg-tc-surface-soft border border-[#C8D9F9] text-[11px] text-tc-ink space-y-1">
+                <div className="p-3 rounded-lg bg-tc-surface-soft border border-tc-primary/20 text-[11px] text-tc-ink space-y-1">
                   <div className="flex items-center gap-1.5 font-bold text-tc-primary">
                     <ShieldCheck className="w-3.5 h-3.5" />
                     <span>Launch Gate Staging Notice</span>

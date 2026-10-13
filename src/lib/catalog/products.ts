@@ -248,6 +248,7 @@ function loadAndParseCatalog(): {
       supplier_id: 'status-uk',
       supplier_name: 'Status International (UK) Ltd',
       category: categoryInfo.name,
+      category_slug: categoryInfo.slug,
       images: [
         fs.existsSync(path.join(process.cwd(), 'public', 'images', 'products', `${r.supplier_sku}.png`))
           ? `/images/products/${r.supplier_sku}.png`

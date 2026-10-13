@@ -248,8 +248,11 @@ function loadAndParseCatalog(): {
       supplier_id: 'status-uk',
       supplier_name: 'Status International (UK) Ltd',
       category: categoryInfo.name,
-      category_slug: categoryInfo.slug,
-      images: [`/images/products/${slug}.svg`],
+      images: [
+        fs.existsSync(path.join(process.cwd(), 'public', 'images', 'products', `${r.supplier_sku}.png`))
+          ? `/images/products/${r.supplier_sku}.png`
+          : `/images/products/${slug}.svg`,
+      ],
       retail_price_inc_vat_gbp: retailPrices.retail_price_inc_vat_gbp,
       retail_price_ex_vat_gbp: retailPrices.retail_price_ex_vat_gbp,
       units_per_pack: unitsPerPack,

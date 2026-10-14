@@ -86,15 +86,15 @@ const CATEGORY_META: Record<string, { title: string; description: string }> = {
 };
 
 const CATEGORY_IMAGES: Record<string, string> = {
-  tools: '/images/categories/tools-hero.webp',
-  'hand-tools': '/images/categories/tools-hero.webp',
-  fixings: '/images/categories/fixings-hero.webp',
-  'fixings-security': '/images/categories/fixings-hero.webp',
-  decorating: '/images/categories/decorating-hero.webp',
-  measuring: '/images/categories/measuring-hero.webp',
-  ppe: '/images/categories/ppe-hero.webp',
-  'workwear-safety': '/images/categories/ppe-hero.webp',
-  'site-equipment': '/images/categories/site-equipment-hero.webp',
+  tools: '/images/3d/categories/tools.webp',
+  'hand-tools': '/images/3d/categories/tools.webp',
+  fixings: '/images/3d/categories/fixings.webp',
+  'fixings-security': '/images/3d/categories/fixings.webp',
+  decorating: '/images/3d/categories/decorating.webp',
+  measuring: '/images/3d/categories/measuring.webp',
+  ppe: '/images/3d/categories/ppe.webp',
+  'workwear-safety': '/images/3d/categories/ppe.webp',
+  'site-equipment': '/images/3d/categories/site-equipment.webp',
   electrical: '/images/kits/electrical-kit.webp',
   'electrical-tapes': '/images/kits/electrical-kit.webp',
   'electrical-lighting': '/images/kits/electrical-kit.webp',
@@ -189,11 +189,11 @@ export default async function CategoryPage({ params, searchParams }: CategoryPag
         {/* Category Hero Image, CAD Accent & Sort */}
         <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 shrink-0">
           {CATEGORY_IMAGES[catSlug] && (
-            <div className="w-36 h-24 sm:w-48 sm:h-28 rounded-xl overflow-hidden bg-tc-canvas border border-tc-border shadow-xs shrink-0 hidden sm:block">
+            <div className="w-36 h-24 sm:w-48 sm:h-28 rounded-xl overflow-hidden bg-tc-canvas border border-tc-border shadow-xs shrink-0 hidden sm:flex items-center justify-center p-2">
               <img
                 src={CATEGORY_IMAGES[catSlug]}
                 alt={meta?.title || catSlug}
-                className="w-full h-full object-cover"
+                className="w-full h-full object-contain drop-shadow-sm"
               />
             </div>
           )}

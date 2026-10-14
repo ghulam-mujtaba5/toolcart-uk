@@ -28,15 +28,15 @@ const CATEGORIES = [
     description: 'Screwdrivers, pliers, hammers, saws, spanners & chisels.',
     icon: Wrench,
     itemCount: '44 items',
-    image: '/images/categories/tools-hero.webp',
+    image: '/images/3d/categories/tools.webp',
   },
   {
     name: 'Fixings & Security',
     slug: 'fixings',
-    description: 'Brass padlocks, bolts, wall plugs, clips & hardware.',
+    description: 'Padlocks, steel bolts, wall plugs, clips & hardware.',
     icon: Shield,
     itemCount: '22 items',
-    image: '/images/categories/fixings-hero.webp',
+    image: '/images/3d/categories/fixings.webp',
   },
   {
     name: 'Decorating',
@@ -44,7 +44,7 @@ const CATEGORIES = [
     description: 'Paint brushes, rollers, masking tapes, scrapers & sandpapers.',
     icon: Paintbrush,
     itemCount: '15 items',
-    image: '/images/categories/decorating-hero.webp',
+    image: '/images/3d/categories/decorating.webp',
   },
   {
     name: 'Measuring',
@@ -52,7 +52,7 @@ const CATEGORIES = [
     description: '5m/10m tape measures, spirit levels, metal rulers & plumb bobs.',
     icon: Ruler,
     itemCount: '5 items',
-    image: '/images/categories/measuring-hero.webp',
+    image: '/images/3d/categories/measuring.webp',
   },
   {
     name: 'Workwear & Safety',
@@ -60,7 +60,7 @@ const CATEGORIES = [
     description: 'EN166 eye protection, dust masks, ear plugs & safety gloves.',
     icon: HardHat,
     itemCount: '10 items',
-    image: '/images/categories/ppe-hero.webp',
+    image: '/images/3d/categories/ppe.webp',
   },
   {
     name: 'Site Equipment',
@@ -68,7 +68,7 @@ const CATEGORIES = [
     description: 'EN14183 step ladders, heavy tarpaulins, ropes & ratchet straps.',
     icon: Package,
     itemCount: '19 items',
-    image: '/images/categories/site-equipment-hero.webp',
+    image: '/images/3d/categories/site-equipment.webp',
   },
 ];
 
@@ -236,11 +236,11 @@ export default async function StorefrontHomePage() {
                 className="group rounded-card bg-white border border-tc-border hover:border-[#94A8C9] hover:shadow-md transition-all duration-200 flex flex-col justify-between overflow-hidden"
               >
                 <div>
-                  <div className="relative aspect-[16/10] w-full bg-tc-canvas border-b border-tc-border overflow-hidden">
+                  <div className="relative aspect-[16/10] w-full bg-tc-canvas border-b border-tc-border overflow-hidden flex items-center justify-center p-3">
                     <img
                       src={cat.image}
                       alt={cat.name}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-500 drop-shadow-sm"
                     />
                     <div className="absolute top-3 left-3 w-10 h-10 rounded-xl bg-white/95 backdrop-blur-xs border border-tc-border flex items-center justify-center text-tc-primary shadow-xs">
                       <Icon className="w-5 h-5 stroke-[2]" />

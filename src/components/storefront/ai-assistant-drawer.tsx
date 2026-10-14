@@ -5,7 +5,6 @@ import { useCart } from '@/context/cart-context';
 import { useVAT } from '@/context/vat-context';
 import { Button } from '@/components/ui/button';
 import {
-  Sparkles,
   X,
   Send,
   ShieldCheck,
@@ -16,6 +15,7 @@ import {
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { PublicProductDTO } from '@/types/product';
+import { IconToolbox } from '@/components/ui/trade-icons';
 import { AiScannerPulse } from '@/components/motion';
 
 interface Message {
@@ -132,12 +132,8 @@ export function AIAssistantDrawer({ isOpen, onClose }: AIAssistantDrawerProps) {
         {/* Header: Cobalt accent, Brand V3 */}
         <div className="p-4 sm:p-5 bg-white border-b border-[#C8D9F9] flex items-center justify-between shrink-0">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-tc-canvas border border-[#C8D9F9] p-1 flex items-center justify-center shadow-xs overflow-hidden shrink-0">
-              <img
-                src="/images/3d/ai/assistant-robot-avatar.webp"
-                alt="ToolCart AI Technical Assistant"
-                className="w-full h-full object-contain drop-shadow-xs"
-              />
+            <div className="w-10 h-10 rounded-xl bg-tc-surface-soft border border-[#C8D9F9] flex items-center justify-center text-tc-primary shadow-xs shrink-0">
+              <IconToolbox size={20} className="text-tc-primary" />
             </div>
             <div>
               <h2 id="ai-assistant-title" className="font-heading font-extrabold text-base text-tc-ink flex items-center gap-1.5">
@@ -254,13 +250,6 @@ export function AIAssistantDrawer({ isOpen, onClose }: AIAssistantDrawerProps) {
         {/* Starter Prompts (if chat is fresh) */}
         {messages.length === 1 && (
           <div className="p-4 bg-white/70 border-t border-[#C8D9F9] space-y-3 shrink-0">
-            <div className="w-full h-28 rounded-xl overflow-hidden bg-white border border-[#C8D9F9] flex items-center justify-center p-2 shadow-xs">
-              <img
-                src="/images/ai/assistant-graphic.webp"
-                alt="ToolCart AI Project Advice"
-                className="h-full object-contain"
-              />
-            </div>
             <p className="text-[11px] font-bold text-tc-text-secondary uppercase tracking-wider">
               Popular questions
             </p>

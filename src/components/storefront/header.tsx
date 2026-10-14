@@ -10,12 +10,17 @@ import {
   Search,
   X,
   Menu,
-  Sparkles,
   User,
   ShieldCheck,
   ChevronRight,
   BookOpen,
   Layers,
+  Wrench,
+  Shield,
+  Paintbrush,
+  Ruler,
+  HardHat,
+  Package,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
@@ -120,11 +125,9 @@ export function Header({ onOpenAiAssistant }: HeaderProps) {
                 aria-label="Search catalog"
                 className="w-full h-11 pl-10 pr-20 bg-tc-canvas border border-tc-border-strong rounded-lg text-sm text-tc-ink placeholder:text-tc-text-secondary focus:outline-none focus:ring-2 focus:ring-tc-primary focus:bg-white transition-all shadow-inner"
               />
-              <img
-                src="/images/3d/icons/icon-search.webp"
-                alt=""
+              <Search
                 aria-hidden="true"
-                className="w-4 h-4 object-contain absolute left-3.5 top-3.5 pointer-events-none drop-shadow-xs"
+                className="w-4 h-4 text-tc-text-secondary absolute left-3.5 top-3.5 pointer-events-none stroke-[2.25]"
               />
 
               {query && (
@@ -211,39 +214,21 @@ export function Header({ onOpenAiAssistant }: HeaderProps) {
             )}
           </div>
 
-          {/* Action Controls: AI Assistant, Account, Mini-Basket */}
+          {/* Action Controls: Account, Mini-Basket */}
           <div className="flex items-center gap-2 sm:gap-3">
-            {/* AI Finder trigger with 3D sparkle icon */}
-            {onOpenAiAssistant && (
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={onOpenAiAssistant}
-                className="hidden lg:inline-flex items-center gap-1.5 border-tc-primary/40 text-tc-primary hover:bg-tc-surface-soft shadow-xs"
-              >
-                <img
-                  src="/images/3d/icons/icon-ai-sparkle.webp"
-                  alt=""
-                  aria-hidden="true"
-                  className="w-4 h-4 object-contain drop-shadow-xs"
-                />
-                <span>Ask ToolCart AI</span>
-              </Button>
-            )}
 
             {/* Customer Account */}
             <Link
               href="/account"
               aria-label="Customer Account & Orders"
-              className="p-2 rounded-lg text-tc-ink hover:bg-tc-canvas transition-colors flex items-center gap-1.5 group"
+              className="p-1.5 sm:px-3 sm:py-2 rounded-lg text-tc-ink hover:bg-tc-canvas hover:text-tc-primary transition-colors flex items-center gap-2 group"
             >
-              <img
-                src="/images/3d/icons/icon-account.webp"
-                alt=""
-                aria-hidden="true"
-                className="w-5 h-5 object-contain drop-shadow-xs group-hover:scale-110 transition-transform"
-              />
-              <span className="hidden xl:inline text-xs font-semibold">Account</span>
+              <div className="w-8 h-8 rounded-lg bg-tc-canvas border border-tc-border flex items-center justify-center text-tc-ink group-hover:text-tc-primary group-hover:border-tc-primary/40 group-hover:bg-tc-surface-soft transition-all shadow-2xs">
+                <User className="w-4.5 h-4.5 stroke-[2.25] group-hover:scale-110 transition-transform" />
+              </div>
+              <span className="hidden sm:inline text-xs font-bold text-tc-ink group-hover:text-tc-primary transition-colors">
+                Account
+              </span>
             </Link>
 
             {/* Mini Basket Drawer Trigger */}
@@ -251,15 +236,12 @@ export function Header({ onOpenAiAssistant }: HeaderProps) {
               type="button"
               onClick={openCart}
               aria-label={`Open Basket, ${summary.total_items_count} items`}
-              className="relative p-2 sm:px-3 sm:py-2 rounded-lg bg-tc-ink text-white hover:bg-tc-graphite transition-all flex items-center gap-2 shadow-xs group active:scale-95"
+              className="relative p-1.5 sm:px-3.5 sm:py-2 rounded-lg bg-tc-ink text-white hover:bg-tc-graphite transition-all flex items-center gap-2.5 shadow-xs group active:scale-95"
             >
-              <img
-                src="/images/3d/icons/icon-cart.webp"
-                alt=""
-                aria-hidden="true"
-                className="w-5 h-5 object-contain drop-shadow-xs group-hover:scale-110 transition-transform"
-              />
-              <span className="hidden sm:inline text-xs font-bold">Basket</span>
+              <div className="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center text-white group-hover:bg-white/20 transition-all">
+                <ShoppingCart className="w-4.5 h-4.5 stroke-[2.25] text-white group-hover:scale-110 transition-transform" />
+              </div>
+              <span className="hidden sm:inline text-xs font-bold tracking-tight">Basket</span>
 
               {summary.total_items_count > 0 && (
                 <span className="absolute -top-1.5 -right-1.5 sm:static sm:top-auto sm:right-auto inline-flex items-center justify-center min-w-[20px] h-5 px-1.5 rounded-full bg-tc-action-lime text-tc-ink text-xs font-extrabold border border-tc-ink tabular-nums shadow-xs animate-in zoom-in-75 duration-200">
@@ -322,23 +304,31 @@ export function Header({ onOpenAiAssistant }: HeaderProps) {
                 Categories
               </p>
               {[
-                { href: '/tools', label: 'Hand Tools' },
-                { href: '/fixings', label: 'Fixings & Security' },
-                { href: '/decorating', label: 'Decorating' },
-                { href: '/measuring', label: 'Measuring' },
-                { href: '/ppe', label: 'Workwear & Safety' },
-                { href: '/site-equipment', label: 'Site Equipment' },
-              ].map((c) => (
-                <Link
-                  key={c.href}
-                  href={c.href}
-                  onClick={() => setIsMobileMenuOpen(false)}
-                  className="flex items-center justify-between py-2.5 px-3 rounded-lg text-sm font-semibold text-tc-ink hover:bg-tc-canvas"
-                >
-                  <span>{c.label}</span>
-                  <ChevronRight className="w-4 h-4 text-tc-border-strong" />
-                </Link>
-              ))}
+                { href: '/tools', label: 'Hand Tools', icon: Wrench },
+                { href: '/fixings', label: 'Fixings & Security', icon: Shield },
+                { href: '/decorating', label: 'Decorating', icon: Paintbrush },
+                { href: '/measuring', label: 'Measuring', icon: Ruler },
+                { href: '/ppe', label: 'Workwear & Safety', icon: HardHat },
+                { href: '/site-equipment', label: 'Site Equipment', icon: Package },
+              ].map((c) => {
+                const Icon = c.icon;
+                return (
+                  <Link
+                    key={c.href}
+                    href={c.href}
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className="flex items-center justify-between py-2.5 px-3 rounded-lg text-sm font-semibold text-tc-ink hover:bg-tc-canvas group"
+                  >
+                    <div className="flex items-center gap-3">
+                      <div className="w-8 h-8 rounded-lg bg-tc-surface-soft border border-[#C8D9F9] flex items-center justify-center text-tc-primary group-hover:bg-tc-primary group-hover:text-white transition-colors">
+                        <Icon className="w-4.5 h-4.5 stroke-[2]" />
+                      </div>
+                      <span>{c.label}</span>
+                    </div>
+                    <ChevronRight className="w-4 h-4 text-tc-border-strong group-hover:text-tc-primary transition-colors" />
+                  </Link>
+                );
+              })}
             </div>
 
             <div className="pt-4 border-t border-tc-border space-y-2">
@@ -370,26 +360,6 @@ export function Header({ onOpenAiAssistant }: HeaderProps) {
                 <span>Trade Portal</span>
               </Link>
             </div>
-
-            {onOpenAiAssistant && (
-              <div className="mt-6 p-4 rounded-xl bg-tc-surface-soft border border-[#C8D9F9]">
-                <p className="text-xs font-bold text-tc-primary mb-1">ToolCart AI Assistant</p>
-                <p className="text-[11px] text-tc-ink mb-3">
-                  Ask about verified specifications, pack quantities, and project tooling.
-                </p>
-                <Button
-                  variant="primary"
-                  size="sm"
-                  className="w-full text-xs"
-                  onClick={() => {
-                    setIsMobileMenuOpen(false);
-                    onOpenAiAssistant();
-                  }}
-                >
-                  Launch Assistant
-                </Button>
-              </div>
-            )}
           </div>
         </div>
       )}

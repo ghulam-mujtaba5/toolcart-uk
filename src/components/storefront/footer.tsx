@@ -48,7 +48,7 @@ export function Footer() {
             </div>
             <div>
               <p className="font-heading font-bold text-xs text-white">Project Guidance</p>
-              <p className="text-[11px] text-[#DFE8F6]/70 mt-0.5">UK buying guides &amp; AI project finder</p>
+              <p className="text-[11px] text-[#DFE8F6]/70 mt-0.5">UK buying guides &amp; curated project kits</p>
             </div>
           </div>
 

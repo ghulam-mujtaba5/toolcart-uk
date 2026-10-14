@@ -3,7 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { VatToggle } from './vat-toggle';
-import { ShieldAlert, Truck, Sparkles } from 'lucide-react';
+import { ShieldAlert, Truck } from 'lucide-react';
 
 export function Microbar() {
   return (

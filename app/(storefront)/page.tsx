@@ -11,13 +11,13 @@ import {
   HardHat,
   Package,
   ArrowRight,
-  Sparkles,
   CheckCircle2,
   Truck,
   BookOpen,
   Layers,
   ShieldCheck,
 } from 'lucide-react';
+import { IconStockRadar } from '@/components/ui/trade-icons';
 
 export const dynamic = 'force-dynamic';
 
@@ -187,19 +187,14 @@ export default async function StorefrontHomePage() {
                   Clear product sizes, pack quantities and relevant options help you make an informed choice before you order. Backed directly by verified UK supplier quotes.
                 </p>
 
-                {/* AI Assistant Teaser with Graphic */}
+                {/* Technical Specification & Fixing Matcher */}
                 <div className="mt-2 p-3.5 rounded-xl bg-white border border-[#C8D9F9] flex gap-3.5 items-center shadow-xs">
-                  <div className="w-16 h-16 rounded-xl bg-tc-canvas border border-[#C8D9F9] p-1 shrink-0 flex items-center justify-center overflow-hidden shadow-xs">
-                    <img
-                      src="/images/3d/ai/assistant-robot-avatar.webp"
-                      alt="ToolCart AI Technical Assistant"
-                      className="w-full h-full object-contain drop-shadow-sm hover:scale-105 transition-transform duration-300"
-                    />
+                  <div className="w-12 h-12 rounded-xl bg-tc-surface-soft border border-[#C8D9F9] shrink-0 flex items-center justify-center text-tc-primary shadow-xs">
+                    <IconStockRadar size={24} className="text-tc-primary" />
                   </div>
                   <div className="flex-1 min-w-0 space-y-1">
                     <div className="flex items-center gap-1.5 text-xs font-bold text-tc-primary">
-                      <Sparkles className="w-3.5 h-3.5 text-tc-primary shrink-0" />
-                      <span>AI Project Finder</span>
+                      <span>Specification & Fixing Matcher</span>
                     </div>
                     <p className="text-[11px] text-tc-graphite italic truncate">
                       &quot;Fixings for a heavy shelf on brick wall?&quot;
@@ -208,7 +203,7 @@ export default async function StorefrontHomePage() {
                       href="/search?q=wall+plugs"
                       className="inline-block text-[11px] font-bold text-tc-primary hover:underline"
                     >
-                      Ask About Shelf Fixings →
+                      Find Matching Wall Plugs &amp; Fixings →
                     </Link>
                   </div>
                 </div>
@@ -254,16 +249,21 @@ export default async function StorefrontHomePage() {
                       alt={cat.name}
                       className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-500 drop-shadow-sm"
                     />
-                    <div className="absolute top-3 left-3 w-10 h-10 rounded-xl bg-white/95 backdrop-blur-xs border border-tc-border flex items-center justify-center text-tc-primary shadow-xs">
-                      <Icon className="w-5 h-5 stroke-[2]" />
+                    <div className="absolute top-3 left-3 w-11 h-11 rounded-xl bg-white/95 backdrop-blur-xs border border-tc-border-strong flex items-center justify-center text-tc-primary shadow-sm group-hover:bg-tc-primary group-hover:text-white transition-all">
+                      <Icon className="w-6 h-6 stroke-[2.25]" />
                     </div>
                   </div>
 
                   <div className="p-5">
-                    <h3 className="font-heading font-bold text-lg text-tc-ink group-hover:text-tc-primary transition-colors">
-                      {cat.name}
-                    </h3>
-                    <p className="text-xs text-tc-text-secondary mt-1.5 leading-relaxed">
+                    <div className="flex items-center gap-2.5">
+                      <div className="w-7 h-7 rounded-md bg-tc-surface-soft border border-[#C8D9F9] flex items-center justify-center text-tc-primary shrink-0 group-hover:bg-tc-primary group-hover:text-white transition-colors">
+                        <Icon className="w-4 h-4 stroke-[2]" />
+                      </div>
+                      <h3 className="font-heading font-bold text-lg text-tc-ink group-hover:text-tc-primary transition-colors">
+                        {cat.name}
+                      </h3>
+                    </div>
+                    <p className="text-xs text-tc-text-secondary mt-2 leading-relaxed">
                       {cat.description}
                     </p>
                   </div>
@@ -347,8 +347,10 @@ export default async function StorefrontHomePage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8">
             <div>
-              <div className="inline-flex items-center gap-1.5 text-xs font-extrabold text-tc-primary uppercase tracking-wider mb-2">
-                <Layers className="w-4 h-4" />
+              <div className="inline-flex items-center gap-2 text-xs font-extrabold text-tc-primary uppercase tracking-wider mb-2">
+                <div className="w-6 h-6 rounded-md bg-tc-surface-soft border border-[#C8D9F9] flex items-center justify-center text-tc-primary shadow-2xs">
+                  <Layers className="w-3.5 h-3.5 stroke-[2.25]" />
+                </div>
                 <span>Job-Ready Bundles</span>
               </div>
               <h2 className="font-heading font-extrabold text-2xl sm:text-3xl text-tc-ink tracking-tight">
@@ -374,11 +376,11 @@ export default async function StorefrontHomePage() {
               >
                 <div className="space-y-4">
                   {kit.image && (
-                    <div className="w-full h-40 rounded-xl overflow-hidden bg-tc-canvas border border-tc-border">
+                    <div className="w-full h-44 rounded-xl overflow-hidden bg-tc-canvas border border-tc-border flex items-center justify-center p-2">
                       <img
                         src={kit.image}
                         alt={kit.title}
-                        className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                        className="w-full h-full object-contain hover:scale-105 transition-transform duration-300 drop-shadow-xs"
                       />
                     </div>
                   )}
@@ -426,8 +428,10 @@ export default async function StorefrontHomePage() {
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-baseline justify-between mb-8">
           <div>
-            <div className="inline-flex items-center gap-1.5 text-xs font-extrabold text-tc-primary uppercase tracking-wider mb-2">
-              <BookOpen className="w-4 h-4" />
+            <div className="inline-flex items-center gap-2 text-xs font-extrabold text-tc-primary uppercase tracking-wider mb-2">
+              <div className="w-6 h-6 rounded-md bg-tc-surface-soft border border-[#C8D9F9] flex items-center justify-center text-tc-primary shadow-2xs">
+                <BookOpen className="w-3.5 h-3.5 stroke-[2.25]" />
+              </div>
               <span>Technical Advice</span>
             </div>
             <h2 className="font-heading font-extrabold text-2xl sm:text-3xl text-tc-ink tracking-tight">

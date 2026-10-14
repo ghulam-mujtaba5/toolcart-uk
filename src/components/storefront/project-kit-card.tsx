@@ -96,11 +96,11 @@ export function ProjectKitCard({ kit }: ProjectKitCardProps) {
       {/* Kit Header with Illustration */}
       <div className="flex flex-col md:flex-row gap-6 pb-6 border-b border-tc-border items-start">
         {kit.image && (
-          <div className="w-full md:w-56 h-40 shrink-0 rounded-xl overflow-hidden bg-tc-canvas border border-tc-border shadow-xs">
+          <div className="w-full md:w-56 h-40 shrink-0 rounded-xl overflow-hidden bg-tc-canvas border border-tc-border shadow-xs flex items-center justify-center p-2">
             <img
               src={kit.image}
               alt={kit.title}
-              className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+              className="w-full h-full object-contain hover:scale-105 transition-transform duration-300 drop-shadow-xs"
             />
           </div>
         )}

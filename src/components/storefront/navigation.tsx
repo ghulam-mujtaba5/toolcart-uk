@@ -5,7 +5,18 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
 import { NavBar } from '@/components/storefront/nav-bar';
-import { X, Menu } from 'lucide-react';
+import {
+  X,
+  Menu,
+  Wrench,
+  Shield,
+  Paintbrush,
+  Ruler,
+  HardHat,
+  Package,
+  Layers,
+  BookOpen,
+} from 'lucide-react';
 import { IconToolbox } from '@/components/ui/trade-icons';
 
 export interface NavigationProps {
@@ -63,24 +74,32 @@ export function Navigation({ className }: NavigationProps) {
             </div>
             <div className="py-4 space-y-1">
               {[
-                { href: '/tools', label: 'Hand Tools' },
-                { href: '/fixings', label: 'Fixings & Security' },
-                { href: '/decorating', label: 'Decorating' },
-                { href: '/measuring', label: 'Measuring' },
-                { href: '/ppe', label: 'Workwear & Safety' },
-                { href: '/site-equipment', label: 'Site Equipment' },
-                { href: '/projects', label: 'Project Kits' },
-                { href: '/guides', label: 'Buying Guides' },
-              ].map((link) => (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  onClick={() => setMobileOpen(false)}
-                  className="flex items-center justify-between py-2.5 px-3 rounded-lg text-sm font-semibold text-tc-ink hover:bg-tc-canvas"
-                >
-                  <span>{link.label}</span>
-                </Link>
-              ))}
+                { href: '/tools', label: 'Hand Tools', icon: Wrench },
+                { href: '/fixings', label: 'Fixings & Security', icon: Shield },
+                { href: '/decorating', label: 'Decorating', icon: Paintbrush },
+                { href: '/measuring', label: 'Measuring', icon: Ruler },
+                { href: '/ppe', label: 'Workwear & Safety', icon: HardHat },
+                { href: '/site-equipment', label: 'Site Equipment', icon: Package },
+                { href: '/projects', label: 'Project Kits', icon: Layers },
+                { href: '/guides', label: 'Buying Guides', icon: BookOpen },
+              ].map((link) => {
+                const Icon = link.icon;
+                return (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    onClick={() => setMobileOpen(false)}
+                    className="flex items-center justify-between py-2.5 px-3 rounded-lg text-sm font-semibold text-tc-ink hover:bg-tc-canvas group"
+                  >
+                    <div className="flex items-center gap-3">
+                      <div className="w-8 h-8 rounded-lg bg-tc-surface-soft border border-[#C8D9F9] flex items-center justify-center text-tc-primary group-hover:bg-tc-primary group-hover:text-white transition-colors">
+                        <Icon className="w-4.5 h-4.5 stroke-[2]" />
+                      </div>
+                      <span>{link.label}</span>
+                    </div>
+                  </Link>
+                );
+              })}
             </div>
           </div>
         </div>

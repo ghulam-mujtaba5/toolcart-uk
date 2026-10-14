@@ -61,7 +61,13 @@ export default function TradePortalPage() {
           </div>
 
           <div className="shrink-0 flex justify-center">
-            <TradeProHeroVector className="w-64 h-44 sm:w-80 sm:h-52" />
+            <div className="w-72 h-44 sm:w-80 sm:h-52 rounded-xl overflow-hidden bg-tc-canvas border border-tc-border shadow-xs">
+              <img
+                src="/images/trade/trade-pro-hero.webp"
+                alt="ToolCart Trade Account for UK Contractors"
+                className="w-full h-full object-cover"
+              />
+            </div>
           </div>
         </div>
 

@@ -87,15 +87,27 @@ export async function searchProducts(
 
   if (filters.category) {
     const cat = filters.category.toLowerCase();
-    const aliasMap: Record<string, string> = {
-      'hand-tools': 'tools',
-      'bits-accessories': 'tools',
-      'fixings-security': 'fixings',
-      'workwear-safety': 'ppe',
-      'tapes-consumables': 'site-equipment',
-    };
-    const target = aliasMap[cat] || cat;
-    filtered = filtered.filter((p) => p.category_slug.toLowerCase() === target || p.category.toLowerCase() === target);
+    if (cat === 'electrical' || cat === 'electrical-tapes' || cat === 'electrical-lighting') {
+      filtered = filtered.filter(
+        (p) =>
+          p.category_slug.toLowerCase() === 'electrical' ||
+          p.category.toLowerCase() === 'electrical' ||
+          p.title.toLowerCase().includes('electrical') ||
+          p.title.toLowerCase().includes('electrician') ||
+          p.title.toLowerCase().includes('neon tester') ||
+          (p.category_slug.toLowerCase() === 'site-equipment' && p.title.toLowerCase().includes('pvc electrical tape'))
+      );
+    } else {
+      const aliasMap: Record<string, string> = {
+        'hand-tools': 'tools',
+        'bits-accessories': 'tools',
+        'fixings-security': 'fixings',
+        'workwear-safety': 'ppe',
+        'tapes-consumables': 'site-equipment',
+      };
+      const target = aliasMap[cat] || cat;
+      filtered = filtered.filter((p) => p.category_slug.toLowerCase() === target || p.category.toLowerCase() === target);
+    }
   }
 
   if (filters.brand) {
@@ -103,11 +115,11 @@ export async function searchProducts(
     filtered = filtered.filter((p) => p.brand.toLowerCase() === brand);
   }
 
-  if (filters.minPrice !== undefined) {
+  if (filters.minPrice !== undefined && !isNaN(Number(filters.minPrice))) {
     filtered = filtered.filter((p) => p.retail_price_inc_vat_gbp >= (filters.minPrice ?? 0));
   }
 
-  if (filters.maxPrice !== undefined) {
+  if (filters.maxPrice !== undefined && !isNaN(Number(filters.maxPrice))) {
     filtered = filtered.filter((p) => p.retail_price_inc_vat_gbp <= (filters.maxPrice ?? Infinity));
   }
 

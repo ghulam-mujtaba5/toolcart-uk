@@ -28,6 +28,7 @@ const CATEGORIES = [
     description: 'Screwdrivers, pliers, hammers, saws, spanners & chisels.',
     icon: Wrench,
     itemCount: '44 items',
+    image: '/images/categories/tools-hero.webp',
   },
   {
     name: 'Fixings & Security',
@@ -35,6 +36,7 @@ const CATEGORIES = [
     description: 'Brass padlocks, bolts, wall plugs, clips & hardware.',
     icon: Shield,
     itemCount: '22 items',
+    image: '/images/categories/fixings-hero.webp',
   },
   {
     name: 'Decorating',
@@ -42,6 +44,7 @@ const CATEGORIES = [
     description: 'Paint brushes, rollers, masking tapes, scrapers & sandpapers.',
     icon: Paintbrush,
     itemCount: '15 items',
+    image: '/images/categories/decorating-hero.webp',
   },
   {
     name: 'Measuring',
@@ -49,6 +52,7 @@ const CATEGORIES = [
     description: '5m/10m tape measures, spirit levels, metal rulers & plumb bobs.',
     icon: Ruler,
     itemCount: '5 items',
+    image: '/images/categories/measuring-hero.webp',
   },
   {
     name: 'Workwear & Safety',
@@ -56,6 +60,7 @@ const CATEGORIES = [
     description: 'EN166 eye protection, dust masks, ear plugs & safety gloves.',
     icon: HardHat,
     itemCount: '10 items',
+    image: '/images/categories/ppe-hero.webp',
   },
   {
     name: 'Site Equipment',
@@ -63,6 +68,7 @@ const CATEGORIES = [
     description: 'EN14183 step ladders, heavy tarpaulins, ropes & ratchet straps.',
     icon: Package,
     itemCount: '19 items',
+    image: '/images/categories/site-equipment-hero.webp',
   },
 ];
 
@@ -84,7 +90,11 @@ export default async function StorefrontHomePage() {
             {/* Left Column: Heading, Lead & CTAs */}
             <div className="lg:col-span-7 space-y-6">
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-tc-surface-soft border border-[#C8D9F9] text-xs font-extrabold tracking-wider text-tc-primary uppercase">
-                <ShieldCheck className="w-4 h-4 text-tc-primary" />
+                <img
+                  src="/images/features/stock-freshness.webp"
+                  alt="Stock freshness radar"
+                  className="w-4 h-4 object-contain"
+                />
                 <span>Verified UK Supplier Catalog · 115 SKUs Quoted</span>
               </div>
 
@@ -126,9 +136,28 @@ export default async function StorefrontHomePage() {
               </div>
             </div>
 
-            {/* Right Column: Customer Promise Card */}
-            <div className="lg:col-span-5">
-              <div className="rounded-2xl bg-tc-surface-soft border border-[#C8D9F9] p-6 sm:p-8 shadow-sm space-y-5">
+            {/* Right Column: Hero Visual & Customer Promise Card */}
+            <div className="lg:col-span-5 space-y-5">
+              {/* Hero Workbench Visual */}
+              <div className="relative rounded-2xl overflow-hidden border border-[#C8D9F9] shadow-md group">
+                <div className="aspect-[16/9] w-full bg-tc-canvas overflow-hidden">
+                  <img
+                    src="/images/hero/hero-workbench.webp"
+                    alt="ToolCart Professional Trade Workbench"
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  />
+                </div>
+                <div className="absolute bottom-3 left-3 right-3 p-3 rounded-xl bg-white/90 backdrop-blur-md border border-white/60 flex items-center justify-between text-xs">
+                  <div className="flex items-center gap-2">
+                    <span className="w-2 h-2 rounded-full bg-tc-success animate-pulse" />
+                    <span className="font-heading font-bold text-tc-ink">Status UK Trade Catalog</span>
+                  </div>
+                  <span className="font-mono text-[11px] font-bold text-tc-primary">115 Verified SKUs</span>
+                </div>
+              </div>
+
+              {/* Customer Promise Card */}
+              <div className="rounded-2xl bg-tc-surface-soft border border-[#C8D9F9] p-6 sm:p-7 shadow-xs space-y-4">
                 <div className="flex items-center justify-between">
                   <span className="text-[11px] font-extrabold tracking-wider text-tc-primary uppercase font-mono">
                     OUR CUSTOMER PROMISE
@@ -138,41 +167,38 @@ export default async function StorefrontHomePage() {
                   </span>
                 </div>
 
-                <h2 className="font-heading font-extrabold text-2xl text-tc-ink leading-tight">
+                <h2 className="font-heading font-extrabold text-xl sm:text-2xl text-tc-ink leading-tight">
                   Less guesswork. Better choices.
                 </h2>
 
-                <p className="text-xs sm:text-sm text-tc-graphite leading-relaxed">
+                <p className="text-xs text-tc-graphite leading-relaxed">
                   Clear product sizes, pack quantities and relevant options help you make an informed choice before you order. Backed directly by verified UK supplier quotes.
                 </p>
 
-                <div className="space-y-2.5 pt-2 text-xs text-tc-ink">
-                  <div className="flex items-start gap-2.5">
-                    <CheckCircle2 className="w-4 h-4 text-tc-primary shrink-0 mt-0.5" />
-                    <span><strong>Verified Specs:</strong> Full EAN-13 GTIN, MPN, carton pack breakdown.</span>
+                {/* AI Assistant Teaser with Graphic */}
+                <div className="mt-2 p-3.5 rounded-xl bg-white border border-[#C8D9F9] flex gap-3.5 items-center">
+                  <div className="w-16 h-16 rounded-lg bg-tc-canvas border border-tc-border p-1 shrink-0 flex items-center justify-center">
+                    <img
+                      src="/images/ai/assistant-graphic.webp"
+                      alt="AI Project Finder"
+                      className="w-full h-full object-contain"
+                    />
                   </div>
-                  <div className="flex items-start gap-2.5">
-                    <CheckCircle2 className="w-4 h-4 text-tc-primary shrink-0 mt-0.5" />
-                    <span><strong>Honest Availability:</strong> We distinguish &quot;Confirmed in stock&quot; from &quot;Subject to confirmation&quot;.</span>
+                  <div className="flex-1 min-w-0 space-y-1">
+                    <div className="flex items-center gap-1.5 text-xs font-bold text-tc-primary">
+                      <Sparkles className="w-3.5 h-3.5 text-tc-primary shrink-0" />
+                      <span>AI Project Finder</span>
+                    </div>
+                    <p className="text-[11px] text-tc-graphite italic truncate">
+                      &quot;Fixings for a heavy shelf on brick wall?&quot;
+                    </p>
+                    <Link
+                      href="/search?q=wall+plugs"
+                      className="inline-block text-[11px] font-bold text-tc-primary hover:underline"
+                    >
+                      Ask About Shelf Fixings →
+                    </Link>
                   </div>
-                  <div className="flex items-start gap-2.5">
-                    <CheckCircle2 className="w-4 h-4 text-tc-primary shrink-0 mt-0.5" />
-                    <span><strong>Transparent Dispatch:</strong> Multi-supplier freight calculation with integer-pence UK 20% VAT math.</span>
-                  </div>
-                </div>
-
-                {/* AI Assistant Teaser */}
-                <div className="mt-4 p-4 rounded-xl bg-white border border-[#C8D9F9] space-y-2">
-                  <div className="flex items-center gap-2 text-xs font-bold text-tc-primary">
-                    <Sparkles className="w-4 h-4 text-tc-primary" />
-                    <span>Try our AI Project Finder</span>
-                  </div>
-                  <p className="text-xs text-tc-graphite italic">
-                    &quot;I need fixings for a heavy shelf on a brick wall—what should I check?&quot;
-                  </p>
-                  <Button variant="outline" size="sm" asChild className="w-full text-xs mt-2 border-tc-primary text-tc-primary hover:bg-tc-surface-soft">
-                    <Link href="/search?q=wall+plugs">Ask About Shelf Fixings →</Link>
-                  </Button>
                 </div>
               </div>
             </div>
@@ -207,21 +233,31 @@ export default async function StorefrontHomePage() {
               <Link
                 key={cat.slug}
                 href={`/${cat.slug}`}
-                className="group p-6 rounded-card bg-white border border-tc-border hover:border-[#94A8C9] hover:shadow-md transition-all duration-200 flex flex-col justify-between"
+                className="group rounded-card bg-white border border-tc-border hover:border-[#94A8C9] hover:shadow-md transition-all duration-200 flex flex-col justify-between overflow-hidden"
               >
                 <div>
-                  <div className="w-12 h-12 rounded-xl bg-tc-surface-soft border border-[#C8D9F9] flex items-center justify-center text-tc-primary mb-4 group-hover:scale-105 transition-transform">
-                    <Icon className="w-6 h-6 stroke-[2]" />
+                  <div className="relative aspect-[16/10] w-full bg-tc-canvas border-b border-tc-border overflow-hidden">
+                    <img
+                      src={cat.image}
+                      alt={cat.name}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    />
+                    <div className="absolute top-3 left-3 w-10 h-10 rounded-xl bg-white/95 backdrop-blur-xs border border-tc-border flex items-center justify-center text-tc-primary shadow-xs">
+                      <Icon className="w-5 h-5 stroke-[2]" />
+                    </div>
                   </div>
-                  <h3 className="font-heading font-bold text-lg text-tc-ink group-hover:text-tc-primary transition-colors">
-                    {cat.name}
-                  </h3>
-                  <p className="text-xs text-tc-text-secondary mt-1.5 leading-relaxed">
-                    {cat.description}
-                  </p>
+
+                  <div className="p-5">
+                    <h3 className="font-heading font-bold text-lg text-tc-ink group-hover:text-tc-primary transition-colors">
+                      {cat.name}
+                    </h3>
+                    <p className="text-xs text-tc-text-secondary mt-1.5 leading-relaxed">
+                      {cat.description}
+                    </p>
+                  </div>
                 </div>
 
-                <div className="mt-5 pt-3 border-t border-tc-border/60 flex items-center justify-between text-xs font-semibold text-tc-primary">
+                <div className="px-5 pb-5 pt-3 border-t border-tc-border/60 flex items-center justify-between text-xs font-semibold text-tc-primary">
                   <span className="font-mono text-tc-text-secondary">{cat.itemCount}</span>
                   <span className="group-hover:translate-x-1 transition-transform flex items-center gap-1">
                     Explore category →
@@ -260,6 +296,40 @@ export default async function StorefrontHomePage() {
         </div>
       </section>
 
+      {/* Mid-Page Promo Banner */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="relative rounded-2xl overflow-hidden border border-tc-border shadow-sm group">
+          <div className="relative aspect-[21/9] sm:aspect-[24/8] min-h-[220px]">
+            <img
+              src="/images/promos/promo-decorating-1600x650.webp"
+              alt="Decorating & Surface Preparation Promotion"
+              className="w-full h-full object-cover"
+            />
+            <div className="absolute inset-0 bg-gradient-to-r from-tc-ink/90 via-tc-ink/65 to-transparent flex items-center p-6 sm:p-10">
+              <div className="max-w-xl space-y-3">
+                <span className="text-[11px] font-extrabold tracking-wider text-tc-action-lime uppercase font-mono">
+                  TRADE SURFACE PREPARATION
+                </span>
+                <h2 className="font-heading font-extrabold text-2xl sm:text-3xl text-white tracking-tight">
+                  Precision Masking &amp; Surface Protection
+                </h2>
+                <p className="text-xs sm:text-sm text-tc-canvas leading-relaxed hidden sm:block">
+                  Save on professional crepe paper masking tapes, pure bristle brushes, and heavy polythene dust sheets. Tested for sharp paint cutoff lines without plaster peeling.
+                </p>
+                <div className="pt-2 flex flex-wrap items-center gap-3">
+                  <Button variant="accent" size="sm" asChild>
+                    <Link href="/decorating">Explore Decorating Range</Link>
+                  </Button>
+                  <Button variant="outline" size="sm" asChild className="bg-white/10 text-white border-white/30 hover:bg-white/20">
+                    <Link href="/guides/masking-painters-tapes-demystified">Read Tape Guide →</Link>
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Curated Project Kits Teaser */}
       <section className="bg-tc-surface-soft border-y border-[#C8D9F9] py-14">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -288,9 +358,19 @@ export default async function StorefrontHomePage() {
             {kits.map((kit) => (
               <div
                 key={kit.id}
-                className="bg-white rounded-card border border-tc-border p-6 shadow-sm flex flex-col justify-between"
+                className="bg-white rounded-card border border-tc-border p-6 shadow-sm flex flex-col justify-between overflow-hidden"
               >
-                <div className="space-y-3">
+                <div className="space-y-4">
+                  {kit.image && (
+                    <div className="w-full h-40 rounded-xl overflow-hidden bg-tc-canvas border border-tc-border">
+                      <img
+                        src={kit.image}
+                        alt={kit.title}
+                        className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                      />
+                    </div>
+                  )}
+
                   <div className="flex items-center justify-between">
                     <span className="text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-tc-primary/10 text-tc-primary">
                       {kit.badge}
@@ -361,10 +441,21 @@ export default async function StorefrontHomePage() {
               href={`/guides/${guide.slug}`}
               className="group bg-white rounded-card border border-tc-border p-6 hover:border-[#94A8C9] hover:shadow-md transition-all flex flex-col justify-between"
             >
-              <div className="space-y-3">
-                <span className="text-[11px] font-bold uppercase tracking-wider text-tc-primary">
-                  {guide.category} • {guide.read_time_minutes} min read
-                </span>
+              <div className="space-y-4">
+                {guide.hero_image && (
+                  <div className="w-full h-36 rounded-lg overflow-hidden bg-tc-canvas border border-tc-border">
+                    <img
+                      src={guide.hero_image}
+                      alt={guide.title}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    />
+                  </div>
+                )}
+                <div className="flex items-center justify-between text-xs">
+                  <span className="text-[11px] font-bold uppercase tracking-wider text-tc-primary">
+                    {guide.category} • {guide.read_time_minutes} min read
+                  </span>
+                </div>
                 <h3 className="font-heading font-bold text-base text-tc-ink group-hover:text-tc-primary transition-colors leading-snug">
                   {guide.title}
                 </h3>

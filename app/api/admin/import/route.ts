@@ -66,7 +66,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const report = parseAndValidateCatalogCsv(csvContent, dryRun);
+    const report = await parseAndValidateCatalogCsv(csvContent, dryRun);
 
     return NextResponse.json(report, { status: 200 });
   } catch (error: unknown) {

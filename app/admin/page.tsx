@@ -38,7 +38,7 @@ export default async function AdminDashboardPage() {
   // Collect latest 5 audit log transitions across all orders
   const allAuditLogs = allOrders
     .flatMap((o) =>
-      o.audit_logs.map((log) => ({
+      (o.audit_logs || []).map((log) => ({
         ...log,
         order_number: o.order_number,
       }))

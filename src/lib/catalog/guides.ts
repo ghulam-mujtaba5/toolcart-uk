@@ -12,7 +12,7 @@ export function getStaticBuyingGuides(): BuyingGuide[] {
       published_date: '2026-10-10',
       author: 'ToolCart UK Technical Advice Team',
       category: 'Hand Tools',
-      hero_image: '/images/guides/screwdrivers.svg',
+      hero_image: '/images/guides/screwdrivers.webp',
       excerpt:
         'Using the wrong screwdriver head damages fasteners, strips screw heads, and causes cam-out injury. Learn how to identify British screw profiles, driver steels, and insulated VDE ratings.',
       safety_warnings: [
@@ -57,7 +57,7 @@ export function getStaticBuyingGuides(): BuyingGuide[] {
       published_date: '2026-10-08',
       author: 'ToolCart UK Technical Advice Team',
       category: 'Fixings & Security',
-      hero_image: '/images/guides/wall-plugs.svg',
+      hero_image: '/images/guides/wall-plugs.webp',
       excerpt:
         'A fixing is only as strong as the wall behind it. Understand drill bit diameters, screw gauges, and expansion plug physics across solid masonry and hollow stud partitions.',
       safety_warnings: [
@@ -95,7 +95,7 @@ export function getStaticBuyingGuides(): BuyingGuide[] {
       published_date: '2026-10-06',
       author: 'ToolCart UK Decorating Specialist',
       category: 'Decorating',
-      hero_image: '/images/guides/masking-tape.svg',
+      hero_image: '/images/guides/masking-tape.webp',
       excerpt:
         'Standard utility masking tape left on surfaces for too long will bake onto timber and tear newly applied emulsion paint. Master adhesion grades, dwell times, and clean removal angles.',
       safety_warnings: [
@@ -127,7 +127,7 @@ export function getStaticBuyingGuides(): BuyingGuide[] {
       published_date: '2026-10-04',
       author: 'ToolCart UK Safety Specialist',
       category: 'Workwear & Safety',
-      hero_image: '/images/guides/ladder-safety.svg',
+      hero_image: '/images/guides/ladder-safety.webp',
       excerpt:
         'Falls from height remain the leading cause of fatal accidents in UK workplaces. Understand BS EN 14183 step stool standards, 150KG maximum load ratings, and mandatory 3-point contact rules.',
       safety_warnings: [
@@ -160,7 +160,7 @@ export function getStaticBuyingGuides(): BuyingGuide[] {
       published_date: '2026-10-02',
       author: 'ToolCart UK Electrical Technical Lead',
       category: 'Site Equipment',
-      hero_image: '/images/guides/electrical-tape.svg',
+      hero_image: '/images/guides/electrical-tape.webp',
       excerpt:
         'Electrical PVC tape is not just adhesive tape: it is an engineered dielectric barrier tested to withstand 600V to 1000V. Understand BS EN 60454 flammability ratings and UK wiring regulation colours.',
       safety_warnings: [

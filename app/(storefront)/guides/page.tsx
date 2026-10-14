@@ -42,6 +42,15 @@ export default async function GuidesDirectoryPage() {
             className="group bg-white rounded-card border border-tc-border p-6 hover:border-[#94A8C9] hover:shadow-md transition-all flex flex-col justify-between"
           >
             <div className="space-y-4">
+              {guide.hero_image && (
+                <div className="w-full h-44 rounded-lg overflow-hidden bg-tc-canvas border border-tc-border">
+                  <img
+                    src={guide.hero_image}
+                    alt={guide.title}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                  />
+                </div>
+              )}
               <div className="flex items-center justify-between text-xs">
                 <span className="font-bold uppercase tracking-wider text-tc-primary">
                   {guide.category}

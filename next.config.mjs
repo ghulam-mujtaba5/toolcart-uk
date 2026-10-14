@@ -12,6 +12,26 @@ if (fs.existsSync('tsconfig.tsbuildinfo')) {
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
+  async rewrites() {
+    return [
+      {
+        source: '/catalog',
+        destination: '/search',
+      },
+      {
+        source: '/categories',
+        destination: '/',
+      },
+      {
+        source: '/product/:slug',
+        destination: '/products/:slug',
+      },
+      {
+        source: '/guide/:slug*',
+        destination: '/guides/:slug*',
+      },
+    ];
+  },
 };
 
 export default nextConfig;

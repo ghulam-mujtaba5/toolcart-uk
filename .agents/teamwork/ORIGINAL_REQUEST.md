@@ -153,3 +153,121 @@ Integrity mode: development
 - [ ] All 426+ existing unit, integration, and security tests pass (`npm test`).
 - [ ] TypeScript typecheck (`npx tsc --noEmit`) and Next.js production build (`npm run build`) exit with code 0.
 - [ ] Changes committed to GitHub (`master`) and deployed to live Vercel production (`https://toolcart-uk.vercel.app`).
+
+
+## 2026-10-13T19:28:15Z
+
+Execute live Supabase PostgreSQL migrations and seed all 115 quoted products, configure Cloudflare R2 object storage to host the 115 extracted product photos, and activate live Resend transactional emails with Brand V3 templates for order confirmations and trade account approvals.
+
+Working directory: e:\ToolCart
+Integrity mode: development
+
+## Requirements
+
+### R1. Live Supabase PostgreSQL Schema Migration & Catalog Seeding
+- Apply the full database migration (`supabase/migrations/20261012_001_initial_schema.sql` or equivalent) to Supabase project `wuhgrawzxhsocbrribrw` using Supabase CLI / direct Postgres connection.
+- Create authoritative tables: `products`, `variants`, `suppliers`, `orders`, `order_audit_logs`, `trade_accounts`, and `pricing_rules`.
+- Seed all 115 quoted products from `src/lib/catalog/products.ts` directly into the Supabase database with their full technical specifications, EAN-13 barcodes, stock quantities, and Brand V3 categories.
+- Enforce Row-Level Security (RLS) policies so public clients cannot query supplier wholesale costs (`unit_cost_ex_vat_gbp`, `case_cost_ex_vat_gbp`).
+- Ensure graceful zero-crash fallback to in-memory repositories if the cloud connection is ever offline or in CI test mode.
+
+### R2. Cloudflare R2 Object Storage & Catalog Asset Hosting
+- Connect the Cloudflare R2 S3-compatible client (`@aws-sdk/client-s3`) using Account `6c9035e2ddbac196ef20ce5bfd9469cd`.
+- Ensure bucket `toolcart-assets` / `toolcart-media` is initialized, and upload all 115 extracted product photos from `public/images/products/*.png`.
+- Wire the media adapter so product cards and PDPs can serve image URLs from R2 with instant fallback to local assets.
+
+### R3. Live Resend Transactional Email Engine
+- Connect the Resend client with API Key `re_He8Pb7UD_...`.
+- Wire live email triggers:
+  - Order Confirmation email sent to customer upon order placement with Brand V3 styling and UK 20% VAT integer-pence summary.
+  - Supplier Purchase Order notification email sent to supplier contact upon state transition to `supplier_order_pending`.
+  - Trade Pro welcome/approval email sent upon application submission or approval.
+- Add an interactive test email dispatch trigger in `/admin/settings` to allow testing email delivery with 1 click.
+
+### R4. Verification, Test Suite & Live Production Deployment
+- Verify all existing and new tests pass with zero regressions (`npm test`).
+- Run `python qa/check_static.py` to ensure 100% Brand V3 compliance (zero copper `#B84C32`, purple, or teal; Action Lime strictly with dark Ink text).
+- Commit all changes to GitHub (`ghulam-mujtaba5/toolcart-uk`) on `master` and deploy to live Vercel production (`https://toolcart-uk.vercel.app`).
+
+## Verification Resources
+
+- Supabase project credentials in `.env.local` (`wuhgrawzxhsocbrribrw`)
+- Cloudflare R2 credentials in `.env.local`
+- Resend API key in `.env.local`
+- Automated test suites: `npm test` (all 571 tests must remain green)
+- Brand V3 static validator: `qa/check_static.py`
+- Production Next.js build: `npm run build && npx tsc --noEmit`
+
+## Acceptance Criteria
+
+### Database & Storage
+- [ ] Supabase PostgreSQL database tables exist in project `wuhgrawzxhsocbrribrw` and contain all 115 quoted products.
+- [ ] Server-side RLS policies are active; public `/api/store/products` API never exposes wholesale cost data.
+- [ ] Cloudflare R2 client successfully uploads and verifies product image assets.
+
+### Transactional Email
+- [ ] Resend transactional email service successfully dispatches test emails without errors.
+- [ ] Brand V3 email templates render cleanly with integer-pence calculations.
+
+### Quality & Deployment
+- [ ] All 571+ existing unit, integration, and security tests continue to pass (`npm test`).
+- [ ] TypeScript typecheck (`npx tsc --noEmit`) and Next.js production build (`npm run build`) exit with code 0.
+- [ ] Successfully deployed to live Vercel production (`https://toolcart-uk.vercel.app`).
+
+
+## 2026-10-14T09:49:51Z
+
+Comprehensive audit and remediation of all bugs, incomplete features, UI/UX defects, wholesale data leaks, and Brand V3 / WCAG AA compliance issues across the ToolCart UK e-commerce storefront and admin portal.
+
+Working directory: e:\ToolCart
+Integrity mode: development
+
+## Requirements
+
+### R1. Comprehensive Storefront & Admin Portal Defect Audit
+Audit all pages and user flows across the ToolCart application (Homepage, Product Detail Pages, Catalog Search & Facets, Compare Drawer, MiniBasket, Checkout Mock Flow, Trade Pro Portal, and Admin Portal). Identify and log all functional bugs, broken state transitions, missing empty/error states, and unhandled boundary inputs.
+
+### R2. Systematic Code Remediation & Defect Resolution
+Implement clean, robust fixes for all discovered defects. Ensure complete lifecycle handling for interactive components (Snap-to-Cart buttons, 1-click SKU copy badges, tactile VAT switches, radar pulse indicators, and responsive navigation drawers).
+
+### R3. Brand V3 Invariants & WCAG AA Accessibility Enforcement
+Strictly uphold ToolCart Brand V3 tokens defined in `design/tokens.css` (Industrial Cobalt `#2450B8`, Action Lime `#DDF16A`, Ink `#182336`, Steel Text `#596B70`, Workshop White `#F7F8F5`, Cloud Blue `#EAF0FF`). Prohibit white text on Action Lime, copper, purple, or unauthorized gradients. Ensure full WCAG AA contrast compliance and responsiveness across 360px mobile and 1440px desktop viewports.
+
+### R4. Wholesale Data Isolation & Commercial Safety
+Ensure wholesale supplier costs, margin formulas, and supplier trade terms remain strictly server-side and are never exposed in client bundles or public Next.js payload. Maintain `STAGING_ONLY=true` and Stripe test mode invariants.
+
+### R5. Automated Verification & Zero-Regression Gate
+Verify all fixes by running the entire test suite and build pipelines. Ensure no existing tests break and write regression tests for newly resolved issues where applicable.
+
+## Acceptance Criteria
+
+### Automated Verification Gates
+- [ ] All unit and integration test suites pass cleanly (`npm test`) with zero failures
+- [ ] Brand V3 static checks pass (`python qa/check_static.py`) with zero violations
+- [ ] TypeScript typecheck passes (`npm run typecheck`) with zero errors
+- [ ] Next.js production build completes successfully (`npm run build`) with zero errors
+
+### Functional & Quality Standards
+- [ ] All storefront interactive elements (cart toggles, copy badges, search filters, modal drawers) function without console errors or runtime crashes
+- [ ] Responsive layouts render cleanly at 360px and 1440px without horizontal overflow or clipped text
+- [ ] Wholesale supplier pricing is 100% isolated to server-side routes and absent from client DOM/bundles
+- [ ] Comprehensive verification report summarizing all audited areas, resolved defects, and test evidence is generated
+
+
+## 2026-10-14T15:11:21Z
+
+Live Browser Auditor report received from https://toolcart-uk.vercel.app with CRITICAL blockers and high-priority fixes:
+
+1. [CRITICAL 500 ERROR]: All Catalog, Search, and Category routes (/search, /tools, /fixings, /decorating, /measuring, /ppe, /site-equipment) crash with Next.js Server Component render exception (Digest: 1307636131). Must be resolved immediately.
+2. [ROUTING & 404s]:
+   - Add redirects/rewrites in next.config.mjs: /catalog -> /search, /categories -> /, and singular /product/:slug -> /products/:slug.
+   - Guides route (/guides/[slug]) redirects to / instead of rendering content.
+3. [ACCESSIBILITY & WCAG AA]:
+   - Inactive VAT switch toggle button contrast is 3.3:1 (#77868b on #edf0f5). Darken to #596B70 or #252D30 to achieve >= 4.5:1.
+   - Mobile navigation drawer close button missing aria-label="Close menu".
+   - Align button aria-label with visible text (WCAG 2.5.3 Label in Name), e.g. "Add to Basket: [Product Title]".
+   - SKU copy badge touch target height is 20px (increase touch padding).
+4. [BRAND V3 FOOTER]:
+   - Footer logo div <div class="bg-tc-action-lime"> inherits color: rgb(255, 255, 255) from parent footer; ensure explicit text-tc-ink or dark styling on container.
+
+Please incorporate these findings directly into PROJECT.md and the worker remediation pipeline.

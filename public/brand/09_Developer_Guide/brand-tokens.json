@@ -1,0 +1,21 @@
+{
+  "brand": "United Shop (working name)",
+  "alternativeStagingBrand": "ToolCart",
+  "colours": {
+    "navy": "#11293C",
+    "navyDeep": "#0A1D2E",
+    "orange": "#F46B2A",
+    "teal": "#1B7C82",
+    "ivory": "#F7F9F9",
+    "textMuted": "#50616D"
+  },
+  "font": "Inter (use your locally hosted or installed licensed copy, fallback sans-serif)",
+  "typography": {
+    "heroHeadline": "clamp(2.5rem, 4vw, 4.8rem)",
+    "body": "1rem"
+  },
+  "names": {
+    "desktopHero": "hero-united-shop-desktop-1920x760.webp",
+    "mobileHero": "hero-united-shop-mobile-1080x1350.webp"
+  }
+}

@@ -9,3 +9,4 @@ export * from './search-filter-chips';
 export * from './compare-drawer';
 export * from './mini-basket';
 export * from './ai-assistant-drawer';
+export * from './catalog-sort-control';

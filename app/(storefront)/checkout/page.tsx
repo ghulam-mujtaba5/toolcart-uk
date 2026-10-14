@@ -72,8 +72,12 @@ export default function CheckoutPage() {
   if (isSuccess) {
     return (
       <div className="max-w-2xl mx-auto px-4 py-16 text-center space-y-6">
-        <div className="w-16 h-16 rounded-full bg-[#E8F5E9] text-tc-success mx-auto flex items-center justify-center">
-          <CheckCircle2 className="w-10 h-10 stroke-[2.5]" />
+        <div className="w-36 h-36 mx-auto flex items-center justify-center">
+          <img
+            src="/images/states/order-success.webp"
+            alt="Order Authorized Successfully"
+            className="w-full h-full object-contain"
+          />
         </div>
 
         <div className="space-y-2">

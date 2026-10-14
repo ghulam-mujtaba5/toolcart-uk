@@ -57,7 +57,13 @@ export default function BasketPage() {
 
       {items.length === 0 ? (
         <div className="bg-white rounded-card tc-card-machined p-10 sm:p-12 text-center space-y-4 max-w-lg mx-auto">
-          <EmptyToolChestVector className="w-56 h-36 sm:w-64 sm:h-40 mx-auto" />
+          <div className="w-52 h-36 mx-auto flex items-center justify-center">
+            <img
+              src="/images/states/empty-cart.webp"
+              alt="Your basket is currently empty"
+              className="w-full h-full object-contain"
+            />
+          </div>
           <h2 className="font-heading font-bold text-xl text-tc-ink">
             Your basket is currently empty
           </h2>

@@ -1,33 +1,31 @@
-# BRIEFING — 2026-10-13T16:41:00Z
+# BRIEFING — 2026-10-14T15:12:00Z
 
 ## Mission
-Coordinate and monitor the visual and motion revamp of ToolCart UK into an elite modern trade e-commerce platform incorporating 2026 industrial design trends, routing to teamwork_preview_orchestrator and running sentinel monitoring and mandatory victory auditing.
+Comprehensive audit and remediation of all bugs, incomplete features, UI/UX defects, wholesale data leaks, and Brand V3 / WCAG AA compliance issues across the ToolCart UK e-commerce storefront and admin portal.
 
 ## 🔒 My Identity
 - Archetype: sentinel
 - Working directory: e:\ToolCart\.agents\teamwork
-- Orchestrator: 311a2f36-0bc9-4d2c-ad1b-812679b4333e (Completed & torn down)
-- Victory Auditor: 17a4a06a-6dd1-497b-8e13-87068b4da3d7 (Completed & torn down)
-- Orchestrator (Revamp): 080a93ac-e184-4734-a107-f062151cd3dc
-- Victory Auditor (Revamp): [to be spawned on victory claim]
+- Orchestrator: ca74de4b-9fa6-4e48-8078-409d8535ac31
+- Victory Auditor: [to be spawned on victory claim]
 
 ## 🔒 Key Constraints
 - No technical decisions — relay only
 - Victory Audit is MANDATORY before reporting completion
 - Must strictly track progress via crons and verify with independent auditor
+- You MUST NOT write code, analyze problems, or make any technical decisions. Keep context ultra-light.
 
 ## User Context
-- **Last user request**: Revamp ToolCart UK into a visually elite, modern trade & hardware e-commerce platform incorporating 2026 industrial design trends (CAD blueprint dot grids, machined tactile chamfers, adaptive duotone icons, lightweight Lottie trade animations, responsive micro-interactions).
+- **Last user request**: Live Browser Auditor report received from https://toolcart-uk.vercel.app with CRITICAL blockers: (1) 500 error on catalog/search/category routes, (2) routing/404 redirects, (3) WCAG AA inactive VAT toggle contrast & aria-labels, (4) Brand V3 footer action lime container text color.
 - **Pending clarifications**: none
-- **Delivered results**: Initial platform build completed and audited. Visual & motion revamp dispatched to orchestrator.
+- **Delivered results**: Platform core and live cloud integration complete. Phase 0 audits running. High-priority live browser findings forwarded to orchestrator pipeline.
 
 ## Project Status
-- **Phase**: in progress (Milestone 1: Brand V3 Vector Visual System & Blueprint CAD Foundations - COMPLETED)
-- **Active Agent**: 080a93ac-e184-4734-a107-f062151cd3dc (orchestrator_revamp_1)
-- **Current Milestone**: Milestone 1 Completed by `worker_m1_1` (443/443 tests pass across 19 suites, 0 static violations, 0 tsc errors, clean Next.js build). Orchestrator processing handoff for Milestone 2 dispatch.
+- **Phase**: in progress (Routing: General -> teamwork_preview_orchestrator)
+- **Active Agent**: ca74de4b-9fa6-4e48-8078-409d8535ac31 (orchestrator_remediation_2)
 - **Crons Active**:
-  - Cron 1 (Progress Reporting, */8 * * * *): task-28
-  - Cron 2 (Liveness Check, */10 * * * *): task-30
+  - Cron 1 (Progress Reporting, */8 * * * *): fa013225-fdde-412f-84d5-81a615b5f601/task-40
+  - Cron 2 (Liveness Check, */10 * * * *): fa013225-fdde-412f-84d5-81a615b5f601/task-42
 
 ## Victory Audit Status
 - **Triggered**: no
@@ -37,6 +35,7 @@ Coordinate and monitor the visual and motion revamp of ToolCart UK into an elite
 ## Artifact Index
 - e:\ToolCart\.agents\teamwork\ORIGINAL_REQUEST.md — Authoritative user request
 - e:\ToolCart\ORIGINAL_REQUEST.md — Root copy of user request
-- e:\ToolCart\.agents\teamwork\orchestrator_revamp_1\context.md — Context for revamp orchestrator
-- e:\ToolCart\.agents\teamwork\orchestrator_revamp_1\plan.md — Orchestrator execution plan
-- e:\ToolCart\.agents\teamwork\orchestrator_revamp_1\progress.md — Orchestrator live progress log
+- e:\ToolCart\.agents\teamwork\orchestrator_remediation_2\context.md — Context for remediation orchestrator
+- e:\ToolCart\.agents\teamwork\orchestrator_remediation_2\DISPATCH.md — Dispatch instructions for orchestrator
+- e:\ToolCart\.agents\teamwork\orchestrator_remediation_2\plan.md — Orchestrator plan
+- e:\ToolCart\.agents\teamwork\orchestrator_remediation_2\progress.md — Orchestrator live progress

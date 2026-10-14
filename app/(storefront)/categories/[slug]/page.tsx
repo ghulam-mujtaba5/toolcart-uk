@@ -1,27 +1,37 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { searchProducts } from '@/lib/catalog';
 import { ProductCard } from '@/components/storefront/product-card';
 import { FilterSidebar } from '@/components/storefront/filter-sidebar';
 import { SearchFilterChips } from '@/components/storefront/search-filter-chips';
+import { CatalogSortControl } from '@/components/storefront/catalog-sort-control';
 import { CategoryCadAccent } from '@/components/ui/vectors';
-import { ArrowUpDown, ShieldCheck } from 'lucide-react';
+import { ShieldCheck } from 'lucide-react';
 
 export const dynamic = 'force-dynamic';
 
 interface CategoryPageProps {
   params: {
     slug: string;
-  };
-  searchParams: {
+  } | Promise<{
+    slug: string;
+  }>;
+  searchParams?: {
     q?: string;
     brand?: string;
     min_price?: string;
     max_price?: string;
     in_stock?: string;
     sort?: string;
-  };
+  } | Promise<{
+    q?: string;
+    brand?: string;
+    min_price?: string;
+    max_price?: string;
+    in_stock?: string;
+    sort?: string;
+  }>;
 }
 
 const CATEGORY_META: Record<string, { title: string; description: string }> = {
@@ -61,17 +71,81 @@ const CATEGORY_META: Record<string, { title: string; description: string }> = {
     title: 'Site Equipment & Consumables',
     description: 'EN14183 150KG 3-step foldable ladders, heavy-duty waterproof tarpaulins, ratchet tie-downs, and BS EN 60454 electrical tape.',
   },
+  electrical: {
+    title: 'Electrical & Cable Management',
+    description: 'BS EN 60454 certified electrical insulation tapes, neon voltage testers, insulated screwdrivers, and site electrical consumables.',
+  },
+  'electrical-tapes': {
+    title: 'Electrical & Cable Management',
+    description: 'BS EN 60454 certified electrical insulation tapes, neon voltage testers, insulated screwdrivers, and site electrical consumables.',
+  },
+  'electrical-lighting': {
+    title: 'Electrical & Cable Management',
+    description: 'BS EN 60454 certified electrical insulation tapes, neon voltage testers, insulated screwdrivers, and site electrical consumables.',
+  },
+};
+
+const CATEGORY_IMAGES: Record<string, string> = {
+  tools: '/images/categories/tools-hero.webp',
+  'hand-tools': '/images/categories/tools-hero.webp',
+  fixings: '/images/categories/fixings-hero.webp',
+  'fixings-security': '/images/categories/fixings-hero.webp',
+  decorating: '/images/categories/decorating-hero.webp',
+  measuring: '/images/categories/measuring-hero.webp',
+  ppe: '/images/categories/ppe-hero.webp',
+  'workwear-safety': '/images/categories/ppe-hero.webp',
+  'site-equipment': '/images/categories/site-equipment-hero.webp',
+  electrical: '/images/kits/electrical-kit.webp',
+  'electrical-tapes': '/images/kits/electrical-kit.webp',
+  'electrical-lighting': '/images/kits/electrical-kit.webp',
+};
+
+const CATEGORY_PROMOS: Record<string, { image: string; title: string; subtitle: string }> = {
+  decorating: {
+    image: '/images/promos/promo-decorating-1600x650.webp',
+    title: 'Trade Surface Preparation & Painting',
+    subtitle: 'Crepe paper masking tapes, pure bristle sets, and heavy polythene floor protection.',
+  },
+  measuring: {
+    image: '/images/promos/promo-measuring-1600x650.webp',
+    title: 'Precision Metric Measurement & Levels',
+    subtitle: '5m/10m high-contrast tapes, 3-vial spirit levels, and stainless steel rules.',
+  },
+  ppe: {
+    image: '/images/promos/promo-safety-1600x650.webp',
+    title: 'Workwear & EN166 Site Safety',
+    subtitle: 'FFP2 dust filtration, abrasion-resistant grip gloves, and certified site eye protection.',
+  },
+  'workwear-safety': {
+    image: '/images/promos/promo-safety-1600x650.webp',
+    title: 'Workwear & EN166 Site Safety',
+    subtitle: 'FFP2 dust filtration, abrasion-resistant grip gloves, and certified site eye protection.',
+  },
 };
 
 export default async function CategoryPage({ params, searchParams }: CategoryPageProps) {
-  const catSlug = params.slug.toLowerCase();
+  const resolvedParams = (await Promise.resolve(params)) || { slug: '' };
+  const resolvedSearchParams = (await Promise.resolve(searchParams)) || {};
+
+  const catSlug = (resolvedParams.slug || '').toLowerCase().trim();
   const meta = CATEGORY_META[catSlug];
 
-  const brand = searchParams.brand;
-  const minPrice = searchParams.min_price ? parseFloat(searchParams.min_price) : undefined;
-  const maxPrice = searchParams.max_price ? parseFloat(searchParams.max_price) : undefined;
-  const inStockOnly = searchParams.in_stock === 'true';
-  const sort = (searchParams.sort as any) || 'relevance';
+  // Hard 404 response on any unknown category slug
+  if (!meta) {
+    notFound();
+  }
+
+  const brand = resolvedSearchParams.brand;
+  const minPrice =
+    resolvedSearchParams.min_price && !isNaN(Number(resolvedSearchParams.min_price)) && Number(resolvedSearchParams.min_price) >= 0
+      ? parseFloat(resolvedSearchParams.min_price)
+      : undefined;
+  const maxPrice =
+    resolvedSearchParams.max_price && !isNaN(Number(resolvedSearchParams.max_price)) && Number(resolvedSearchParams.max_price) >= 0
+      ? parseFloat(resolvedSearchParams.max_price)
+      : undefined;
+  const inStockOnly = resolvedSearchParams.in_stock === 'true';
+  const sort = (resolvedSearchParams.sort as any) || 'relevance';
 
   const result = await searchProducts('', {
     category: catSlug,
@@ -112,31 +186,23 @@ export default async function CategoryPage({ params, searchParams }: CategoryPag
           </p>
         </div>
 
-        {/* CAD Accent Motif & Sort */}
+        {/* Category Hero Image, CAD Accent & Sort */}
         <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 shrink-0">
-          <CategoryCadAccent categorySlug={catSlug} className="w-36 h-20 sm:w-44 sm:h-22 opacity-75 shrink-0 hidden md:block" />
+          {CATEGORY_IMAGES[catSlug] && (
+            <div className="w-36 h-24 sm:w-48 sm:h-28 rounded-xl overflow-hidden bg-tc-canvas border border-tc-border shadow-xs shrink-0 hidden sm:block">
+              <img
+                src={CATEGORY_IMAGES[catSlug]}
+                alt={meta?.title || catSlug}
+                className="w-full h-full object-cover"
+              />
+            </div>
+          )}
+          <CategoryCadAccent categorySlug={catSlug} className="w-28 h-16 sm:w-36 sm:h-20 opacity-60 shrink-0 hidden lg:block" />
 
-          {/* Sort */}
-          <div className="flex items-center gap-2 shrink-0 self-start sm:self-auto">
-            <span className="text-xs text-tc-text-secondary font-medium flex items-center gap-1">
-              <ArrowUpDown className="w-3.5 h-3.5" />
-              Sort:
-            </span>
-            <form method="GET">
-              {brand && <input type="hidden" name="brand" value={brand} />}
-              <select
-                name="sort"
-                defaultValue={sort}
-                onChange={(e) => e.target.form?.submit()}
-                className="h-9 px-3 rounded-lg border border-tc-border bg-white text-xs text-tc-ink font-semibold focus:outline-none focus:ring-2 focus:ring-tc-primary"
-              >
-                <option value="relevance">Relevance</option>
-                <option value="price_asc">Price: Low to High</option>
-                <option value="price_desc">Price: High to Low</option>
-                <option value="title_asc">Name: A to Z</option>
-              </select>
-            </form>
-          </div>
+          {/* Sort via Client Component */}
+          <Suspense fallback={<div className="h-9 w-32 bg-tc-canvas rounded-lg animate-pulse" />}>
+            <CatalogSortControl currentSort={sort} />
+          </Suspense>
         </div>
       </div>
 
@@ -151,7 +217,32 @@ export default async function CategoryPage({ params, searchParams }: CategoryPag
         </div>
 
         {/* Products */}
-        <div className="lg:col-span-3">
+        <div className="lg:col-span-3 space-y-6">
+          {CATEGORY_PROMOS[catSlug] && (
+            <div className="relative rounded-2xl overflow-hidden border border-tc-border shadow-xs group">
+              <div className="relative aspect-[21/7] min-h-[140px]">
+                <img
+                  src={CATEGORY_PROMOS[catSlug].image}
+                  alt={CATEGORY_PROMOS[catSlug].title}
+                  className="w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-r from-tc-ink/90 via-tc-ink/60 to-transparent flex items-center p-6">
+                  <div className="max-w-md space-y-1.5 text-white">
+                    <span className="text-[10px] font-extrabold uppercase tracking-widest text-tc-action-lime font-mono">
+                      CATEGORY HIGHLIGHT
+                    </span>
+                    <h3 className="font-heading font-extrabold text-lg sm:text-xl leading-tight">
+                      {CATEGORY_PROMOS[catSlug].title}
+                    </h3>
+                    <p className="text-xs text-[#DFE8F6] leading-relaxed hidden sm:block">
+                      {CATEGORY_PROMOS[catSlug].subtitle}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+
           {result.products.length > 0 ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
               {result.products.map((product) => (

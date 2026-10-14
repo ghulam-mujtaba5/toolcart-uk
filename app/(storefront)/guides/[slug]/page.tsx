@@ -1,7 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { getBuyingGuideBySlug, getAllProducts } from '@/lib/catalog';
+import { getBuyingGuideBySlug, getBuyingGuides, getAllProducts } from '@/lib/catalog';
 import { ProductCard } from '@/components/storefront/product-card';
 import {
   BookOpen,
@@ -19,11 +19,23 @@ export const dynamic = 'force-dynamic';
 interface GuideDetailPageProps {
   params: {
     slug: string;
-  };
+  } | Promise<{
+    slug: string;
+  }>;
 }
 
 export default async function GuideDetailPage({ params }: GuideDetailPageProps) {
-  const guide = await getBuyingGuideBySlug(params.slug);
+  const resolvedParams = (await Promise.resolve(params)) || { slug: '' };
+  const rawSlug = resolvedParams.slug || '';
+
+  let guide = await getBuyingGuideBySlug(rawSlug);
+
+  // Fallback if accessed via template placeholder '/guides/[slug]' or '%5Bslug%5D' or empty
+  if (!guide && (rawSlug === '[slug]' || rawSlug === '%5Bslug%5D' || !rawSlug)) {
+    const allGuides = await getBuyingGuides();
+    guide = allGuides[0] || null;
+  }
+
   if (!guide) {
     notFound();
   }
@@ -81,6 +93,17 @@ export default async function GuideDetailPage({ params }: GuideDetailPageProps) 
           </div>
         )}
       </div>
+
+      {/* Guide Hero Illustration */}
+      {guide.hero_image && (
+        <div className="w-full aspect-[16/9] sm:aspect-[21/9] rounded-2xl overflow-hidden bg-tc-canvas border border-tc-border shadow-xs">
+          <img
+            src={guide.hero_image}
+            alt={guide.title}
+            className="w-full h-full object-cover"
+          />
+        </div>
+      )}
 
       {/* Safety Warning Callout */}
       {guide.safety_warnings.length > 0 && (

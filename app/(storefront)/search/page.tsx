@@ -1,16 +1,17 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import Link from 'next/link';
 import { searchProducts } from '@/lib/catalog';
 import { ProductCard } from '@/components/storefront/product-card';
 import { FilterSidebar } from '@/components/storefront/filter-sidebar';
 import { SearchFilterChips } from '@/components/storefront/search-filter-chips';
+import { CatalogSortControl } from '@/components/storefront/catalog-sort-control';
 import { EmptyToolChestVector } from '@/components/ui/vectors';
-import { Search, AlertCircle, ArrowUpDown } from 'lucide-react';
+import { Search, AlertCircle } from 'lucide-react';
 
 export const dynamic = 'force-dynamic';
 
 interface SearchPageProps {
-  searchParams: {
+  searchParams?: {
     q?: string;
     category?: string;
     brand?: string;
@@ -18,17 +19,32 @@ interface SearchPageProps {
     max_price?: string;
     in_stock?: string;
     sort?: string;
-  };
+  } | Promise<{
+    q?: string;
+    category?: string;
+    brand?: string;
+    min_price?: string;
+    max_price?: string;
+    in_stock?: string;
+    sort?: string;
+  }>;
 }
 
 export default async function SearchPage({ searchParams }: SearchPageProps) {
-  const query = searchParams.q || '';
-  const category = searchParams.category;
-  const brand = searchParams.brand;
-  const minPrice = searchParams.min_price ? parseFloat(searchParams.min_price) : undefined;
-  const maxPrice = searchParams.max_price ? parseFloat(searchParams.max_price) : undefined;
-  const inStockOnly = searchParams.in_stock === 'true';
-  const sort = (searchParams.sort as any) || 'relevance';
+  const resolvedSearchParams = (await Promise.resolve(searchParams)) || {};
+  const query = resolvedSearchParams.q || '';
+  const category = resolvedSearchParams.category;
+  const brand = resolvedSearchParams.brand;
+  const minPrice =
+    resolvedSearchParams.min_price && !isNaN(Number(resolvedSearchParams.min_price)) && Number(resolvedSearchParams.min_price) >= 0
+      ? parseFloat(resolvedSearchParams.min_price)
+      : undefined;
+  const maxPrice =
+    resolvedSearchParams.max_price && !isNaN(Number(resolvedSearchParams.max_price)) && Number(resolvedSearchParams.max_price) >= 0
+      ? parseFloat(resolvedSearchParams.max_price)
+      : undefined;
+  const inStockOnly = resolvedSearchParams.in_stock === 'true';
+  const sort = (resolvedSearchParams.sort as any) || 'relevance';
 
   const result = await searchProducts(query, {
     category,
@@ -58,31 +74,10 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
           </h1>
         </div>
 
-        {/* Sort Controls */}
-        <div className="flex items-center gap-2 self-start sm:self-auto">
-          <span className="text-xs text-tc-text-secondary font-medium flex items-center gap-1">
-            <ArrowUpDown className="w-3.5 h-3.5" />
-            Sort:
-          </span>
-          <form method="GET">
-            {query && <input type="hidden" name="q" value={query} />}
-            {category && <input type="hidden" name="category" value={category} />}
-            {brand && <input type="hidden" name="brand" value={brand} />}
-            {searchParams.in_stock && <input type="hidden" name="in_stock" value={searchParams.in_stock} />}
-            <select
-              name="sort"
-              defaultValue={sort}
-              onChange={(e) => e.target.form?.submit()}
-              className="h-9 px-3 rounded-lg border border-tc-border bg-white text-xs text-tc-ink font-semibold focus:outline-none focus:ring-2 focus:ring-tc-primary"
-            >
-              <option value="relevance">Relevance</option>
-              <option value="price_asc">Price: Low to High</option>
-              <option value="price_desc">Price: High to Low</option>
-              <option value="title_asc">Name: A to Z</option>
-              <option value="title_desc">Name: Z to A</option>
-            </select>
-          </form>
-        </div>
+        {/* Sort Controls via Client Component */}
+        <Suspense fallback={<div className="h-9 w-32 bg-tc-canvas rounded-lg animate-pulse" />}>
+          <CatalogSortControl currentSort={sort} />
+        </Suspense>
       </div>
 
       {/* Zero-Results UK Synonym Notice */}
@@ -115,7 +110,13 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
             </div>
           ) : (
             <div className="bg-white rounded-card tc-card-machined p-10 sm:p-12 text-center space-y-4">
-              <EmptyToolChestVector className="w-56 h-36 sm:w-64 sm:h-40 mx-auto" />
+              <div className="w-48 h-36 mx-auto flex items-center justify-center">
+                <img
+                  src="/images/states/no-results.webp"
+                  alt="No matching hardware products"
+                  className="w-full h-full object-contain"
+                />
+              </div>
               <h3 className="font-heading font-bold text-lg text-tc-ink">
                 No matching hardware products
               </h3>

@@ -93,31 +93,42 @@ export function ProjectKitCard({ kit }: ProjectKitCardProps) {
 
   return (
     <div className="bg-white rounded-card border border-tc-border overflow-hidden shadow-xs space-y-6 p-6 sm:p-8">
-      {/* Kit Header */}
-      <div className="space-y-3 pb-6 border-b border-tc-border">
-        <div className="flex flex-wrap items-center justify-between gap-2">
-          <div className="flex items-center gap-2">
-            <span className="text-xs font-bold px-2.5 py-0.5 rounded-full bg-tc-primary/10 text-tc-primary">
-              {kit.badge}
-            </span>
-            <span className="text-xs text-tc-text-secondary flex items-center gap-1">
-              <Clock className="w-3.5 h-3.5" />
-              {kit.estimated_time}
+      {/* Kit Header with Illustration */}
+      <div className="flex flex-col md:flex-row gap-6 pb-6 border-b border-tc-border items-start">
+        {kit.image && (
+          <div className="w-full md:w-56 h-40 shrink-0 rounded-xl overflow-hidden bg-tc-canvas border border-tc-border shadow-xs">
+            <img
+              src={kit.image}
+              alt={kit.title}
+              className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+            />
+          </div>
+        )}
+        <div className="space-y-3 flex-1">
+          <div className="flex flex-wrap items-center justify-between gap-2">
+            <div className="flex items-center gap-2">
+              <span className="text-xs font-bold px-2.5 py-0.5 rounded-full bg-tc-primary/10 text-tc-primary">
+                {kit.badge}
+              </span>
+              <span className="text-xs text-tc-text-secondary flex items-center gap-1">
+                <Clock className="w-3.5 h-3.5" />
+                {kit.estimated_time}
+              </span>
+            </div>
+
+            <span className="text-xs font-extrabold text-tc-action-lime bg-tc-ink px-2.5 py-1 rounded border border-tc-ink">
+              {kit.bundle_savings_percent}% Bundle Savings
             </span>
           </div>
 
-          <span className="text-xs font-extrabold text-tc-action-lime bg-tc-ink px-2.5 py-1 rounded border border-tc-ink">
-            {kit.bundle_savings_percent}% Bundle Savings
-          </span>
+          <h2 className="font-heading font-extrabold text-2xl text-tc-ink">
+            {kit.title}
+          </h2>
+
+          <p className="text-xs sm:text-sm text-tc-graphite leading-relaxed">
+            {kit.description}
+          </p>
         </div>
-
-        <h2 className="font-heading font-extrabold text-2xl text-tc-ink">
-          {kit.title}
-        </h2>
-
-        <p className="text-xs sm:text-sm text-tc-graphite leading-relaxed">
-          {kit.description}
-        </p>
       </div>
 
       {/* Checklist of Kit Items */}

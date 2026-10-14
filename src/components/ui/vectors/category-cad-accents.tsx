@@ -173,6 +173,50 @@ export function CategoryCadAccent({
         </svg>
       );
 
+    case 'electrical':
+    case 'electrical-tapes':
+    case 'electrical-lighting':
+      return (
+        <svg
+          viewBox="0 0 240 120"
+          width={width}
+          height={height}
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          className={className}
+          aria-hidden="true"
+        >
+          {/* Cable Reel / Tape Coil Wireframe */}
+          <circle cx="50" cy="60" r="35" stroke="#182336" strokeWidth="2" fill="none" />
+          <circle cx="50" cy="60" r="22" stroke="#2450B8" strokeWidth="1.5" strokeDasharray="4 2" />
+          <circle cx="50" cy="60" r="10" stroke="#7C8A94" strokeWidth="1.5" fill="#EAF0FF" />
+          {/* Voltage Waveform / Pulse */}
+          <path
+            d="M95 60 L115 60 L125 35 L140 85 L150 50 L160 65 L170 60 L205 60"
+            stroke="#2450B8"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+          {/* BS EN 60454 Rating Badge */}
+          <rect x="145" y="20" width="56" height="16" rx="2" fill="#DDF16A" stroke="#182336" strokeWidth="1.5" />
+          <text
+            x="173"
+            y="31"
+            fill="#182336"
+            fontSize="7.5"
+            fontWeight="bold"
+            textAnchor="middle"
+            fontFamily="monospace"
+          >
+            BS EN 60454
+          </text>
+          {/* Dimension Callout */}
+          <line x1="15" y1="102" x2="85" y2="102" stroke="#7C8A94" strokeWidth="1" strokeDasharray="2 2" />
+          <text x="50" y="112" fill="#2450B8" fontSize="7" textAnchor="middle" fontFamily="monospace">Ø70mm • 230V</text>
+        </svg>
+      );
+
     case 'site-equipment':
     default:
       return (

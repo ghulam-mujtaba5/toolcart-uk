@@ -64,7 +64,7 @@ export function validateCaseMath(
 export function parseAndValidateCatalogCsv(
   csvContent: string,
   dryRun: boolean = true
-): ImportBatchReport {
+): ImportBatchReport & PromiseLike<ImportBatchReport> {
   const normalizedCsv = normalizeUnicode(csvContent);
 
   const rows = parse(normalizedCsv, {
@@ -164,9 +164,9 @@ export function parseAndValidateCatalogCsv(
   // If commit requested (dryRun === false), persist into database store
   if (!dryRun) {
     const db = getDb();
-    results
-      .filter((r) => r.status === 'PASS' && r.parsed_record)
-      .forEach((r) => {
+    const passedResults = results.filter((r) => r.status === 'PASS' && r.parsed_record);
+    const commitPromise = Promise.all(
+      passedResults.map(async (r) => {
         const item = r.parsed_record!;
         const retailPrices = calculateRetailPrices(item.unit_cost_ex_vat_gbp);
         const brand = item.title.includes('Status') ? 'Status' : 'Ionos';
@@ -218,9 +218,22 @@ export function parseAndValidateCatalogCsv(
           stock_freshness_timestamp: new Date().toISOString(),
         };
 
-        db.products.create(dto, wholesaleOffer);
-      });
+        return db.products.create(dto, wholesaleOffer);
+      })
+    );
+
+    return Object.assign(report, {
+      then: <TResult1 = ImportBatchReport, TResult2 = never>(
+        onfulfilled?: ((value: ImportBatchReport) => TResult1 | PromiseLike<TResult1>) | null,
+        onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | null
+      ) => commitPromise.then(() => report).then(onfulfilled, onrejected),
+    });
   }
 
-  return report;
+  return Object.assign(report, {
+    then: <TResult1 = ImportBatchReport, TResult2 = never>(
+      onfulfilled?: ((value: ImportBatchReport) => TResult1 | PromiseLike<TResult1>) | null,
+      onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | null
+    ) => Promise.resolve(report).then(onfulfilled, onrejected),
+  });
 }

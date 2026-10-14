@@ -317,6 +317,18 @@ export function getPublicProductsByCategory(categorySlug: string): PublicProduct
   const { publicProducts } = loadAndParseCatalog();
   const cat = categorySlug.toLowerCase();
 
+  if (cat === 'electrical' || cat === 'electrical-tapes' || cat === 'electrical-lighting') {
+    return publicProducts.filter(
+      (p) =>
+        p.category_slug.toLowerCase() === 'electrical' ||
+        p.category.toLowerCase() === 'electrical' ||
+        p.title.toLowerCase().includes('electrical') ||
+        p.title.toLowerCase().includes('electrician') ||
+        p.title.toLowerCase().includes('neon tester') ||
+        (p.category_slug.toLowerCase() === 'site-equipment' && p.title.toLowerCase().includes('pvc electrical tape'))
+    );
+  }
+
   // Handle aliases
   const aliasMap: Record<string, string> = {
     'hand-tools': 'tools',

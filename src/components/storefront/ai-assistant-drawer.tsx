@@ -233,7 +233,14 @@ export function AIAssistantDrawer({ isOpen, onClose }: AIAssistantDrawerProps) {
 
         {/* Starter Prompts (if chat is fresh) */}
         {messages.length === 1 && (
-          <div className="p-4 bg-white/70 border-t border-[#C8D9F9] space-y-2 shrink-0">
+          <div className="p-4 bg-white/70 border-t border-[#C8D9F9] space-y-3 shrink-0">
+            <div className="w-full h-28 rounded-xl overflow-hidden bg-white border border-[#C8D9F9] flex items-center justify-center p-2 shadow-xs">
+              <img
+                src="/images/ai/assistant-graphic.webp"
+                alt="ToolCart AI Project Advice"
+                className="h-full object-contain"
+              />
+            </div>
             <p className="text-[11px] font-bold text-tc-text-secondary uppercase tracking-wider">
               Popular questions
             </p>

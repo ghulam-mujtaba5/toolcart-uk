@@ -37,7 +37,13 @@ export default function NotFound() {
       {/* Main 404 Content */}
       <main role="main" className="flex-1 flex items-center justify-center px-4 py-12 sm:px-6 lg:px-8">
         <div className="w-full max-w-2xl bg-white rounded-xl tc-card-machined p-8 sm:p-12 shadow-sm text-center">
-          <NotFoundVector className="w-64 h-40 sm:w-80 sm:h-48 mx-auto mb-6" />
+          <div className="w-56 h-36 sm:w-64 sm:h-40 mx-auto mb-6 flex items-center justify-center">
+            <img
+              src="/images/states/404-not-found.webp"
+              alt="404 Page Not Found"
+              className="w-full h-full object-contain"
+            />
+          </div>
 
           <div className="inline-flex items-center gap-2 rounded-full bg-tc-surface-soft border border-tc-primary/20 px-3.5 py-1 text-xs font-semibold text-tc-primary mb-6">
             <span className="inline-block h-2 w-2 rounded-full bg-tc-primary animate-pulse" />

@@ -94,11 +94,12 @@ export function ProductCard({ product, className }: ProductCardProps) {
         {/* Top Image & Badge Box */}
         <div className="relative bg-tc-surface-soft p-6 flex items-center justify-center border-b border-tc-border/60 aspect-4/3 overflow-hidden">
           {/* Live 24h Stock Freshness Radar Pulse Ring */}
-          <div className="absolute top-2.5 left-2.5 z-10">
+          <div className="absolute top-2.5 left-2.5 z-10 max-w-[160px] sm:max-w-none">
             <StockRadarBadge
               status={product.availability_status}
               stockQuantity={product.stock_quantity}
               size="sm"
+              className="max-w-[160px] sm:max-w-none"
             />
           </div>
 
@@ -125,7 +126,7 @@ export function ProductCard({ product, className }: ProductCardProps) {
           {/* Real Product Photography with Brand V3 Fallback */}
           <Link
             href={`/products/${product.slug}`}
-            className="w-full h-full flex flex-col items-center justify-center group-hover:scale-105 transition-transform p-2"
+            className="w-full h-full flex flex-col items-center justify-center group-hover:scale-105 transition-transform p-2 pb-8"
           >
             <div className="relative w-full h-36 sm:h-40 flex items-center justify-center">
               {product.images && product.images[0] ? (
@@ -142,18 +143,12 @@ export function ProductCard({ product, className }: ProductCardProps) {
                 </div>
               )}
             </div>
-
-            {/* 1-Click SKU Copy Badge */}
-            <div
-              className="mt-2"
-              onClick={(e) => {
-                e.preventDefault();
-                e.stopPropagation();
-              }}
-            >
-              <CopyBadge value={product.supplier_sku} size="xs" label="SKU" />
-            </div>
           </Link>
+
+          {/* 1-Click SKU Copy Badge */}
+          <div className="absolute bottom-2 z-10">
+            <CopyBadge value={product.supplier_sku} size="xs" label="SKU" />
+          </div>
         </div>
 
         {/* Content Box */}
@@ -208,7 +203,7 @@ export function ProductCard({ product, className }: ProductCardProps) {
           type="button"
           onClick={handleAddCart}
           aria-live="polite"
-          aria-label={isSnapped ? `Added ${product.title} to your basket` : `Add ${product.title} to Basket`}
+          aria-label={isSnapped ? `Added to ToolCart: ${product.title}` : `Add to Basket: ${product.title}`}
           className={cn(
             'relative w-full flex items-center justify-center gap-2 h-10 px-4 rounded-button text-xs sm:text-sm font-bold',
             'transition-all duration-200 select-none outline-none focus-visible:ring-2 focus-visible:ring-tc-primary',

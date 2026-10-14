@@ -89,11 +89,11 @@ export default async function StorefrontHomePage() {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
             {/* Left Column: Heading, Lead & CTAs */}
             <div className="lg:col-span-7 space-y-6">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-tc-surface-soft border border-[#C8D9F9] text-xs font-extrabold tracking-wider text-tc-primary uppercase">
+              <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-tc-surface-soft border border-[#C8D9F9] text-xs font-extrabold tracking-wider text-tc-primary uppercase shadow-xs">
                 <img
-                  src="/images/features/stock-freshness.webp"
-                  alt="Stock freshness radar"
-                  className="w-4 h-4 object-contain"
+                  src="/images/3d/features/stock-freshness-radar.webp"
+                  alt="Stock freshness radar telemetry"
+                  className="w-5 h-5 object-contain drop-shadow-xs"
                 />
                 <span>Verified UK Supplier Catalog · 115 SKUs Quoted</span>
               </div>
@@ -119,18 +119,30 @@ export default async function StorefrontHomePage() {
                 </Button>
               </div>
 
-              {/* Trust Indicators */}
+              {/* Trust Indicators with 3D Claymorphic Emblems */}
               <div className="pt-4 flex flex-wrap items-center gap-6 text-xs text-tc-text-secondary font-medium">
-                <span className="flex items-center gap-1.5">
-                  <CheckCircle2 className="w-4 h-4 text-tc-success" />
+                <span className="flex items-center gap-2">
+                  <img
+                    src="/images/3d/trust/honest-pack-counts.webp"
+                    alt="Honest pack counts"
+                    className="w-6 h-6 object-contain drop-shadow-xs"
+                  />
                   No inflated multi-pack claims
                 </span>
-                <span className="flex items-center gap-1.5">
-                  <CheckCircle2 className="w-4 h-4 text-tc-success" />
+                <span className="flex items-center gap-2">
+                  <img
+                    src="/images/3d/trust/stock-freshness-ttl.webp"
+                    alt="24h Stock freshness TTL"
+                    className="w-6 h-6 object-contain drop-shadow-xs"
+                  />
                   24h Stock freshness TTL
                 </span>
-                <span className="flex items-center gap-1.5">
-                  <Truck className="w-4 h-4 text-tc-primary" />
+                <span className="flex items-center gap-2">
+                  <img
+                    src="/images/3d/trust/free-freight-delivery.webp"
+                    alt="Free delivery over £50"
+                    className="w-6 h-6 object-contain drop-shadow-xs"
+                  />
                   Free delivery over £50 ex. VAT
                 </span>
               </div>
@@ -176,12 +188,12 @@ export default async function StorefrontHomePage() {
                 </p>
 
                 {/* AI Assistant Teaser with Graphic */}
-                <div className="mt-2 p-3.5 rounded-xl bg-white border border-[#C8D9F9] flex gap-3.5 items-center">
-                  <div className="w-16 h-16 rounded-lg bg-tc-canvas border border-tc-border p-1 shrink-0 flex items-center justify-center">
+                <div className="mt-2 p-3.5 rounded-xl bg-white border border-[#C8D9F9] flex gap-3.5 items-center shadow-xs">
+                  <div className="w-16 h-16 rounded-xl bg-tc-canvas border border-[#C8D9F9] p-1 shrink-0 flex items-center justify-center overflow-hidden shadow-xs">
                     <img
-                      src="/images/ai/assistant-graphic.webp"
-                      alt="AI Project Finder"
-                      className="w-full h-full object-contain"
+                      src="/images/3d/ai/assistant-robot-avatar.webp"
+                      alt="ToolCart AI Technical Assistant"
+                      className="w-full h-full object-contain drop-shadow-sm hover:scale-105 transition-transform duration-300"
                     />
                   </div>
                   <div className="flex-1 min-w-0 space-y-1">

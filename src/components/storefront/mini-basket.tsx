@@ -15,6 +15,17 @@ export function MiniBasket() {
   const { items, summary, isOpen, closeCart, updateQuantity, removeItem, clearCart } = useCart();
   const { isTradeMode, formatPriceDisplay } = useVAT();
 
+  React.useEffect(() => {
+    if (!isOpen) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        closeCart();
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isOpen, closeCart]);
+
   if (!isOpen) return null;
 
   return (
@@ -27,12 +38,17 @@ export function MiniBasket() {
       />
 
       {/* Slide-Over Drawer Container */}
-      <div className="relative w-full max-w-md bg-white h-full shadow-2xl flex flex-col z-10 animate-in slide-in-from-right-full duration-300">
+      <div
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="mini-basket-title"
+        className="relative w-full max-w-md bg-white h-full shadow-2xl flex flex-col z-10 animate-in slide-in-from-right-full duration-300"
+      >
         {/* Drawer Header */}
         <div className="p-4 sm:p-5 border-b border-tc-border flex items-center justify-between bg-tc-canvas shrink-0">
           <div className="flex items-center gap-2">
             <IconToolbox size={20} className="text-tc-primary" />
-            <h2 className="font-heading font-extrabold text-base sm:text-lg text-tc-ink">
+            <h2 id="mini-basket-title" className="font-heading font-extrabold text-base sm:text-lg text-tc-ink">
               Your Basket
             </h2>
             <span className="px-2 py-0.5 rounded-full bg-tc-action-lime text-tc-ink font-bold text-xs border border-tc-ink tabular-nums">

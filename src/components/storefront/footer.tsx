@@ -72,7 +72,7 @@ export function Footer() {
           {/* Column 1: Brand & Identity */}
           <div className="lg:col-span-1 space-y-4">
             <Link href="/" className="flex items-center gap-2.5">
-              <div className="w-8 h-8 rounded-lg bg-tc-action-lime border-2 border-tc-ink flex items-center justify-center">
+              <div className="w-8 h-8 rounded-lg bg-tc-action-lime text-tc-ink border-2 border-tc-ink flex items-center justify-center">
                 <ShoppingCart className="w-4 h-4 text-tc-ink stroke-[2.5]" />
               </div>
               <span className="font-heading font-extrabold text-xl tracking-tight text-white">

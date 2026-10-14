@@ -51,14 +51,14 @@ export function TactileVatRocker({ className, size = 'sm' }: TactileVatRockerPro
           size === 'sm' ? 'px-3 py-1 text-xs' : 'px-4 py-1.5 text-sm',
           isInc
             ? 'bg-tc-primary text-white font-bold shadow-md transform scale-100 z-10'
-            : 'text-tc-text-secondary hover:text-tc-ink hover:bg-black/5 opacity-80'
+            : 'text-tc-graphite hover:text-tc-ink hover:bg-black/5 font-semibold'
         )}
         style={{
           transitionTimingFunction: 'cubic-bezier(0.34, 1.56, 0.64, 1)',
         }}
       >
         <span>Inc. VAT</span>
-        <span className={cn('ml-1 text-[10px] font-normal', isInc ? 'text-white/90' : 'text-tc-text-secondary')}>
+        <span className={cn('ml-1 text-[10px] font-normal', isInc ? 'text-white/90' : 'text-tc-graphite')}>
           (DIY)
         </span>
       </button>
@@ -76,14 +76,14 @@ export function TactileVatRocker({ className, size = 'sm' }: TactileVatRockerPro
           size === 'sm' ? 'px-3 py-1 text-xs' : 'px-4 py-1.5 text-sm',
           isEx
             ? 'bg-tc-action-lime text-tc-ink font-extrabold border-2 border-tc-ink shadow-md transform scale-100 z-10'
-            : 'text-tc-text-secondary hover:text-tc-ink hover:bg-black/5 opacity-80'
+            : 'text-tc-graphite hover:text-tc-ink hover:bg-black/5 font-semibold'
         )}
         style={{
           transitionTimingFunction: 'cubic-bezier(0.34, 1.56, 0.64, 1)',
         }}
       >
         <span>Ex. VAT</span>
-        <span className={cn('ml-1 text-[10px] font-bold', isEx ? 'text-tc-ink/90' : 'text-tc-text-secondary')}>
+        <span className={cn('ml-1 text-[10px] font-bold', isEx ? 'text-tc-ink/90' : 'text-tc-graphite')}>
           (Trade)
         </span>
       </button>

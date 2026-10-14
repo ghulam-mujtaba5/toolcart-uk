@@ -162,10 +162,11 @@ export function parseAndValidateCatalogCsv(
   };
 
   // If commit requested (dryRun === false), persist into database store
+  let commitPromise: Promise<any> | null = null;
   if (!dryRun) {
     const db = getDb();
     const passedResults = results.filter((r) => r.status === 'PASS' && r.parsed_record);
-    const commitPromise = Promise.all(
+    commitPromise = Promise.all(
       passedResults.map(async (r) => {
         const item = r.parsed_record!;
         const retailPrices = calculateRetailPrices(item.unit_cost_ex_vat_gbp);
@@ -221,19 +222,8 @@ export function parseAndValidateCatalogCsv(
         return db.products.create(dto, wholesaleOffer);
       })
     );
-
-    return Object.assign(report, {
-      then: <TResult1 = ImportBatchReport, TResult2 = never>(
-        onfulfilled?: ((value: ImportBatchReport) => TResult1 | PromiseLike<TResult1>) | null,
-        onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | null
-      ) => commitPromise.then(() => report).then(onfulfilled, onrejected),
-    });
   }
 
-  return Object.assign(report, {
-    then: <TResult1 = ImportBatchReport, TResult2 = never>(
-      onfulfilled?: ((value: ImportBatchReport) => TResult1 | PromiseLike<TResult1>) | null,
-      onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | null
-    ) => Promise.resolve(report).then(onfulfilled, onrejected),
-  });
+  const resultPromise = (commitPromise || Promise.resolve()).then(() => report);
+  return Object.assign(resultPromise, report);
 }

@@ -61,8 +61,8 @@ ToolCart UK is a Next.js 14 / TypeScript e-commerce platform for UK tradespeople
 ## Milestones
 | # | Name | Scope | Dependencies | Status |
 |---|------|-------|-------------|--------|
-| R1 | Critical Routes, Navigation & Server Fixes | Features 1–9: Fix 500 render crash, next.config rewrites, guides fix, /electrical, soft-404, NaN filter, sort params, batch importer, dashboard null safety | None | IN_PROGRESS |
-| R2 | Brand V3, WCAG AA & Viewport Accessibility | Features 10–19: VAT switch contrast, close aria-label, label in name, copy badge 44px target, footer logo ink text, HTML nesting fixes, py-0.2 fix, radar 360px overflow, modal dialogs | R1 | PLANNED |
+| R1 | Critical Routes, Navigation & Server Fixes | Features 1–9: Fix 500 render crash, next.config rewrites, guides fix, /electrical, soft-404, NaN filter, sort params, batch importer, dashboard null safety | None | DONE |
+| R2 | Brand V3, WCAG AA & Viewport Accessibility | Features 10–19: VAT switch contrast, close aria-label, label in name, copy badge 44px target, footer logo ink text, HTML nesting fixes, py-0.2 fix, radar 360px overflow, modal dialogs | R1 | DONE |
 | R3 | Interactive UI Lifecycle, Cart & Persistence | Features 20–30: Cart composite keys, pack/case stepper, out-of-stock guard, project kit DTO, compare null guard, filter debounce & VAT label, vector integration, Trade Pro persistence, Admin trade approval, checkout DB order | R2 | PLANNED |
 | R4 | Automated Verification & Zero-Regression Gate | Features 31–34: Full test suite (npm test), brand check (python qa/check_static.py), typecheck, production build, wholesale isolation, final report | R3 | PLANNED |
 

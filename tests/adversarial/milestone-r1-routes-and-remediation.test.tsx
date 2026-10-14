@@ -8,14 +8,14 @@ import { CatalogSortControl } from '@/components/storefront/catalog-sort-control
 import fs from 'node:fs';
 import path from 'node:path';
 
-// Mock Next.js router hooks for CatalogSortControl testing
-const mockPush = vi.fn();
-let mockSearchParamString = 'q=hammer&min_price=10';
+const { mockPush } = vi.hoisted(() => ({
+  mockPush: vi.fn(),
+}));
 
 vi.mock('next/navigation', () => ({
   useRouter: () => ({ push: mockPush }),
   usePathname: () => '/search',
-  useSearchParams: () => new URLSearchParams(mockSearchParamString),
+  useSearchParams: () => new URLSearchParams('q=tape&brand=Status&min_price=5&in_stock=true'),
   notFound: () => {
     throw new Error('NEXT_NOT_FOUND');
   },
@@ -31,7 +31,6 @@ describe('Milestone R1: Critical Routes, Navigation & Server Fixes', () => {
     });
 
     it('preserves existing query parameters when user changes sort', () => {
-      mockSearchParamString = 'q=tape&brand=Status&min_price=5&in_stock=true';
       mockPush.mockClear();
 
       render(<CatalogSortControl currentSort="relevance" />);
@@ -201,7 +200,7 @@ describe('Milestone R1: Critical Routes, Navigation & Server Fixes', () => {
       // Replicate the exact transformation in app/admin/page.tsx:39-47
       const allAuditLogs = mockOrders
         .flatMap((o) =>
-          (o.audit_logs || []).map((log) => ({
+          (o.audit_logs || []).map((log: any) => ({
             ...log,
             order_number: o.order_number,
           }))

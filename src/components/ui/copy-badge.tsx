@@ -102,7 +102,7 @@ export function CopyBadge({
       }}
       onKeyDown={handleKeyDown}
       className={cn(
-        'inline-flex items-center font-mono rounded-md font-semibold select-none cursor-pointer',
+        'inline-flex items-center justify-center min-h-[44px] min-w-[44px] font-mono rounded-md font-semibold select-none cursor-pointer',
         'transition-all duration-180 ease-out outline-none focus-visible:ring-2 focus-visible:ring-tc-primary',
         sizeClasses,
         copied
@@ -118,7 +118,7 @@ export function CopyBadge({
           <span>
             {label && <span className="opacity-80">{label}: </span>}
             <span className="font-extrabold">{shownText}</span>
-            <span className="ml-1 uppercase text-[9px] tracking-wider px-1 py-0.2 bg-tc-ink text-white rounded font-bold">
+            <span className="ml-1 uppercase text-[9px] tracking-wider px-1 py-0.5 bg-tc-ink text-white rounded font-bold">
               COPIED
             </span>
           </span>

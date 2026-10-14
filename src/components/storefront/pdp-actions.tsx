@@ -166,7 +166,7 @@ export function PdpActions({ product }: PdpActionsProps) {
           type="button"
           onClick={handleAdd}
           aria-live="polite"
-          aria-label={isSnapped ? `Added ${product.title} to your basket` : 'Add to Basket'}
+          aria-label={isSnapped ? `Added to ToolCart: ${product.title}` : `Add to Basket: ${product.title}`}
           className={cn(
             'relative flex-1 flex items-center justify-center gap-2 h-11 px-6 rounded-button text-sm font-bold',
             'transition-all duration-200 select-none outline-none focus-visible:ring-2 focus-visible:ring-tc-primary',

@@ -290,6 +290,7 @@ export function Header({ onOpenAiAssistant }: HeaderProps) {
               <button
                 type="button"
                 onClick={() => setIsMobileMenuOpen(false)}
+                aria-label="Close menu"
                 className="p-1 rounded-md text-tc-text-secondary hover:text-tc-ink"
               >
                 <X className="w-5 h-5" />

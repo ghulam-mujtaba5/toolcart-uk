@@ -119,7 +119,7 @@ export function ProductTable({ products, wholesaleOffers = {} }: ProductTablePro
             >
               <span>{tab.label}</span>
               <span
-                className={`px-1.5 py-0.2 rounded-full text-[10px] ${
+                className={`px-1.5 py-0.5 rounded-full text-[10px] ${
                   statusFilter === tab.key ? 'bg-white/20 text-white' : 'bg-tc-border text-tc-ink'
                 }`}
               >

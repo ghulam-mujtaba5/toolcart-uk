@@ -51,6 +51,17 @@ export function AIAssistantDrawer({ isOpen, onClose }: AIAssistantDrawerProps) {
     },
   ]);
 
+  React.useEffect(() => {
+    if (!isOpen) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        onClose();
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isOpen, onClose]);
+
   if (!isOpen) return null;
 
   const handleSend = async (textToSend?: string) => {
@@ -112,15 +123,24 @@ export function AIAssistantDrawer({ isOpen, onClose }: AIAssistantDrawerProps) {
       />
 
       {/* Drawer Container */}
-      <div className="relative w-full max-w-lg bg-tc-surface-soft h-full shadow-2xl flex flex-col z-10 border-l border-[#C8D9F9] animate-in slide-in-from-right-full duration-300">
+      <div
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="ai-assistant-title"
+        className="relative w-full max-w-lg bg-tc-surface-soft h-full shadow-2xl flex flex-col z-10 border-l border-[#C8D9F9] animate-in slide-in-from-right-full duration-300"
+      >
         {/* Header: Cobalt accent, Brand V3 */}
         <div className="p-4 sm:p-5 bg-white border-b border-[#C8D9F9] flex items-center justify-between shrink-0">
-          <div className="flex items-center gap-2.5">
-            <div className="w-9 h-9 rounded-xl bg-tc-primary text-white flex items-center justify-center shadow-xs">
-              <Sparkles className="w-5 h-5 text-white" />
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-xl bg-tc-canvas border border-[#C8D9F9] p-1 flex items-center justify-center shadow-xs overflow-hidden shrink-0">
+              <img
+                src="/images/3d/ai/assistant-robot-avatar.webp"
+                alt="ToolCart AI Technical Assistant"
+                className="w-full h-full object-contain drop-shadow-xs"
+              />
             </div>
             <div>
-              <h2 className="font-heading font-extrabold text-base text-tc-ink flex items-center gap-1.5">
+              <h2 id="ai-assistant-title" className="font-heading font-extrabold text-base text-tc-ink flex items-center gap-1.5">
                 ToolCart AI Assistant
                 <span className="text-[10px] px-1.5 py-0.5 rounded bg-tc-primary/10 text-tc-primary font-bold">
                   Grounded

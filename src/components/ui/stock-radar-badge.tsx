@@ -79,7 +79,7 @@ export function StockRadarBadge({
         onMouseLeave={() => showDetailsPopover && setIsPopoverOpen(false)}
         onClick={() => showDetailsPopover && setIsPopoverOpen((prev) => !prev)}
         className={cn(
-          'inline-flex items-center gap-2 rounded-full border shadow-2xs font-semibold select-none',
+          'inline-flex items-center gap-2 rounded-full border shadow-2xs font-semibold select-none max-w-full',
           'transition-all duration-150',
           size === 'sm' ? 'px-2.5 py-0.5 text-[11px]' : 'px-3 py-1 text-xs',
           toneClasses,
@@ -130,7 +130,7 @@ export function StockRadarBadge({
         <IconStockRadar size={16} className="shrink-0 opacity-80" aria-hidden={true} />
 
         {/* Status Text */}
-        <span className="tabular-nums font-medium tracking-tight truncate">{labelText}</span>
+        <span className="tabular-nums font-medium tracking-tight truncate max-w-[140px] sm:max-w-none">{labelText}</span>
       </div>
 
       {/* Interactive Telemetry Popover */}

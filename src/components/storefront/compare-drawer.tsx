@@ -24,6 +24,17 @@ export function CompareDrawer() {
   const { formatPriceDisplay } = useVAT();
   const { addItem } = useCart();
 
+  React.useEffect(() => {
+    if (!isOpen) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        closeCompare();
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isOpen, closeCompare]);
+
   if (products.length === 0) return null;
 
   // Extract all unique specification keys across comparing products
@@ -89,13 +100,18 @@ export function CompareDrawer() {
             aria-hidden="true"
           />
 
-          <div className="relative bg-white rounded-t-2xl shadow-2xl max-h-[88vh] flex flex-col border-t border-tc-border animate-in slide-in-from-bottom-8 overflow-hidden">
+          <div
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="compare-drawer-title"
+            className="relative bg-white rounded-t-2xl shadow-2xl max-h-[88vh] flex flex-col border-t border-tc-border animate-in slide-in-from-bottom-8 overflow-hidden"
+          >
             {/* Header */}
             <div className="bg-tc-ink text-white px-6 py-4 flex items-center justify-between border-b border-white/10 shrink-0">
               <div className="flex items-center gap-3">
-                <span className="font-heading font-extrabold text-base sm:text-lg">
+                <h2 id="compare-drawer-title" className="font-heading font-extrabold text-base sm:text-lg">
                   Side-by-Side Product Comparison
-                </span>
+                </h2>
                 <span className="text-xs px-2 py-0.5 rounded-full bg-tc-action-lime text-tc-ink font-bold">
                   {products.length} / 4 Products
                 </span>

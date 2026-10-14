@@ -43,3 +43,6 @@ __pycache__/
 qa/prototype_inline.js
 
 .vercel
+
+downloaded_gemini_images/
+

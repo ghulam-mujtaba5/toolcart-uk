@@ -1,0 +1,94 @@
+{
+  "asset": {
+    "version": "2.0",
+    "generator": "ToolCart UK 3D Studio"
+  },
+  "scenes": [
+    {
+      "nodes": [
+        0
+      ]
+    }
+  ],
+  "nodes": [
+    {
+      "mesh": 0,
+      "name": "fixings_brass_padlock"
+    }
+  ],
+  "meshes": [
+    {
+      "primitives": [
+        {
+          "attributes": {
+            "POSITION": 0
+          },
+          "indices": 1,
+          "material": 0
+        }
+      ],
+      "name": "fixings_brass_padlock"
+    }
+  ],
+  "materials": [
+    {
+      "name": "ToolCartPBR",
+      "pbrMetallicRoughness": {
+        "baseColorFactor": [
+          0.145,
+          0.388,
+          0.922,
+          1.0
+        ],
+        "metallicFactor": 0.65,
+        "roughnessFactor": 0.25
+      }
+    }
+  ],
+  "buffers": [
+    {
+      "uri": "data:application/octet-stream;base64,zcwMvzMzU79mZma+zcwMPzMzU79mZma+zcwMP5qZ2T5mZma+zcwMv5qZ2T5mZma+zcwMvzMzU79mZmY+zcwMPzMzU79mZmY+zcwMP5qZ2T5mZmY+zcwMv5qZ2T5mZmY+FK7HvpqZmT4pXI+9AACAvpqZmT4pXI+9AACAvgAAgD8pXI+9FK7HvgAAgD8pXI+9FK7HvpqZmT4pXI89AACAvpqZmT4pXI89AACAvgAAgD8pXI89FK7HvgAAgD8pXI89AACAPpqZmT4pXI+9FK7HPpqZmT4pXI+9FK7HPgAAgD8pXI+9AACAPgAAgD8pXI+9AACAPpqZmT4pXI89FK7HPpqZmT4pXI89FK7HPgAAgD8pXI89AACAPgAAgD8pXI89FK7Hvq5HYT8pXI+9FK7HPq5HYT8pXI+9FK7HPlyPgj8pXI+9FK7HvlyPgj8pXI+9FK7Hvq5HYT8pXI89FK7HPq5HYT8pXI89FK7HPlyPgj8pXI89FK7HvlyPgj8pXI89AAABAAIAAAACAAMABAAGAAUABAAHAAYAAAAEAAUAAAAFAAEAAQAFAAYAAQAGAAIAAgAGAAcAAgAHAAMAAwAHAAQAAwAEAAAACAAJAAoACAAKAAsADAAOAA0ADAAPAA4ACAAMAA0ACAANAAkACQANAA4ACQAOAAoACgAOAA8ACgAPAAsACwAPAAwACwAMAAgAEAARABIAEAASABMAFAAWABUAFAAXABYAEAAUABUAEAAVABEAEQAVABYAEQAWABIAEgAWABcAEgAXABMAEwAXABQAEwAUABAAGAAZABoAGAAaABsAHAAeAB0AHAAfAB4AGAAcAB0AGAAdABkAGQAdAB4AGQAeABoAGgAeAB8AGgAfABsAGwAfABwAGwAcABgA",
+      "byteLength": 672
+    }
+  ],
+  "bufferViews": [
+    {
+      "buffer": 0,
+      "byteOffset": 0,
+      "byteLength": 384,
+      "target": 34962
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 384,
+      "byteLength": 288,
+      "target": 34963
+    }
+  ],
+  "accessors": [
+    {
+      "bufferView": 0,
+      "byteOffset": 0,
+      "componentType": 5126,
+      "count": 32,
+      "type": "VEC3",
+      "min": [
+        -0.55,
+        -0.825,
+        -0.225
+      ],
+      "max": [
+        0.55,
+        1.02,
+        0.225
+      ]
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 0,
+      "componentType": 5123,
+      "count": 144,
+      "type": "SCALAR"
+    }
+  ]
+}

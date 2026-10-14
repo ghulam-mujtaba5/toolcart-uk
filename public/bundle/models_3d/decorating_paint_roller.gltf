@@ -1,0 +1,94 @@
+{
+  "asset": {
+    "version": "2.0",
+    "generator": "ToolCart UK 3D Studio"
+  },
+  "scenes": [
+    {
+      "nodes": [
+        0
+      ]
+    }
+  ],
+  "nodes": [
+    {
+      "mesh": 0,
+      "name": "decorating_paint_roller"
+    }
+  ],
+  "meshes": [
+    {
+      "primitives": [
+        {
+          "attributes": {
+            "POSITION": 0
+          },
+          "indices": 1,
+          "material": 0
+        }
+      ],
+      "name": "decorating_paint_roller"
+    }
+  ],
+  "materials": [
+    {
+      "name": "ToolCartPBR",
+      "pbrMetallicRoughness": {
+        "baseColorFactor": [
+          0.145,
+          0.388,
+          0.922,
+          1.0
+        ],
+        "metallicFactor": 0.65,
+        "roughnessFactor": 0.25
+      }
+    }
+  ],
+  "buffers": [
+    {
+      "uri": "data:application/octet-stream;base64,AABAv65H4T49Cle+AABAP65H4T49Cle+AABAP/YoXD89Cle+AABAv/YoXD89Cle+AABAv65H4T49Clc+AABAP65H4T49Clc+AABAP/YoXD89Clc+AABAv/YoXD89Clc+uB5FP83MzDzNzEy9UrheP83MzDzNzEy9UrheP83MLD/NzEy9uB5FP83MLD/NzEy9uB5FP83MzDzNzEw9UrheP83MzDzNzEw9UrheP83MLD/NzEw9uB5FP83MLD/NzEw9zczMvI/C9bzNzEy9MzNTP4/C9bzNzEy9MzNTPylcjz3NzEy9zczMvClcjz3NzEy9zczMvI/C9bzNzEw9MzNTP4/C9bzNzEw9MzNTPylcjz3NzEw9zczMvClcjz3NzEw9j8L1vQAAgL+PwvW9j8L1PQAAgL+PwvW9j8L1Pc3MzL2PwvW9j8L1vc3MzL2PwvW9j8L1vQAAgL+PwvU9j8L1PQAAgL+PwvU9j8L1Pc3MzL2PwvU9j8L1vc3MzL2PwvU9AAABAAIAAAACAAMABAAGAAUABAAHAAYAAAAEAAUAAAAFAAEAAQAFAAYAAQAGAAIAAgAGAAcAAgAHAAMAAwAHAAQAAwAEAAAACAAJAAoACAAKAAsADAAOAA0ADAAPAA4ACAAMAA0ACAANAAkACQANAA4ACQAOAAoACgAOAA8ACgAPAAsACwAPAAwACwAMAAgAEAARABIAEAASABMAFAAWABUAFAAXABYAEAAUABUAEAAVABEAEQAVABYAEQAWABIAEgAWABcAEgAXABMAEwAXABQAEwAUABAAGAAZABoAGAAaABsAHAAeAB0AHAAfAB4AGAAcAB0AGAAdABkAGQAdAB4AGQAeABoAGgAeAB8AGgAfABsAGwAfABwAGwAcABgA",
+      "byteLength": 672
+    }
+  ],
+  "bufferViews": [
+    {
+      "buffer": 0,
+      "byteOffset": 0,
+      "byteLength": 384,
+      "target": 34962
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 384,
+      "byteLength": 288,
+      "target": 34963
+    }
+  ],
+  "accessors": [
+    {
+      "bufferView": 0,
+      "byteOffset": 0,
+      "componentType": 5126,
+      "count": 32,
+      "type": "VEC3",
+      "min": [
+        -0.75,
+        -1.0,
+        -0.21
+      ],
+      "max": [
+        0.87,
+        0.86,
+        0.21
+      ]
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 0,
+      "componentType": 5123,
+      "count": 144,
+      "type": "SCALAR"
+    }
+  ]
+}

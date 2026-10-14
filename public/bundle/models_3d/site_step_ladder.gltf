@@ -1,0 +1,94 @@
+{
+  "asset": {
+    "version": "2.0",
+    "generator": "ToolCart UK 3D Studio"
+  },
+  "scenes": [
+    {
+      "nodes": [
+        0
+      ]
+    }
+  ],
+  "nodes": [
+    {
+      "mesh": 0,
+      "name": "site_step_ladder"
+    }
+  ],
+  "meshes": [
+    {
+      "primitives": [
+        {
+          "attributes": {
+            "POSITION": 0
+          },
+          "indices": 1,
+          "material": 0
+        }
+      ],
+      "name": "site_step_ladder"
+    }
+  ],
+  "materials": [
+    {
+      "name": "ToolCartPBR",
+      "pbrMetallicRoughness": {
+        "baseColorFactor": [
+          0.145,
+          0.388,
+          0.922,
+          1.0
+        ],
+        "metallicFactor": 0.65,
+        "roughnessFactor": 0.25
+      }
+    }
+  ],
+  "buffers": [
+    {
+      "uri": "data:application/octet-stream;base64,FK4Hv2Zmhr9cj0I+9ijcvmZmhr9cj0I+9ijcvmZmhj9cj0I+FK4Hv2Zmhj9cj0I+FK4Hv2Zmhr9SuJ4+9ijcvmZmhr9SuJ4+9ijcvmZmhj9SuJ4+FK4Hv2Zmhj9SuJ4+9ijcPmZmhr9cj0I+FK4HP2Zmhr9cj0I+FK4HP2Zmhj9cj0I+9ijcPmZmhj9cj0I+9ijcPmZmhr9SuJ4+FK4HP2Zmhr9SuJ4+FK4HP2Zmhj9SuJ4+9ijcPmZmhj9SuJ4+uB4Fv2Zmhr/NzMy+rkfhvmZmhr/NzMy+rkfhvmZmhj/NzMy+uB4Fv2Zmhj/NzMy+uB4Fv2Zmhr+amZm+rkfhvmZmhr+amZm+rkfhvmZmhj+amZm+uB4Fv2Zmhj+amZm+rkfhPmZmhr/NzMy+uB4FP2Zmhr/NzMy+uB4FP2Zmhj/NzMy+rkfhPmZmhj/NzMy+rkfhPmZmhr+amZm+uB4FP2Zmhr+amZm+uB4FP2Zmhj+amZm+rkfhPmZmhj+amZm+j8L1vj0KF7+PwvU9j8L1Pj0KF7+PwvU9j8L1PlyPAr+PwvU9j8L1vlyPAr+PwvU9j8L1vj0KF79cj8I+j8L1Pj0KF79cj8I+j8L1PlyPAr9cj8I+j8L1vlyPAr9cj8I+j8L1vo/CdT2PwvU9j8L1Po/CdT2PwvU9j8L1PilcDz6PwvU9j8L1vilcDz6PwvU9j8L1vo/CdT1cj8I+j8L1Po/CdT1cj8I+j8L1PilcDz5cj8I+j8L1vilcDz5cj8I+XI8Cv83MTD9mZqa+XI8CP83MTD9mZqa+XI8CP2ZmZj9mZqa+XI8Cv2ZmZj9mZqa+XI8Cv83MTD9mZqY+XI8CP83MTD9mZqY+XI8CP2ZmZj9mZqY+XI8Cv2ZmZj9mZqY+AAABAAIAAAACAAMABAAGAAUABAAHAAYAAAAEAAUAAAAFAAEAAQAFAAYAAQAGAAIAAgAGAAcAAgAHAAMAAwAHAAQAAwAEAAAACAAJAAoACAAKAAsADAAOAA0ADAAPAA4ACAAMAA0ACAANAAkACQANAA4ACQAOAAoACgAOAA8ACgAPAAsACwAPAAwACwAMAAgAEAARABIAEAASABMAFAAWABUAFAAXABYAEAAUABUAEAAVABEAEQAVABYAEQAWABIAEgAWABcAEgAXABMAEwAXABQAEwAUABAAGAAZABoAGAAaABsAHAAeAB0AHAAfAB4AGAAcAB0AGAAdABkAGQAdAB4AGQAeABoAGgAeAB8AGgAfABsAGwAfABwAGwAcABgAIAAhACIAIAAiACMAJAAmACUAJAAnACYAIAAkACUAIAAlACEAIQAlACYAIQAmACIAIgAmACcAIgAnACMAIwAnACQAIwAkACAAKAApACoAKAAqACsALAAuAC0ALAAvAC4AKAAsAC0AKAAtACkAKQAtAC4AKQAuACoAKgAuAC8AKgAvACsAKwAvACwAKwAsACgAMAAxADIAMAAyADMANAA2ADUANAA3ADYAMAA0ADUAMAA1ADEAMQA1ADYAMQA2ADIAMgA2ADcAMgA3ADMAMwA3ADQAMwA0ADAA",
+      "byteLength": 1176
+    }
+  ],
+  "bufferViews": [
+    {
+      "buffer": 0,
+      "byteOffset": 0,
+      "byteLength": 672,
+      "target": 34962
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 672,
+      "byteLength": 504,
+      "target": 34963
+    }
+  ],
+  "accessors": [
+    {
+      "bufferView": 0,
+      "byteOffset": 0,
+      "componentType": 5126,
+      "count": 56,
+      "type": "VEC3",
+      "min": [
+        -0.53,
+        -1.05,
+        -0.39999999999999997
+      ],
+      "max": [
+        0.53,
+        1.05,
+        0.38
+      ]
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 0,
+      "componentType": 5123,
+      "count": 252,
+      "type": "SCALAR"
+    }
+  ]
+}

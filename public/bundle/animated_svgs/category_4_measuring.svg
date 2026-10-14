@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360" width="100%" height="100%">
+  <defs>
+    <linearGradient id="levelBlue" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2563EB"/>
+      <stop offset="100%" stop-color="#1E3A8A"/>
+    </linearGradient>
+    <linearGradient id="tapeYellow" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FEF08A"/>
+      <stop offset="100%" stop-color="#EAB308"/>
+    </linearGradient>
+    <filter id="shadow4" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="14" stdDeviation="10" flood-color="#0F172A" flood-opacity="0.15"/>
+    </filter>
+    <style>
+      .level-float { animation: lvlFloat 3.8s ease-in-out infinite; }
+      .tape-extend { animation: tapeExt 3.4s ease-in-out infinite; }
+      .bubble-move { animation: bubMove 3.8s ease-in-out infinite; }
+      @keyframes lvlFloat { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-9px); } }
+      @keyframes tapeExt { 0%, 100% { transform: translate(0px, 0px); } 50% { transform: translate(-10px, -8px); } }
+      @keyframes bubMove { 0%, 100% { transform: translateX(-3px); } 50% { transform: translateX(3px); } }
+    </style>
+  </defs>
+  <ellipse cx="360" cy="248" rx="195" ry="72" fill="#EFF6FF"/>
+  <ellipse cx="360" cy="248" rx="140" ry="50" fill="#DBEAFE" opacity="0.65"/>
+  <!-- 3D Anodised Spirit Level -->
+  <g class="level-float" filter="url(#shadow4)">
+    <g transform="translate(185, 225) rotate(-26)">
+      <rect x="0" y="0" width="330" height="46" rx="6" fill="url(#levelBlue)" stroke="#1D4ED8" stroke-width="1.5"/>
+      <rect x="0" y="0" width="18" height="46" rx="4" fill="#0F172A"/>
+      <rect x="312" y="0" width="18" height="46" rx="4" fill="#0F172A"/>
+      <!-- Neon Green Vials -->
+      <rect x="135" y="6" width="60" height="20" rx="8" fill="#BEF264" stroke="#4D7C0F" stroke-width="1.5"/>
+      <circle cx="165" cy="16" r="6" fill="#FFFFFF" class="bubble-move"/>
+      <circle cx="72" cy="23" r="14" fill="#BEF264" stroke="#4D7C0F" stroke-width="1.5"/>
+      <circle cx="72" cy="23" r="5" fill="#FFFFFF"/>
+      <circle cx="258" cy="23" r="14" fill="#BEF264" stroke="#4D7C0F" stroke-width="1.5"/>
+      <circle cx="258" cy="23" r="5" fill="#FFFFFF"/>
+    </g>
+  </g>
+  <!-- 3D 5m/10m Pocket Tape Measure -->
+  <g class="tape-extend" filter="url(#shadow4)">
+    <!-- Extended Yellow Blade -->
+    <polygon points="155,215 275,148 292,165 172,232" fill="url(#tapeYellow)" stroke="#CA8A04" stroke-width="1.5"/>
+    <line x1="175" y1="205" x2="270" y2="152" stroke="#713F12" stroke-width="3" stroke-dasharray="4,8"/>
+    <polygon points="150,210 160,204 176,228 166,235" fill="#CBD5E1" stroke="#475569" stroke-width="1.5"/>
+    <!-- Tape Housing -->
+    <rect x="245" y="75" width="98" height="88" rx="28" fill="#0F172A" stroke="#334155" stroke-width="2"/>
+    <rect x="257" y="87" width="74" height="64" rx="20" fill="url(#levelBlue)"/>
+    <circle cx="294" cy="119" r="20" fill="#CBD5E1"/>
+    <rect x="240" y="105" width="12" height="28" rx="4" fill="#F97316"/>
+  </g>
+  <!-- 3D Brass Plumb Bob & Steel Ruler -->
+  <g class="level-float" filter="url(#shadow4)">
+    <g transform="translate(455, 185) rotate(32)">
+      <polygon points="0,0 26,-45 52,0 26,75" fill="#EAB308" stroke="#A16207" stroke-width="1.5"/>
+      <ellipse cx="26" cy="0" rx="26" ry="8" fill="#FEF08A"/>
+    </g>
+  </g>
+</svg>

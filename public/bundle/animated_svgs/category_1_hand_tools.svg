@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360" width="100%" height="100%">
+  <defs>
+    <linearGradient id="steel" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F8FAFC"/>
+      <stop offset="50%" stop-color="#CBD5E1"/>
+      <stop offset="100%" stop-color="#64748B"/>
+    </linearGradient>
+    <linearGradient id="royal" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#3B82F6"/>
+      <stop offset="100%" stop-color="#1D4ED8"/>
+    </linearGradient>
+    <linearGradient id="navy" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1E293B"/>
+      <stop offset="100%" stop-color="#0F172A"/>
+    </linearGradient>
+    <filter id="softShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="14" stdDeviation="10" flood-color="#0F172A" flood-opacity="0.14"/>
+    </filter>
+    <style>
+      .float-hammer { animation: floatA 3.6s ease-in-out infinite; transform-origin: 240px 180px; }
+      .float-spanner { animation: floatB 4.2s ease-in-out infinite; transform-origin: 380px 190px; }
+      .float-saw { animation: floatC 3.9s ease-in-out infinite; transform-origin: 470px 160px; }
+      .pulse-ring { animation: ringPulse 3s ease-out infinite; transform-origin: 350px 190px; }
+      @keyframes floatA { 0%, 100% { transform: translateY(0px) rotate(0deg); } 50% { transform: translateY(-10px) rotate(-3deg); } }
+      @keyframes floatB { 0%, 100% { transform: translateY(0px) rotate(0deg); } 50% { transform: translateY(-8px) rotate(4deg); } }
+      @keyframes floatC { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-12px); } }
+      @keyframes ringPulse { 0% { transform: scale(0.92); opacity: 0.5; } 50% { transform: scale(1.04); opacity: 0.9; } 100% { transform: scale(0.92); opacity: 0.5; } }
+    </style>
+  </defs>
+  <!-- Ambient Isometric Depth Rings -->
+  <ellipse cx="360" cy="245" rx="195" ry="75" fill="#EFF6FF" class="pulse-ring"/>
+  <ellipse cx="360" cy="245" rx="145" ry="52" fill="#DBEAFE" opacity="0.65"/>
+  <!-- 3D Isometric Hand Saw -->
+  <g class="float-saw" filter="url(#softShadow)">
+    <polygon points="360,235 555,115 585,150 395,265" fill="url(#steel)" stroke="#94A3B8" stroke-width="1.5"/>
+    <polyline points="395,265 405,255 410,260 420,249 425,254 435,243 440,248 450,237 455,242 465,231 470,236 480,225 485,230 500,215 505,220 520,205 525,210 540,195 545,200 560,185 565,190 585,150" fill="none" stroke="#475569" stroke-width="2"/>
+    <path d="M535,105 L595,85 C608,82 615,95 610,112 L592,162 C586,174 572,175 562,166 L528,125 Z" fill="url(#royal)"/>
+    <path d="M555,112 L588,102 L578,145 L548,125 Z" fill="#FFFFFF"/>
+    <circle cx="545" cy="132" r="3.5" fill="#CBD5E1"/>
+    <circle cx="562" cy="148" r="3.5" fill="#CBD5E1"/>
+  </g>
+  <!-- 3D Isometric Chrome-Vanadium Spanner & VDE Screwdriver -->
+  <g class="float-spanner" filter="url(#softShadow)">
+    <rect x="275" y="185" width="165" height="22" rx="8" transform="rotate(-28 350 195)" fill="url(#steel)" stroke="#94A3B8" stroke-width="1.5"/>
+    <path d="M250,218 C232,205 235,180 256,175 L272,188 L262,202 L278,210 C268,225 258,224 250,218 Z" fill="url(#steel)" stroke="#64748B" stroke-width="1.5"/>
+    <circle cx="422" cy="156" r="18" fill="url(#steel)" stroke="#64748B" stroke-width="1.5"/>
+    <circle cx="422" cy="156" r="9" fill="#EFF6FF"/>
+    <!-- Screwdriver -->
+    <rect x="295" y="232" width="110" height="8" rx="3" transform="rotate(-28 350 235)" fill="url(#steel)"/>
+    <rect x="225" y="262" width="82" height="26" rx="12" transform="rotate(-28 265 275)" fill="url(#royal)"/>
+    <rect x="235" y="267" width="45" height="16" rx="7" transform="rotate(-28 265 275)" fill="url(#navy)"/>
+  </g>
+  <!-- 3D Isometric Forged Claw Hammer -->
+  <g class="float-hammer" filter="url(#softShadow)">
+    <rect x="145" y="165" width="185" height="24" rx="10" transform="rotate(-32 235 175)" fill="url(#royal)"/>
+    <rect x="142" y="192" width="95" height="24" rx="10" transform="rotate(-32 190 204)" fill="url(#navy)"/>
+    <path d="M275,92 L342,128 L328,152 L288,132 L262,148 C265,125 268,108 275,92 Z" fill="url(#steel)" stroke="#64748B" stroke-width="1.5"/>
+    <ellipse cx="336" cy="140" rx="9" ry="15" transform="rotate(28 336 140)" fill="#94A3B8"/>
+  </g>
+</svg>

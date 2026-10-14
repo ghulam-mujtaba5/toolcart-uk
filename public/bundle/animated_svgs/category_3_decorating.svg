@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360" width="100%" height="100%">
+  <defs>
+    <linearGradient id="blueGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#3B82F6"/>
+      <stop offset="100%" stop-color="#1D4ED8"/>
+    </linearGradient>
+    <linearGradient id="tapeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#60A5FA"/>
+      <stop offset="100%" stop-color="#2563EB"/>
+    </linearGradient>
+    <linearGradient id="bristle" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FEF3C7"/>
+      <stop offset="100%" stop-color="#D97706"/>
+    </linearGradient>
+    <filter id="shadow3" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="14" stdDeviation="10" flood-color="#0F172A" flood-opacity="0.14"/>
+    </filter>
+    <style>
+      .roller-anim { animation: rollMove 3.6s ease-in-out infinite; }
+      .brush-anim { animation: brushMove 4s ease-in-out infinite; }
+      .tape-anim { animation: tapeMove 3.2s ease-in-out infinite; }
+      @keyframes rollMove { 0%, 100% { transform: translate(0px, 0px); } 50% { transform: translate(-8px, -10px); } }
+      @keyframes brushMove { 0%, 100% { transform: translateY(0px) rotate(0deg); } 50% { transform: translateY(-9px) rotate(-3deg); } }
+      @keyframes tapeMove { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-12px); } }
+    </style>
+  </defs>
+  <ellipse cx="355" cy="248" rx="195" ry="72" fill="#EFF6FF"/>
+  <ellipse cx="355" cy="248" rx="140" ry="50" fill="#DBEAFE" opacity="0.65"/>
+  <!-- 3D Woven Paint Roller -->
+  <g class="roller-anim" filter="url(#shadow3)">
+    <g transform="translate(260, 75) rotate(-24)">
+      <rect x="0" y="0" width="165" height="54" rx="26" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="2"/>
+      <path d="M25,2 L45,52 M65,2 L85,52 M105,2 L125,52 M145,2 L160,42" stroke="#3B82F6" stroke-width="4" stroke-linecap="round"/>
+      <path d="M165,27 L195,27 L195,95 L110,95 L110,135" fill="none" stroke="#94A3B8" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+      <rect x="96" y="130" width="28" height="78" rx="12" fill="url(#blueGrad)"/>
+      <rect x="101" y="142" width="18" height="45" rx="7" fill="#0F172A"/>
+    </g>
+  </g>
+  <!-- 3D Pure Bristle Paintbrush -->
+  <g class="brush-anim" filter="url(#shadow3)">
+    <g transform="translate(155, 195) rotate(-30)">
+      <polygon points="0,8 65,0 65,58 0,50" fill="url(#bristle)"/>
+      <rect x="65" y="0" width="32" height="58" rx="3" fill="#E2E8F0" stroke="#94A3B8" stroke-width="1.5"/>
+      <path d="M97,4 L185,16 C198,18 198,40 185,42 L97,54 Z" fill="url(#blueGrad)"/>
+      <ellipse cx="145" cy="29" rx="25" ry="7" fill="#0F172A"/>
+    </g>
+  </g>
+  <!-- 3D Blue Precision Masking Tape Roll & Putty Scraper -->
+  <g class="tape-anim" filter="url(#shadow3)">
+    <ellipse cx="475" cy="195" rx="58" ry="38" fill="#1D4ED8"/>
+    <rect x="417" y="168" width="116" height="27" fill="url(#tapeGrad)"/>
+    <ellipse cx="475" cy="168" rx="58" ry="38" fill="#60A5FA"/>
+    <ellipse cx="475" cy="168" rx="34" ry="21" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="3"/>
+    <!-- Stainless Putty Scraper -->
+    <g transform="translate(355, 225) rotate(22)">
+      <polygon points="0,0 75,-22 75,52 0,30" fill="#E2E8F0" stroke="#94A3B8" stroke-width="1.5"/>
+      <rect x="-72" y="3" width="74" height="24" rx="11" fill="#0F172A"/>
+      <rect x="-58" y="8" width="42" height="14" rx="6" fill="#3B82F6"/>
+    </g>
+  </g>
+</svg>

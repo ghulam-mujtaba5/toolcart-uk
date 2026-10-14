@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360" width="100%" height="100%">
+  <defs>
+    <linearGradient id="brass" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FDE047"/>
+      <stop offset="50%" stop-color="#EAB308"/>
+      <stop offset="100%" stop-color="#A16207"/>
+    </linearGradient>
+    <linearGradient id="chrome" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="50%" stop-color="#CBD5E1"/>
+      <stop offset="100%" stop-color="#475569"/>
+    </linearGradient>
+    <linearGradient id="plugBlue" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#3B82F6"/>
+      <stop offset="100%" stop-color="#1E40AF"/>
+    </linearGradient>
+    <filter id="shadow2" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="14" stdDeviation="10" flood-color="#0F172A" flood-opacity="0.15"/>
+    </filter>
+    <style>
+      .padlock-float { animation: padFloat 3.8s ease-in-out infinite; }
+      .bolt-float { animation: boltFloat 4.2s ease-in-out infinite; }
+      .plug-float { animation: plugFloat 3.4s ease-in-out infinite; }
+      @keyframes padFloat { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-11px); } }
+      @keyframes boltFloat { 0%, 100% { transform: translate(0px, 0px); } 50% { transform: translate(4px, -8px); } }
+      @keyframes plugFloat { 0%, 100% { transform: translate(0px, 0px); } 50% { transform: translate(-4px, -9px); } }
+    </style>
+  </defs>
+  <ellipse cx="360" cy="250" rx="190" ry="70" fill="#EFF6FF"/>
+  <ellipse cx="360" cy="250" rx="135" ry="48" fill="#DBEAFE" opacity="0.7"/>
+  <!-- 3D Solid Brass Padlock -->
+  <g class="padlock-float" filter="url(#shadow2)">
+    <path d="M315,135 L315,85 C315,48 385,48 385,85 L385,135" fill="none" stroke="url(#chrome)" stroke-width="20" stroke-linecap="round"/>
+    <polygon points="290,130 395,110 415,130 415,235 310,255 290,235" fill="url(#brass)"/>
+    <polygon points="290,130 310,150 310,255 290,235" fill="#CA8A04"/>
+    <polygon points="290,130 395,110 415,130 310,150" fill="#FEF08A"/>
+    <circle cx="362" cy="192" r="12" fill="#713F12"/>
+    <rect x="359" y="192" width="6" height="18" rx="2" fill="#FEF08A"/>
+  </g>
+  <!-- 3D Stainless Hex Bolts & Nuts -->
+  <g class="bolt-float" filter="url(#shadow2)">
+    <g transform="translate(160, 155) rotate(-25)">
+      <polygon points="0,12 18,0 36,12 36,34 18,46 0,34" fill="url(#chrome)" stroke="#64748B" stroke-width="1.5"/>
+      <rect x="36" y="11" width="95" height="24" rx="3" fill="url(#chrome)"/>
+      <line x1="48" y1="11" x2="44" y2="35" stroke="#64748B" stroke-width="2"/>
+      <line x1="60" y1="11" x2="56" y2="35" stroke="#64748B" stroke-width="2"/>
+      <line x1="72" y1="11" x2="68" y2="35" stroke="#64748B" stroke-width="2"/>
+      <line x1="84" y1="11" x2="80" y2="35" stroke="#64748B" stroke-width="2"/>
+      <line x1="96" y1="11" x2="92" y2="35" stroke="#64748B" stroke-width="2"/>
+      <line x1="108" y1="11" x2="104" y2="35" stroke="#64748B" stroke-width="2"/>
+    </g>
+    <!-- Hex Nut -->
+    <g transform="translate(215, 235)">
+      <polygon points="24,0 48,12 48,36 24,48 0,36 0,12" fill="url(#chrome)" stroke="#64748B" stroke-width="1.5"/>
+      <circle cx="24" cy="24" r="11" fill="#EFF6FF" stroke="#475569" stroke-width="2"/>
+    </g>
+  </g>
+  <!-- 3D Blue Nylon Wall Plugs -->
+  <g class="plug-float" filter="url(#shadow2)">
+    <g transform="translate(445, 195) rotate(-28)">
+      <rect x="0" y="0" width="115" height="24" rx="6" fill="url(#plugBlue)"/>
+      <polygon points="20,0 28,-6 28,30 20,24" fill="#1D4ED8"/>
+      <polygon points="45,0 53,-6 53,30 45,24" fill="#1D4ED8"/>
+      <polygon points="70,0 78,-6 78,30 70,24" fill="#1D4ED8"/>
+      <line x1="15" y1="12" x2="105" y2="12" stroke="#93C5FD" stroke-width="2" stroke-dasharray="10,6"/>
+    </g>
+    <g transform="translate(465, 240) rotate(-28)">
+      <rect x="0" y="0" width="115" height="24" rx="6" fill="url(#plugBlue)"/>
+      <line x1="15" y1="12" x2="105" y2="12" stroke="#93C5FD" stroke-width="2" stroke-dasharray="10,6"/>
+    </g>
+  </g>
+</svg>

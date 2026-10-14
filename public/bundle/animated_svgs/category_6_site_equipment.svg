@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360" width="100%" height="100%">
+  <defs>
+    <linearGradient id="tarpBlue" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#3B82F6"/>
+      <stop offset="100%" stop-color="#1E40AF"/>
+    </linearGradient>
+    <linearGradient id="aluGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F8FAFC"/>
+      <stop offset="50%" stop-color="#CBD5E1"/>
+      <stop offset="100%" stop-color="#64748B"/>
+    </linearGradient>
+    <linearGradient id="strapOrange" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FB923C"/>
+      <stop offset="100%" stop-color="#EA580C"/>
+    </linearGradient>
+    <filter id="shadow6" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="14" stdDeviation="10" flood-color="#0F172A" flood-opacity="0.15"/>
+    </filter>
+    <style>
+      .ladder-float { animation: ladFloat 3.8s ease-in-out infinite; }
+      .tarp-float { animation: trpFloat 4.2s ease-in-out infinite; }
+      .strap-float { animation: strFloat 3.5s ease-in-out infinite; }
+      @keyframes ladFloat { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-10px); } }
+      @keyframes trpFloat { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-8px); } }
+      @keyframes strFloat { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-11px); } }
+    </style>
+  </defs>
+  <ellipse cx="360" cy="252" rx="195" ry="72" fill="#EFF6FF"/>
+  <ellipse cx="360" cy="252" rx="140" ry="50" fill="#DBEAFE" opacity="0.65"/>
+  <!-- 3D Heavy Waterproof Tarpaulin Sheet with Brass Eyelets -->
+  <g class="tarp-float" filter="url(#shadow6)">
+    <polygon points="150,210 245,160 325,202 230,255" fill="#1E3A8A"/>
+    <polygon points="150,196 245,146 325,188 230,241" fill="#1D4ED8"/>
+    <polygon points="150,182 245,132 325,174 230,227" fill="url(#tarpBlue)" stroke="#60A5FA" stroke-width="1.5"/>
+    <circle cx="230" cy="212" r="5" fill="#FDE047" stroke="#A16207" stroke-width="2"/>
+    <circle cx="170" cy="182" r="5" fill="#FDE047" stroke="#A16207" stroke-width="2"/>
+    <circle cx="305" cy="174" r="5" fill="#FDE047" stroke="#A16207" stroke-width="2"/>
+  </g>
+  <!-- 3D EN14183 Trade Aluminium Step Ladder -->
+  <g class="ladder-float" filter="url(#shadow6)">
+    <line x1="335" y1="245" x2="375" y2="75" stroke="url(#aluGrad)" stroke-width="12" stroke-linecap="round"/>
+    <line x1="415" y1="265" x2="445" y2="92" stroke="url(#aluGrad)" stroke-width="12" stroke-linecap="round"/>
+    <line x1="445" y1="92" x2="488" y2="232" stroke="#94A3B8" stroke-width="10" stroke-linecap="round"/>
+    <line x1="375" y1="75" x2="418" y2="215" stroke="#94A3B8" stroke-width="10" stroke-linecap="round"/>
+    <polygon points="365,70 448,86 458,102 375,86" fill="url(#tarpBlue)"/>
+    <polygon points="352,132 432,148 438,160 358,144" fill="#0F172A"/>
+    <polygon points="342,188 422,204 428,216 348,200" fill="#0F172A"/>
+  </g>
+  <!-- 3D Orange & Blue Ratchet Tie-Down Strap -->
+  <g class="strap-float" filter="url(#shadow6)">
+    <ellipse cx="525" cy="215" rx="46" ry="28" fill="#C2410C"/>
+    <rect x="479" y="195" width="92" height="20" fill="url(#strapOrange)"/>
+    <ellipse cx="525" cy="195" rx="46" ry="28" fill="#FB923C" stroke="#EA580C" stroke-width="2"/>
+    <ellipse cx="525" cy="195" rx="18" ry="11" fill="#0F172A"/>
+    <rect x="462" y="222" width="55" height="18" rx="6" transform="rotate(-22 490 230)" fill="url(#aluGrad)" stroke="#475569" stroke-width="1.5"/>
+  </g>
+</svg>

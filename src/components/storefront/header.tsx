@@ -120,7 +120,12 @@ export function Header({ onOpenAiAssistant }: HeaderProps) {
                 aria-label="Search catalog"
                 className="w-full h-11 pl-10 pr-20 bg-tc-canvas border border-tc-border-strong rounded-lg text-sm text-tc-ink placeholder:text-tc-text-secondary focus:outline-none focus:ring-2 focus:ring-tc-primary focus:bg-white transition-all shadow-inner"
               />
-              <Search className="w-4 h-4 text-tc-text-secondary absolute left-3.5 top-3.5 pointer-events-none" />
+              <img
+                src="/images/3d/icons/icon-search.webp"
+                alt=""
+                aria-hidden="true"
+                className="w-4 h-4 object-contain absolute left-3.5 top-3.5 pointer-events-none drop-shadow-xs"
+              />
 
               {query && (
                 <button
@@ -208,15 +213,20 @@ export function Header({ onOpenAiAssistant }: HeaderProps) {
 
           {/* Action Controls: AI Assistant, Account, Mini-Basket */}
           <div className="flex items-center gap-2 sm:gap-3">
-            {/* AI Finder trigger with duotone radar accent */}
+            {/* AI Finder trigger with 3D sparkle icon */}
             {onOpenAiAssistant && (
               <Button
                 variant="outline"
                 size="sm"
                 onClick={onOpenAiAssistant}
-                className="hidden lg:inline-flex items-center gap-1.5 border-tc-primary/40 text-tc-primary hover:bg-tc-surface-soft"
+                className="hidden lg:inline-flex items-center gap-1.5 border-tc-primary/40 text-tc-primary hover:bg-tc-surface-soft shadow-xs"
               >
-                <IconStockRadar size={16} className="text-tc-primary" />
+                <img
+                  src="/images/3d/icons/icon-ai-sparkle.webp"
+                  alt=""
+                  aria-hidden="true"
+                  className="w-4 h-4 object-contain drop-shadow-xs"
+                />
                 <span>Ask ToolCart AI</span>
               </Button>
             )}
@@ -225,9 +235,14 @@ export function Header({ onOpenAiAssistant }: HeaderProps) {
             <Link
               href="/account"
               aria-label="Customer Account & Orders"
-              className="p-2 rounded-lg text-tc-ink hover:bg-tc-canvas transition-colors flex items-center gap-1"
+              className="p-2 rounded-lg text-tc-ink hover:bg-tc-canvas transition-colors flex items-center gap-1.5 group"
             >
-              <User className="w-5 h-5 text-tc-ink" />
+              <img
+                src="/images/3d/icons/icon-account.webp"
+                alt=""
+                aria-hidden="true"
+                className="w-5 h-5 object-contain drop-shadow-xs group-hover:scale-110 transition-transform"
+              />
               <span className="hidden xl:inline text-xs font-semibold">Account</span>
             </Link>
 
@@ -238,7 +253,12 @@ export function Header({ onOpenAiAssistant }: HeaderProps) {
               aria-label={`Open Basket, ${summary.total_items_count} items`}
               className="relative p-2 sm:px-3 sm:py-2 rounded-lg bg-tc-ink text-white hover:bg-tc-graphite transition-all flex items-center gap-2 shadow-xs group active:scale-95"
             >
-              <ShoppingCart className="w-5 h-5 text-white stroke-[2]" />
+              <img
+                src="/images/3d/icons/icon-cart.webp"
+                alt=""
+                aria-hidden="true"
+                className="w-5 h-5 object-contain drop-shadow-xs group-hover:scale-110 transition-transform"
+              />
               <span className="hidden sm:inline text-xs font-bold">Basket</span>
 
               {summary.total_items_count > 0 && (

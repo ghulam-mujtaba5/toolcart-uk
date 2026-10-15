@@ -109,7 +109,7 @@ export function Header({ onOpenAiAssistant }: HeaderProps) {
       )}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between gap-4 h-16 sm:h-20">
+        <div className="flex items-center justify-between gap-4 h-20 sm:h-24">
           {/* Mobile hamburger */}
           <button
             type="button"
@@ -121,20 +121,20 @@ export function Header({ onOpenAiAssistant }: HeaderProps) {
           </button>
 
           {/* Brand Wordmark & Action Lime Cart Badge with 3D Master Logo */}
-          <Link href="/" className="flex items-center gap-2.5 shrink-0 group">
-            <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-tc-action-lime border-2 border-tc-ink flex items-center justify-center shadow-xs transition-transform group-hover:scale-105 overflow-hidden p-0.5">
+          <Link href="/" className="flex items-center gap-3 sm:gap-3.5 shrink-0 group">
+            <div className="w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 rounded-2xl bg-tc-action-lime border-[2.5px] border-tc-ink flex items-center justify-center shadow-sm transition-transform group-hover:scale-105 overflow-hidden p-1 sm:p-1.5 shrink-0">
               <img
                 src="/images/brand/logo-toolcart.webp"
                 alt="ToolCart 3D Logo"
                 className="w-full h-full object-contain drop-shadow-xs"
               />
             </div>
-            <div className="flex flex-col">
-              <span className="font-heading font-extrabold text-2xl sm:text-3xl tracking-[-0.04em] text-tc-ink leading-none">
+            <div className="flex flex-col justify-center">
+              <span className="font-heading font-extrabold text-2xl sm:text-3xl lg:text-4xl tracking-[-0.04em] text-tc-ink leading-none">
                 TOOLCART
               </span>
-              <span className="text-[9px] uppercase tracking-widest text-tc-text-secondary font-bold font-sans">
-                UK Hardware Direct
+              <span className="text-[9px] sm:text-[10px] uppercase tracking-widest text-tc-primary font-mono font-extrabold mt-1">
+                UK Trade Direct · BS EN Spec
               </span>
             </div>
           </Link>

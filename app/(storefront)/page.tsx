@@ -11,11 +11,8 @@ import {
   HardHat,
   Package,
   ArrowRight,
-  CheckCircle2,
-  Truck,
   BookOpen,
   Layers,
-  ShieldCheck,
 } from 'lucide-react';
 
 export const dynamic = 'force-dynamic';
@@ -82,118 +79,71 @@ export default async function StorefrontHomePage() {
 
   return (
     <div className="space-y-12 sm:space-y-16 pb-16">
-      {/* 2-Column Hero Section */}
-      <section className="bg-white border-b border-tc-border pt-10 pb-14 lg:py-16">
+      {/* Clean Professional Hero Section */}
+      <section className="bg-white border-b border-tc-border pt-10 pb-12 lg:py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
             {/* Left Column: Heading, Lead & CTAs */}
             <div className="lg:col-span-7 space-y-6">
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-tc-surface-soft border border-[#C8D9F9] text-xs font-semibold text-tc-primary shadow-xs">
-                <ShieldCheck className="w-4 h-4 text-tc-primary" />
-                <span>Direct UK Trade Hardware &amp; Supplies</span>
-              </div>
-
               <h1 className="font-heading font-extrabold text-4xl sm:text-5xl lg:text-6xl text-tc-ink tracking-tight leading-[1.08]">
                 The right tools.{' '}
                 <span className="text-tc-primary">The right advice.</span>
               </h1>
 
               <p className="text-base sm:text-lg text-tc-graphite max-w-2xl leading-relaxed">
-                Shop verified trade hardware and everyday project supplies. Search by exact specification or tell us what you are working on—we will help you narrow it down without guesswork.
+                Trade-quality hand tools, fixings, decorating supplies, and site gear with verified specifications and clear pack quantities.
               </p>
 
               <div className="flex flex-wrap items-center gap-3 pt-2">
                 <Button variant="primary" size="lg" asChild>
                   <Link href="/tools" className="flex items-center gap-2">
-                    <span>Shop tools & hardware</span>
+                    <span>Shop tools &amp; hardware</span>
                     <ArrowRight className="w-4 h-4" />
                   </Link>
                 </Button>
-                <Button variant="accent" size="lg" asChild>
-                  <Link href="/projects">Help me choose</Link>
+                <Button variant="outline" size="lg" asChild>
+                  <Link href="/projects">Curated project kits</Link>
                 </Button>
               </div>
 
-              {/* Trust Indicators with 3D Claymorphic Emblems */}
-              <div className="pt-4 flex flex-wrap items-center gap-6 text-xs text-tc-text-secondary font-medium">
+              {/* Trust Indicators */}
+              <div className="pt-4 flex flex-wrap items-center gap-6 text-xs text-tc-text-secondary font-medium border-t border-tc-border/60">
                 <span className="flex items-center gap-2">
                   <img
                     src="/images/3d/trust/honest-pack-counts.webp"
                     alt="Honest pack counts"
-                    className="w-6 h-6 object-contain drop-shadow-xs"
+                    className="w-5 h-5 object-contain drop-shadow-xs"
                   />
-                  No inflated multi-pack claims
+                  Honest pack counts &amp; case pricing
                 </span>
                 <span className="flex items-center gap-2">
                   <img
                     src="/images/3d/trust/stock-freshness-ttl.webp"
-                    alt="24h Stock freshness TTL"
-                    className="w-6 h-6 object-contain drop-shadow-xs"
+                    alt="Stock freshness"
+                    className="w-5 h-5 object-contain drop-shadow-xs"
                   />
-                  Daily stock freshness checks
+                  Live verified inventory
                 </span>
                 <span className="flex items-center gap-2">
                   <img
                     src="/images/3d/trust/free-freight-delivery.webp"
-                    alt="Free delivery over £50"
-                    className="w-6 h-6 object-contain drop-shadow-xs"
+                    alt="Free delivery"
+                    className="w-5 h-5 object-contain drop-shadow-xs"
                   />
-                  Free delivery over £50 ex. VAT
+                  Free UK delivery over £50 ex. VAT
                 </span>
               </div>
             </div>
 
-            {/* Right Column: Hero Visual & Customer Promise Card */}
-            <div className="lg:col-span-5 space-y-5">
-              {/* Hero Workbench Visual */}
+            {/* Right Column: Hero Visual */}
+            <div className="lg:col-span-5">
               <div className="relative rounded-2xl overflow-hidden border border-[#C8D9F9] shadow-md group">
-                <div className="aspect-[16/9] w-full bg-tc-canvas overflow-hidden">
+                <div className="aspect-[4/3] w-full bg-tc-canvas overflow-hidden">
                   <img
                     src="/images/hero/hero-workbench.webp"
                     alt="ToolCart Professional Trade Workbench"
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   />
-                </div>
-              </div>
-
-              {/* Customer Promise Card */}
-              <div className="rounded-2xl bg-tc-surface-soft border border-[#C8D9F9] p-6 sm:p-7 shadow-xs space-y-4">
-                <div className="flex items-center justify-between">
-                  <span className="text-[11px] font-extrabold tracking-wider text-tc-primary uppercase font-mono">
-                    OUR CUSTOMER PROMISE
-                  </span>
-                  <span className="text-xs px-2 py-0.5 rounded-full bg-tc-primary/10 text-tc-primary font-bold">
-                    ToolCart Standards
-                  </span>
-                </div>
-
-                <h2 className="font-heading font-extrabold text-xl sm:text-2xl text-tc-ink leading-tight">
-                  Less guesswork. Better choices.
-                </h2>
-
-                <p className="text-xs text-tc-graphite leading-relaxed">
-                  Clear product sizes, pack quantities and relevant options help you make an informed choice before you order.
-                </p>
-
-                {/* Technical Specification & Fixing Matcher */}
-                <div className="mt-2 p-3.5 rounded-xl bg-white border border-[#C8D9F9] flex gap-3.5 items-center shadow-xs">
-                  <div className="w-10 h-10 rounded-xl bg-tc-surface-soft border border-[#C8D9F9] flex items-center justify-center text-tc-primary shrink-0 shadow-2xs">
-                    <Wrench className="w-5 h-5 text-tc-primary stroke-[2]" />
-                  </div>
-                  <div className="flex-1 min-w-0 space-y-1">
-                    <div className="flex items-center gap-1.5 text-xs font-bold text-tc-primary">
-                      <span>Trade Fixings &amp; Hardware Matcher</span>
-                    </div>
-                    <p className="text-[11px] text-tc-graphite italic truncate">
-                      &quot;Need masonry fixings or drywall plugs?&quot;
-                    </p>
-                    <Link
-                      href="/search?q=wall+plugs"
-                      className="inline-block text-[11px] font-bold text-tc-primary hover:underline"
-                    >
-                      Find Matching Wall Plugs &amp; Fixings →
-                    </Link>
-                  </div>
                 </div>
               </div>
             </div>

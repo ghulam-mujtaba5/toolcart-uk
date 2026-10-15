@@ -57,11 +57,11 @@ export default function BasketPage() {
 
       {items.length === 0 ? (
         <div className="bg-white rounded-card tc-card-machined p-10 sm:p-12 text-center space-y-4 max-w-lg mx-auto">
-          <div className="w-52 h-36 mx-auto flex items-center justify-center">
+          <div className="w-56 h-44 mx-auto flex items-center justify-center">
             <img
               src="/images/states/empty-cart.webp"
               alt="Your basket is currently empty"
-              className="w-full h-full object-contain"
+              className="w-full h-full object-contain drop-shadow-[0_16px_32px_rgba(24,35,54,0.12)] hover:scale-105 transition-transform duration-300"
             />
           </div>
           <h2 className="font-heading font-bold text-xl text-tc-ink">

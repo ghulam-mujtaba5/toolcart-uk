@@ -31,7 +31,7 @@ export default async function ProjectsPage() {
         </h1>
 
         <p className="text-xs sm:text-sm text-tc-text-secondary max-w-2xl leading-relaxed">
-          Pre-assembled multi-item kits designed to eliminate missed components. Each bundle features authentic Status International &amp; Ionos products with up to 18% bundle savings.
+          Pre-assembled multi-item kits designed to eliminate missed site components. Each bundle features trade-certified UK hardware with up to 18% bundle savings.
         </p>
 
         <div className="flex flex-wrap items-center gap-6 pt-2 text-xs text-tc-ink font-medium">

@@ -22,12 +22,6 @@ interface AIAssistantDrawerProps {
   onClose: () => void;
 }
 
-const STARTER_PROMPTS = [
-  'I need fixings for a shelf on brick wall—what should I check?',
-  'Which screwdriver set has 1000V electrical insulation?',
-  'What masking tape gives razor-sharp lines without peeling paint?',
-  'What is the safe load limit for your step ladder?',
-];
 
 export function AIAssistantDrawer({ isOpen, onClose }: AIAssistantDrawerProps) {
   const { addItem } = useCart();
@@ -246,29 +240,7 @@ export function AIAssistantDrawer({ isOpen, onClose }: AIAssistantDrawerProps) {
           )}
         </div>
 
-        {/* Starter Prompts (if chat is fresh) */}
-        {messages.length === 1 && (
-          <div className="p-4 bg-white/70 border-t border-[#C8D9F9] space-y-2.5 shrink-0">
-            <p className="text-[11px] font-bold text-tc-text-secondary uppercase tracking-wider">
-              Popular questions
-            </p>
-            <div className="flex flex-wrap gap-1.5">
-              {STARTER_PROMPTS.map((prompt, i) => (
-                <button
-                  key={i}
-                  type="button"
-                  onClick={() => handleSend(prompt)}
-                  className={cn(
-                    "text-left text-xs min-h-[44px] sm:min-h-[36px] px-3 py-2 rounded-lg bg-white border border-tc-border hover:border-tc-primary hover:text-tc-primary transition-colors text-tc-ink flex items-center",
-                    i >= 2 && "hidden sm:flex"
-                  )}
-                >
-                  {prompt}
-                </button>
-              ))}
-            </div>
-          </div>
-        )}
+
 
         {/* Input Bar */}
         <div className="p-4 bg-white border-t border-[#C8D9F9] shrink-0 pb-[calc(1.25rem+env(safe-area-inset-bottom))]">

@@ -102,12 +102,12 @@ describe('Adversarial Challenge: AI Assistant Drawer Safety & Styling', () => {
       screen.getByText('Verified catalog tools • Zero safety hallucinations')
     ).toBeInTheDocument();
 
-    // Verify starter safety questions
+    // Verify input and supplier compliance notice
     expect(
-      screen.getByText(/Which screwdriver set has 1000V electrical insulation\?/i)
+      screen.getByPlaceholderText(/Ask about screws, tape adhesion, ladder safety/i)
     ).toBeInTheDocument();
     expect(
-      screen.getByText(/What is the safe load limit for your step ladder\?/i)
+      screen.getByText(/ToolCart AI answers using verified UK supplier catalog data/i)
     ).toBeInTheDocument();
   });
 });

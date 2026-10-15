@@ -385,7 +385,7 @@ describe('Adversarial Suite: Mobile-Responsive Drawers & Touch Target Ergonomics
       expect(maxInput.className).toContain('sm:text-xs');
     });
 
-    it('AIAssistantDrawer prompt input enforces text-base sm:text-xs, Grounded badge is present, and starter chips meet min-h-[44px] sm:min-h-[36px]', () => {
+    it('AIAssistantDrawer prompt input enforces text-base sm:text-xs and Grounded badge is present', () => {
       render(
         <VatProvider>
           <CartProvider>
@@ -401,11 +401,6 @@ describe('Adversarial Suite: Mobile-Responsive Drawers & Touch Target Ergonomics
       const input = screen.getByPlaceholderText(/Ask about screws, tape adhesion, ladder safety/i);
       expect(input.className).toContain('text-base');
       expect(input.className).toContain('sm:text-xs');
-
-      const starterChips = screen.getAllByRole('button', { name: /I need fixings for a shelf/i });
-      expect(starterChips.length).toBeGreaterThan(0);
-      expect(starterChips[0].className).toContain('min-h-[44px]');
-      expect(starterChips[0].className).toContain('sm:min-h-[36px]');
     });
   });
 

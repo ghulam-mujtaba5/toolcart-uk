@@ -51,7 +51,7 @@ export function StockRadarBadge({
   }
 
   const toneClasses = {
-    success: 'bg-[#E8F5E9] text-tc-success border-[#A3D9B5]',
+    success: 'bg-white/90 text-tc-ink border-tc-border/80 backdrop-blur-xs',
     warning: 'bg-[#FFF7E8] text-tc-warning border-[#E8CB91]',
     muted: 'bg-[#F2F4F7] text-tc-text-secondary border-tc-border',
   }[badgeTone];

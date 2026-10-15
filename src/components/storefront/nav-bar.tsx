@@ -26,7 +26,7 @@ export function NavBar() {
       className="bg-tc-primary text-white border-b border-tc-primary-hover shadow-xs overflow-x-auto scrollbar-none"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <ul className="flex items-center gap-1 sm:gap-2 py-2 text-xs sm:text-sm font-medium whitespace-nowrap">
+        <ul className="flex items-center lg:justify-between gap-1 sm:gap-2 py-2 text-xs sm:text-sm font-medium whitespace-nowrap">
           {NAV_LINKS.map((link) => {
             const isActive = pathname ? (pathname === link.href || pathname.startsWith(`${link.href}/`)) : false;
             const Icon = link.icon;

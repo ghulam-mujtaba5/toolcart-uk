@@ -193,6 +193,15 @@
   .tc-animate-radar {
     animation: tc-radar-ring 1.8s cubic-bezier(0, 0, 0.2, 1) infinite;
   }
+
+  /* Cross-browser scrollbar hiding utility */
+  .scrollbar-none {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
+  .scrollbar-none::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -1,33 +1,38 @@
-# Dispatch: Forensic Auditor (Milestone 1 — CSS Foundations & Bespoke SVGs)
+# DISPATCH — Forensic Auditor for Milestone M1
 
-- Working Directory: `e:\ToolCart\.agents\teamwork\auditor_m1_1`
-- Original Request: `e:\ToolCart\.agents\teamwork\ORIGINAL_REQUEST.md` (read section `## 2026-10-13T16:36:41Z`)
-- Project Root: `e:\ToolCart`
-- Scope Document: `e:\ToolCart\PROJECT.md`
-- Worker Handoff: `e:\ToolCart\.agents\teamwork\worker_m1_1\handoff.md`
+## Role & Mission
+You are a Forensic Auditor (`teamwork_preview_auditor`). Perform integrity forensics on the Milestone M1 implementation in `e:\ToolCart`.
 
-## Mission:
-Perform rigorous, independent forensic integrity verification on Milestone 1:
-1. Verify genuine implementation of all vector components and CSS patterns (no dummy stubs, no fake returns, no circumventions).
-2. Verify that `tests/ui/vector-scenes.test.tsx` makes genuine assertions on rendered DOM elements, viewBox attributes, and path colors.
-3. Check git diff and source code files:
-   - `app/globals.css`
-   - `src/components/ui/vectors/empty-tool-chest-vector.tsx`
-   - `src/components/ui/vectors/not-found-vector.tsx`
-   - `src/components/ui/vectors/trade-pro-vector.tsx`
-   - `src/components/ui/vectors/category-cad-accents.tsx`
-   - `src/components/ui/vectors/index.ts`
-   - `tests/ui/vector-scenes.test.tsx`
-4. Verify that no hardcoded test cheats exist, no prohibited colors are injected, and no tests were skipped or disabled.
-5. Render a binary verdict: **CLEAN** or **INTEGRITY VIOLATION**.
-Write your forensic report to `e:\ToolCart\.agents\teamwork\auditor_m1_1\audit_report.md` and `handoff.md`. Communicate your verdict back via send_message.
+## Verification Scope
+1. Implementation Authenticity:
+   - Verify that code in `src/components/admin/admin-layout.tsx`, `src/components/admin/admin-sidebar.tsx`, `src/components/admin/dashboard-quick-filters.tsx`, and `app/admin/page.tsx` is genuine, not mock facades or hardcoded values.
+   - Verify that KPI calculations actually compute values dynamically from `db.orders.getAll()` and `db.products.getAll()`.
+2. Brand V3 Invariants:
+   - Zero occurrences of retired copper `#B84C32`, `--tc-copper`, purple/violet, or teal.
+   - Action Lime `#DDF16A` paired strictly with dark Ink `#182336` text.
+   - Run `python qa/check_static.py`.
+3. Wholesale Cost Confidentiality:
+   - Ensure wholesale costs (`unit_cost_ex_vat_gbp`, `case_cost_ex_vat_gbp`) are not serialized to public storefront routes or client components.
+   - Run `npx vitest run tests/security/wholesale-isolation.test.ts`.
+4. Verdict:
+   - State verdict clearly: `CLEAN` or `INTEGRITY VIOLATION`.
 
+Write your report to `e:\ToolCart\.agents\teamwork\auditor_m1_1\handoff.md` and send message to parent `616c35a2-dbd8-4d26-9bbc-5e7e26c1b91c`.
 
-## 2026-10-13T17:33:48Z
-You are Forensic Auditor for Milestone 1 of the ToolCart UK Revamp.
-Your working directory is: `e:\ToolCart\.agents\teamwork\auditor_m1_1`
-Read instructions in `e:\ToolCart\.agents\teamwork\auditor_m1_1\DISPATCH.md` and `e:\ToolCart\.agents\teamwork\ORIGINAL_REQUEST.md` (section `## 2026-10-13T16:36:41Z`).
-Read Worker M1's handoff at `e:\ToolCart\.agents\teamwork\worker_m1_1\handoff.md`.
-Inspect git changes and source code for genuine implementation vs cheats, mock stubs, or test circumvention.
-Verify no skipped tests and no prohibited colors.
-Render a binary verdict: CLEAN or INTEGRITY VIOLATION in `e:\ToolCart\.agents\teamwork\auditor_m1_1\handoff.md` and report via send_message.
+## 2026-10-15T12:55:34Z
+You are auditor_m1_1.
+Your working directory is: e:\ToolCart\.agents\teamwork\auditor_m1_1
+Your parent is: 616c35a2-dbd8-4d26-9bbc-5e7e26c1b91c
+
+Read and follow:
+1. e:\ToolCart\.agents\teamwork\ORIGINAL_REQUEST.md (specifically timestamp 2026-10-15T12:07:45Z)
+2. e:\ToolCart\.agents\teamwork\auditor_m1_1\DISPATCH.md
+3. e:\ToolCart\.agents\teamwork\worker_m1_2\handoff.md
+4. design/tokens.css
+
+Perform forensic integrity checks on Milestone M1:
+- Authenticity check: Verify calculations and UI are genuine, not mock facades.
+- Static brand check: python qa/check_static.py (zero copper/purple/teal; action lime with dark text).
+- Wholesale security isolation: npx vitest run tests/security/wholesale-isolation.test.ts.
+State your verdict (CLEAN or INTEGRITY VIOLATION) in e:\ToolCart\.agents\teamwork\auditor_m1_1\handoff.md.
+Send message to parent 616c35a2-dbd8-4d26-9bbc-5e7e26c1b91c upon completion.

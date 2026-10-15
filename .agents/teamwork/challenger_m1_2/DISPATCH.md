@@ -1,25 +1,30 @@
-# Dispatch: Challenger 2 (Milestone 1 — Adversarial Brand & Responsive Viewports)
+# DISPATCH — Challenger 2 for Milestone M1
 
-- Working Directory: `e:\ToolCart\.agents\teamwork\challenger_m1_2`
-- Original Request: `e:\ToolCart\.agents\teamwork\ORIGINAL_REQUEST.md` (read section `## 2026-10-13T16:36:41Z`)
-- Project Root: `e:\ToolCart`
-- Scope Document: `e:\ToolCart\PROJECT.md`
-- Worker Handoff: `e:\ToolCart\.agents\teamwork\worker_m1_1\handoff.md`
+## Role & Mission
+You are a Challenger (`teamwork_preview_challenger`). Adversarially test the retail operational KPI metrics and operational triage console in `app/admin/page.tsx` and `src/components/admin/dashboard-quick-filters.tsx`.
 
-## Mission:
-Adversarially test Brand V3 compliance and mobile responsive viewports:
-1. Run adversarial brand scanners (`npx vitest run tests/adversarial/brand-v3-storefront-scan.test.ts`) and check for retired copper (`#B84C32`), purple, teal, or white-on-lime text.
-2. Run responsive viewport tests (`npx vitest run tests/adversarial/responsive-viewport-challenge.test.tsx`) at 360px and 1440px viewports.
-3. Verify that the new vector scenes do not cause horizontal scroll blowout at 360px.
-4. Render a clear verdict: **APPROVE** or **REQUEST_CHANGES**.
-Write your challenge report to `e:\ToolCart\.agents\teamwork\challenger_m1_2\challenge_report.md` and `handoff.md`. Communicate your verdict back via send_message.
+## Focus & Stress Testing
+1. Boundary & Edge Case Testing:
+   - Empty order database (0 orders): verify velocity is 0, revenue is £0.00, AOV is £0.00, no NaN or crash.
+   - 1 single order, 1000 orders, orders with £0 total.
+   - Stock thresholds: products with stock = 0 (out of stock badge), stock = 1 (critical), stock = 10 (low), stock = 11 (not alert).
+   - Triage console tab transitions under rapid switching.
+2. Write and execute an empirical test script/harness to verify robustness.
+3. State your verdict clearly: `APPROVE` or `REQUEST_CHANGES`.
 
+Write your report to `e:\ToolCart\.agents\teamwork\challenger_m1_2\handoff.md` and send message to parent `616c35a2-dbd8-4d26-9bbc-5e7e26c1b91c`.
 
-## 2026-10-13T17:33:48Z
-You are Challenger 2 for Milestone 1 of the ToolCart UK Revamp.
-Your working directory is: `e:\ToolCart\.agents\teamwork\challenger_m1_2`
-Read instructions in `e:\ToolCart\.agents\teamwork\challenger_m1_2\DISPATCH.md` and `e:\ToolCart\.agents\teamwork\ORIGINAL_REQUEST.md` (section `## 2026-10-13T16:36:41Z`).
-Read Worker M1's handoff at `e:\ToolCart\.agents\teamwork\worker_m1_1\handoff.md`.
-Adversarially challenge Brand V3 compliance and mobile responsive viewports:
-Run `npx vitest run tests/adversarial/brand-v3-storefront-scan.test.ts` and `npx vitest run tests/adversarial/responsive-viewport-challenge.test.tsx`.
-Report your verdict (APPROVE or REQUEST_CHANGES) in `e:\ToolCart\.agents\teamwork\challenger_m1_2\handoff.md` and report via send_message.
+## 2026-10-15T12:55:34Z
+You are challenger_m1_2.
+Your working directory is: e:\ToolCart\.agents\teamwork\challenger_m1_2
+Your parent is: 616c35a2-dbd8-4d26-9bbc-5e7e26c1b91c
+
+Read and follow:
+1. e:\ToolCart\.agents\teamwork\ORIGINAL_REQUEST.md (specifically timestamp 2026-10-15T12:07:45Z)
+2. e:\ToolCart\.agents\teamwork\challenger_m1_2\DISPATCH.md
+3. e:\ToolCart\.agents\teamwork\worker_m1_2\handoff.md
+
+Adversarially stress-test retail KPI calculations and triage console under edge cases (0 orders, 1 order, large volumes, stock threshold boundaries, rapid tab toggling).
+Write and run empirical tests.
+State your verdict (APPROVE or REQUEST_CHANGES) in e:\ToolCart\.agents\teamwork\challenger_m1_2\handoff.md.
+Send message to parent 616c35a2-dbd8-4d26-9bbc-5e7e26c1b91c upon completion.

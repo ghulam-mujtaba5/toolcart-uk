@@ -271,3 +271,67 @@ Live Browser Auditor report received from https://toolcart-uk.vercel.app with CR
    - Footer logo div <div class="bg-tc-action-lime"> inherits color: rgb(255, 255, 255) from parent footer; ensure explicit text-tc-ink or dark styling on container.
 
 Please incorporate these findings directly into PROJECT.md and the worker remediation pipeline.
+
+
+## 2026-10-15T12:07:45Z
+
+Build a resilient, production-grade retail merchant Admin Portal for ToolCart UK inspired by Medusa v2 and Shopify Polaris architecture patterns, optimized for retail e-commerce management (catalog, pricing, retail orders, customer support, and inventory tracking) with robust error boundaries and zero portal breakages.
+
+Working directory: e:\ToolCart
+Integrity mode: development
+
+## Requirements
+
+### R1. Retail Merchant Admin Navigation & Core Dashboard
+- Centralized administrative dashboard optimized for retail operations (sales velocity, gross revenue, active retail orders, stock alerts, average order value).
+- Polished, responsive layout adhering strictly to ToolCart Brand V3 (`design/tokens.css`): Industrial Cobalt `#2450B8`, Action Lime `#DDF16A` accents, Ink `#182336`, Workshop White `#F7F8F5`, Steel Text `#596B70`.
+- Quick-filter views for retail orders needing fulfillment, low-stock alerts, and recent customer activity.
+
+### R2. High-Reliability Data Tables & Bulk Actions (Shopify / Medusa Pattern)
+- Accessible TanStack Table / headless primitives with multi-column sorting, debounce search, status filtering, pagination, and row selection.
+- Bulk actions for products (publish/draft status, retail price adjustments, category assignments, stock adjustments).
+- Order management workflow with status transitions (pending, paid, fulfilling, dispatched, delivered, refunded) and complete timeline audit trails.
+
+### R3. Retail Product & Inventory Editor
+- Full product & variant editing interface with retail VAT calculation display (Inc. VAT / Ex. VAT preview), barcode/SKU management, and media gallery management.
+- Real-time input sanitization with Zod schema validation to eliminate NaN values, invalid prices, or broken state submissions.
+- Optimistic UI updates with rollback and accessible toast feedback on mutation failures.
+
+### R4. Zero-Crash Error Boundaries & Fault Tolerance
+- Granular React Error Boundaries wrapping table views, forms, and detail panels so an isolated failure never crashes the administrative portal.
+- Graceful recovery states and clear actionable error fallbacks with reload/retry mechanisms.
+- Wholesale supplier cost confidentiality preserved strictly server-side with zero exposure in client bundles.
+
+## Acceptance Criteria
+
+### Functionality & Usability
+- [ ] Admin dashboard, products list, product editor, orders list, order detail, and settings pages render without runtime errors.
+- [ ] Product status, retail pricing, and inventory mutations succeed with validation and immediate UI feedback.
+- [ ] Order fulfillment and status transition workflows execute reliably with audit log updates.
+- [ ] Error boundaries catch injected component errors and present recovery actions without unmounting the layout.
+
+### Code Quality & Brand Integrity
+- [ ] All automated tests pass (`npm test`) without regressions.
+- [ ] Brand V3 static compliance check (`python qa/check_static.py`) passes with 0 violations.
+- [ ] TypeScript compilation (`npm run typecheck`) and Next.js build (`npm run build`) pass cleanly.
+- [ ] Wholesale cost isolation tests (`tests/security/wholesale-isolation.test.ts`) pass with zero client leakage.
+
+## 2026-10-15T12:57:49Z
+
+This is a single self-contained fix; keep it small and focused. Continue and finalize the mobile-first responsive adaptation and modern web guidelines compliance for ToolCart UK.
+Rounds 0, 1, and 2 are already implemented and hardened: all core storefront layouts (Header, Navigation Drawer, Filter Drawer, PDP Sticky Buy Bar, MiniBasket, and Compare Drawer) have been refactored for 360px-1440px viewports with >= 44x44px touch targets, iOS zoom prevention (text-base sm:text-xs), and Brand V3 token integrity. 662 tests are currently passing with 0 typecheck errors and 0 static violations.
+Execute the final verification, independent victory audit, and summary report.
+
+Working directory: e:\ToolCart
+Integrity mode: development
+
+## Requirements
+
+### R1. Final Mobile-First Responsive Verification
+Verify all storefront templates across 360px, 390px, 768px, and 1440px viewports with zero horizontal overflow, clipped content, or broken layouts.
+
+### R2. Touch Ergonomics & Accessibility Sign-Off
+Confirm all interactive controls (buttons, inputs, quantity steppers, drawer close triggers) meet or exceed the 44x44px minimum touch target requirement, with safe-area padding for mobile home indicators.
+
+### R3. Quality Gates & Final Reporting
+Execute full test suites (`npm test`), static checks (`python qa/check_static.py`), and TypeScript validation (`npm run typecheck`), delivering the final victory report and project documentation updates.

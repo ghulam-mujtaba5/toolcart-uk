@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/db';
+import { ProductUpdateSchema } from '@/lib/schemas/product';
+import { PublicProductDTO } from '@/types/product';
 
 export async function GET(
   request: NextRequest,
@@ -37,7 +39,20 @@ export async function PUT(
 ) {
   try {
     const { id } = params;
-    const body = await request.json();
+    const rawBody = await request.json();
+
+    const parseResult = ProductUpdateSchema.safeParse(rawBody);
+    if (!parseResult.success) {
+      return NextResponse.json(
+        {
+          error: 'Validation failed',
+          issues: parseResult.error.flatten().fieldErrors,
+        },
+        { status: 400 }
+      );
+    }
+
+    const body = parseResult.data;
     const db = getDb();
 
     const existing = await db.products.getById(id);
@@ -45,11 +60,19 @@ export async function PUT(
       return NextResponse.json({ error: `Product ${id} not found` }, { status: 404 });
     }
 
-    const updated = await db.products.update(id, body);
+    const { unit_cost_ex_vat_gbp, gtin, carton_barcode, mpn, ...dtoUpdates } = body;
+    const cleanUpdates: Partial<PublicProductDTO> = {
+      ...dtoUpdates,
+      ...(gtin !== undefined && gtin !== null ? { gtin } : {}),
+      ...(carton_barcode !== undefined && carton_barcode !== null ? { carton_barcode } : {}),
+      ...(mpn !== undefined && mpn !== null ? { mpn } : {}),
+    };
 
-    if (body.unit_cost_ex_vat_gbp !== undefined) {
+    const updated = await db.products.update(id, cleanUpdates);
+
+    if (unit_cost_ex_vat_gbp !== undefined) {
       await db.products.updateWholesaleOffer(existing.supplier_sku, {
-        unit_cost_ex_vat_gbp: body.unit_cost_ex_vat_gbp,
+        unit_cost_ex_vat_gbp,
       });
     }
 

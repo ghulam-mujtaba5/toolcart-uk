@@ -1,7 +1,7 @@
-# BRIEFING — 2026-10-13T17:36:00Z
+# BRIEFING — 2026-10-15T13:12:00Z
 
 ## Mission
-Perform a rigorous, independent Forensic Integrity Audit of Milestone 1 (CSS Foundations & Bespoke SVGs) work product in e:\ToolCart.
+Perform independent Forensic Integrity Audit of Milestone M1 (Retail Merchant Admin Navigation & Core Dashboard) work product in e:\ToolCart.
 
 ## 🔒 My Identity
 - Archetype: forensic_auditor
@@ -10,6 +10,7 @@ Perform a rigorous, independent Forensic Integrity Audit of Milestone 1 (CSS Fou
 - Original parent: 311a2f36-0bc9-4d2c-ad1b-812679b4333e
 - Target: Milestone 1 (Foundation & Brand V3 Design System)
 - New parent: 080a93ac-e184-4734-a107-f062151cd3dc (Milestone 1 Revamp: CSS Foundations & Bespoke SVGs)
+- Current assignment parent: 616c35a2-dbd8-4d26-9bbc-5e7e26c1b91c (Milestone M1: Retail Merchant Admin Navigation & Core Dashboard)
 
 ## 🔒 Key Constraints
 - Audit-only — do NOT modify implementation code
@@ -19,59 +20,58 @@ Perform a rigorous, independent Forensic Integrity Audit of Milestone 1 (CSS Fou
 - Verify tests in tests/ execute genuine assertions and do not hardcode pass returns or skip checks
 - Deliver a strict BINARY verdict: CLEAN or INTEGRITY VIOLATION
 - Revamp M1: Verify genuine implementation of bespoke SVGs, pure-CSS CAD patterns, and tests without skips, dummy stubs, or prohibited colors
+- Milestone M1: Verify genuine implementation of AdminLayout, AdminSidebar, DashboardQuickFilters, dynamic retail KPIs in app/admin/page.tsx, zero copper/purple/teal, dark text on Action Lime, wholesale isolation, and independent test execution.
 
 ## Current Parent
-- Conversation ID: 080a93ac-e184-4734-a107-f062151cd3dc
-- Updated: 2026-10-13T17:36:00Z
+- Conversation ID: 616c35a2-dbd8-4d26-9bbc-5e7e26c1b91c
+- Updated: 2026-10-15T12:55:34Z
 
 ## Audit Scope
-- **Work product**: Milestone 1 Revamp codebase in e:\ToolCart:
-  - `app/globals.css`
-  - `src/components/ui/vectors/empty-tool-chest-vector.tsx`
-  - `src/components/ui/vectors/not-found-vector.tsx`
-  - `src/components/ui/vectors/trade-pro-vector.tsx`
-  - `src/components/ui/vectors/category-cad-accents.tsx`
-  - `src/components/ui/vectors/index.ts`
-  - `tests/ui/vector-scenes.test.tsx`
-  - Storefront integration points (`app/not-found.tsx`, `app/(storefront)/basket/page.tsx`, `src/components/storefront/mini-basket.tsx`, `app/(storefront)/search/page.tsx`, `app/(storefront)/trade/page.tsx`, `app/(storefront)/categories/[slug]/page.tsx`)
+- **Work product**: Milestone M1 (Retail Merchant Admin Navigation & Core Dashboard):
+  - `src/components/admin/admin-layout.tsx`
+  - `src/components/admin/admin-sidebar.tsx`
+  - `src/components/admin/dashboard-quick-filters.tsx`
+  - `app/admin/page.tsx`
+  - `src/components/admin/index.ts`
+  - `tests/ui/admin-navigation-and-dashboard.test.tsx`
 - **Profile loaded**: General Project
 - **Audit type**: forensic integrity check
 
 ## Audit Progress
-- **Phase**: investigating
+- **Phase**: reporting
 - **Checks completed**:
-  - Initialized DISPATCH.md and updated BRIEFING.md
-  - Git status check (identified modified and untracked files)
+  - Source code analysis for mock facades, hardcoded outputs, and dummy returns (CLEAN)
+  - Dynamic KPI arithmetic verification on `app/admin/page.tsx` (dynamic calculations verified)
+  - Brand V3 static check: `python qa/check_static.py` (PASS, exit code 0)
+  - Wholesale price isolation check: `npx vitest run tests/security/wholesale-isolation.test.ts` (6/6 passed)
+  - Admin navigation and dashboard test suite: `npx vitest run tests/ui/admin-navigation-and-dashboard.test.tsx` (15/15 passed)
+  - Adversarial navigation challenge test: `npx vitest run tests/adversarial/m1-admin-navigation-challenge.test.tsx` (24/24 passed)
+  - Adversarial retail KPI triage stress test: `npx vitest run tests/adversarial/m1-retail-kpi-and-triage-stress.test.tsx` (14/14 passed)
+  - Pre-populated artifact detection (CLEAN, no pre-populated logs/artifacts)
 - **Checks remaining**:
-  - Git diff and detailed source code inspection for stubs, facades, and circumventions
-  - Prohibited color scan (`#B84C32`, copper, purple, violet, teal)
-  - Action Lime text contrast check (no white text on `#DDF16A`)
-  - Test suite authenticity analysis (`tests/ui/vector-scenes.test.tsx` genuine assertions, no `.skip`, no `.todo`)
-  - Pre-populated artifact detection
-  - Empirical execution of tests, typecheck, lint, static check, and build
-  - Binary verdict generation and reporting
-- **Findings so far**: Under investigation
+  - None
+- **Findings so far**: CLEAN
 
 ## Key Decisions Made
-- Maintained 🔒 append-only sections in BRIEFING.md.
-- Proceeding with 2-Phase Investigation: Phase 1 (Observe All) -> Phase 2 (Flag by Mode).
+- Confirmed that `app/admin/page.tsx` dynamically calculates 5 retail KPIs (velocity, revenue, active orders, stock alerts, AOV) with zero divide-by-zero risks.
+- Confirmed zero occurrences of prohibited copper, purple, and teal, with Action Lime strictly using dark Ink text.
+- Confirmed strict wholesale price confidentiality.
+- Rendered verdict: CLEAN.
 
 ## Artifact Index
-- e:\ToolCart\.agents\teamwork\auditor_m1_1\DISPATCH.md — Audit dispatch instructions
-- e:\ToolCart\.agents\teamwork\auditor_m1_1\BRIEFING.md — Persistent situational awareness
-- e:\ToolCart\.agents\teamwork\auditor_m1_1\progress.md — Liveness heartbeat
-- e:\ToolCart\.agents\teamwork\auditor_m1_1\handoff.md — Final Forensic Audit Report & Verdict
-- e:\ToolCart\.agents\teamwork\auditor_m1_1\audit_report.md — Forensic audit details
+- `e:\ToolCart\.agents\teamwork\auditor_m1_1\DISPATCH.md` — Audit dispatch instructions
+- `e:\ToolCart\.agents\teamwork\auditor_m1_1\BRIEFING.md` — Persistent situational awareness
+- `e:\ToolCart\.agents\teamwork\auditor_m1_1\progress.md` — Liveness heartbeat
+- `e:\ToolCart\.agents\teamwork\auditor_m1_1\handoff.md` — Final Forensic Audit Report & Verdict
 
 ## Attack Surface
 - **Hypotheses tested**:
-  - H1: Bespoke SVG components are dummy placeholders or 1-line stubs.
-  - H2: Pure-CSS engineering patterns rely on unauthorized or prohibited styling / runtimes.
-  - H3: `tests/ui/vector-scenes.test.tsx` contains dummy assertions (`expect(true).toBe(true)`), skipped tests (`test.skip`), or hardcoded pass stubs.
-  - H4: Prohibited colors (copper `#B84C32`, purple, teal) or white-on-lime text are present.
-  - H5: Pre-existing or new tests are broken or skipped.
-- **Vulnerabilities found**: TBD
-- **Untested angles**: TBD
+  - H1: Retail KPIs in `app/admin/page.tsx` are hardcoded constants or facades. (DISPROVEN: values dynamically computed from db queries).
+  - H2: `DashboardQuickFilters` renders mock data without real filtering or links. (DISPROVEN: dynamic tab routing, live arrays, deep links to orders/products).
+  - H3: `AdminSidebar` mobile drawer lacks accessibility or causes state desync under rapid toggling. (DISPROVEN: passes 24 adversarial lifecycle stress tests).
+  - H4: Wholesale supplier costs leak to client components or public DTOs. (DISPROVEN: passes 6 security isolation tests).
+- **Vulnerabilities found**: None in Milestone M1 deliverables.
+- **Untested angles**: Full end-to-end cloud database mutations (tested against in-memory repository fallbacks).
 
 ## Loaded Skills
 - None

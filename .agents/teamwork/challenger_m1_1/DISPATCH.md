@@ -1,26 +1,32 @@
-# Dispatch: Challenger 1 (Milestone 1 — CSS Foundations & Bespoke SVGs)
+# DISPATCH — Challenger 1 for Milestone M1
 
-- Working Directory: `e:\ToolCart\.agents\teamwork\challenger_m1_1`
-- Original Request: `e:\ToolCart\.agents\teamwork\ORIGINAL_REQUEST.md` (read section `## 2026-10-13T16:36:41Z`)
-- Project Root: `e:\ToolCart`
-- Scope Document: `e:\ToolCart\PROJECT.md`
-- Worker Handoff: `e:\ToolCart\.agents\teamwork\worker_m1_1\handoff.md`
+## Role & Mission
+You are a Challenger (`teamwork_preview_challenger`). Adversarially test the responsive navigation drawer and interaction patterns in `src/components/admin/admin-layout.tsx` and `src/components/admin/admin-sidebar.tsx`.
 
-## Mission:
-Empirically challenge and stress-test the Milestone 1 deliverables:
-1. Challenge the pure-CSS patterns (`.tc-bg-dots`, `.tc-bg-blueprint`, `.tc-card-machined`): test contrast on various backgrounds, check rendering under extreme container widths, test print media or dark mode compatibility.
-2. Challenge the bespoke SVG vector components (`src/components/ui/vectors/*`): test with undefined classNames, extreme dimensions (width=0, width=5000px), rapid mount/unmount in JSDOM, and check for SVG viewBox distortion.
-3. Run verification tests:
-   - `npm test`
-   - `python qa/check_static.py`
-4. Render a clear verdict: **APPROVE** or **REQUEST_CHANGES**.
-Write your challenge report to `e:\ToolCart\.agents\teamwork\challenger_m1_1\challenge_report.md` and `handoff.md`. Communicate your verdict back via send_message.
+## Focus & Stress Testing
+1. Mobile Navigation Stress:
+   - Rapid consecutive opens and closes.
+   - Escape key presses while drawer is open vs closed.
+   - Backdrop click dismissals.
+   - Viewport boundary testing (360px mobile viewport vs 1440px desktop).
+   - Touch target verification (>= 44px on all interactive mobile buttons).
+2. Write and execute an empirical test script/harness to verify robustness.
+3. State your verdict clearly: `APPROVE` or `REQUEST_CHANGES`.
 
-## 2026-10-13T17:33:48Z
-You are Challenger 1 for Milestone 1 of the ToolCart UK Revamp.
-Your working directory is: `e:\ToolCart\.agents\teamwork\challenger_m1_1`
-Read instructions in `e:\ToolCart\.agents\teamwork\challenger_m1_1\DISPATCH.md` and `e:\ToolCart\.agents\teamwork\ORIGINAL_REQUEST.md` (section `## 2026-10-13T16:36:41Z`).
-Read Worker M1's handoff at `e:\ToolCart\.agents\teamwork\worker_m1_1\handoff.md`.
-Stress-test pure-CSS patterns and bespoke SVG vector components under extreme inputs and edge cases.
-Run tests and report your verdict (APPROVE or REQUEST_CHANGES) in `e:\ToolCart\.agents\teamwork\challenger_m1_1\handoff.md` and report via send_message.
+Write your report to `e:\ToolCart\.agents\teamwork\challenger_m1_1\handoff.md` and send message to parent `616c35a2-dbd8-4d26-9bbc-5e7e26c1b91c`.
+
+## 2026-10-15T12:55:33Z
+You are challenger_m1_1.
+Your working directory is: e:\ToolCart\.agents\teamwork\challenger_m1_1
+Your parent is: 616c35a2-dbd8-4d26-9bbc-5e7e26c1b91c
+
+Read and follow:
+1. e:\ToolCart\.agents\teamwork\ORIGINAL_REQUEST.md (specifically timestamp 2026-10-15T12:07:45Z)
+2. e:\ToolCart\.agents\teamwork\challenger_m1_1\DISPATCH.md
+3. e:\ToolCart\.agents\teamwork\worker_m1_2\handoff.md
+
+Adversarially stress-test responsive navigation drawer, backdrop, Escape key, touch target size (44px), and 360px viewport scaling.
+Write and run empirical tests.
+State your verdict (APPROVE or REQUEST_CHANGES) in e:\ToolCart\.agents\teamwork\challenger_m1_1\handoff.md.
+Send message to parent 616c35a2-dbd8-4d26-9bbc-5e7e26c1b91c upon completion.
 

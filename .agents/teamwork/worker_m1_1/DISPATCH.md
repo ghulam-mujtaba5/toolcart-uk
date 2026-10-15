@@ -1,65 +1,47 @@
-# Dispatch: Worker M1 (CSS Foundations & Bespoke SVGs)
+# DISPATCH — Worker M1: Navigation & Retail Operational Dashboard
 
-- Working Directory: `e:\ToolCart\.agents\teamwork\worker_m1_1`
-- Original Request: `e:\ToolCart\.agents\teamwork\ORIGINAL_REQUEST.md` (read section `## 2026-10-13T16:36:41Z`)
-- Project Root: `e:\ToolCart`
-- Explorer Report: `e:\ToolCart\.agents\teamwork\explorer_survey_1\survey_report.md`
-- Scope Document: `e:\ToolCart\PROJECT.md`
+## Mission
+Implement Milestone M1 (Retail Merchant Admin Navigation & Core Dashboard) in `e:\ToolCart`.
 
-## Mandatory Integrity Warning:
+## Reference Materials
+- `e:\ToolCart\.agents\teamwork\ORIGINAL_REQUEST.md` (specifically timestamp `2026-10-15T12:07:45Z`)
+- `e:\ToolCart\.agents\teamwork\orchestrator_admin_1\SCOPE.md`
+- `e:\ToolCart\.agents\teamwork\explorer_admin_survey_1\handoff.md`
+- `design/tokens.css` and `docs/02_BRAND_IDENTITY.md`
+
+## Files Owned
+- `src/components/admin/admin-layout.tsx`
+- `src/components/admin/admin-sidebar.tsx`
+- `app/admin/page.tsx`
+- `src/components/admin/dashboard-quick-filters.tsx` (or dashboard operational triage components)
+
+## Scope of Work
+1. **Responsive Navigation & Mobile Drawer**:
+   - In `src/components/admin/admin-layout.tsx`: Add mobile drawer open/close state, mobile hamburger toggle button in the header (visible on `< lg`), accessible close button, and tokenized styling.
+   - In `src/components/admin/admin-sidebar.tsx`: Support responsive drawer mode on mobile screens (slide-over with backdrop, `fixed inset-y-0 left-0 z-50` with transition), and desktop docking (`hidden lg:flex lg:w-64`). Group nav links into "Commerce Operations", "Suppliers & Logistics", and "Governance".
+   - Ensure clean 360px mobile viewport rendering without horizontal overflow.
+2. **Retail Operational KPI Cards**:
+   - In `app/admin/page.tsx`: Replace supplier feed cards with the 5 retail operational KPIs:
+     - **Sales Velocity**: Calculated as retail orders per day over past 7 days (or total retail orders if <7 days), with trend indicator.
+     - **Gross Revenue**: Sum of all retail order totals formatted in GBP (£ inc. VAT).
+     - **Active Retail Orders**: Count of orders in active fulfillment states (`pending`, `checkout_authorized`, `supplier_order_pending`, `supplier_accepted`, `payment_captured`, `dispatched`).
+     - **Stock Alerts**: Count of products with `stock_quantity <= 10` or `availability_status === 'out_of_stock'`.
+     - **Average Order Value (AOV)**: Average order value in GBP (`orders.length > 0 ? grossRevenue / orders.length : 0`).
+   - Include safe division guards (`orders.length > 0`) to prevent NaN or divide-by-zero on clean databases.
+3. **Operational Triage Quick-Filters (`DashboardQuickFilters`)**:
+   - Build a 3-tab operational triage console in `src/components/admin/dashboard-quick-filters.tsx` and integrate it into `app/admin/page.tsx`:
+     - **Needs Fulfillment Tab**: Retail orders awaiting dispatch with quick action links to `/admin/orders/[id]`.
+     - **Low-Stock Alerts Tab**: Products needing replenishment with stock level badges and links to `/admin/products/[id]`.
+     - **Customer Activity Tab**: Recent trade account applications and retail customer orders.
+4. **Brand V3 Tokenization**:
+   - Strictly adhere to `design/tokens.css`: Industrial Cobalt (`#2450B8`), Action Lime (`#DDF16A` with dark Ink `#182336` text), Ink (`#182336`), Workshop White (`#F7F8F5`), Steel Text (`#596B70`).
+   - Zero occurrences of retired copper `#B84C32`, purple, or teal.
+5. **Verification**:
+   - Run `npm test`, `npm run typecheck`, and `python qa/check_static.py`.
+   - Ensure all tests pass with zero regressions.
+
+## MANDATORY INTEGRITY WARNING
 DO NOT CHEAT. All implementations must be genuine. DO NOT hardcode test results, create dummy/facade implementations, or circumvent the intended task. A teamwork_preview_auditor will independently verify your work. Integrity violations WILL be detected and your work WILL be rejected.
 
-## Milestone 1 Objectives:
-1. **CSS Engineering Patterns (`app/globals.css`)**:
-   Implement pure-CSS zero-runtime engineering patterns adhering strictly to Brand V3:
-   - `.tc-bg-dots`: 24px pitch CAD dot pattern using radial gradient (`var(--tc-primary)` / `#2450B8` at ~12% opacity on canvas).
-   - `.tc-bg-blueprint`: Dual-pitch 20px minor / 100px major orthogonal engineering grid using linear gradients with subtle opacity.
-   - `.tc-card-machined`: Machined tactile chamfer effect with 1px border (`var(--tc-border-strong)` / `#7C8A94`), inset metallic reflection (`inset 0 1px 0 rgba(255,255,255,0.8)`), and subtle hover elevation.
-   - Keep all existing classes intact (e.g., `.tc-btn-accent`, `.tabular-nums`).
-
-2. **Bespoke Brand V3 SVG Vector Scenes (`src/components/ui/vectors/`)**:
-   Create bespoke React SVG vector components using exact Brand V3 palette (`#182336`, `#2450B8`, `#DDF16A` paired with `#182336`, `#F7F8F5`, `#EAF0FF`, `#596B70`, `#7C8A94`):
-   - `src/components/ui/vectors/empty-tool-chest-vector.tsx`: 3-tier cantilever chest with open lid, foam cutout, and dashed silhouettes of spanner, screwdriver, and sockets.
-   - `src/components/ui/vectors/not-found-vector.tsx`: Heavy-duty bi-material tape measure casing, blade snapped at "404mm", uncoiled spring recoil, and technical dimension callout.
-   - `src/components/ui/vectors/trade-pro-vector.tsx`: Precision vernier caliper jaws clamped onto a verified industrial trade crest (measuring 30.00mm for Net 30 trade credit).
-   - `src/components/ui/vectors/category-cad-accents.tsx`: 6 bespoke technical wireframe motifs for Hand Tools, Fixings, Decorating, Measuring, PPE, and Site Equipment.
-   - Create an index file `src/components/ui/vectors/index.ts` exporting all vector components.
-
-3. **Storefront Integration**:
-   Integrate these vector scenes and CAD patterns into:
-   - `app/not-found.tsx`: Replace generic placeholder with `<NotFoundVector />`. Fix untokenized `bg-tc-cloud` with `bg-tc-surface-soft`.
-   - `app/(storefront)/basket/page.tsx` & `src/components/storefront/mini-basket.tsx`: Replace generic shopping bag on empty state with `<EmptyToolChestVector />`.
-   - `app/(storefront)/search/page.tsx`: Integrate `<EmptyToolChestVector />` when query returns 0 results.
-   - `app/(storefront)/trade/page.tsx`: Integrate `<TradeProHeroVector />` in the Trade Pro hero card. Replace untokenized `#E8F5E9` with tokenized styling.
-   - `app/(storefront)/categories/[slug]/page.tsx`: Integrate `<CategoryCadAccents />` in category hero headers. Replace hardcoded `#C8D9F9` border.
-
-4. **Verification**:
-   - Run `npm test` and ensure all 426 tests pass. Add unit tests for the new vector components in `tests/ui/vector-scenes.test.tsx`.
-   - Run `python qa/check_static.py` and verify 0 violations (0 copper, 0 purple, 0 teal, 0 white-on-lime).
-   - Run `npx tsc --noEmit` and verify 0 TypeScript errors.
-   - Write your handoff report to `e:\ToolCart\.agents\teamwork\worker_m1_1\handoff.md` with full command outputs.
-
-
-## 2026-10-13T17:02:24Z
-From: 080a93ac-e184-4734-a107-f062151cd3dc
-Content: You are Worker M1 for the ToolCart UK Revamp project.
-Your working directory is: `e:\ToolCart\.agents\teamwork\worker_m1_1`
-Read your instructions in `e:\ToolCart\.agents\teamwork\worker_m1_1\DISPATCH.md` and read `e:\ToolCart\.agents\teamwork\ORIGINAL_REQUEST.md` (section `## 2026-10-13T16:36:41Z`).
-Also read the detailed Explorer survey specifications at `e:\ToolCart\.agents\teamwork\explorer_survey_1\survey_report.md`.
-
-MANDATORY INTEGRITY WARNING:
-DO NOT CHEAT. All implementations must be genuine. DO NOT hardcode test results, create dummy/facade implementations, or circumvent the intended task. A teamwork_preview_auditor will independently verify your work. Integrity violations WILL be detected and your work WILL be rejected.
-
-Your write ownership:
-- `app/globals.css`
-- `src/components/ui/vectors/*`
-- `app/not-found.tsx`
-- `app/(storefront)/basket/page.tsx`
-- `src/components/storefront/mini-basket.tsx`
-- `app/(storefront)/search/page.tsx`
-- `app/(storefront)/trade/page.tsx`
-- `app/(storefront)/categories/[slug]/page.tsx`
-- `tests/ui/vector-scenes.test.tsx`
-
-Implement the CSS patterns, create the bespoke SVG vector scenes, integrate them into the storefront pages, fix untokenized classes, run tests (`npm test`), static brand verification (`python qa/check_static.py`), and TypeScript typechecking (`npx tsc --noEmit`).
-Report all results in `e:\ToolCart\.agents\teamwork\worker_m1_1\handoff.md` and notify via send_message when done.
+## Output Requirements
+Write your progress to `e:\ToolCart\.agents\teamwork\worker_m1_1\progress.md` and your final report to `e:\ToolCart\.agents\teamwork\worker_m1_1\handoff.md`. Include test commands, build results, and viewport verification. When complete, send a message to parent `616c35a2-dbd8-4d26-9bbc-5e7e26c1b91c`.

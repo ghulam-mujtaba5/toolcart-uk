@@ -1,30 +1,37 @@
-# Dispatch: Reviewer 2 (Milestone 1 — CSS Foundations & Bespoke SVGs)
+# DISPATCH — Reviewer 2 for Milestone M1
 
-- Working Directory: `e:\ToolCart\.agents\teamwork\reviewer_m1_2`
-- Original Request: `e:\ToolCart\.agents\teamwork\ORIGINAL_REQUEST.md` (read section `## 2026-10-13T16:36:41Z`)
-- Project Root: `e:\ToolCart`
-- Scope Document: `e:\ToolCart\PROJECT.md`
-- Worker Handoff: `e:\ToolCart\.agents\teamwork\worker_m1_1\handoff.md`
+## Role & Mission
+You are a Reviewer (`teamwork_preview_reviewer`). Review accessibility and retail merchant domain logic for Milestone M1 in `e:\ToolCart`.
 
-## Mission:
-Independently review the work completed by Worker M1 for Milestone 1:
-1. Examine code changes in `app/globals.css`, `src/components/ui/vectors/*`, and all modified storefront pages.
-2. Verify robustness, accessibility, and WCAG AA contrast compliance: check that Action Lime is paired strictly with dark Ink text (never white text). Verify that non-text boundaries have sufficient contrast.
-3. Check code quality and edge cases: SVG responsive behavior down to 360px viewport, proper `aria-hidden` or accessible titles, and lack of hydration mismatches.
-4. Run verification commands:
-   - `npm test`
-   - `python qa/check_static.py`
-   - `npx tsc --noEmit`
-   - `npm run build`
-5. Render a clear verdict: **APPROVE** or **REQUEST_CHANGES** with concrete evidence.
-Write your review report to `e:\ToolCart\.agents\teamwork\reviewer_m1_2\review_report.md` and `handoff.md`. Communicate your verdict back via send_message.
+## Files to Review
+- `src/components/admin/admin-layout.tsx`
+- `src/components/admin/admin-sidebar.tsx`
+- `src/components/admin/dashboard-quick-filters.tsx`
+- `app/admin/page.tsx`
+- `tests/ui/admin-navigation-and-dashboard.test.tsx`
+- `e:\ToolCart\.agents\teamwork\worker_m1_2\handoff.md`
+
+## Focus
+1. Accessibility & WCAG AA: Minimum 44px touch targets on mobile hamburger and close buttons, ARIA dialog roles (`role="dialog"`, `aria-modal="true"`, `aria-label`), keyboard navigation (Escape key), and focus management.
+2. Retail Operational Logic: Accurate calculation of Sales Velocity, Gross Revenue (inc. VAT), Active Retail Orders, Stock Alerts, and AOV; safe division guards (`orders.length > 0`) to prevent `NaN`.
+3. Verification: Run `npm test`, `npm run typecheck`, and `python qa/check_static.py`.
+4. Verdict: Explicitly state `APPROVE` or `REQUEST_CHANGES` with concrete rationale.
+
+Write your report to `e:\ToolCart\.agents\teamwork\reviewer_m1_2\handoff.md` and send message to parent `616c35a2-dbd8-4d26-9bbc-5e7e26c1b91c`.
 
 
-## 2026-10-13T17:33:48Z
-You are Reviewer 2 for Milestone 1 of the ToolCart UK Revamp.
-Your working directory is: `e:\ToolCart\.agents\teamwork\reviewer_m1_2`
-Read instructions in `e:\ToolCart\.agents\teamwork\reviewer_m1_2\DISPATCH.md` and `e:\ToolCart\.agents\teamwork\ORIGINAL_REQUEST.md` (section `## 2026-10-13T16:36:41Z`).
-Read Worker M1's handoff at `e:\ToolCart\.agents\teamwork\worker_m1_1\handoff.md`.
-Examine accessibility, WCAG contrast compliance, responsive viewports down to 360px, and code quality.
-Run `npm test`, `python qa/check_static.py`, `npx tsc --noEmit`, and `npm run build`.
-Render your verdict (APPROVE or REQUEST_CHANGES) with supporting evidence in `e:\ToolCart\.agents\teamwork\reviewer_m1_2\handoff.md` and report via send_message.
+## 2026-10-15T12:55:33Z
+You are reviewer_m1_2.
+Your working directory is: e:\ToolCart\.agents\teamwork\reviewer_m1_2
+Your parent is: 616c35a2-dbd8-4d26-9bbc-5e7e26c1b91c
+
+Read and follow:
+1. e:\ToolCart\.agents\teamwork\ORIGINAL_REQUEST.md (specifically timestamp 2026-10-15T12:07:45Z)
+2. e:\ToolCart\.agents\teamwork\reviewer_m1_2\DISPATCH.md
+3. e:\ToolCart\.agents\teamwork\worker_m1_2\handoff.md
+4. design/tokens.css
+
+Review Milestone M1 for WCAG AA accessibility, mobile drawer ARIA roles, touch targets, and retail operational math logic.
+Run npm test, npm run typecheck, python qa/check_static.py.
+State your verdict (APPROVE or REQUEST_CHANGES) in e:\ToolCart\.agents\teamwork\reviewer_m1_2\handoff.md.
+Send message to parent 616c35a2-dbd8-4d26-9bbc-5e7e26c1b91c upon completion.

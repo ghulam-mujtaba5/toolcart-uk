@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button';
 import { X, Send, AlertTriangle, ShoppingCart } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { PublicProductDTO } from '@/types/product';
+import { AiScannerPulse } from '@/components/motion';
 import { ChatbotRobot3DLazy } from '@/components/ui/3d';
 
 interface Message {
@@ -134,11 +135,14 @@ export function AIAssistantDrawer({ isOpen, onClose }: AIAssistantDrawerProps) {
               />
             </div>
             <div>
-              <h2 id="ai-assistant-title" className="font-heading font-extrabold text-base text-tc-ink">
+              <h2 id="ai-assistant-title" className="font-heading font-extrabold text-base text-tc-ink flex items-center gap-1.5">
                 ToolCart AI Assistant
+                <span className="text-[10px] px-1.5 py-0.5 rounded bg-tc-primary/10 text-tc-primary font-bold">
+                  Grounded
+                </span>
               </h2>
               <p className="text-[11px] text-tc-text-secondary">
-                Verified catalog tools • British Standards &amp; HSE guidance
+                Verified catalog tools • Zero safety hallucinations
               </p>
             </div>
           </div>
@@ -232,11 +236,11 @@ export function AIAssistantDrawer({ isOpen, onClose }: AIAssistantDrawerProps) {
           ))}
 
           {loading && (
-            <div className="mr-auto p-3.5 rounded-2xl bg-white border border-[#C8D9F9] rounded-bl-xs text-xs text-tc-text-secondary flex items-center gap-3 shadow-xs">
-              <span className="w-2.5 h-2.5 rounded-full bg-tc-primary animate-ping shrink-0" />
+            <div className="mr-auto p-4 rounded-2xl bg-white border border-[#C8D9F9] rounded-bl-xs text-xs text-tc-text-secondary flex items-center gap-3 shadow-xs">
+              <AiScannerPulse size={40} className="shrink-0" />
               <div>
-                <p className="font-bold text-tc-ink text-xs">Checking technical catalog specifications...</p>
-                <span className="text-[11px] text-tc-text-secondary">Matching verified UK trade standards and pack sizes</span>
+                <p className="font-bold text-tc-ink text-xs">Scanning catalog specifications...</p>
+                <span className="text-[11px] text-tc-text-secondary">Filtering 115 quoted trade lines with zero safety hallucinations</span>
               </div>
             </div>
           )}
@@ -246,7 +250,7 @@ export function AIAssistantDrawer({ isOpen, onClose }: AIAssistantDrawerProps) {
         {messages.length === 1 && (
           <div className="p-4 bg-white/70 border-t border-[#C8D9F9] space-y-2.5 shrink-0">
             <p className="text-[11px] font-bold text-tc-text-secondary uppercase tracking-wider">
-              Common Hardware Inquiries
+              Popular questions
             </p>
             <div className="flex flex-wrap gap-1.5">
               {STARTER_PROMPTS.map((prompt, i) => (

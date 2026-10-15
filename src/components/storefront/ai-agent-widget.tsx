@@ -22,7 +22,7 @@ export function AiAgentFloatingWidget({ onOpen, isOpen }: AiAgentFloatingWidgetP
       <button
         type="button"
         onClick={onOpen}
-        aria-label="Open Hardware Advice assistant"
+        aria-label="Open ToolCart Hardware Advice assistant"
         className={cn(
           'group relative flex items-center p-1 sm:p-1.5 sm:pr-4 rounded-full',
           'bg-tc-ink hover:bg-[#1E3A8A] text-white transition-all duration-300',
@@ -50,7 +50,7 @@ export function AiAgentFloatingWidget({ onOpen, isOpen }: AiAgentFloatingWidgetP
         <div className="hidden sm:flex flex-col text-left pl-2.5 pr-1">
           <span className="text-[10px] font-mono font-bold text-tc-action-lime uppercase tracking-wider leading-tight flex items-center gap-1">
             <span className="w-1.5 h-1.5 rounded-full bg-tc-action-lime" />
-            Online
+            Advice Online
           </span>
           <span className="font-heading font-bold text-xs text-white tracking-tight flex items-center gap-1.5">
             Hardware Advice

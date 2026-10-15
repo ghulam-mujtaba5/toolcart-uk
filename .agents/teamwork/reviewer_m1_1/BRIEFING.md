@@ -1,14 +1,14 @@
-# BRIEFING — 2026-10-13T17:35:00Z
+# BRIEFING — 2026-10-15T13:07:00Z
 
 ## Mission
-Independently review and adversarially stress-test Worker M1's Milestone 1 revamp implementation: CSS Foundations & Bespoke SVGs (pure-CSS CAD patterns, Brand V3 vector scenes, storefront empty/error/trade states, and vector tests), verifying integrity, Brand V3 adherence, zero runtime overhead, responsive scaling, and test pass rates.
+Review and adversarially stress-test Milestone M1 implementation (Retail Merchant Admin Navigation & Core Dashboard: admin-layout, admin-sidebar, dashboard-quick-filters, admin/page, tests), verifying code quality, Brand V3 tokenization, responsive mobile layouts, test coverage, and integrity.
 
 ## 🔒 My Identity
 - Archetype: reviewer / critic
 - Roles: reviewer, critic
 - Working directory: e:\ToolCart\.agents\teamwork\reviewer_m1_1
 - Original parent: 311a2f36-0bc9-4d2c-ad1b-812679b4333e
-- Milestone: Milestone 1
+- Milestone: Milestone M1
 - Instance: 1 of 1
 
 ## 🔒 Key Constraints
@@ -17,46 +17,52 @@ Independently review and adversarially stress-test Worker M1's Milestone 1 revam
 - Brand V3 strictly enforced: zero copper (#B84C32 / --tc-copper), zero purple/violet/lavender, zero teal. Action Lime must never have white text and must have 2px Ink border on white.
 
 ## Current Parent
-- Conversation ID: 080a93ac-e184-4734-a107-f062151cd3dc
-- Updated: 2026-10-13T17:35:00Z
+- Conversation ID: 616c35a2-dbd8-4d26-9bbc-5e7e26c1b91c
+- Updated: 2026-10-15T13:07:00Z
 
 ## Review Scope
 - **Files to review**:
-  - `app/globals.css`
-  - `src/components/ui/vectors/empty-tool-chest-vector.tsx`
-  - `src/components/ui/vectors/not-found-vector.tsx`
-  - `src/components/ui/vectors/trade-pro-vector.tsx`
-  - `src/components/ui/vectors/category-cad-accents.tsx`
-  - `src/components/ui/vectors/index.ts`
-  - `app/not-found.tsx`
-  - `app/(storefront)/basket/page.tsx`
-  - `src/components/storefront/mini-basket.tsx`
-  - `app/(storefront)/search/page.tsx`
-  - `app/(storefront)/trade/page.tsx`
-  - `app/(storefront)/categories/[slug]/page.tsx`
-  - `tests/ui/vector-scenes.test.tsx`
-- **Interface contracts**: `e:\ToolCart\PROJECT.md`, `e:\ToolCart\docs\02_BRAND_IDENTITY.md`, `e:\ToolCart\design\tokens.css`, `e:\ToolCart\qa\contrast_matrix.json`, `e:\ToolCart\.agents\teamwork\ORIGINAL_REQUEST.md` (section `## 2026-10-13T16:36:41Z`)
-- **Review criteria**: Correctness, integrity violations check, Brand V3 conformance, zero runtime overhead CSS patterns, accessibility, responsive scaling, edge cases
+  - `src/components/admin/admin-layout.tsx`
+  - `src/components/admin/admin-sidebar.tsx`
+  - `src/components/admin/dashboard-quick-filters.tsx`
+  - `app/admin/page.tsx`
+  - `tests/ui/admin-navigation-and-dashboard.test.tsx`
+  - `e:\ToolCart\.agents\teamwork\worker_m1_2\handoff.md`
+  - `design/tokens.css`
+- **Interface contracts**: `PROJECT.md`, `docs/02_BRAND_IDENTITY.md`, `design/tokens.css`, `qa/contrast_matrix.json`, `ORIGINAL_REQUEST.md` (section `## 2026-10-15T12:07:45Z`)
+- **Review criteria**: Correctness, Brand V3 tokenization, responsive design (360px & desktop), accessibility (WCAG AA, dialog, keyboard nav), error resilience, test quality & integrity violations check.
 
 ## Key Decisions Made
-- [In progress] Reviewing Worker M1 handoff and changed files.
+- Confirmed zero integrity violations across all Milestone M1 files.
+- Confirmed Brand V3 tokenization passes `python qa/check_static.py`.
+- Verified 15/15 unit tests pass, 24/24 adversarial tests pass, and 700/700 total suite tests pass.
+- Isolated repository `tsc` failure to untracked/in-progress Milestone M2 files (`app/api/admin/products/bulk/route.ts` and `app/api/admin/products/[id]/route.ts`); M1 files are 100% type-clean.
+- Issued verdict: `APPROVE` in `handoff.md`.
 
 ## Artifact Index
 - `e:\ToolCart\.agents\teamwork\reviewer_m1_1\progress.md` — Liveness & status tracking
 - `e:\ToolCart\.agents\teamwork\reviewer_m1_1\handoff.md` — Final review & adversarial report
 
 ## Review Checklist
-- **Items reviewed**: Pending inspection of Worker M1 files
-- **Verdict**: Pending
-- **Unverified claims**: Worker M1 claims 17 vector tests pass, 443 total tests pass, zero prohibited colors, pure CSS patterns
+- **Items reviewed**:
+  - `src/components/admin/admin-layout.tsx`
+  - `src/components/admin/admin-sidebar.tsx`
+  - `src/components/admin/dashboard-quick-filters.tsx`
+  - `app/admin/page.tsx`
+  - `tests/ui/admin-navigation-and-dashboard.test.tsx`
+  - `tests/adversarial/m1-admin-navigation-challenge.test.tsx`
+- **Verdict**: APPROVE
+- **Unverified claims**: None. All verified via test execution and static check.
 
 ## Attack Surface
 - **Hypotheses tested**:
-  - Check for integrity violations or facade/mocked SVGs
-  - Check for prohibited colors (#B84C32, purple, teal) in SVGs, CSS, and storefront pages
-  - Check for white text on Action Lime (#DDF16A)
-  - Check CategoryCadAccent with invalid/unexpected slug fallback
-  - Check pure-CSS pattern rendering and responsiveness
-  - Check test suite completeness vs cheating/hardcoding
-- **Vulnerabilities found**: TBD
-- **Untested angles**: TBD
+  - Integrity violations / facade logic: Passed (genuine interactive components).
+  - Prohibited colors (#B84C32, purple, teal): Passed (0 violations).
+  - White text on Action Lime: Passed (Action Lime exclusively uses dark Ink text with 2px borders).
+  - Mobile drawer dialog lifecycle & body scroll lock: Passed (24 adversarial stress tests passed).
+  - Division by zero / NaN in retail KPIs: Passed (safe guard handles empty DB).
+- **Vulnerabilities found**:
+  - Minor: Raw hex `#182336` on `app/admin/page.tsx:327` instead of `bg-tc-ink`.
+  - Minor: Missing focus trap within mobile drawer dialog (`admin-sidebar.tsx:185`).
+  - Advisory / M2 blocker: Typecheck failure in concurrent untracked M2 bulk route.
+- **Untested angles**: Focus trap enforcement with Screen Reader on real device.

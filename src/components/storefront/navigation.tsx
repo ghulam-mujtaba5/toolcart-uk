@@ -43,7 +43,7 @@ export function Navigation({ className }: NavigationProps) {
   }, [mobileOpen]);
 
   return (
-    <div className={cn('relative', className)}>
+    <div className={cn('relative', mobileOpen ? 'z-50' : '', className)}>
       <div className="flex items-center justify-between md:hidden p-3 bg-tc-primary text-white">
         <div className="flex items-center gap-2">
           <div className="w-6 h-6 rounded bg-tc-action-lime text-tc-ink flex items-center justify-center">

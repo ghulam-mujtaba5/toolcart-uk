@@ -126,7 +126,7 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
               <div className="pt-2">
                 <Link
                   href="/search"
-                  className="inline-flex items-center px-4 py-2 rounded-lg bg-tc-primary text-white text-xs font-semibold hover:bg-tc-primary-hover"
+                  className="inline-flex items-center justify-center min-h-[44px] px-4 py-2 rounded-lg bg-tc-primary text-white text-xs font-semibold hover:bg-tc-primary-hover"
                 >
                   View all products
                 </Link>

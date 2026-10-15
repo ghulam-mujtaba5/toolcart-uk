@@ -111,22 +111,22 @@ export function CompareDrawer() {
             className="relative bg-white rounded-t-2xl shadow-2xl max-h-[88vh] flex flex-col border-t border-tc-border animate-in slide-in-from-bottom-8 overflow-hidden"
           >
             {/* Header */}
-            <div className="bg-tc-ink text-white px-6 py-4 flex items-center justify-between border-b border-white/10 shrink-0">
-              <div className="flex items-center gap-3">
-                <h2 id="compare-drawer-title" className="font-heading font-extrabold text-base sm:text-lg">
+            <div className="bg-tc-ink text-white p-4 sm:px-6 sm:py-4 flex flex-wrap items-center justify-between gap-3 border-b border-white/10 shrink-0">
+              <div className="flex items-center gap-2 sm:gap-3 min-w-0">
+                <h2 id="compare-drawer-title" className="font-heading font-extrabold text-sm sm:text-lg">
                   Side-by-Side Product Comparison
                 </h2>
-                <span className="text-xs px-2 py-0.5 rounded-full bg-tc-action-lime text-tc-ink font-bold">
+                <span className="text-xs px-2 py-0.5 rounded-full bg-tc-action-lime text-tc-ink font-bold shrink-0">
                   {products.length} / 4 Products
                 </span>
               </div>
 
-              <div className="flex items-center gap-3">
+              <div className="flex items-center gap-2 sm:gap-3 order-last sm:order-none w-full sm:w-auto justify-between sm:justify-start">
                 <button
                   type="button"
                   onClick={toggleHighlightDifferences}
                   className={cn(
-                    'text-xs font-semibold min-h-[44px] sm:min-h-[36px] px-3 py-1.5 rounded-md border flex items-center gap-1.5 transition-colors',
+                    'text-xs font-semibold min-h-[44px] sm:min-h-[36px] px-3 py-1.5 rounded-md border flex items-center justify-center gap-1.5 transition-colors flex-1 sm:flex-initial',
                     highlightDifferences
                       ? 'bg-tc-primary text-white border-tc-primary'
                       : 'bg-white/10 text-white/90 border-white/20 hover:bg-white/20'
@@ -139,20 +139,20 @@ export function CompareDrawer() {
                 <button
                   type="button"
                   onClick={clearCompare}
-                  className="text-xs text-white/70 hover:text-white underline min-h-[44px] flex items-center px-2 mr-1"
+                  className="text-xs text-white/70 hover:text-white underline min-h-[44px] flex items-center px-2 shrink-0"
                 >
                   Clear All
                 </button>
-
-                <button
-                  type="button"
-                  onClick={closeCompare}
-                  className="min-w-[44px] min-h-[44px] flex items-center justify-center rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors"
-                  aria-label="Close comparison drawer"
-                >
-                  <X className="w-5 h-5" />
-                </button>
               </div>
+
+              <button
+                type="button"
+                onClick={closeCompare}
+                className="min-w-[44px] min-h-[44px] flex items-center justify-center rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors shrink-0"
+                aria-label="Close comparison drawer"
+              >
+                <X className="w-5 h-5" />
+              </button>
             </div>
 
             {/* Comparison Matrix Table */}

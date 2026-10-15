@@ -245,15 +245,20 @@ export function ChronologicalAssemblyAnimation() {
                     setCurrentStepIdx(idx);
                     setIsPlaying(false);
                   }}
-                  className={`flex-1 h-2 rounded-full transition-all ${
-                    idx === currentStepIdx
-                      ? 'bg-tc-primary shadow-xs'
-                      : idx < currentStepIdx
-                      ? 'bg-tc-action-lime'
-                      : 'bg-tc-border'
-                  }`}
+                  aria-label={`Jump to assembly stage ${idx + 1}: ${s.title}`}
+                  className="flex-1 min-h-[36px] py-1.5 flex items-center group cursor-pointer focus:outline-none"
                   title={s.title}
-                />
+                >
+                  <span
+                    className={`w-full h-2 rounded-full transition-all ${
+                      idx === currentStepIdx
+                        ? 'bg-tc-primary shadow-xs'
+                        : idx < currentStepIdx
+                        ? 'bg-tc-action-lime'
+                        : 'bg-tc-border group-hover:bg-tc-border-strong'
+                    }`}
+                  />
+                </button>
               ))}
             </div>
 

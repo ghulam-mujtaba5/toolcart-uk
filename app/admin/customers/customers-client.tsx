@@ -14,17 +14,40 @@ export interface CustomersClientProps {
 export function CustomersClient({ initialCustomers }: CustomersClientProps) {
   const [customers, setCustomers] = useState<TradeCustomerRecord[]>(initialCustomers);
   const [loadingId, setLoadingId] = useState<string | null>(null);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [successMessage, setSuccessMessage] = useState<string | null>(null);
 
   const handleStatusChange = async (
     id: string,
     newStatus: 'approved' | 'rejected' | 'pending'
   ) => {
     setLoadingId(id);
+    setErrorMessage(null);
+    setSuccessMessage(null);
+    const previous = [...customers];
+
+    // Optimistic update
+    setCustomers((prev) =>
+      prev.map((c) => (c.id === id ? { ...c, status: newStatus } : c))
+    );
+
     try {
-      // Optimistic update
-      setCustomers((prev) =>
-        prev.map((c) => (c.id === id ? { ...c, status: newStatus } : c))
-      );
+      const res = await fetch(`/api/admin/customers/${id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ status: newStatus }),
+      });
+
+      if (!res.ok) {
+        const errorData = await res.json().catch(() => ({}));
+        throw new Error(errorData.error || 'Failed to update customer status');
+      }
+
+      setSuccessMessage(`Account status successfully updated to ${newStatus}.`);
+    } catch (err: unknown) {
+      // Rollback on failure
+      setCustomers(previous);
+      setErrorMessage(err instanceof Error ? err.message : 'Error updating trade customer');
     } finally {
       setLoadingId(null);
     }
@@ -35,6 +58,39 @@ export function CustomersClient({ initialCustomers }: CustomersClientProps) {
 
   return (
     <div className="space-y-6">
+      {errorMessage && (
+        <div
+          role="alert"
+          aria-live="assertive"
+          className="p-3 bg-red-50 border border-red-200 text-red-800 text-xs rounded-lg flex items-center justify-between"
+        >
+          <span>{errorMessage}</span>
+          <button
+            type="button"
+            onClick={() => setErrorMessage(null)}
+            className="text-red-700 hover:text-red-900 font-bold ml-2"
+          >
+            &times;
+          </button>
+        </div>
+      )}
+      {successMessage && (
+        <div
+          role="status"
+          aria-live="polite"
+          className="p-3 bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs rounded-lg flex items-center justify-between"
+        >
+          <span>{successMessage}</span>
+          <button
+            type="button"
+            onClick={() => setSuccessMessage(null)}
+            className="text-emerald-700 hover:text-emerald-900 font-bold ml-2"
+          >
+            &times;
+          </button>
+        </div>
+      )}
+
       {/* Pending Applications Section */}
       <div className="bg-white border border-tc-border rounded-xl p-5 shadow-xs space-y-4">
         <div className="flex items-center justify-between border-b border-tc-border pb-3">

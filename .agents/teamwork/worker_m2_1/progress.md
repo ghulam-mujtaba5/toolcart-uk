@@ -1,31 +1,39 @@
-# Progress: Worker M2 — Adaptive Duotone Icons & Tactile Micro-Interactions
+# Progress: Worker M2 — High-Reliability Data Tables & Bulk Actions (R2)
 
-Last visited: 2026-10-13T18:13:30Z
+Last visited: 2026-10-15T13:16:00Z
 Status: IN_PROGRESS
 
 ## Phase 1: Investigation & Baseline Verification
 - [x] Received dispatch instructions and verified constraints
-- [x] Studied `survey_report.md` vector specs and micro-interaction mechanics
-- [ ] Run current test suite to verify baseline health
+- [x] Studied `SCOPE.md`, `explorer_admin_survey_2/handoff.md`, `ORIGINAL_REQUEST.md`, `design/tokens.css`
+- [ ] Investigate existing codebase: `src/components/admin/product-table.tsx`, `app/admin/orders/page.tsx`, `app/admin/customers/customers-client.tsx`, `app/api/admin/products/bulk/route.ts`, database models & repositories
+- [ ] Run current test suite, typecheck, and static check baseline
 
-## Phase 2: Core Components Implementation
-- [ ] Implement `src/components/ui/trade-icons.tsx` (8 icons, 4 optical sizes each: 16, 20, 24, 32)
-- [ ] Implement `src/components/ui/copy-badge.tsx` (1-click copy with Action Lime feedback)
-- [ ] Implement `src/components/ui/stock-radar-badge.tsx` (24h stock freshness radar pulse)
-- [ ] Implement `src/components/storefront/tactile-vat-rocker.tsx` & wrap `src/components/storefront/vat-toggle.tsx`
-- [ ] Implement Snap-to-Cart tactile button physics & checkmark burst
+## Phase 2: Headless Data Table Primitives (`src/components/admin/data-table/`)
+- [ ] Design and implement `useDataTable` hook supporting:
+  - Multi-column sorting with toggle and visual indicators
+  - 300ms debounced search
+  - Faceted status filtering
+  - Pagination controls (page size 10, 25, 50, 100)
+  - Row selection with indeterminate state on header checkbox
+- [ ] Implement UI subcomponents: `DataTable`, `DataTableColumnHeader`, `DataTablePagination`, `DataTableSearch`, `DataTableFacetedFilter`, `IndeterminateCheckbox`
 
-## Phase 3: Storefront Integration
-- [ ] Update `src/components/storefront/product-card.tsx`
-- [ ] Update `src/components/storefront/pdp-actions.tsx`
-- [ ] Update `app/(storefront)/products/[slug]/page.tsx`
-- [ ] Update `src/components/storefront/header.tsx`
-- [ ] Update `src/components/storefront/mini-basket.tsx`
+## Phase 3: Product Table Upgrade & Bulk Actions
+- [ ] Create `src/components/admin/bulk-action-bar.tsx` (docked bar showing selected count, status update, price adjustment, category assignment, stock adjustment)
+- [ ] Refactor `src/components/admin/product-table.tsx` to use the data table primitive and integrate `BulkActionBar`
+- [ ] Implement `app/api/admin/products/bulk/route.ts` handling `POST` with batch updates via `db.products` repository with clean TypeScript types
 
-## Phase 4: Verification & Testing
-- [ ] Write `tests/ui/trade-icons.test.tsx`
-- [ ] Write `tests/ui/micro-interactions.test.tsx`
+## Phase 4: Interactive Orders Table
+- [ ] Create `src/components/admin/orders-table.tsx` with search, status filtering tabs, date/total sorting, pagination, and quick transition links
+- [ ] Update `app/admin/orders/page.tsx` to render the interactive `OrdersTable`
+
+## Phase 5: Customer Trade Approval Persistence
+- [ ] Create `app/api/admin/customers/[id]/route.ts` handling `PUT` with `{ status, credit_limit_gbp }`
+- [ ] Wire `handleStatusChange` in `app/admin/customers/customers-client.tsx` to persist changes with optimistic update & rollback
+
+## Phase 6: Testing & Quality Verification
+- [ ] Write tests in `tests/ui/admin-data-tables-and-bulk-actions.test.tsx`
 - [ ] Run `npm test`
+- [ ] Run `npm run typecheck`
 - [ ] Run `python qa/check_static.py`
-- [ ] Run `npx tsc --noEmit`
-- [ ] Write handoff report and notify caller
+- [ ] Write handoff report `handoff.md` and message parent

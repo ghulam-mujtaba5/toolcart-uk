@@ -5,3 +5,6 @@ export * from './product-table';
 export * from './order-action-bar';
 export * from './audit-timeline';
 export * from './import-preview-table';
+export * from './orders-table';
+export * from './dashboard-quick-filters';
+export * from './error-boundary';

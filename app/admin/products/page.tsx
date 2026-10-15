@@ -2,6 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import { getDb } from '@/lib/db';
 import { ProductTable } from '@/components/admin/product-table';
+import { AdminErrorBoundary } from '@/components/admin/error-boundary';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { UploadCloud, ShieldAlert } from 'lucide-react';
@@ -60,8 +61,13 @@ export default async function AdminProductsPage() {
         </div>
       </div>
 
-      {/* Product Table */}
-      <ProductTable products={products} wholesaleOffers={wholesaleMap} />
+      {/* Product Table wrapped in Error Boundary */}
+      <AdminErrorBoundary
+        title="Error Displaying Product Table"
+        fallbackMessage="An unexpected error occurred while rendering the product catalog table. Your underlying data is safe."
+      >
+        <ProductTable products={products} wholesaleOffers={wholesaleMap} />
+      </AdminErrorBoundary>
     </div>
   );
 }

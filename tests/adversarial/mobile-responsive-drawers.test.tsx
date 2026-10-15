@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import React from 'react';
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen, fireEvent, within } from '@testing-library/react';
 import { FilterSidebar } from '@/components/storefront/filter-sidebar';
 import { PdpActions } from '@/components/storefront/pdp-actions';
 import { Header } from '@/components/storefront/header';
@@ -10,9 +10,12 @@ import { CatalogSortControl } from '@/components/storefront/catalog-sort-control
 import { ProductCard } from '@/components/storefront/product-card';
 import { AIAssistantDrawer } from '@/components/storefront/ai-assistant-drawer';
 import { SearchFilterChips } from '@/components/storefront/search-filter-chips';
+import { CompareDrawer } from '@/components/storefront/compare-drawer';
+import { ChronologicalAssemblyAnimation } from '@/components/storefront/chronological-assembly-animation';
+import { Navigation } from '@/components/storefront/navigation';
 import { VatProvider } from '@/context/vat-context';
 import { CartProvider, useCart } from '@/context/cart-context';
-import { CompareProvider } from '@/context/compare-context';
+import { CompareProvider, useCompare } from '@/context/compare-context';
 import { PublicProductDTO } from '@/types/product';
 
 let mockSearchParams = new URLSearchParams();
@@ -382,7 +385,7 @@ describe('Adversarial Suite: Mobile-Responsive Drawers & Touch Target Ergonomics
       expect(maxInput.className).toContain('sm:text-xs');
     });
 
-    it('AIAssistantDrawer prompt input enforces text-base sm:text-xs and starter chips meet min-h-[44px] sm:min-h-[36px]', () => {
+    it('AIAssistantDrawer prompt input enforces text-base sm:text-xs, Grounded badge is present, and starter chips meet min-h-[44px] sm:min-h-[36px]', () => {
       render(
         <VatProvider>
           <CartProvider>
@@ -390,6 +393,10 @@ describe('Adversarial Suite: Mobile-Responsive Drawers & Touch Target Ergonomics
           </CartProvider>
         </VatProvider>
       );
+
+      // Verify Grounded badge and canonical subtitle
+      expect(screen.getByText('Grounded')).toBeInTheDocument();
+      expect(screen.getByText('Verified catalog tools • Zero safety hallucinations')).toBeInTheDocument();
 
       const input = screen.getByPlaceholderText(/Ask about screws, tape adhesion, ladder safety/i);
       expect(input.className).toContain('text-base');
@@ -444,6 +451,122 @@ describe('Adversarial Suite: Mobile-Responsive Drawers & Touch Target Ergonomics
       const clearBtn = screen.getByRole('button', { name: /Clear all/i });
       expect(clearBtn.className).toContain('min-h-[44px]');
       expect(clearBtn.className).toContain('sm:min-h-[36px]');
+    });
+
+    it('Header mobile menu renders canonical Hardware Advice banner and Get Hardware Advice trigger with 44px touch target', () => {
+      const handleOpenAi = vi.fn();
+      render(
+        <VatProvider>
+          <CartProvider>
+            <Header onOpenAiAssistant={handleOpenAi} />
+          </CartProvider>
+        </VatProvider>
+      );
+
+      fireEvent.click(screen.getByLabelText(/Open mobile navigation menu/i));
+
+      // Verify canonical banner copy inside mobile drawer
+      const drawer = screen.getByRole('dialog', { name: /Mobile navigation menu/i });
+      expect(within(drawer).getByText('Hardware Advice')).toBeInTheDocument();
+      expect(within(drawer).getByText(/Need help choosing sizes, pack counts, or BS ratings\?/i)).toBeInTheDocument();
+
+      const launchBtn = within(drawer).getByRole('button', { name: /Get Hardware Advice/i });
+      expect(launchBtn).toBeInTheDocument();
+      expect(launchBtn.className).toContain('min-h-[44px]');
+
+      // Click launches finder and closes mobile menu
+      fireEvent.click(launchBtn);
+      expect(handleOpenAi).toHaveBeenCalledTimes(1);
+    });
+
+    it('Navigation component mobile menu renders accessible backdrop and 44px links', () => {
+      const { container } = render(<Navigation />);
+
+      fireEvent.click(screen.getByLabelText(/Open mobile navigation menu/i));
+
+      const backdrop = container.querySelector('.bg-black\\/50');
+      expect(backdrop).not.toBeNull();
+      expect(backdrop).toHaveAttribute('aria-hidden', 'true');
+
+      const drawer = screen.getByRole('dialog', { name: /Mobile navigation menu/i });
+      const handToolsLink = within(drawer).getByText('Hand Tools').closest('a');
+      expect(handToolsLink?.className).toContain('min-h-[44px]');
+    });
+  });
+
+  describe('Feature 8: Viewport Wrap, Compare Drawer & Interactive Animation Touch Targets', () => {
+    function CompareDrawerOpener() {
+      const { addProduct, openCompare } = useCompare();
+      return (
+        <button
+          type="button"
+          onClick={() => {
+            addProduct(mockProduct);
+            openCompare();
+          }}
+        >
+          Open Compare Test
+        </button>
+      );
+    }
+
+    it('CompareDrawer header adapts to mobile viewports with flex-wrap and enforces 44px touch targets', () => {
+      render(
+        <VatProvider>
+          <CartProvider>
+            <CompareProvider>
+              <CompareDrawerOpener />
+              <CompareDrawer />
+            </CompareProvider>
+          </CartProvider>
+        </VatProvider>
+      );
+
+      fireEvent.click(screen.getByRole('button', { name: 'Open Compare Test' }));
+
+      // Compare drawer dialog is open
+      const dialog = screen.getByRole('dialog', { name: /Side-by-Side Product Comparison/i });
+      expect(dialog).toBeInTheDocument();
+
+      // Header container has flex-wrap to prevent horizontal overflow on 360px screens
+      const header = dialog.querySelector('.bg-tc-ink');
+      expect(header?.className).toContain('flex-wrap');
+
+      // Highlight differences button meets 44px min-h on mobile with sm:min-h-[36px] on desktop
+      const highlightBtn = screen.getByRole('button', { name: /Highlight Differences/i });
+      expect(highlightBtn.className).toContain('min-h-[44px]');
+      expect(highlightBtn.className).toContain('sm:min-h-[36px]');
+
+      // Close button meets 44x44px touch target
+      const closeBtn = screen.getByRole('button', { name: /Close comparison drawer/i });
+      expect(closeBtn.className).toContain('min-w-[44px]');
+      expect(closeBtn.className).toContain('min-h-[44px]');
+
+      // Clear all button meets 44px min-h
+      const clearBtn = screen.getByRole('button', { name: /Clear All/i });
+      expect(clearBtn.className).toContain('min-h-[44px]');
+    });
+
+    it('ChronologicalAssemblyAnimation step scrubber and playback controls meet touch target guidelines', () => {
+      render(<ChronologicalAssemblyAnimation />);
+
+      // Play/Pause button meets 44x44px touch target
+      const playPauseBtn = screen.getByRole('button', { name: /Pause animation|Play animation/i });
+      expect(playPauseBtn.className).toContain('min-w-[44px]');
+      expect(playPauseBtn.className).toContain('min-h-[44px]');
+
+      // Restart button meets 44x44px touch target
+      const restartBtn = screen.getByRole('button', { name: /Restart assembly sequence/i });
+      expect(restartBtn.className).toContain('min-w-[44px]');
+      expect(restartBtn.className).toContain('min-h-[44px]');
+
+      // Step scrubber progress buttons meet min-h-[36px] touch target
+      const step1Btn = screen.getByRole('button', { name: /Jump to assembly stage 1/i });
+      expect(step1Btn.className).toContain('min-h-[36px]');
+
+      // Scene selector buttons meet 44px on mobile
+      const electricalKitBtn = screen.getByRole('button', { name: /Electrical Kit/i });
+      expect(electricalKitBtn.className).toContain('min-h-[44px]');
     });
   });
 });

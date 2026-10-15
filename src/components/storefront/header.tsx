@@ -102,7 +102,12 @@ export function Header({ onOpenAiAssistant }: HeaderProps) {
   };
 
   return (
-    <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-tc-border">
+    <header
+      className={cn(
+        'sticky top-0 bg-white/95 border-b border-tc-border',
+        isMobileMenuOpen ? 'z-50' : 'z-40 backdrop-blur-md'
+      )}
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between gap-4 h-16 sm:h-20">
           {/* Mobile hamburger */}
@@ -110,7 +115,7 @@ export function Header({ onOpenAiAssistant }: HeaderProps) {
             type="button"
             onClick={() => setIsMobileMenuOpen(true)}
             aria-label="Open mobile navigation menu"
-            className="md:hidden min-w-[44px] min-h-[44px] p-2 rounded-lg text-tc-ink hover:bg-tc-canvas transition-colors flex items-center justify-center"
+            className="md:hidden min-w-[44px] min-h-[44px] p-2 rounded-lg text-tc-ink hover:bg-tc-canvas transition-colors flex items-center justify-center shrink-0"
           >
             <Menu className="w-6 h-6" />
           </button>

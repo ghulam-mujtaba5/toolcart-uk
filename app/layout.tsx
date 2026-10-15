@@ -1,5 +1,4 @@
 import type { Metadata, Viewport } from 'next';
-import { Manrope, IBM_Plex_Sans } from 'next/font/google';
 import './globals.css';
 
 export const viewport: Viewport = {
@@ -9,20 +8,6 @@ export const viewport: Viewport = {
   viewportFit: 'cover',
   themeColor: '#2450B8',
 };
-
-const manrope = Manrope({
-  subsets: ['latin'],
-  weight: ['600', '700', '800'],
-  variable: '--font-heading',
-  display: 'swap',
-});
-
-const ibmPlexSans = IBM_Plex_Sans({
-  subsets: ['latin'],
-  weight: ['400', '500', '600', '700'],
-  variable: '--font-body',
-  display: 'swap',
-});
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://toolcart.co.uk'),
@@ -62,7 +47,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${manrope.variable} ${ibmPlexSans.variable}`}>
+    <html lang="en">
       <body className="min-h-screen bg-tc-canvas font-body text-tc-graphite antialiased">
         {children}
       </body>

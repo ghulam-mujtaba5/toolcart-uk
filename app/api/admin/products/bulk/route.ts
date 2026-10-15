@@ -1,0 +1,75 @@
+import { NextRequest, NextResponse } from 'next/server';
+import { getDb } from '@/lib/db';
+import { BulkProductActionSchema } from '@/lib/schemas/product';
+
+export async function POST(request: NextRequest) {
+  try {
+    const rawBody = await request.json();
+    const parseResult = BulkProductActionSchema.safeParse(rawBody);
+
+    if (!parseResult.success) {
+      return NextResponse.json(
+        {
+          error: 'Validation failed',
+          issues: parseResult.error.flatten().fieldErrors,
+        },
+        { status: 400 }
+      );
+    }
+
+    const { product_ids, action, payload } = parseResult.data;
+    const db = getDb();
+    let updatedCount = 0;
+
+    for (const id of product_ids) {
+      const product = await db.products.getById(id);
+      if (!product) continue;
+
+      if (action === 'status' && payload.status) {
+        await db.products.update(id, {
+          sellability_status: payload.status,
+        });
+        updatedCount++;
+      } else if (action === 'price_adjust') {
+        let newIncPrice = product.retail_price_inc_vat_gbp;
+        if (payload.price_percentage_change !== undefined) {
+          newIncPrice = Number((newIncPrice * (1 + payload.price_percentage_change / 100)).toFixed(2));
+        } else if (payload.price_fixed_change_gbp !== undefined) {
+          newIncPrice = Number(Math.max(0.01, newIncPrice + payload.price_fixed_change_gbp).toFixed(2));
+        }
+        const newExPrice = Number((newIncPrice / 1.2).toFixed(2));
+        await db.products.update(id, {
+          retail_price_inc_vat_gbp: newIncPrice,
+          retail_price_ex_vat_gbp: newExPrice,
+        });
+        updatedCount++;
+      } else if (action === 'stock_adjust') {
+        let newStock = product.stock_quantity ?? 0;
+        if (payload.stock_exact !== undefined) {
+          newStock = Math.max(0, payload.stock_exact);
+        } else if (payload.stock_delta !== undefined) {
+          newStock = Math.max(0, newStock + payload.stock_delta);
+        }
+        await db.products.update(id, {
+          stock_quantity: newStock,
+          availability_status: newStock > 0 ? 'in_stock' : 'out_of_stock',
+        });
+        updatedCount++;
+      }
+    }
+
+    return NextResponse.json(
+      {
+        success: true,
+        updated_count: updatedCount,
+        message: `Successfully updated ${updatedCount} products.`,
+      },
+      { status: 200 }
+    );
+  } catch (error: unknown) {
+    return NextResponse.json(
+      { error: error instanceof Error ? error.message : 'Internal Server Error' },
+      { status: 500 }
+    );
+  }
+}

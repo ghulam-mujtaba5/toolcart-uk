@@ -3,7 +3,6 @@ import Link from 'next/link';
 import { getAllProducts, getProjectKits, getBuyingGuides } from '@/lib/catalog';
 import { ProductCard } from '@/components/storefront/product-card';
 import { Button } from '@/components/ui/button';
-import { MasterTelemetryAnimation } from '@/components/storefront/master-telemetry-animation';
 import {
   Wrench,
   Shield,
@@ -18,7 +17,6 @@ import {
   Layers,
   ShieldCheck,
 } from 'lucide-react';
-import { IconStockRadar } from '@/components/ui/trade-icons';
 
 export const dynamic = 'force-dynamic';
 
@@ -90,13 +88,9 @@ export default async function StorefrontHomePage() {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
             {/* Left Column: Heading, Lead & CTAs */}
             <div className="lg:col-span-7 space-y-6">
-              <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-tc-surface-soft border border-[#C8D9F9] text-xs font-extrabold tracking-wider text-tc-primary uppercase shadow-xs">
-                <img
-                  src="/images/3d/features/stock-freshness-radar.webp"
-                  alt="Stock freshness radar telemetry"
-                  className="w-5 h-5 object-contain drop-shadow-xs"
-                />
-                <span>Verified UK Supplier Catalog · 115 SKUs Quoted</span>
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-tc-surface-soft border border-[#C8D9F9] text-xs font-semibold text-tc-primary shadow-xs">
+                <ShieldCheck className="w-4 h-4 text-tc-primary" />
+                <span>Direct UK Trade Hardware &amp; Supplies</span>
               </div>
 
               <h1 className="font-heading font-extrabold text-4xl sm:text-5xl lg:text-6xl text-tc-ink tracking-tight leading-[1.08]">
@@ -136,7 +130,7 @@ export default async function StorefrontHomePage() {
                     alt="24h Stock freshness TTL"
                     className="w-6 h-6 object-contain drop-shadow-xs"
                   />
-                  24h Stock freshness TTL
+                  Daily stock freshness checks
                 </span>
                 <span className="flex items-center gap-2">
                   <img
@@ -160,13 +154,6 @@ export default async function StorefrontHomePage() {
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   />
                 </div>
-                <div className="absolute bottom-3 left-3 right-3 p-3 rounded-xl bg-white/90 backdrop-blur-md border border-white/60 flex items-center justify-between text-xs">
-                  <div className="flex items-center gap-2">
-                    <span className="w-2 h-2 rounded-full bg-tc-success animate-pulse" />
-                    <span className="font-heading font-bold text-tc-ink">Status UK Trade Catalog</span>
-                  </div>
-                  <span className="font-mono text-[11px] font-bold text-tc-primary">115 Verified SKUs</span>
-                </div>
               </div>
 
               {/* Customer Promise Card */}
@@ -176,7 +163,7 @@ export default async function StorefrontHomePage() {
                     OUR CUSTOMER PROMISE
                   </span>
                   <span className="text-xs px-2 py-0.5 rounded-full bg-tc-primary/10 text-tc-primary font-bold">
-                    ToolCart V3
+                    ToolCart Standards
                   </span>
                 </div>
 
@@ -185,27 +172,20 @@ export default async function StorefrontHomePage() {
                 </h2>
 
                 <p className="text-xs text-tc-graphite leading-relaxed">
-                  Clear product sizes, pack quantities and relevant options help you make an informed choice before you order. Backed directly by verified UK supplier quotes.
+                  Clear product sizes, pack quantities and relevant options help you make an informed choice before you order.
                 </p>
 
                 {/* Technical Specification & Fixing Matcher */}
                 <div className="mt-2 p-3.5 rounded-xl bg-white border border-[#C8D9F9] flex gap-3.5 items-center shadow-xs">
-                  <div className="w-12 h-12 rounded-xl bg-tc-surface-soft border border-[#C8D9F9] p-1 shrink-0 flex items-center justify-center shadow-xs group">
-                    <img
-                      src="/images/3d/icons/icon-ai-robot.webp"
-                      alt="AI Project Finder"
-                      className="w-full h-full object-contain drop-shadow-xs group-hover:scale-110 transition-transform"
-                    />
+                  <div className="w-10 h-10 rounded-xl bg-tc-surface-soft border border-[#C8D9F9] flex items-center justify-center text-tc-primary shrink-0 shadow-2xs">
+                    <Wrench className="w-5 h-5 text-tc-primary stroke-[2]" />
                   </div>
                   <div className="flex-1 min-w-0 space-y-1">
                     <div className="flex items-center gap-1.5 text-xs font-bold text-tc-primary">
-                      <span>AI Project Finder &amp; Fixing Matcher</span>
-                      <span className="text-[10px] px-1.5 py-0.2 rounded bg-tc-primary/10 text-tc-primary font-bold">
-                        Grounded
-                      </span>
+                      <span>Trade Fixings &amp; Hardware Matcher</span>
                     </div>
                     <p className="text-[11px] text-tc-graphite italic truncate">
-                      &quot;Fixings for a heavy shelf on brick wall?&quot;
+                      &quot;Need masonry fixings or drywall plugs?&quot;
                     </p>
                     <Link
                       href="/search?q=wall+plugs"
@@ -229,14 +209,14 @@ export default async function StorefrontHomePage() {
               Hardware Categories
             </h2>
             <p className="text-xs sm:text-sm text-tc-text-secondary mt-1">
-              Browse our 6 comprehensive trade categories containing all 115 quoted lines.
+              Browse our core trade hardware categories for tools, fixings, decorating, measuring, safety, and site supplies.
             </p>
           </div>
           <Link
             href="/search"
             className="text-xs sm:text-sm font-bold text-tc-primary hover:underline flex items-center gap-1"
           >
-            <span>View all 115 products</span>
+            <span>View full catalog</span>
             <ArrowRight className="w-4 h-4" />
           </Link>
         </div>
@@ -350,8 +330,6 @@ export default async function StorefrontHomePage() {
         </div>
       </section>
 
-      {/* Intelligent Trade Telemetry Engine & 3D Master Brand Animation */}
-      <MasterTelemetryAnimation />
 
       {/* Curated Project Kits Teaser */}
       <section className="bg-tc-surface-soft border-y border-[#C8D9F9] py-14">
@@ -414,7 +392,7 @@ export default async function StorefrontHomePage() {
                   </p>
 
                   <div className="pt-2 text-xs text-tc-ink font-semibold flex items-center gap-2">
-                    <span>{kit.items.length} verified products included</span>
+                    <span>{kit.items.length} trade items included</span>
                     <span>•</span>
                     <span className="text-tc-text-secondary">{kit.estimated_time}</span>
                   </div>

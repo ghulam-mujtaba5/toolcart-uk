@@ -11,7 +11,7 @@ import {
   IconCaliper,
   IconTradeVerified,
 } from '@/components/ui/trade-icons';
-import { ShoppingCart, Check, Plus, Minus } from 'lucide-react';
+import { ShoppingCart, Check, Plus, Minus, ShieldCheck } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 interface PdpActionsProps {
@@ -227,14 +227,14 @@ export function PdpActions({ product }: PdpActionsProps) {
         </button>
       </div>
 
-      {/* Reassurance Notice with Duotone IconTradeVerified */}
+      {/* Reassurance Notice */}
       <div className="p-3.5 rounded-xl bg-tc-surface-soft border border-[#C8D9F9] text-xs text-tc-ink space-y-1">
         <div className="font-bold flex items-center gap-2 text-tc-primary">
-          <IconTradeVerified size={20} className="text-tc-primary shrink-0" />
-          <span>Verified Commercial Quote Baseline</span>
+          <ShieldCheck className="w-4 h-4 text-tc-primary shrink-0" />
+          <span>UK Trade &amp; DIY Standards Assured</span>
         </div>
         <p className="text-[11px] text-tc-text-secondary leading-snug">
-          Quotation record from Status International (UK) Ltd. Shipped from West Yorkshire distribution facility under standard trade terms.
+          Direct dispatch from UK distribution facility. Transparent pack counts, genuine specifications, and standard 30-day returns.
         </p>
       </div>
     </div>

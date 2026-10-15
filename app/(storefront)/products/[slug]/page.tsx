@@ -211,7 +211,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
         <div className="border-b border-tc-border pb-4">
           <div className="flex items-center gap-2 text-xs font-bold text-tc-primary uppercase tracking-wider mb-1 font-mono">
             <IconCaliper size={20} className="text-tc-primary" />
-            <span>AUTHENTICATED CATALOG DATA</span>
+            <span>SPECIFICATIONS &amp; DIMENSIONS</span>
           </div>
           <h2 className="font-heading font-extrabold text-xl sm:text-2xl text-tc-ink">
             Technical Specification Sheet

@@ -28,7 +28,7 @@ export function Microbar() {
               Free UK delivery over £50 ex. VAT
             </span>
             <span className="hidden lg:inline text-tc-border-strong">•</span>
-            <span className="hidden lg:inline">24h Supplier Stock Freshness TTL</span>
+            <span className="hidden lg:inline">Direct UK Distribution</span>
           </div>
 
           {/* Right: VAT Mode Switcher & Quick Navigation */}

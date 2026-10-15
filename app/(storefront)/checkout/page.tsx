@@ -303,7 +303,7 @@ export default function CheckoutPage() {
                   <span>Test Card: 4242 •••• •••• 4242 (Stripe Test Elements)</span>
                 </div>
                 <p className="text-tc-text-secondary text-[11px] leading-relaxed">
-                  In compliance with launch governance rules (`docs/07_LAUNCH_GATES_AND_GOVERNANCE.md`), checkout operates under test authorization. Real credit cards are never charged.
+                  Checkout operates under test sandbox authorization. Real credit cards are never charged.
                 </p>
               </div>
 

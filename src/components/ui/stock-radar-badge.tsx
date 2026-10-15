@@ -40,9 +40,7 @@ export function StockRadarBadge({
   let badgeTone = 'success';
 
   if (isAvailable) {
-    labelText = stockQuantity && stockQuantity > 0
-      ? `${stockQuantity} in stock • Stock verified < 24h • Confirmed in stock`
-      : 'Stock verified < 24h • Confirmed in stock';
+    labelText = 'Stock verified < 24h • Confirmed in stock';
     badgeTone = 'success';
   } else if (isPending) {
     labelText = 'Stock quote > 24h • Confirming';
@@ -64,12 +62,6 @@ export function StockRadarBadge({
     muted: 'bg-[#98A2B3]',
   }[badgeTone];
 
-  const ringClasses = {
-    success: 'border-tc-success/50',
-    warning: 'border-tc-warning/50',
-    muted: 'border-transparent',
-  }[badgeTone];
-
   return (
     <div className="relative inline-block">
       <div
@@ -79,55 +71,18 @@ export function StockRadarBadge({
         onMouseLeave={() => showDetailsPopover && setIsPopoverOpen(false)}
         onClick={() => showDetailsPopover && setIsPopoverOpen((prev) => !prev)}
         className={cn(
-          'inline-flex items-center gap-2 rounded-full border shadow-2xs font-semibold select-none max-w-full',
+          'inline-flex items-center gap-1.5 rounded-full border shadow-2xs font-semibold select-none max-w-full',
           'transition-all duration-150',
-          size === 'sm' ? 'px-2.5 py-0.5 text-[11px]' : 'px-3 py-1 text-xs',
+          size === 'sm' ? 'px-2 py-0.5 text-[11px]' : 'px-2.5 py-1 text-xs',
           toneClasses,
           showDetailsPopover ? 'cursor-pointer hover:shadow-xs' : 'cursor-default',
           className
         )}
       >
-        {/* Telemetry Radar Beacon with Harmonic Multi-Ring Waves */}
-        <span className="relative flex h-3 w-3 items-center justify-center shrink-0">
-          {/* Animated Harmonic Outer Ring 1 */}
-          {isAvailable && (
-            <span
-              className={cn(
-                'absolute inline-flex h-full w-full rounded-full border animate-ping opacity-75 motion-reduce:hidden',
-                ringClasses
-              )}
-              style={{ animationDuration: '2.4s' }}
-            />
-          )}
-
-          {/* Animated Harmonic Outer Ring 2 (delayed) */}
-          {isAvailable && (
-            <span
-              className={cn(
-                'absolute inline-flex h-full w-full rounded-full border animate-ping opacity-40 motion-reduce:hidden',
-                ringClasses
-              )}
-              style={{ animationDuration: '2.4s', animationDelay: '1.2s' }}
-            />
-          )}
-
-          {/* Slower pulse for quote review */}
-          {isPending && (
-            <span
-              className={cn(
-                'absolute inline-flex h-full w-full rounded-full border animate-pulse opacity-60 motion-reduce:hidden',
-                ringClasses
-              )}
-              style={{ animationDuration: '3.6s' }}
-            />
-          )}
-
-          {/* Core Radar Beacon Dot */}
-          <span className={cn('relative inline-flex h-2 w-2 rounded-full', dotClasses)} />
+        {/* Status Indicator Dot */}
+        <span className="relative flex h-2 w-2 items-center justify-center shrink-0">
+          <span className={cn('relative inline-flex h-1.5 w-1.5 rounded-full', dotClasses)} />
         </span>
-
-        {/* Radar Icon for higher clarity at optical size 16 */}
-        <IconStockRadar size={16} className="shrink-0 opacity-80" aria-hidden={true} />
 
         {/* Status Text */}
         <span className="tabular-nums font-medium tracking-tight truncate max-w-[140px] sm:max-w-none">{labelText}</span>

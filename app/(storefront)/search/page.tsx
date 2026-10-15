@@ -128,7 +128,7 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
                   href="/search"
                   className="inline-flex items-center px-4 py-2 rounded-lg bg-tc-primary text-white text-xs font-semibold hover:bg-tc-primary-hover"
                 >
-                  View all 115 products
+                  View all products
                 </Link>
               </div>
             </div>

@@ -193,17 +193,17 @@ describe('Brand V3 Micro-Interactions Suite', () => {
     it('renders stock verified radar ring for in_stock products', () => {
       render(<StockRadarBadge status="in_stock" stockQuantity={25} />);
       expect(screen.getByRole('status')).toBeInTheDocument();
-      expect(screen.getByText(/Stock verified < 24h/i)).toBeInTheDocument();
+      expect(screen.getByText(/Confirmed in stock/i)).toBeInTheDocument();
     });
 
     it('renders warning status for quote awaiting confirmation', () => {
       render(<StockRadarBadge status="subject_to_confirmation" />);
-      expect(screen.getByText(/Stock quote > 24h • Confirming/i)).toBeInTheDocument();
+      expect(screen.getByText(/Confirming availability/i)).toBeInTheDocument();
     });
 
     it('renders muted status when unavailable', () => {
       render(<StockRadarBadge status="unavailable" />);
-      expect(screen.getByText(/Subject to supplier confirmation/i)).toBeInTheDocument();
+      expect(screen.getByText(/Check availability/i)).toBeInTheDocument();
     });
 
     it('displays telemetry details popover on click when showDetailsPopover is true', () => {

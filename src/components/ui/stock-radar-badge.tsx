@@ -36,17 +36,17 @@ export function StockRadarBadge({
   const isPending = status === 'subject_to_confirmation';
 
   // Label configuration based on status
-  let labelText = 'Stock verified < 24h';
+  let labelText = 'Confirmed in stock';
   let badgeTone = 'success';
 
   if (isAvailable) {
-    labelText = 'Stock verified < 24h • Confirmed in stock';
+    labelText = 'Confirmed in stock';
     badgeTone = 'success';
   } else if (isPending) {
-    labelText = 'Stock quote > 24h • Confirming';
+    labelText = 'Confirming availability';
     badgeTone = 'warning';
   } else {
-    labelText = 'Subject to supplier confirmation';
+    labelText = 'Check availability';
     badgeTone = 'muted';
   }
 

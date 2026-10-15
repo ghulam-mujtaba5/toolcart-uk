@@ -551,7 +551,7 @@ describe('Adversarial Suite: Mobile-Responsive Drawers & Touch Target Ergonomics
       render(<ChronologicalAssemblyAnimation />);
 
       // Play/Pause button meets 44x44px touch target
-      const playPauseBtn = screen.getByRole('button', { name: /Pause animation|Play animation/i });
+      const playPauseBtn = screen.getByRole('button', { name: /Pause walkthrough|Play walkthrough/i });
       expect(playPauseBtn.className).toContain('min-w-[44px]');
       expect(playPauseBtn.className).toContain('min-h-[44px]');
 
@@ -561,8 +561,10 @@ describe('Adversarial Suite: Mobile-Responsive Drawers & Touch Target Ergonomics
       expect(restartBtn.className).toContain('min-h-[44px]');
 
       // Step scrubber progress buttons meet min-h-[36px] touch target
-      const step1Btn = screen.getByRole('button', { name: /Jump to assembly stage 1/i });
-      expect(step1Btn.className).toContain('min-h-[36px]');
+      // Two buttons match "Jump to assembly step 1" — pick the numeric scrubber (min-w-[36px])
+      const step1Btns = screen.getAllByRole('button', { name: /Jump to assembly step 1/i });
+      const step1Btn = step1Btns.find((btn) => btn.className.includes('min-w-[36px]'));
+      expect(step1Btn?.className).toContain('min-h-[36px]');
 
       // Scene selector buttons meet 44px on mobile
       const electricalKitBtn = screen.getByRole('button', { name: /Electrical Kit/i });

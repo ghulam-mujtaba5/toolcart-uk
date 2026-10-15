@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { X, Sparkles, MessageSquare } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { ChatbotRobot3DLazy } from '@/components/ui/3d';
 
 interface AiAgentFloatingWidgetProps {
   onOpen: () => void;
@@ -36,7 +37,7 @@ export function AiAgentFloatingWidget({ onOpen, isOpen }: AiAgentFloatingWidgetP
   return (
     <aside
       aria-label="AI Project Finder support agent"
-      className="fixed bottom-5 right-5 sm:bottom-6 sm:right-6 z-40 flex items-center gap-3 select-none"
+      className="fixed bottom-[calc(5.25rem+env(safe-area-inset-bottom))] right-4 sm:bottom-6 sm:right-6 z-40 flex items-center gap-3 select-none"
     >
       {/* Interactive Tooltip Callout */}
       {showTooltip && (
@@ -92,12 +93,11 @@ export function AiAgentFloatingWidget({ onOpen, isOpen }: AiAgentFloatingWidgetP
           'focus:outline-hidden focus:ring-3 focus:ring-tc-action-lime focus:ring-offset-2 focus:ring-offset-tc-canvas'
         )}
       >
-        {/* 3D Futuristic Robot Avatar Icon Container */}
-        <div className="relative w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-tc-ink/70 border border-white/20 p-1 flex items-center justify-center overflow-hidden shrink-0">
-          <img
-            src="/images/3d/icons/icon-ai-robot.webp"
-            alt="ToolCart 3D AI Assistant Robot"
-            className="w-full h-full object-contain drop-shadow-md group-hover:scale-115 transition-transform duration-300"
+        {/* 3D Futuristic Robot WebGL Canvas Container */}
+        <div className="relative w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-tc-ink/80 border border-white/20 p-0.5 flex items-center justify-center overflow-visible shrink-0 shadow-inner">
+          <ChatbotRobot3DLazy
+            size={46}
+            className="w-full h-full drop-shadow-md group-hover:scale-110 transition-transform duration-300"
           />
           {/* Active Status Pulse Ring */}
           <span

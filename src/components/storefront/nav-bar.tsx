@@ -35,7 +35,7 @@ export function NavBar() {
                 <Link
                   href={link.href}
                   className={cn(
-                    'flex items-center gap-2 px-3 py-1.5 rounded-md transition-all text-white hover:text-white hover:bg-tc-primary-hover group',
+                    'flex items-center gap-2 px-3 py-2 min-h-[44px] rounded-md transition-all text-white hover:text-white hover:bg-tc-primary-hover group',
                     isActive && 'bg-tc-primary-hover text-white font-bold ring-1 ring-white/30'
                   )}
                 >

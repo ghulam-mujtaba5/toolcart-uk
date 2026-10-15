@@ -23,6 +23,7 @@ import {
   Package,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { ChatbotRobot3DLazy } from '@/components/ui/3d';
 import { Button } from '@/components/ui/button';
 import { PublicProductDTO } from '@/types/product';
 import { IconToolbox, IconStockRadar, IconTradeVerified } from '@/components/ui/trade-icons';
@@ -77,6 +78,22 @@ export function Header({ onOpenAiAssistant }: HeaderProps) {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
+  // Escape key and scroll lock for mobile menu
+  useEffect(() => {
+    if (!isMobileMenuOpen) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setIsMobileMenuOpen(false);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    document.body.style.overflow = 'hidden';
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+      document.body.style.overflow = '';
+    };
+  }, [isMobileMenuOpen]);
+
   const handleSearchSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!query.trim()) return;
@@ -93,7 +110,7 @@ export function Header({ onOpenAiAssistant }: HeaderProps) {
             type="button"
             onClick={() => setIsMobileMenuOpen(true)}
             aria-label="Open mobile navigation menu"
-            className="md:hidden p-2 rounded-lg text-tc-ink hover:bg-tc-canvas transition-colors"
+            className="md:hidden min-w-[44px] min-h-[44px] p-2 rounded-lg text-tc-ink hover:bg-tc-canvas transition-colors flex items-center justify-center"
           >
             <Menu className="w-6 h-6" />
           </button>
@@ -229,12 +246,9 @@ export function Header({ onOpenAiAssistant }: HeaderProps) {
                 className="hidden md:inline-flex items-center gap-2 border-[#C8D9F9] bg-white hover:bg-tc-surface-soft text-tc-ink hover:text-tc-primary hover:border-tc-primary transition-all shadow-xs group px-3 h-10"
                 aria-label="Open AI Project Finder assistant"
               >
-                <img
-                  src="/images/3d/icons/icon-ai-robot.webp"
-                  alt=""
-                  aria-hidden="true"
-                  className="w-5 h-5 object-contain drop-shadow-xs group-hover:scale-110 transition-transform"
-                />
+                <div className="w-6 h-6 shrink-0 relative flex items-center justify-center">
+                  <ChatbotRobot3DLazy size={24} className="w-full h-full drop-shadow-xs" />
+                </div>
                 <span className="font-semibold text-xs text-tc-ink group-hover:text-tc-primary">
                   AI Project Finder
                 </span>
@@ -248,7 +262,7 @@ export function Header({ onOpenAiAssistant }: HeaderProps) {
             <Link
               href="/account"
               aria-label="Customer Account & Orders"
-              className="p-1.5 sm:px-3 sm:py-2 rounded-lg text-tc-ink hover:bg-tc-canvas hover:text-tc-primary transition-colors flex items-center gap-2 group"
+              className="min-w-[44px] min-h-[44px] p-1.5 sm:px-3 sm:py-2 rounded-lg text-tc-ink hover:bg-tc-canvas hover:text-tc-primary transition-colors flex items-center justify-center gap-2 group"
             >
               <div className="w-8 h-8 rounded-lg bg-tc-canvas border border-tc-border flex items-center justify-center text-tc-ink group-hover:text-tc-primary group-hover:border-tc-primary/40 group-hover:bg-tc-surface-soft transition-all shadow-2xs">
                 <User className="w-4.5 h-4.5 stroke-[2.25] group-hover:scale-110 transition-transform" />
@@ -263,7 +277,7 @@ export function Header({ onOpenAiAssistant }: HeaderProps) {
               type="button"
               onClick={openCart}
               aria-label={`Open Basket, ${summary.total_items_count} items`}
-              className="relative p-1.5 sm:px-3.5 sm:py-2 rounded-lg bg-tc-ink text-white hover:bg-tc-graphite transition-all flex items-center gap-2.5 shadow-xs group active:scale-95"
+              className="relative min-w-[44px] min-h-[44px] p-1.5 sm:px-3.5 sm:py-2 rounded-lg bg-tc-ink text-white hover:bg-tc-graphite transition-all flex items-center justify-center gap-2.5 shadow-xs group active:scale-95"
             >
               <div className="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center text-white group-hover:bg-white/20 transition-all">
                 <ShoppingCart className="w-4.5 h-4.5 stroke-[2.25] text-white group-hover:scale-110 transition-transform" />
@@ -271,7 +285,7 @@ export function Header({ onOpenAiAssistant }: HeaderProps) {
               <span className="hidden sm:inline text-xs font-bold tracking-tight">Basket</span>
 
               {summary.total_items_count > 0 && (
-                <span className="absolute -top-1.5 -right-1.5 sm:static sm:top-auto sm:right-auto inline-flex items-center justify-center min-w-[20px] h-5 px-1.5 rounded-full bg-tc-action-lime text-tc-ink text-xs font-extrabold border border-tc-ink tabular-nums shadow-xs animate-in zoom-in-75 duration-200">
+                <span className="absolute -top-1.5 -right-1.5 sm:static sm:top-auto sm:top-auto sm:right-auto inline-flex items-center justify-center min-w-[20px] h-5 px-1.5 rounded-full bg-tc-action-lime text-tc-ink text-xs font-extrabold border border-tc-ink tabular-nums shadow-xs animate-in zoom-in-75 duration-200">
                   {summary.total_items_count}
                 </span>
               )}
@@ -281,18 +295,18 @@ export function Header({ onOpenAiAssistant }: HeaderProps) {
 
         {/* Mobile Search Input Row */}
         <div className="md:hidden pb-3">
-          <form onSubmit={handleSearchSubmit} className="relative">
+          <form onSubmit={handleSearchSubmit} className="relative flex items-center">
             <input
               type="text"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder="Search 115 trade tools & hardware..."
-              className="w-full h-10 pl-9 pr-16 bg-tc-canvas border border-tc-border-strong rounded-lg text-xs text-tc-ink placeholder:text-tc-text-secondary focus:outline-none focus:ring-2 focus:ring-tc-primary"
+              className="w-full h-11 min-h-[44px] pl-10 pr-20 bg-tc-canvas border border-tc-border-strong rounded-lg text-xs text-tc-ink placeholder:text-tc-text-secondary focus:outline-none focus:ring-2 focus:ring-tc-primary"
             />
-            <Search className="w-4 h-4 text-tc-text-secondary absolute left-3 top-3 pointer-events-none" />
+            <Search className="w-4 h-4 text-tc-text-secondary absolute left-3.5 top-3.5 pointer-events-none stroke-[2.25]" />
             <button
               type="submit"
-              className="absolute right-1 top-1 h-8 px-2.5 rounded bg-tc-primary text-white text-[11px] font-semibold"
+              className="absolute right-1 top-1 h-9 min-h-[36px] min-w-[54px] px-3 rounded-md bg-tc-primary text-white text-xs font-semibold hover:bg-tc-primary-hover flex items-center justify-center"
             >
               Search
             </button>
@@ -308,7 +322,12 @@ export function Header({ onOpenAiAssistant }: HeaderProps) {
             onClick={() => setIsMobileMenuOpen(false)}
           />
 
-          <div className="relative ml-auto w-full max-w-xs bg-white h-full shadow-2xl flex flex-col p-5 overflow-y-auto">
+          <div
+            role="dialog"
+            aria-modal="true"
+            aria-label="Mobile navigation menu"
+            className="relative ml-auto w-full max-w-xs bg-white h-full shadow-2xl flex flex-col p-5 overflow-y-auto pb-[calc(1.5rem+env(safe-area-inset-bottom))]"
+          >
             <div className="flex items-center justify-between pb-4 border-b border-tc-border">
               <div className="flex items-center gap-2">
                 <div className="w-7 h-7 rounded bg-tc-action-lime border border-tc-ink flex items-center justify-center">
@@ -320,7 +339,7 @@ export function Header({ onOpenAiAssistant }: HeaderProps) {
                 type="button"
                 onClick={() => setIsMobileMenuOpen(false)}
                 aria-label="Close menu"
-                className="p-1 rounded-md text-tc-text-secondary hover:text-tc-ink"
+                className="min-w-[44px] min-h-[44px] flex items-center justify-center rounded-md text-tc-text-secondary hover:text-tc-ink"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -390,11 +409,10 @@ export function Header({ onOpenAiAssistant }: HeaderProps) {
 
             {onOpenAiAssistant && (
               <div className="mt-4 p-3.5 rounded-xl bg-tc-surface-soft border border-[#C8D9F9] flex items-center gap-3">
-                <div className="w-12 h-12 rounded-xl bg-white border border-[#C8D9F9] p-1 shrink-0 flex items-center justify-center shadow-xs">
-                  <img
-                    src="/images/3d/icons/icon-ai-robot.webp"
-                    alt="AI Project Finder Mascot"
-                    className="w-full h-full object-contain"
+                <div className="w-12 h-12 rounded-xl bg-white border border-[#C8D9F9] p-0.5 shrink-0 flex items-center justify-center shadow-xs overflow-visible">
+                  <ChatbotRobot3DLazy
+                    size={48}
+                    className="w-full h-full drop-shadow-md"
                   />
                 </div>
                 <div className="flex-1 min-w-0">

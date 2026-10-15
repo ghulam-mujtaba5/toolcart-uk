@@ -175,7 +175,7 @@ export default function CheckoutPage() {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="tradesperson@company.co.uk"
-                    className="w-full h-10 px-3 rounded-lg border border-tc-border-strong text-xs text-tc-ink focus:outline-none focus:ring-2 focus:ring-tc-primary"
+                    className="w-full h-11 min-h-[44px] px-3.5 rounded-lg border border-tc-border-strong text-base sm:text-xs text-tc-ink focus:outline-none focus:ring-2 focus:ring-tc-primary"
                   />
                 </div>
 
@@ -187,7 +187,7 @@ export default function CheckoutPage() {
                     value={fullName}
                     onChange={(e) => setFullName(e.target.value)}
                     placeholder="Jane Doe"
-                    className="w-full h-10 px-3 rounded-lg border border-tc-border-strong text-xs text-tc-ink focus:outline-none focus:ring-2 focus:ring-tc-primary"
+                    className="w-full h-11 min-h-[44px] px-3.5 rounded-lg border border-tc-border-strong text-base sm:text-xs text-tc-ink focus:outline-none focus:ring-2 focus:ring-tc-primary"
                   />
                 </div>
 
@@ -198,7 +198,7 @@ export default function CheckoutPage() {
                     value={companyName}
                     onChange={(e) => setCompanyName(e.target.value)}
                     placeholder="Acme Electrical Ltd"
-                    className="w-full h-10 px-3 rounded-lg border border-tc-border text-xs text-tc-ink focus:outline-none focus:ring-2 focus:ring-tc-primary"
+                    className="w-full h-11 min-h-[44px] px-3.5 rounded-lg border border-tc-border text-base sm:text-xs text-tc-ink focus:outline-none focus:ring-2 focus:ring-tc-primary"
                   />
                 </div>
 
@@ -210,7 +210,7 @@ export default function CheckoutPage() {
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
                     placeholder="07700 900077"
-                    className="w-full h-10 px-3 rounded-lg border border-tc-border-strong text-xs text-tc-ink focus:outline-none focus:ring-2 focus:ring-tc-primary"
+                    className="w-full h-11 min-h-[44px] px-3.5 rounded-lg border border-tc-border-strong text-base sm:text-xs text-tc-ink focus:outline-none focus:ring-2 focus:ring-tc-primary"
                   />
                 </div>
               </div>
@@ -232,7 +232,7 @@ export default function CheckoutPage() {
                     value={addressLine1}
                     onChange={(e) => setAddressLine1(e.target.value)}
                     placeholder="12 Commercial Way, Unit 4"
-                    className="w-full h-10 px-3 rounded-lg border border-tc-border-strong text-xs text-tc-ink focus:outline-none focus:ring-2 focus:ring-tc-primary"
+                    className="w-full h-11 min-h-[44px] px-3.5 rounded-lg border border-tc-border-strong text-base sm:text-xs text-tc-ink focus:outline-none focus:ring-2 focus:ring-tc-primary"
                   />
                 </div>
 
@@ -243,7 +243,7 @@ export default function CheckoutPage() {
                     value={addressLine2}
                     onChange={(e) => setAddressLine2(e.target.value)}
                     placeholder="Industrial Estate"
-                    className="w-full h-10 px-3 rounded-lg border border-tc-border text-xs text-tc-ink focus:outline-none focus:ring-2 focus:ring-tc-primary"
+                    className="w-full h-11 min-h-[44px] px-3.5 rounded-lg border border-tc-border text-base sm:text-xs text-tc-ink focus:outline-none focus:ring-2 focus:ring-tc-primary"
                   />
                 </div>
 
@@ -256,7 +256,7 @@ export default function CheckoutPage() {
                       value={city}
                       onChange={(e) => setCity(e.target.value)}
                       placeholder="Leeds"
-                      className="w-full h-10 px-3 rounded-lg border border-tc-border-strong text-xs text-tc-ink focus:outline-none focus:ring-2 focus:ring-tc-primary"
+                      className="w-full h-11 min-h-[44px] px-3.5 rounded-lg border border-tc-border-strong text-base sm:text-xs text-tc-ink focus:outline-none focus:ring-2 focus:ring-tc-primary"
                     />
                   </div>
 
@@ -272,7 +272,7 @@ export default function CheckoutPage() {
                       }}
                       onBlur={handlePostcodeBlur}
                       placeholder="LS1 4DY"
-                      className="w-full h-10 px-3 rounded-lg border border-tc-border-strong uppercase text-xs font-mono font-bold text-tc-ink focus:outline-none focus:ring-2 focus:ring-tc-primary"
+                      className="w-full h-11 min-h-[44px] px-3.5 rounded-lg border border-tc-border-strong uppercase text-base sm:text-xs font-mono font-bold text-tc-ink focus:outline-none focus:ring-2 focus:ring-tc-primary"
                     />
                     {postcodeError && (
                       <p className="text-[11px] text-tc-error mt-1 flex items-center gap-1 font-semibold">
@@ -312,7 +312,7 @@ export default function CheckoutPage() {
                 variant="accent"
                 size="lg"
                 disabled={isSubmitting}
-                className="w-full text-sm font-bold flex items-center justify-center gap-2"
+                className="w-full min-h-[48px] text-sm sm:text-base font-bold flex items-center justify-center gap-2"
               >
                 {isSubmitting ? (
                   <span>Authorizing Supplier Order...</span>

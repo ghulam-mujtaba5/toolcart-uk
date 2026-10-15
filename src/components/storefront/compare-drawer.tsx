@@ -32,7 +32,11 @@ export function CompareDrawer() {
       }
     };
     window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
+    document.body.style.overflow = 'hidden';
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+      document.body.style.overflow = '';
+    };
   }, [isOpen, closeCompare]);
 
   if (products.length === 0) return null;
@@ -46,13 +50,13 @@ export function CompareDrawer() {
     <>
       {/* Docked Floating Bottom Bar (visible when closed or minimized) */}
       {!isOpen && (
-        <div className="fixed bottom-4 left-1/2 -translate-x-1/2 z-40 bg-tc-ink text-white px-4 py-2.5 rounded-full shadow-2xl border-2 border-tc-action-lime flex items-center gap-3 sm:gap-4 animate-in slide-in-from-bottom-4">
+        <div className="fixed bottom-[calc(1rem+env(safe-area-inset-bottom))] left-1/2 -translate-x-1/2 z-40 bg-tc-ink text-white px-4 py-2 rounded-full shadow-2xl border-2 border-tc-action-lime flex items-center gap-2 sm:gap-4 animate-in slide-in-from-bottom-4 max-w-[calc(100vw-2rem)]">
           <div className="flex items-center gap-2">
-            <span className="w-6 h-6 rounded-full bg-tc-action-lime text-tc-ink font-bold text-xs flex items-center justify-center">
+            <span className="w-6 h-6 rounded-full bg-tc-action-lime text-tc-ink font-bold text-xs flex items-center justify-center shrink-0">
               {products.length}
             </span>
-            <span className="text-xs sm:text-sm font-semibold">
-              Comparing {products.length} {products.length === 1 ? 'product' : 'products'}
+            <span className="text-xs sm:text-sm font-semibold truncate">
+              Comparing {products.length} {products.length === 1 ? 'item' : 'items'}
             </span>
           </div>
 
@@ -68,12 +72,12 @@ export function CompareDrawer() {
             ))}
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1 sm:gap-2">
             <Button
               variant="accent"
               size="sm"
               onClick={openCompare}
-              className="text-xs h-7 px-3"
+              className="text-xs min-h-[44px] sm:min-h-[36px] px-3.5"
             >
               <span>View Specs</span>
               <ChevronUp className="w-3.5 h-3.5 ml-1" />
@@ -81,7 +85,7 @@ export function CompareDrawer() {
             <button
               type="button"
               onClick={clearCompare}
-              className="p-1 rounded text-white/70 hover:text-white transition-colors"
+              className="min-w-[44px] min-h-[44px] flex items-center justify-center rounded-full text-white/70 hover:text-white transition-colors"
               title="Clear comparison list"
               aria-label="Clear all compared products"
             >
@@ -135,7 +139,7 @@ export function CompareDrawer() {
                 <button
                   type="button"
                   onClick={clearCompare}
-                  className="text-xs text-white/70 hover:text-white underline mr-2"
+                  className="text-xs text-white/70 hover:text-white underline min-h-[44px] flex items-center px-2 mr-1"
                 >
                   Clear All
                 </button>
@@ -143,7 +147,7 @@ export function CompareDrawer() {
                 <button
                   type="button"
                   onClick={closeCompare}
-                  className="p-1.5 rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors"
+                  className="min-w-[44px] min-h-[44px] flex items-center justify-center rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors"
                   aria-label="Close comparison drawer"
                 >
                   <X className="w-5 h-5" />
@@ -152,7 +156,7 @@ export function CompareDrawer() {
             </div>
 
             {/* Comparison Matrix Table */}
-            <div className="overflow-x-auto overflow-y-auto p-6 max-h-[calc(88vh-72px)]">
+            <div className="overflow-x-auto overflow-y-auto p-4 sm:p-6 max-h-[calc(88vh-72px)] pb-[calc(1.5rem+env(safe-area-inset-bottom))]">
               <table className="w-full border-collapse text-left text-sm">
                 <thead>
                   <tr className="border-b border-tc-border">
@@ -173,10 +177,11 @@ export function CompareDrawer() {
                             <button
                               type="button"
                               onClick={() => removeProduct(p.id)}
-                              className="text-tc-text-secondary hover:text-tc-error p-0.5"
+                              className="min-w-[44px] min-h-[44px] flex items-center justify-center text-tc-text-secondary hover:text-tc-error p-1"
                               title="Remove from compare"
+                              aria-label={`Remove ${p.title} from compare`}
                             >
-                              <X className="w-3.5 h-3.5" />
+                              <X className="w-4 h-4" />
                             </button>
                           </div>
 

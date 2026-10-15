@@ -169,26 +169,26 @@ export default function BasketPage() {
                         </div>
 
                           {/* Controls & Line Total */}
-                          <div className="flex items-center justify-between sm:justify-end gap-6">
-                            <div className="flex items-center border border-tc-border rounded-lg bg-tc-canvas h-9">
+                          <div className="flex items-center justify-between sm:justify-end gap-4 sm:gap-6">
+                            <div className="flex items-center border border-tc-border rounded-lg bg-tc-canvas h-11 min-h-[44px]">
                               <button
                                 type="button"
                                 onClick={() => updateQuantity(item.product_id, item.quantity - 1)}
-                                className="px-2.5 text-tc-text-secondary hover:text-tc-ink h-full"
-                                aria-label="Decrease quantity"
+                                className="w-11 h-11 min-w-[44px] min-h-[44px] flex items-center justify-center text-tc-text-secondary hover:text-tc-ink transition-colors"
+                                aria-label={`Decrease quantity of ${item.title}`}
                               >
-                                <Minus className="w-3.5 h-3.5" />
+                                <Minus className="w-4 h-4" />
                               </button>
-                              <span className="px-2 text-xs font-bold text-tc-ink tabular-nums">
+                              <span className="px-2 text-xs font-bold text-tc-ink tabular-nums min-w-[24px] text-center">
                                 {item.quantity}
                               </span>
                               <button
                                 type="button"
                                 onClick={() => updateQuantity(item.product_id, item.quantity + 1)}
-                                className="px-2.5 text-tc-text-secondary hover:text-tc-ink h-full"
-                                aria-label="Increase quantity"
+                                className="w-11 h-11 min-w-[44px] min-h-[44px] flex items-center justify-center text-tc-text-secondary hover:text-tc-ink transition-colors"
+                                aria-label={`Increase quantity of ${item.title}`}
                               >
-                                <Plus className="w-3.5 h-3.5" />
+                                <Plus className="w-4 h-4" />
                               </button>
                             </div>
 
@@ -204,7 +204,8 @@ export default function BasketPage() {
                             <button
                               type="button"
                               onClick={() => removeItem(item.product_id)}
-                              className="text-tc-text-secondary hover:text-tc-error p-1"
+                              className="w-11 h-11 min-w-[44px] min-h-[44px] flex items-center justify-center rounded-lg hover:bg-red-50 text-tc-text-secondary hover:text-tc-error transition-colors"
+                              aria-label={`Remove ${item.title} from basket`}
                               title="Remove item"
                             >
                               <Trash2 className="w-4 h-4" />

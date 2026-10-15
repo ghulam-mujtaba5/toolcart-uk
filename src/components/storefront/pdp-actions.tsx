@@ -96,7 +96,7 @@ export function PdpActions({ product }: PdpActionsProps) {
             type="button"
             onClick={() => setIsCaseOrder(false)}
             className={cn(
-              'p-2.5 rounded-lg border text-left transition-all flex items-start gap-2',
+              'p-2.5 min-h-[44px] rounded-lg border text-left transition-all flex items-start gap-2',
               !isCaseOrder
                 ? 'border-tc-primary bg-tc-surface-soft font-bold text-tc-primary shadow-xs'
                 : 'border-tc-border hover:border-tc-ink text-tc-ink'
@@ -115,7 +115,7 @@ export function PdpActions({ product }: PdpActionsProps) {
             type="button"
             onClick={() => setIsCaseOrder(true)}
             className={cn(
-              'p-2.5 rounded-lg border text-left transition-all flex items-start gap-2',
+              'p-2.5 min-h-[44px] rounded-lg border text-left transition-all flex items-start gap-2',
               isCaseOrder
                 ? 'border-tc-primary bg-tc-surface-soft font-bold text-tc-primary shadow-xs'
                 : 'border-tc-border hover:border-tc-ink text-tc-ink'
@@ -143,7 +143,7 @@ export function PdpActions({ product }: PdpActionsProps) {
           <button
             type="button"
             onClick={() => setQuantity((q) => Math.max(1, q - 1))}
-            className="px-3 text-tc-text-secondary hover:text-tc-ink h-full transition-colors"
+            className="min-w-[44px] h-full flex items-center justify-center text-tc-text-secondary hover:text-tc-ink transition-colors"
             aria-label="Decrease quantity"
           >
             <Minus className="w-4 h-4" />
@@ -154,7 +154,7 @@ export function PdpActions({ product }: PdpActionsProps) {
           <button
             type="button"
             onClick={() => setQuantity((q) => q + 1)}
-            className="px-3 text-tc-text-secondary hover:text-tc-ink h-full transition-colors"
+            className="min-w-[44px] h-full flex items-center justify-center text-tc-text-secondary hover:text-tc-ink transition-colors"
             aria-label="Increase quantity"
           >
             <Plus className="w-4 h-4" />
@@ -207,7 +207,7 @@ export function PdpActions({ product }: PdpActionsProps) {
           type="button"
           onClick={handleCompareToggle}
           className={cn(
-            'w-full py-2.5 px-4 rounded-lg text-xs font-bold border transition-colors flex items-center justify-center gap-2',
+            'w-full min-h-[44px] py-2.5 px-4 rounded-lg text-xs font-bold border transition-colors flex items-center justify-center gap-2',
             isCompared
               ? 'bg-tc-primary text-white border-tc-primary'
               : 'bg-white text-tc-ink border-tc-border hover:border-tc-ink'
@@ -236,6 +236,51 @@ export function PdpActions({ product }: PdpActionsProps) {
         <p className="text-[11px] text-tc-text-secondary leading-snug">
           Direct dispatch from UK distribution facility. Transparent pack counts, genuine specifications, and standard 30-day returns.
         </p>
+      </div>
+
+      {/* Sticky Mobile Buy Bar (Visible on mobile/tablet viewports < lg) */}
+      <div
+        data-testid="pdp-sticky-buy-bar"
+        className="fixed bottom-0 inset-x-0 z-30 bg-white/95 backdrop-blur-md border-t border-tc-border px-4 py-3 shadow-[0_-4px_16px_rgba(24,35,54,0.10)] pb-[calc(0.75rem+env(safe-area-inset-bottom))] lg:hidden flex items-center justify-between gap-3 animate-in slide-in-from-bottom duration-200"
+      >
+        <div className="flex-1 min-w-0">
+          <div className="text-[10px] uppercase font-bold text-tc-text-secondary truncate">
+            {isCaseOrder ? `Case of ${product.units_per_case}` : `Pack of ${product.units_per_pack}`}
+          </div>
+          <div className="font-heading font-extrabold text-base text-tc-ink tabular-nums leading-tight">
+            {totalPrice.primaryText}
+          </div>
+          <div className="text-[10px] text-tc-text-secondary tabular-nums truncate">
+            {totalPrice.secondaryText}
+          </div>
+        </div>
+
+        <button
+          type="button"
+          onClick={handleAdd}
+          aria-live="polite"
+          aria-label={isSnapped ? `Quick order placed: ${product.title}` : `Quick Order: ${product.title}`}
+          className={cn(
+            'relative shrink-0 flex items-center justify-center gap-2 h-11 px-5 rounded-button text-xs font-bold',
+            'transition-all duration-200 select-none outline-none focus-visible:ring-2 focus-visible:ring-tc-primary',
+            'active:scale-[0.94] active:translate-y-[2px]',
+            isSnapped
+              ? 'bg-tc-action-lime text-tc-ink border-2 border-tc-ink font-extrabold shadow-sm'
+              : 'bg-tc-primary text-white hover:bg-tc-primary-hover shadow-xs'
+          )}
+        >
+          {isSnapped ? (
+            <>
+              <IconTradeVerified size={16} className="text-tc-ink" />
+              <span>Added!</span>
+            </>
+          ) : (
+            <>
+              <ShoppingCart className="w-4 h-4 text-white" />
+              <span>Quick Order</span>
+            </>
+          )}
+        </button>
       </div>
     </div>
   );

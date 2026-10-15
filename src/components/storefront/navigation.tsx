@@ -27,6 +27,21 @@ export function Navigation({ className }: NavigationProps) {
   const [mobileOpen, setMobileOpen] = useState(false);
   const pathname = usePathname();
 
+  React.useEffect(() => {
+    if (!mobileOpen) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setMobileOpen(false);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    document.body.style.overflow = 'hidden';
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+      document.body.style.overflow = '';
+    };
+  }, [mobileOpen]);
+
   return (
     <div className={cn('relative', className)}>
       <div className="flex items-center justify-between md:hidden p-3 bg-tc-primary text-white">
@@ -40,7 +55,7 @@ export function Navigation({ className }: NavigationProps) {
           type="button"
           onClick={() => setMobileOpen(true)}
           aria-label="Open mobile navigation menu"
-          className="p-1 rounded text-white hover:bg-tc-primary-hover"
+          className="min-w-[44px] min-h-[44px] flex items-center justify-center p-2 rounded text-white hover:bg-tc-primary-hover"
         >
           <Menu className="w-5 h-5" />
         </button>
@@ -55,7 +70,12 @@ export function Navigation({ className }: NavigationProps) {
             onClick={() => setMobileOpen(false)}
             aria-hidden="true"
           />
-          <div className="relative ml-auto w-full max-w-xs bg-white h-full shadow-2xl flex flex-col p-5 overflow-y-auto">
+          <div
+            role="dialog"
+            aria-modal="true"
+            aria-label="Mobile navigation menu"
+            className="relative ml-auto w-full max-w-xs bg-white h-full shadow-2xl flex flex-col p-5 overflow-y-auto pb-[calc(1.5rem+env(safe-area-inset-bottom))]"
+          >
             <div className="flex items-center justify-between pb-4 border-b border-tc-border">
               <div className="flex items-center gap-2">
                 <div className="w-7 h-7 rounded bg-tc-action-lime text-tc-ink border border-tc-ink flex items-center justify-center">
@@ -67,7 +87,7 @@ export function Navigation({ className }: NavigationProps) {
                 type="button"
                 onClick={() => setMobileOpen(false)}
                 aria-label="Close menu"
-                className="p-1 rounded-md text-tc-text-secondary hover:text-tc-ink"
+                className="min-w-[44px] min-h-[44px] flex items-center justify-center rounded-md text-tc-text-secondary hover:text-tc-ink"
               >
                 <X className="w-5 h-5" />
               </button>

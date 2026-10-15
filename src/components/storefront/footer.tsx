@@ -9,7 +9,7 @@ export function Footer() {
     <footer className="bg-tc-ink text-white border-t border-tc-graphite pt-14 pb-10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Value Proposition Strip */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 pb-12 mb-12 border-b border-white/10">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 pb-12 mb-12 border-b border-white/10">
           <div className="flex items-start gap-3 group">
             <div className="w-12 h-12 rounded-xl bg-white/10 border border-white/20 p-1.5 shrink-0 flex items-center justify-center shadow-xs group-hover:scale-105 transition-transform">
               <img

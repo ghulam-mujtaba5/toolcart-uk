@@ -23,7 +23,11 @@ export function MiniBasket() {
       }
     };
     window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
+    document.body.style.overflow = 'hidden';
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+      document.body.style.overflow = '';
+    };
   }, [isOpen, closeCart]);
 
   if (!isOpen) return null;
@@ -56,12 +60,12 @@ export function MiniBasket() {
             </span>
           </div>
 
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2">
             {items.length > 0 && (
               <button
                 type="button"
                 onClick={clearCart}
-                className="text-xs text-tc-text-secondary hover:text-tc-error underline"
+                className="min-h-[44px] px-2 flex items-center text-xs text-tc-text-secondary hover:text-tc-error underline"
               >
                 Clear
               </button>
@@ -69,7 +73,7 @@ export function MiniBasket() {
             <button
               type="button"
               onClick={closeCart}
-              className="p-1 rounded-md text-tc-text-secondary hover:text-tc-ink transition-colors"
+              className="min-w-[44px] min-h-[44px] flex items-center justify-center rounded-md text-tc-text-secondary hover:text-tc-ink transition-colors"
               aria-label="Close basket drawer"
             >
               <X className="w-5 h-5" />
@@ -81,11 +85,11 @@ export function MiniBasket() {
         <div className="flex-1 overflow-y-auto p-4 sm:p-5 space-y-6">
           {items.length === 0 ? (
             <div className="h-full flex flex-col items-center justify-center text-center p-6 space-y-4">
-              <div className="w-40 h-32 mx-auto flex items-center justify-center">
+              <div className="w-48 h-36 mx-auto flex items-center justify-center">
                 <img
                   src="/images/states/empty-cart.webp"
                   alt="Empty Tool Basket"
-                  className="w-full h-full object-contain"
+                  className="w-full h-full object-contain drop-shadow-[0_12px_24px_rgba(24,35,54,0.12)] hover:scale-105 transition-transform duration-300"
                 />
               </div>
               <div>
@@ -177,23 +181,24 @@ export function MiniBasket() {
                             <button
                               type="button"
                               onClick={() => removeItem(item.product_id)}
-                              className="text-tc-text-secondary hover:text-tc-error p-1"
+                              className="min-w-[44px] min-h-[44px] flex items-center justify-center text-tc-text-secondary hover:text-tc-error"
                               title="Remove item"
+                              aria-label={`Remove ${item.title} from basket`}
                             >
-                              <Trash2 className="w-3.5 h-3.5" />
+                              <Trash2 className="w-4 h-4" />
                             </button>
                           </div>
 
                           {/* Quantity & Price Controls */}
                           <div className="flex items-center justify-between pt-1">
-                            <div className="flex items-center border border-tc-border rounded-md bg-tc-canvas">
+                            <div className="flex items-center border border-tc-border rounded-md bg-tc-canvas h-11">
                               <button
                                 type="button"
                                 onClick={() => updateQuantity(item.product_id, item.quantity - 1)}
-                                className="p-1.5 text-tc-text-secondary hover:text-tc-ink transition-colors"
+                                className="min-w-[44px] h-full flex items-center justify-center text-tc-text-secondary hover:text-tc-ink transition-colors"
                                 aria-label="Decrease quantity"
                               >
-                                <Minus className="w-3 h-3" />
+                                <Minus className="w-3.5 h-3.5" />
                               </button>
                               <span className="px-2.5 text-xs font-bold text-tc-ink tabular-nums">
                                 {item.quantity}
@@ -201,10 +206,10 @@ export function MiniBasket() {
                               <button
                                 type="button"
                                 onClick={() => updateQuantity(item.product_id, item.quantity + 1)}
-                                className="p-1.5 text-tc-text-secondary hover:text-tc-ink transition-colors"
+                                className="min-w-[44px] h-full flex items-center justify-center text-tc-text-secondary hover:text-tc-ink transition-colors"
                                 aria-label="Increase quantity"
                               >
-                                <Plus className="w-3 h-3" />
+                                <Plus className="w-3.5 h-3.5" />
                               </button>
                             </div>
 
@@ -241,7 +246,7 @@ export function MiniBasket() {
 
         {/* Drawer Footer: Taxes & Actions */}
         {items.length > 0 && (
-          <div className="p-4 sm:p-5 border-t border-tc-border bg-white space-y-3 shrink-0">
+          <div className="p-4 sm:p-5 border-t border-tc-border bg-white space-y-3 shrink-0 pb-[calc(1.25rem+env(safe-area-inset-bottom))]">
             <div className="space-y-1.5 text-xs">
               <div className="flex justify-between text-tc-text-secondary">
                 <span>Net Subtotal (ex. VAT)</span>

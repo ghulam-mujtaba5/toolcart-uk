@@ -17,6 +17,7 @@ import { cn } from '@/lib/utils';
 import { PublicProductDTO } from '@/types/product';
 import { IconToolbox } from '@/components/ui/trade-icons';
 import { AiScannerPulse } from '@/components/motion';
+import { ChatbotRobot3DLazy } from '@/components/ui/3d';
 
 interface Message {
   role: 'user' | 'assistant';
@@ -59,7 +60,11 @@ export function AIAssistantDrawer({ isOpen, onClose }: AIAssistantDrawerProps) {
       }
     };
     window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
+    document.body.style.overflow = 'hidden';
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+      document.body.style.overflow = '';
+    };
   }, [isOpen, onClose]);
 
   if (!isOpen) return null;
@@ -132,11 +137,10 @@ export function AIAssistantDrawer({ isOpen, onClose }: AIAssistantDrawerProps) {
         {/* Header: Cobalt accent, Brand V3 */}
         <div className="p-4 sm:p-5 bg-white border-b border-[#C8D9F9] flex items-center justify-between shrink-0">
           <div className="flex items-center gap-3">
-            <div className="w-11 h-11 rounded-xl bg-tc-surface-soft border border-[#C8D9F9] p-1 flex items-center justify-center shadow-xs shrink-0 overflow-hidden group">
-              <img
-                src="/images/3d/ai/assistant-robot-avatar.webp"
-                alt="ToolCart AI Project Finder 3D Robot Mascot"
-                className="w-full h-full object-contain drop-shadow-xs group-hover:scale-110 transition-transform"
+            <div className="w-11 h-11 rounded-xl bg-tc-surface-soft border border-[#C8D9F9] p-0.5 flex items-center justify-center shadow-xs shrink-0 overflow-visible group">
+              <ChatbotRobot3DLazy
+                size={40}
+                className="w-full h-full drop-shadow-xs group-hover:scale-110 transition-transform"
               />
             </div>
             <div>
@@ -155,7 +159,7 @@ export function AIAssistantDrawer({ isOpen, onClose }: AIAssistantDrawerProps) {
           <button
             type="button"
             onClick={onClose}
-            className="p-1 rounded-md text-tc-text-secondary hover:text-tc-ink transition-colors"
+            className="min-w-[44px] min-h-[44px] flex items-center justify-center rounded-md text-tc-text-secondary hover:text-tc-ink transition-colors"
             aria-label="Close AI assistant"
           >
             <X className="w-5 h-5" />
@@ -266,11 +270,10 @@ export function AIAssistantDrawer({ isOpen, onClose }: AIAssistantDrawerProps) {
                   Ask about verified fixings, British Standards, or pack counts.
                 </p>
               </div>
-              <div className="w-14 h-14 shrink-0 relative">
-                <img
-                  src="/images/3d/icons/icon-ai-robot.webp"
-                  alt="ToolCart AI 3D Mascot"
-                  className="w-full h-full object-contain drop-shadow-xs hover:scale-105 transition-transform"
+              <div className="w-16 h-16 shrink-0 relative flex items-center justify-center">
+                <ChatbotRobot3DLazy
+                  size={62}
+                  className="w-full h-full drop-shadow-md hover:scale-105 transition-transform"
                 />
               </div>
             </div>
@@ -293,7 +296,7 @@ export function AIAssistantDrawer({ isOpen, onClose }: AIAssistantDrawerProps) {
         )}
 
         {/* Input Bar */}
-        <div className="p-4 bg-white border-t border-[#C8D9F9] shrink-0">
+        <div className="p-4 bg-white border-t border-[#C8D9F9] shrink-0 pb-[calc(1.25rem+env(safe-area-inset-bottom))]">
           <form
             onSubmit={(e) => {
               e.preventDefault();
@@ -306,14 +309,15 @@ export function AIAssistantDrawer({ isOpen, onClose }: AIAssistantDrawerProps) {
               value={input}
               onChange={(e) => setInput(e.target.value)}
               placeholder="Ask about screws, tape adhesion, ladder safety..."
-              className="flex-1 h-10 px-3 bg-tc-canvas border border-tc-border-strong rounded-lg text-xs text-tc-ink placeholder:text-tc-text-secondary focus:outline-none focus:ring-2 focus:ring-tc-primary"
+              className="flex-1 h-11 min-h-[44px] px-3.5 bg-tc-canvas border border-tc-border-strong rounded-lg text-xs text-tc-ink placeholder:text-tc-text-secondary focus:outline-none focus:ring-2 focus:ring-tc-primary"
             />
             <Button
               type="submit"
               variant="primary"
               size="sm"
               disabled={loading || !input.trim()}
-              className="h-10 px-4"
+              className="min-h-[44px] min-w-[44px] px-4 flex items-center justify-center"
+              aria-label="Send message to AI assistant"
             >
               <Send className="w-4 h-4" />
             </Button>

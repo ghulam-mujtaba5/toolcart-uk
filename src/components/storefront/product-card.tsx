@@ -109,7 +109,7 @@ export function ProductCard({ product, className }: ProductCardProps) {
             onClick={handleCompareToggle}
             aria-label={isCompared ? `Remove ${product.title} from compare` : `Add ${product.title} to compare`}
             className={cn(
-              'absolute top-2.5 right-2.5 z-10 px-2 py-1 rounded-md text-[11px] font-bold border transition-colors flex items-center gap-1 shadow-2xs',
+              'absolute top-2.5 right-2.5 z-10 min-h-[36px] px-2.5 py-1.5 rounded-md text-[11px] font-bold border transition-colors flex items-center gap-1 shadow-2xs',
               isCompared
                 ? 'bg-tc-primary text-white border-tc-primary'
                 : 'bg-white text-tc-ink border-tc-border hover:border-tc-ink'
@@ -205,7 +205,7 @@ export function ProductCard({ product, className }: ProductCardProps) {
           aria-live="polite"
           aria-label={isSnapped ? `Added to ToolCart: ${product.title}` : `Add to Basket: ${product.title}`}
           className={cn(
-            'relative w-full flex items-center justify-center gap-2 h-10 px-4 rounded-button text-xs sm:text-sm font-bold',
+            'relative w-full flex items-center justify-center gap-2 h-11 min-h-[44px] px-4 rounded-button text-xs sm:text-sm font-bold',
             'transition-all duration-200 select-none outline-none focus-visible:ring-2 focus-visible:ring-tc-primary',
             'active:scale-[0.94] active:translate-y-[2px] active:shadow-[inset_0_2px_4px_rgba(24,35,54,0.25)]',
             isSnapped

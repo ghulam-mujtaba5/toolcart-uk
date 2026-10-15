@@ -8,7 +8,6 @@ import { Footer } from './footer';
 import { CompareDrawer } from './compare-drawer';
 import { MiniBasket } from './mini-basket';
 import { AIAssistantDrawer } from './ai-assistant-drawer';
-import { AiAgentFloatingWidget } from './ai-agent-widget';
 
 export function StorefrontLayoutClient({ children }: { children: React.ReactNode }) {
   const [isAiOpen, setIsAiOpen] = useState(false);
@@ -21,7 +20,6 @@ export function StorefrontLayoutClient({ children }: { children: React.ReactNode
       <main className="flex-1">{children}</main>
       <CompareDrawer />
       <MiniBasket />
-      <AiAgentFloatingWidget onOpen={() => setIsAiOpen(true)} isOpen={isAiOpen} />
       <AIAssistantDrawer isOpen={isAiOpen} onClose={() => setIsAiOpen(false)} />
       <Footer />
     </div>

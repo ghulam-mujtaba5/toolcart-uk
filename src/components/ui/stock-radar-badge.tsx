@@ -66,7 +66,7 @@ export function StockRadarBadge({
     <div className="relative inline-block">
       <div
         role="status"
-        aria-label={`Stock telemetry: ${labelText}`}
+        aria-label={`Stock status: ${labelText}`}
         onMouseEnter={() => showDetailsPopover && setIsPopoverOpen(true)}
         onMouseLeave={() => showDetailsPopover && setIsPopoverOpen(false)}
         onClick={() => showDetailsPopover && setIsPopoverOpen((prev) => !prev)}

@@ -2,71 +2,12 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { ShoppingCart, ShieldCheck, CheckCircle2, Lock } from 'lucide-react';
+import { ShieldCheck, CheckCircle2, Lock } from 'lucide-react';
 
 export function Footer() {
   return (
     <footer className="bg-tc-ink text-white border-t border-tc-graphite pt-14 pb-10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Value Proposition Strip */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 pb-12 mb-12 border-b border-white/10">
-          <div className="flex items-start gap-3 group">
-            <div className="w-12 h-12 rounded-xl bg-white/10 border border-white/20 p-1.5 shrink-0 flex items-center justify-center shadow-xs group-hover:scale-105 transition-transform">
-              <img
-                src="/images/3d/icons/icon-specs.webp"
-                alt="Clear specifications"
-                className="w-full h-full object-contain drop-shadow-sm"
-              />
-            </div>
-            <div>
-              <p className="font-heading font-bold text-xs text-white group-hover:text-tc-action-lime transition-colors">Clear Specifications</p>
-              <p className="text-[11px] text-[#DFE8F6] mt-0.5">EAN-13 GTIN, MPN &amp; certified ratings</p>
-            </div>
-          </div>
-
-          <div className="flex items-start gap-3 group">
-            <div className="w-12 h-12 rounded-xl bg-white/10 border border-white/20 p-1.5 shrink-0 flex items-center justify-center shadow-xs group-hover:scale-105 transition-transform">
-              <img
-                src="/images/3d/icons/icon-trade-diy.webp"
-                alt="Trade & DIY"
-                className="w-full h-full object-contain drop-shadow-sm"
-              />
-            </div>
-            <div>
-              <p className="font-heading font-bold text-xs text-white group-hover:text-tc-action-lime transition-colors">Trade &amp; DIY Pricing</p>
-              <p className="text-[11px] text-[#DFE8F6] mt-0.5">Instant toggle between Inc. &amp; Ex. VAT</p>
-            </div>
-          </div>
-
-          <div className="flex items-start gap-3 group">
-            <div className="w-12 h-12 rounded-xl bg-white/10 border border-white/20 p-1.5 shrink-0 flex items-center justify-center shadow-xs group-hover:scale-105 transition-transform">
-              <img
-                src="/images/3d/icons/icon-project-guidance.webp"
-                alt="Project guidance"
-                className="w-full h-full object-contain drop-shadow-sm"
-              />
-            </div>
-            <div>
-              <p className="font-heading font-bold text-xs text-white group-hover:text-tc-action-lime transition-colors">Project Guidance</p>
-              <p className="text-[11px] text-[#DFE8F6] mt-0.5">UK buying guides &amp; curated project kits</p>
-            </div>
-          </div>
-
-          <div className="flex items-start gap-3 group">
-            <div className="w-12 h-12 rounded-xl bg-white/10 border border-white/20 p-1.5 shrink-0 flex items-center justify-center shadow-xs group-hover:scale-105 transition-transform">
-              <img
-                src="/images/3d/icons/icon-pack-options.webp"
-                alt="Product options"
-                className="w-full h-full object-contain drop-shadow-sm"
-              />
-            </div>
-            <div>
-              <p className="font-heading font-bold text-xs text-white group-hover:text-tc-action-lime transition-colors">Transparent Packaging</p>
-              <p className="text-[11px] text-[#DFE8F6] mt-0.5">Clear unit vs carton quantities</p>
-            </div>
-          </div>
-        </div>
-
         {/* 5-Column Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 pb-12 border-b border-white/10 text-sm">
           {/* Column 1: Brand & Identity */}
@@ -235,6 +176,8 @@ export function Footer() {
             <p>© 2026 ToolCart UK Ltd. All rights reserved.</p>
             <span className="hidden sm:inline text-white/30">•</span>
             <p>Direct trade distribution for UK tradespeople and DIYers.</p>
+            <span className="hidden sm:inline text-white/30">•</span>
+            <p className="text-white/70 italic">ToolCart UK is a provisional demonstration platform. Staging and prototype only.</p>
           </div>
           <div className="flex items-center gap-4 text-xs text-[#DFE8F6]">
             <span>Prices shown in Inc. &amp; Ex. VAT</span>

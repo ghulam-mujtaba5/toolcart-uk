@@ -6,9 +6,7 @@ import { PublicProductDTO } from '@/types/product';
 import { useVAT } from '@/context/vat-context';
 import { useCart } from '@/context/cart-context';
 import { useCompare } from '@/context/compare-context';
-import { Button } from '@/components/ui/button';
 import { StockRadarBadge } from '@/components/ui/stock-radar-badge';
-import { CopyBadge } from '@/components/ui/copy-badge';
 import {
   IconToolbox,
   IconCaliper,
@@ -17,7 +15,7 @@ import {
   IconBolt,
   IconTapeMeasure,
 } from '@/components/ui/trade-icons';
-import { ShoppingCart, Check, Plus } from 'lucide-react';
+import { ShoppingCart, Check } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 interface ProductCardProps {
@@ -69,9 +67,12 @@ export function ProductCard({ product, className }: ProductCardProps) {
     }
   };
 
+  const isOutOfStock = (product.stock_quantity ?? 0) <= 0 || product.availability_status === 'out_of_stock';
+
   const handleAddCart = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
+    if (isOutOfStock) return;
     addItem(product, 1);
 
     setIsSnapped(true);
@@ -126,7 +127,7 @@ export function ProductCard({ product, className }: ProductCardProps) {
           {/* Real Product Photography with Brand V3 Fallback */}
           <Link
             href={`/products/${product.slug}`}
-            className="w-full h-full flex flex-col items-center justify-center group-hover:scale-105 transition-transform p-2 pb-8"
+            className="w-full h-full flex flex-col items-center justify-center group-hover:scale-105 transition-transform p-2"
           >
             <div className="relative w-full h-36 sm:h-40 flex items-center justify-center">
               {product.images && product.images[0] ? (
@@ -144,21 +145,18 @@ export function ProductCard({ product, className }: ProductCardProps) {
               )}
             </div>
           </Link>
-
-          {/* 1-Click SKU Copy Badge */}
-          <div className="absolute bottom-2 z-10">
-            <CopyBadge value={product.supplier_sku} size="xs" label="SKU" />
-          </div>
         </div>
 
         {/* Content Box */}
         <div className="p-4 sm:p-5">
-          <div className="flex items-center gap-2 mb-1.5">
+          <div className="flex items-center gap-2 mb-1.5 text-xs text-tc-text-secondary">
             <span className="text-[11px] font-bold uppercase tracking-wider text-tc-primary">
               {product.brand}
             </span>
             <span className="text-tc-border-strong">•</span>
-            <span className="text-xs text-tc-text-secondary truncate">{product.category}</span>
+            <span className="font-mono text-[11px] text-tc-text-secondary">{product.supplier_sku}</span>
+            <span className="text-tc-border-strong">•</span>
+            <span className="truncate">{product.category}</span>
           </div>
 
           <Link href={`/products/${product.slug}`} className="block">
@@ -202,15 +200,25 @@ export function ProductCard({ product, className }: ProductCardProps) {
         <button
           type="button"
           onClick={handleAddCart}
+          disabled={isOutOfStock || isSnapped}
           aria-live="polite"
-          aria-label={isSnapped ? `Added to ToolCart: ${product.title}` : `Add to Basket: ${product.title}`}
+          aria-label={
+            isOutOfStock
+              ? `Out of Stock: ${product.title}`
+              : isSnapped
+              ? `Added to ToolCart: ${product.title}`
+              : `Add to Basket: ${product.title}`
+          }
           className={cn(
             'relative w-full flex items-center justify-center gap-2 h-11 min-h-[44px] px-4 rounded-button text-xs sm:text-sm font-bold',
             'transition-all duration-200 select-none outline-none focus-visible:ring-2 focus-visible:ring-tc-primary',
-            'active:scale-[0.94] active:translate-y-[2px] active:shadow-[inset_0_2px_4px_rgba(24,35,54,0.25)]',
-            isSnapped
-              ? 'bg-tc-action-lime text-tc-ink border-2 border-tc-ink font-extrabold shadow-sm'
-              : 'bg-tc-primary text-white hover:bg-tc-primary-hover shadow-xs'
+            isOutOfStock
+              ? 'bg-tc-surface-soft text-tc-text-secondary cursor-not-allowed border border-tc-border'
+              : 'active:scale-[0.94] active:translate-y-[2px] active:shadow-[inset_0_2px_4px_rgba(24,35,54,0.25)]',
+            !isOutOfStock &&
+              (isSnapped
+                ? 'bg-tc-action-lime text-tc-ink border-2 border-tc-ink font-extrabold shadow-sm'
+                : 'bg-tc-primary text-white hover:bg-tc-primary-hover shadow-xs')
           )}
           style={{
             transitionTimingFunction: 'cubic-bezier(0.34, 1.56, 0.64, 1)',
@@ -224,7 +232,9 @@ export function ProductCard({ product, className }: ProductCardProps) {
             />
           )}
 
-          {isSnapped ? (
+          {isOutOfStock ? (
+            <span>Out of Stock</span>
+          ) : isSnapped ? (
             <>
               <IconTradeVerified size={16} className="text-tc-ink" />
               <span>Added to ToolCart!</span>

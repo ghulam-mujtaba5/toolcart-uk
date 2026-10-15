@@ -2,6 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import { getAllProducts, getProjectKits, getBuyingGuides } from '@/lib/catalog';
 import { ProductCard } from '@/components/storefront/product-card';
+import { TradeSpecifierHero } from '@/components/storefront/trade-specifier-hero';
 import { Button } from '@/components/ui/button';
 import {
   Wrench,
@@ -79,77 +80,8 @@ export default async function StorefrontHomePage() {
 
   return (
     <div className="space-y-12 sm:space-y-16 pb-16">
-      {/* Clean Professional Hero Section */}
-      <section className="bg-white border-b border-tc-border pt-10 pb-12 lg:py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
-            {/* Left Column: Heading, Lead & CTAs */}
-            <div className="lg:col-span-7 space-y-6">
-              <h1 className="font-heading font-extrabold text-4xl sm:text-5xl lg:text-6xl text-tc-ink tracking-tight leading-[1.08]">
-                The right tools.{' '}
-                <span className="text-tc-primary">The right advice.</span>
-              </h1>
-
-              <p className="text-base sm:text-lg text-tc-graphite max-w-2xl leading-relaxed">
-                Trade-quality hand tools, fixings, decorating supplies, and site gear with verified specifications and clear pack quantities.
-              </p>
-
-              <div className="flex flex-wrap items-center gap-3 pt-2">
-                <Button variant="primary" size="lg" asChild>
-                  <Link href="/tools" className="flex items-center gap-2">
-                    <span>Shop tools &amp; hardware</span>
-                    <ArrowRight className="w-4 h-4" />
-                  </Link>
-                </Button>
-                <Button variant="outline" size="lg" asChild>
-                  <Link href="/projects">Curated project kits</Link>
-                </Button>
-              </div>
-
-              {/* Trust Indicators */}
-              <div className="pt-4 flex flex-wrap items-center gap-6 text-xs text-tc-text-secondary font-medium border-t border-tc-border/60">
-                <span className="flex items-center gap-2">
-                  <img
-                    src="/images/3d/trust/honest-pack-counts.webp"
-                    alt="Honest pack counts"
-                    className="w-5 h-5 object-contain drop-shadow-xs"
-                  />
-                  Honest pack counts &amp; case pricing
-                </span>
-                <span className="flex items-center gap-2">
-                  <img
-                    src="/images/3d/trust/stock-freshness-ttl.webp"
-                    alt="Stock freshness"
-                    className="w-5 h-5 object-contain drop-shadow-xs"
-                  />
-                  Live verified inventory
-                </span>
-                <span className="flex items-center gap-2">
-                  <img
-                    src="/images/3d/trust/free-freight-delivery.webp"
-                    alt="Free delivery"
-                    className="w-5 h-5 object-contain drop-shadow-xs"
-                  />
-                  Free UK delivery over £50 ex. VAT
-                </span>
-              </div>
-            </div>
-
-            {/* Right Column: Hero Visual */}
-            <div className="lg:col-span-5">
-              <div className="relative rounded-2xl overflow-hidden border border-[#C8D9F9] shadow-md group">
-                <div className="aspect-[4/3] w-full bg-tc-canvas overflow-hidden">
-                  <img
-                    src="/images/hero/hero-workbench.webp"
-                    alt="ToolCart Professional Trade Workbench"
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      {/* Bespoke Industrial Trade Specifier Hero */}
+      <TradeSpecifierHero />
 
       {/* 6 Primary Category Grid */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -187,9 +119,6 @@ export default async function StorefrontHomePage() {
                       alt={cat.name}
                       className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-500 drop-shadow-sm"
                     />
-                    <div className="absolute top-3 left-3 w-11 h-11 rounded-xl bg-white/95 backdrop-blur-xs border border-tc-border-strong flex items-center justify-center text-tc-primary shadow-sm group-hover:bg-tc-primary group-hover:text-white transition-all">
-                      <Icon className="w-6 h-6 stroke-[2.25]" />
-                    </div>
                   </div>
 
                   <div className="p-5">

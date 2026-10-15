@@ -267,7 +267,7 @@ describe('Milestone 2 Storefront Test Suite', () => {
       );
 
       expect(screen.getByText(/ToolCart AI Assistant/i)).toBeInTheDocument();
-      expect(screen.getByText(/Verified catalog tools • Zero safety hallucinations/i)).toBeInTheDocument();
+      expect(screen.getByText(/Verified catalog tools • British Standards & HSE guidance/i)).toBeInTheDocument();
       expect(screen.getByPlaceholderText(/Ask about screws, tape adhesion, ladder safety/i)).toBeInTheDocument();
     });
   });

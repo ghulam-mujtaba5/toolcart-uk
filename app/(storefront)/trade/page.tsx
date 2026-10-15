@@ -155,7 +155,7 @@ export default function TradePortalPage() {
                   value={companyName}
                   onChange={(e) => setCompanyName(e.target.value)}
                   placeholder="Apex Contracting Services Ltd"
-                  className="w-full h-11 px-3 rounded-lg border border-tc-border-strong text-xs text-tc-ink focus:outline-none focus:ring-2 focus:ring-tc-primary"
+                  className="w-full h-11 min-h-[44px] px-3.5 rounded-lg border border-tc-border-strong text-base sm:text-xs text-tc-ink focus:outline-none focus:ring-2 focus:ring-tc-primary"
                 />
               </div>
 
@@ -167,7 +167,7 @@ export default function TradePortalPage() {
                   value={companiesHouseNumber}
                   onChange={(e) => setCompaniesHouseNumber(e.target.value)}
                   placeholder="08765432"
-                  className="w-full h-11 px-3 rounded-lg border border-tc-border-strong font-mono uppercase text-xs text-tc-ink focus:outline-none focus:ring-2 focus:ring-tc-primary"
+                  className="w-full h-11 min-h-[44px] px-3.5 rounded-lg border border-tc-border-strong font-mono uppercase text-base sm:text-xs text-tc-ink focus:outline-none focus:ring-2 focus:ring-tc-primary"
                 />
               </div>
 
@@ -178,7 +178,7 @@ export default function TradePortalPage() {
                   value={vatNumber}
                   onChange={(e) => setVatNumber(e.target.value)}
                   placeholder="GB 123 4567 89"
-                  className="w-full h-11 px-3 rounded-lg border border-tc-border font-mono uppercase text-xs text-tc-ink focus:outline-none focus:ring-2 focus:ring-tc-primary"
+                  className="w-full h-11 min-h-[44px] px-3.5 rounded-lg border border-tc-border font-mono uppercase text-base sm:text-xs text-tc-ink focus:outline-none focus:ring-2 focus:ring-tc-primary"
                 />
               </div>
 
@@ -187,7 +187,7 @@ export default function TradePortalPage() {
                 <select
                   value={tradeSector}
                   onChange={(e) => setTradeSector(e.target.value)}
-                  className="w-full h-11 px-3 rounded-lg border border-tc-border bg-white text-xs text-tc-ink focus:outline-none focus:ring-2 focus:ring-tc-primary font-semibold"
+                  className="w-full h-11 min-h-[44px] px-3.5 rounded-lg border border-tc-border bg-white text-base sm:text-xs text-tc-ink focus:outline-none focus:ring-2 focus:ring-tc-primary font-semibold"
                 >
                   <option value="Electrical">Electrical Installation &amp; Maintenance</option>
                   <option value="Plumbing">Plumbing &amp; Heating</option>
@@ -206,7 +206,7 @@ export default function TradePortalPage() {
                   value={contactName}
                   onChange={(e) => setContactName(e.target.value)}
                   placeholder="Alex Wright (Director)"
-                  className="w-full h-11 px-3 rounded-lg border border-tc-border-strong text-xs text-tc-ink focus:outline-none focus:ring-2 focus:ring-tc-primary"
+                  className="w-full h-11 min-h-[44px] px-3.5 rounded-lg border border-tc-border-strong text-base sm:text-xs text-tc-ink focus:outline-none focus:ring-2 focus:ring-tc-primary"
                 />
               </div>
 
@@ -218,12 +218,12 @@ export default function TradePortalPage() {
                   value={contactEmail}
                   onChange={(e) => setContactEmail(e.target.value)}
                   placeholder="accounts@apexcontracting.co.uk"
-                  className="w-full h-11 px-3 rounded-lg border border-tc-border-strong text-xs text-tc-ink focus:outline-none focus:ring-2 focus:ring-tc-primary"
+                  className="w-full h-11 min-h-[44px] px-3.5 rounded-lg border border-tc-border-strong text-base sm:text-xs text-tc-ink focus:outline-none focus:ring-2 focus:ring-tc-primary"
                 />
               </div>
             </div>
 
-            <div className="pt-4 border-t border-tc-border flex items-center justify-between">
+            <div className="pt-4 border-t border-tc-border flex flex-col sm:flex-row sm:items-center justify-between gap-4">
               <span className="text-xs text-tc-text-secondary">
                 Applications reviewed within 1 business day.
               </span>
@@ -232,7 +232,7 @@ export default function TradePortalPage() {
                 type="submit"
                 variant="accent"
                 size="lg"
-                className="font-bold flex items-center gap-2 text-sm"
+                className="font-bold flex items-center justify-center gap-2 text-sm w-full sm:w-auto"
               >
                 <span>Submit Trade Application</span>
                 <ArrowRight className="w-4 h-4" />

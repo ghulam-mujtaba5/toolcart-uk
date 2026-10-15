@@ -126,7 +126,7 @@ export function CompareDrawer() {
                   type="button"
                   onClick={toggleHighlightDifferences}
                   className={cn(
-                    'text-xs font-semibold px-2.5 py-1 rounded-md border flex items-center gap-1.5 transition-colors',
+                    'text-xs font-semibold min-h-[44px] sm:min-h-[36px] px-3 py-1.5 rounded-md border flex items-center gap-1.5 transition-colors',
                     highlightDifferences
                       ? 'bg-tc-primary text-white border-tc-primary'
                       : 'bg-white/10 text-white/90 border-white/20 hover:bg-white/20'

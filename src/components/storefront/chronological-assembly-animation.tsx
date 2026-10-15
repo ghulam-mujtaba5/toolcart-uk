@@ -162,7 +162,7 @@ export function ChronologicalAssemblyAnimation() {
           <button
             type="button"
             onClick={() => handleSceneChange('electrical-kit')}
-            className={`px-3 py-1.5 rounded-md text-xs font-semibold transition-all flex items-center gap-1.5 ${
+            className={`min-h-[44px] sm:min-h-[36px] px-3.5 py-1.5 rounded-md text-xs font-semibold transition-all flex items-center gap-1.5 ${
               activeSceneId === 'electrical-kit'
                 ? 'bg-tc-primary text-white shadow-xs'
                 : 'text-tc-text-secondary hover:text-tc-ink'
@@ -174,7 +174,7 @@ export function ChronologicalAssemblyAnimation() {
           <button
             type="button"
             onClick={() => handleSceneChange('masonry-bolt')}
-            className={`px-3 py-1.5 rounded-md text-xs font-semibold transition-all flex items-center gap-1.5 ${
+            className={`min-h-[44px] sm:min-h-[36px] px-3.5 py-1.5 rounded-md text-xs font-semibold transition-all flex items-center gap-1.5 ${
               activeSceneId === 'masonry-bolt'
                 ? 'bg-tc-primary text-white shadow-xs'
                 : 'text-tc-text-secondary hover:text-tc-ink'
@@ -293,8 +293,9 @@ export function ChronologicalAssemblyAnimation() {
               <button
                 type="button"
                 onClick={() => setIsPlaying(!isPlaying)}
-                className="w-9 h-9 rounded-lg bg-tc-primary hover:bg-tc-primary-hover text-white flex items-center justify-center transition-all shadow-xs"
+                className="w-11 h-11 min-w-[44px] min-h-[44px] rounded-lg bg-tc-primary hover:bg-tc-primary-hover text-white flex items-center justify-center transition-all shadow-xs"
                 title={isPlaying ? 'Pause animation' : 'Play animation'}
+                aria-label={isPlaying ? 'Pause animation' : 'Play animation'}
               >
                 {isPlaying ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4 ml-0.5" />}
               </button>
@@ -305,15 +306,16 @@ export function ChronologicalAssemblyAnimation() {
                   setCurrentStepIdx(0);
                   setIsPlaying(true);
                 }}
-                className="w-9 h-9 rounded-lg border border-tc-border hover:bg-tc-surface-soft text-tc-ink flex items-center justify-center transition-all"
+                className="w-11 h-11 min-w-[44px] min-h-[44px] rounded-lg border border-tc-border hover:bg-tc-surface-soft text-tc-ink flex items-center justify-center transition-all"
                 title="Restart assembly sequence"
+                aria-label="Restart assembly sequence"
               >
                 <RotateCcw className="w-4 h-4" />
               </button>
             </div>
 
             {/* Direct Step Jump Buttons */}
-            <div className="flex items-center gap-1">
+            <div className="flex items-center gap-1.5">
               {scene.steps.map((_, idx) => (
                 <button
                   key={idx}
@@ -322,10 +324,11 @@ export function ChronologicalAssemblyAnimation() {
                     setCurrentStepIdx(idx);
                     setIsPlaying(false);
                   }}
-                  className={`w-7 h-7 rounded-md font-mono text-xs font-bold transition-all ${
+                  aria-label={`Jump to assembly step ${idx + 1}`}
+                  className={`min-w-[36px] min-h-[44px] sm:min-h-[36px] px-2 rounded-md font-mono text-xs font-bold transition-all flex items-center justify-center ${
                     idx === currentStepIdx
-                      ? 'bg-tc-ink text-white'
-                      : 'text-tc-text-secondary hover:text-tc-ink hover:bg-tc-surface-soft'
+                      ? 'bg-tc-ink text-white shadow-xs'
+                      : 'text-tc-text-secondary hover:text-tc-ink hover:bg-tc-surface-soft border border-tc-border/60'
                   }`}
                 >
                   {idx + 1}

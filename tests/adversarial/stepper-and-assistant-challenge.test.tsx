@@ -99,7 +99,7 @@ describe('Adversarial Challenge: AI Assistant Drawer Safety & Styling', () => {
     // Verify Title and Subtitle
     expect(screen.getByText('ToolCart AI Assistant')).toBeInTheDocument();
     expect(
-      screen.getByText('Verified catalog tools • Zero safety hallucinations')
+      screen.getByText(/Verified catalog tools • British Standards & HSE guidance/i)
     ).toBeInTheDocument();
 
     // Verify starter safety questions

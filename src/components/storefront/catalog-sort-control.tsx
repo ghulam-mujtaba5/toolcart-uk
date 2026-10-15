@@ -29,7 +29,7 @@ export function CatalogSortControl({ currentSort }: CatalogSortControlProps) {
         name="sort"
         value={currentSort}
         onChange={(e) => handleSortChange(e.target.value)}
-        className="h-9 px-3 rounded-lg border border-tc-border bg-white text-xs text-tc-ink font-semibold focus:outline-none focus:ring-2 focus:ring-tc-primary cursor-pointer"
+        className="h-11 min-h-[44px] sm:h-9 sm:min-h-[36px] px-3 rounded-lg border border-tc-border bg-white text-base sm:text-xs text-tc-ink font-semibold focus:outline-none focus:ring-2 focus:ring-tc-primary cursor-pointer"
         aria-label="Sort products"
       >
         <option value="relevance">Relevance</option>

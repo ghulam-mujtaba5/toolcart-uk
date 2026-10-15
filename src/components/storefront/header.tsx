@@ -235,25 +235,22 @@ export function Header({ onOpenAiAssistant }: HeaderProps) {
             )}
           </div>
 
-          {/* Action Controls: AI Project Finder, Account, Mini-Basket */}
+          {/* Action Controls: Hardware Advice, Account, Mini-Basket */}
           <div className="flex items-center gap-2 sm:gap-3">
-            {/* AI Project Finder Trigger with 3D Robot Mascot */}
+            {/* Hardware Advice Trigger with 3D Robot */}
             {onOpenAiAssistant && (
               <Button
                 variant="outline"
                 size="sm"
                 onClick={onOpenAiAssistant}
                 className="hidden md:inline-flex items-center gap-2 border-[#C8D9F9] bg-white hover:bg-tc-surface-soft text-tc-ink hover:text-tc-primary hover:border-tc-primary transition-all shadow-xs group px-3 h-10"
-                aria-label="Open AI Project Finder assistant"
+                aria-label="Open Hardware Advice assistant"
               >
                 <div className="w-6 h-6 shrink-0 relative flex items-center justify-center">
                   <ChatbotRobot3DLazy size={24} className="w-full h-full drop-shadow-xs" />
                 </div>
                 <span className="font-semibold text-xs text-tc-ink group-hover:text-tc-primary">
-                  AI Project Finder
-                </span>
-                <span className="text-[10px] px-1.5 py-0.5 rounded bg-tc-primary/10 text-tc-primary font-bold">
-                  AI
+                  Hardware Advice
                 </span>
               </Button>
             )}
@@ -285,7 +282,7 @@ export function Header({ onOpenAiAssistant }: HeaderProps) {
               <span className="hidden sm:inline text-xs font-bold tracking-tight">Basket</span>
 
               {summary.total_items_count > 0 && (
-                <span className="absolute -top-1.5 -right-1.5 sm:static sm:top-auto sm:top-auto sm:right-auto inline-flex items-center justify-center min-w-[20px] h-5 px-1.5 rounded-full bg-tc-action-lime text-tc-ink text-xs font-extrabold border border-tc-ink tabular-nums shadow-xs animate-in zoom-in-75 duration-200">
+                <span className="absolute -top-1.5 -right-1.5 sm:static sm:top-auto sm:right-auto inline-flex items-center justify-center min-w-[20px] h-5 px-1.5 rounded-full bg-tc-action-lime text-tc-ink text-xs font-extrabold border border-tc-ink tabular-nums shadow-xs animate-in zoom-in-75 duration-200">
                   {summary.total_items_count}
                 </span>
               )}
@@ -301,12 +298,12 @@ export function Header({ onOpenAiAssistant }: HeaderProps) {
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder="Search 115 trade tools & hardware..."
-              className="w-full h-11 min-h-[44px] pl-10 pr-20 bg-tc-canvas border border-tc-border-strong rounded-lg text-xs text-tc-ink placeholder:text-tc-text-secondary focus:outline-none focus:ring-2 focus:ring-tc-primary"
+              className="w-full h-11 min-h-[44px] pl-10 pr-24 bg-tc-canvas border border-tc-border-strong rounded-lg text-base sm:text-xs text-tc-ink placeholder:text-tc-text-secondary focus:outline-none focus:ring-2 focus:ring-tc-primary"
             />
             <Search className="w-4 h-4 text-tc-text-secondary absolute left-3.5 top-3.5 pointer-events-none stroke-[2.25]" />
             <button
               type="submit"
-              className="absolute right-1 top-1 h-9 min-h-[36px] min-w-[54px] px-3 rounded-md bg-tc-primary text-white text-xs font-semibold hover:bg-tc-primary-hover flex items-center justify-center"
+              className="absolute right-0 inset-y-0 h-full min-h-[44px] min-w-[60px] px-3.5 rounded-r-lg bg-tc-primary text-white text-xs font-semibold hover:bg-tc-primary-hover flex items-center justify-center"
             >
               Search
             </button>
@@ -320,6 +317,7 @@ export function Header({ onOpenAiAssistant }: HeaderProps) {
           <div
             className="fixed inset-0 bg-black/50 backdrop-blur-xs transition-opacity"
             onClick={() => setIsMobileMenuOpen(false)}
+            aria-hidden="true"
           />
 
           <div
@@ -384,7 +382,7 @@ export function Header({ onOpenAiAssistant }: HeaderProps) {
               <Link
                 href="/projects"
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="flex items-center gap-2 py-2 px-3 rounded-lg text-sm text-tc-ink hover:bg-tc-canvas"
+                className="flex items-center gap-2 min-h-[44px] py-2 px-3 rounded-lg text-sm text-tc-ink hover:bg-tc-canvas"
               >
                 <Layers className="w-4 h-4 text-tc-primary" />
                 <span>Project Kits</span>
@@ -392,7 +390,7 @@ export function Header({ onOpenAiAssistant }: HeaderProps) {
               <Link
                 href="/guides"
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="flex items-center gap-2 py-2 px-3 rounded-lg text-sm text-tc-ink hover:bg-tc-canvas"
+                className="flex items-center gap-2 min-h-[44px] py-2 px-3 rounded-lg text-sm text-tc-ink hover:bg-tc-canvas"
               >
                 <BookOpen className="w-4 h-4 text-tc-primary" />
                 <span>UK Buying Guides</span>
@@ -400,7 +398,7 @@ export function Header({ onOpenAiAssistant }: HeaderProps) {
               <Link
                 href="/trade"
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="flex items-center gap-2 py-2 px-3 rounded-lg text-sm text-tc-ink hover:bg-tc-canvas"
+                className="flex items-center gap-2 min-h-[44px] py-2 px-3 rounded-lg text-sm text-tc-ink hover:bg-tc-canvas"
               >
                 <ShieldCheck className="w-4 h-4 text-tc-primary" />
                 <span>Trade Portal</span>
@@ -416,20 +414,20 @@ export function Header({ onOpenAiAssistant }: HeaderProps) {
                   />
                 </div>
                 <div className="flex-1 min-w-0">
-                  <p className="text-xs font-bold text-tc-primary mb-0.5">AI Project Finder</p>
+                  <p className="text-xs font-bold text-tc-primary mb-0.5">Hardware Advice</p>
                   <p className="text-[11px] text-tc-graphite mb-2">
-                    Ask about verified specs, pack quantities, and trade tooling.
+                    Need help choosing sizes, pack counts, or BS ratings?
                   </p>
                   <Button
                     variant="primary"
                     size="sm"
-                    className="w-full text-xs"
+                    className="w-full text-xs min-h-[44px]"
                     onClick={() => {
                       setIsMobileMenuOpen(false);
                       onOpenAiAssistant();
                     }}
                   >
-                    Launch Finder
+                    Get Hardware Advice
                   </Button>
                 </div>
               </div>

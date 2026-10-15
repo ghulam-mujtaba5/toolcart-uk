@@ -4,19 +4,9 @@ import React, { useState } from 'react';
 import { useCart } from '@/context/cart-context';
 import { useVAT } from '@/context/vat-context';
 import { Button } from '@/components/ui/button';
-import {
-  X,
-  Send,
-  ShieldCheck,
-  AlertTriangle,
-  ShoppingCart,
-  CheckCircle2,
-  HelpCircle,
-} from 'lucide-react';
+import { X, Send, AlertTriangle, ShoppingCart } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { PublicProductDTO } from '@/types/product';
-import { IconToolbox } from '@/components/ui/trade-icons';
-import { AiScannerPulse } from '@/components/motion';
 import { ChatbotRobot3DLazy } from '@/components/ui/3d';
 
 interface Message {
@@ -48,7 +38,7 @@ export function AIAssistantDrawer({ isOpen, onClose }: AIAssistantDrawerProps) {
     {
       role: 'assistant',
       content:
-        'Hello! I am your ToolCart UK Technical Assistant. I can help you select exact tools, verify pack sizes, check British Standard ratings, and find matching consumables from our verified 115-SKU catalog.',
+        'Hello! How can I assist with your hardware requirements today? Ask about fixing sizes, British Standards, electrical ratings, or trade consumables.',
     },
   ]);
 
@@ -144,14 +134,11 @@ export function AIAssistantDrawer({ isOpen, onClose }: AIAssistantDrawerProps) {
               />
             </div>
             <div>
-              <h2 id="ai-assistant-title" className="font-heading font-extrabold text-base text-tc-ink flex items-center gap-1.5">
+              <h2 id="ai-assistant-title" className="font-heading font-extrabold text-base text-tc-ink">
                 ToolCart AI Assistant
-                <span className="text-[10px] px-1.5 py-0.5 rounded bg-tc-primary/10 text-tc-primary font-bold">
-                  Grounded
-                </span>
               </h2>
               <p className="text-[11px] text-tc-text-secondary">
-                Verified catalog tools • Zero safety hallucinations
+                Verified catalog tools • British Standards &amp; HSE guidance
               </p>
             </div>
           </div>
@@ -229,7 +216,7 @@ export function AIAssistantDrawer({ isOpen, onClose }: AIAssistantDrawerProps) {
                           <Button
                             variant="primary"
                             size="sm"
-                            className="h-7 text-xs px-2.5 shrink-0"
+                            className="min-h-[44px] sm:min-h-[36px] text-xs px-3 shrink-0 flex items-center"
                             onClick={() => addItem(prod, 1)}
                           >
                             <ShoppingCart className="w-3 h-3 mr-1" />
@@ -245,11 +232,11 @@ export function AIAssistantDrawer({ isOpen, onClose }: AIAssistantDrawerProps) {
           ))}
 
           {loading && (
-            <div className="mr-auto p-4 rounded-2xl bg-white border border-[#C8D9F9] rounded-bl-xs text-xs text-tc-text-secondary flex items-center gap-3 shadow-xs">
-              <AiScannerPulse size={40} className="shrink-0" />
+            <div className="mr-auto p-3.5 rounded-2xl bg-white border border-[#C8D9F9] rounded-bl-xs text-xs text-tc-text-secondary flex items-center gap-3 shadow-xs">
+              <span className="w-2.5 h-2.5 rounded-full bg-tc-primary animate-ping shrink-0" />
               <div>
-                <p className="font-bold text-tc-ink">Scanning catalog specifications...</p>
-                <span className="text-[11px] text-tc-text-secondary">Filtering 115 quoted trade lines with zero safety hallucinations</span>
+                <p className="font-bold text-tc-ink text-xs">Checking technical catalog specifications...</p>
+                <span className="text-[11px] text-tc-text-secondary">Matching verified UK trade standards and pack sizes</span>
               </div>
             </div>
           )}
@@ -257,28 +244,9 @@ export function AIAssistantDrawer({ isOpen, onClose }: AIAssistantDrawerProps) {
 
         {/* Starter Prompts (if chat is fresh) */}
         {messages.length === 1 && (
-          <div className="p-4 bg-white/70 border-t border-[#C8D9F9] space-y-3 shrink-0">
-            <div className="rounded-xl overflow-hidden bg-gradient-to-r from-tc-surface-soft via-white to-tc-surface-soft border border-[#C8D9F9] p-3.5 flex items-center justify-between gap-3 shadow-xs">
-              <div className="space-y-1">
-                <span className="text-[10px] font-mono font-extrabold px-2 py-0.5 rounded-full bg-tc-primary/10 text-tc-primary uppercase tracking-wider inline-block">
-                  3D Trade AI Advisor
-                </span>
-                <p className="font-heading font-extrabold text-xs text-tc-ink">
-                  Hardware Advice &amp; Project Matching
-                </p>
-                <p className="text-[11px] text-tc-text-secondary">
-                  Ask about verified fixings, British Standards, or pack counts.
-                </p>
-              </div>
-              <div className="w-16 h-16 shrink-0 relative flex items-center justify-center">
-                <ChatbotRobot3DLazy
-                  size={62}
-                  className="w-full h-full drop-shadow-md hover:scale-105 transition-transform"
-                />
-              </div>
-            </div>
+          <div className="p-4 bg-white/70 border-t border-[#C8D9F9] space-y-2.5 shrink-0">
             <p className="text-[11px] font-bold text-tc-text-secondary uppercase tracking-wider">
-              Popular questions
+              Common Hardware Inquiries
             </p>
             <div className="flex flex-wrap gap-1.5">
               {STARTER_PROMPTS.map((prompt, i) => (
@@ -286,7 +254,10 @@ export function AIAssistantDrawer({ isOpen, onClose }: AIAssistantDrawerProps) {
                   key={i}
                   type="button"
                   onClick={() => handleSend(prompt)}
-                  className="text-left text-xs px-2.5 py-1.5 rounded-lg bg-white border border-tc-border hover:border-tc-primary hover:text-tc-primary transition-colors text-tc-ink"
+                  className={cn(
+                    "text-left text-xs min-h-[44px] sm:min-h-[36px] px-3 py-2 rounded-lg bg-white border border-tc-border hover:border-tc-primary hover:text-tc-primary transition-colors text-tc-ink flex items-center",
+                    i >= 2 && "hidden sm:flex"
+                  )}
                 >
                   {prompt}
                 </button>
@@ -309,7 +280,7 @@ export function AIAssistantDrawer({ isOpen, onClose }: AIAssistantDrawerProps) {
               value={input}
               onChange={(e) => setInput(e.target.value)}
               placeholder="Ask about screws, tape adhesion, ladder safety..."
-              className="flex-1 h-11 min-h-[44px] px-3.5 bg-tc-canvas border border-tc-border-strong rounded-lg text-xs text-tc-ink placeholder:text-tc-text-secondary focus:outline-none focus:ring-2 focus:ring-tc-primary"
+              className="flex-1 h-11 min-h-[44px] px-3.5 bg-tc-canvas border border-tc-border-strong rounded-lg text-base sm:text-xs text-tc-ink placeholder:text-tc-text-secondary focus:outline-none focus:ring-2 focus:ring-tc-primary"
             />
             <Button
               type="submit"

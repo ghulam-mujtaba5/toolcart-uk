@@ -47,7 +47,7 @@ export default function BasketPage() {
           <button
             type="button"
             onClick={clearCart}
-            className="text-xs text-tc-text-secondary hover:text-tc-error underline flex items-center gap-1"
+            className="text-xs text-tc-text-secondary hover:text-tc-error underline min-h-[44px] px-2 flex items-center gap-1.5"
           >
             <Trash2 className="w-3.5 h-3.5" />
             <span>Clear Entire Basket</span>

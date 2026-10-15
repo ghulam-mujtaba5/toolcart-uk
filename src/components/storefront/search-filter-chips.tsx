@@ -57,23 +57,23 @@ export function SearchFilterChips() {
       {activeChips.map((chip) => (
         <span
           key={chip.key}
-          className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold bg-tc-surface-soft text-tc-primary border border-[#C8D9F9]"
+          className="inline-flex items-center gap-1.5 pl-3 pr-1.5 py-1 rounded-full text-xs font-semibold bg-tc-surface-soft text-tc-primary border border-[#C8D9F9]"
         >
           <span>{chip.label}</span>
           <button
             type="button"
             onClick={() => removeChip(chip.key)}
-            className="hover:text-tc-ink transition-colors p-0.5"
+            className="hover:text-tc-ink transition-colors min-w-[28px] min-h-[28px] sm:min-w-0 sm:min-h-0 p-1 flex items-center justify-center rounded-full hover:bg-tc-canvas"
             aria-label={`Remove filter ${chip.label}`}
           >
-            <X className="w-3 h-3" />
+            <X className="w-3.5 h-3.5" />
           </button>
         </span>
       ))}
       <button
         type="button"
         onClick={clearAll}
-        className="text-xs text-tc-primary hover:underline ml-1 font-semibold"
+        className="text-xs text-tc-primary hover:underline min-h-[44px] sm:min-h-[36px] flex items-center px-2 ml-1 font-semibold"
       >
         Clear all
       </button>

@@ -187,7 +187,7 @@ export function FilterSidebar({ categories, brands, className }: FilterSidebarPr
               placeholder="0"
               value={minPrice}
               onChange={(e) => updateParam('min_price', e.target.value || null)}
-              className="w-full h-11 min-h-[44px] px-3 rounded-lg border border-tc-border-strong text-xs tabular-nums focus:outline-none focus:ring-2 focus:ring-tc-primary"
+              className="w-full h-11 min-h-[44px] px-3 rounded-lg border border-tc-border-strong text-base sm:text-xs tabular-nums focus:outline-none focus:ring-2 focus:ring-tc-primary"
             />
           </div>
           <div>
@@ -197,7 +197,7 @@ export function FilterSidebar({ categories, brands, className }: FilterSidebarPr
               placeholder="100"
               value={maxPrice}
               onChange={(e) => updateParam('max_price', e.target.value || null)}
-              className="w-full h-11 min-h-[44px] px-3 rounded-lg border border-tc-border-strong text-xs tabular-nums focus:outline-none focus:ring-2 focus:ring-tc-primary"
+              className="w-full h-11 min-h-[44px] px-3 rounded-lg border border-tc-border-strong text-base sm:text-xs tabular-nums focus:outline-none focus:ring-2 focus:ring-tc-primary"
             />
           </div>
         </div>

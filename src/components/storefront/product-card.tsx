@@ -109,7 +109,7 @@ export function ProductCard({ product, className }: ProductCardProps) {
             onClick={handleCompareToggle}
             aria-label={isCompared ? `Remove ${product.title} from compare` : `Add ${product.title} to compare`}
             className={cn(
-              'absolute top-2.5 right-2.5 z-10 min-h-[36px] px-2.5 py-1.5 rounded-md text-[11px] font-bold border transition-colors flex items-center gap-1 shadow-2xs',
+              'absolute top-2.5 right-2.5 z-10 min-h-[44px] sm:min-h-[36px] px-2.5 py-1.5 rounded-md text-[11px] font-bold border transition-colors flex items-center justify-center gap-1 shadow-2xs',
               isCompared
                 ? 'bg-tc-primary text-white border-tc-primary'
                 : 'bg-white text-tc-ink border-tc-border hover:border-tc-ink'

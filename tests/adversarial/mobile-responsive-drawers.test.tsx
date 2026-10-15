@@ -6,10 +6,16 @@ import { PdpActions } from '@/components/storefront/pdp-actions';
 import { Header } from '@/components/storefront/header';
 import { MiniBasket } from '@/components/storefront/mini-basket';
 import { Button } from '@/components/ui/button';
+import { CatalogSortControl } from '@/components/storefront/catalog-sort-control';
+import { ProductCard } from '@/components/storefront/product-card';
+import { AIAssistantDrawer } from '@/components/storefront/ai-assistant-drawer';
+import { SearchFilterChips } from '@/components/storefront/search-filter-chips';
 import { VatProvider } from '@/context/vat-context';
 import { CartProvider, useCart } from '@/context/cart-context';
 import { CompareProvider } from '@/context/compare-context';
 import { PublicProductDTO } from '@/types/product';
+
+let mockSearchParams = new URLSearchParams();
 
 vi.mock('next/navigation', () => ({
   useRouter: () => ({
@@ -17,7 +23,7 @@ vi.mock('next/navigation', () => ({
     replace: vi.fn(),
     prefetch: vi.fn(),
   }),
-  useSearchParams: () => new URLSearchParams(),
+  useSearchParams: () => mockSearchParams,
   usePathname: () => '/tools',
 }));
 
@@ -61,6 +67,7 @@ const mockProduct: PublicProductDTO = {
 describe('Adversarial Suite: Mobile-Responsive Drawers & Touch Target Ergonomics', () => {
   beforeEach(() => {
     document.body.style.overflow = '';
+    mockSearchParams = new URLSearchParams();
   });
 
   describe('Feature 1: FilterSidebar Mobile Drawer & Touch Targets', () => {
@@ -307,6 +314,136 @@ describe('Adversarial Suite: Mobile-Responsive Drawers & Touch Target Ergonomics
       );
       const btn = container.querySelector('button');
       expect(btn?.className).toContain('min-h-[44px]');
+    });
+  });
+
+  describe('Feature 6: iOS Safari Auto-Zoom Suppression & Extended Mobile Touch Targets', () => {
+    it('Header mobile search input enforces text-base sm:text-xs to prevent iOS auto-zoom, and button meets 44px minimum touch target', () => {
+      render(
+        <VatProvider>
+          <CartProvider>
+            <Header />
+          </CartProvider>
+        </VatProvider>
+      );
+
+      const searchInput = screen.getByPlaceholderText(/Search 115 trade tools & hardware.../i);
+      expect(searchInput.className).toContain('text-base');
+      expect(searchInput.className).toContain('sm:text-xs');
+      expect(searchInput.className).toContain('min-h-[44px]');
+
+      // Mobile search submit button must meet 44px height and min-w-[60px]
+      const form = searchInput.closest('form');
+      const submitBtn = form?.querySelector('button[type="submit"]');
+      expect(submitBtn?.className).toContain('min-h-[44px]');
+      expect(submitBtn?.className).toContain('min-w-[60px]');
+    });
+
+    it('CatalogSortControl select element enforces 44px touch target on mobile and text-base to prevent auto-zoom', () => {
+      render(<CatalogSortControl currentSort="relevance" />);
+
+      const select = screen.getByLabelText(/Sort products/i);
+      expect(select.className).toContain('min-h-[44px]');
+      expect(select.className).toContain('sm:min-h-[36px]');
+      expect(select.className).toContain('text-base');
+      expect(select.className).toContain('sm:text-xs');
+    });
+
+    it('ProductCard compare button enforces min-h-[44px] on mobile with sm:min-h-[36px] on desktop', () => {
+      render(
+        <VatProvider>
+          <CartProvider>
+            <CompareProvider>
+              <ProductCard product={mockProduct} />
+            </CompareProvider>
+          </CartProvider>
+        </VatProvider>
+      );
+
+      const compareBtn = screen.getByRole('button', { name: new RegExp(`Add ${mockProduct.title} to compare`, 'i') });
+      expect(compareBtn.className).toContain('min-h-[44px]');
+      expect(compareBtn.className).toContain('sm:min-h-[36px]');
+    });
+
+    it('FilterSidebar price inputs enforce text-base sm:text-xs to prevent iOS auto-zoom', () => {
+      render(
+        <FilterSidebar
+          categories={mockCategories}
+          brands={mockBrands}
+        />
+      );
+
+      const minInput = screen.getByPlaceholderText('0');
+      const maxInput = screen.getByPlaceholderText('100');
+
+      expect(minInput.className).toContain('text-base');
+      expect(minInput.className).toContain('sm:text-xs');
+      expect(maxInput.className).toContain('text-base');
+      expect(maxInput.className).toContain('sm:text-xs');
+    });
+
+    it('AIAssistantDrawer prompt input enforces text-base sm:text-xs and starter chips meet min-h-[44px] sm:min-h-[36px]', () => {
+      render(
+        <VatProvider>
+          <CartProvider>
+            <AIAssistantDrawer isOpen={true} onClose={vi.fn()} />
+          </CartProvider>
+        </VatProvider>
+      );
+
+      const input = screen.getByPlaceholderText(/Ask about screws, tape adhesion, ladder safety/i);
+      expect(input.className).toContain('text-base');
+      expect(input.className).toContain('sm:text-xs');
+
+      const starterChips = screen.getAllByRole('button', { name: /I need fixings for a shelf/i });
+      expect(starterChips.length).toBeGreaterThan(0);
+      expect(starterChips[0].className).toContain('min-h-[44px]');
+      expect(starterChips[0].className).toContain('sm:min-h-[36px]');
+    });
+  });
+
+  describe('Feature 7: Mobile Drawer Accessibility & Backdrop Semantics', () => {
+    it('Header mobile menu backdrop includes aria-hidden="true"', () => {
+      const { container } = render(
+        <VatProvider>
+          <CartProvider>
+            <Header />
+          </CartProvider>
+        </VatProvider>
+      );
+
+      fireEvent.click(screen.getByLabelText(/Open mobile navigation menu/i));
+      const backdrop = container.querySelector('.bg-black\\/50');
+      expect(backdrop).not.toBeNull();
+      expect(backdrop).toHaveAttribute('aria-hidden', 'true');
+    });
+
+    it('Header mobile menu Advice & Solutions links have min-h-[44px]', () => {
+      render(
+        <VatProvider>
+          <CartProvider>
+            <Header />
+          </CartProvider>
+        </VatProvider>
+      );
+
+      fireEvent.click(screen.getByLabelText(/Open mobile navigation menu/i));
+
+      const projectKitsLink = screen.getByText('Project Kits').closest('a');
+      const buyingGuidesLink = screen.getByText('UK Buying Guides').closest('a');
+      const tradePortalLink = screen.getByText('Trade Portal').closest('a');
+
+      expect(projectKitsLink?.className).toContain('min-h-[44px]');
+      expect(buyingGuidesLink?.className).toContain('min-h-[44px]');
+      expect(tradePortalLink?.className).toContain('min-h-[44px]');
+    });
+
+    it('SearchFilterChips clear all button meets min-h-[44px] sm:min-h-[36px] touch target', () => {
+      mockSearchParams = new URLSearchParams('category=tools');
+      render(<SearchFilterChips />);
+      const clearBtn = screen.getByRole('button', { name: /Clear all/i });
+      expect(clearBtn.className).toContain('min-h-[44px]');
+      expect(clearBtn.className).toContain('sm:min-h-[36px]');
     });
   });
 });

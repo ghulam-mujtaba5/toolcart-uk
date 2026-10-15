@@ -109,7 +109,7 @@ export function Navigation({ className }: NavigationProps) {
                     key={link.href}
                     href={link.href}
                     onClick={() => setMobileOpen(false)}
-                    className="flex items-center justify-between py-2.5 px-3 rounded-lg text-sm font-semibold text-tc-ink hover:bg-tc-canvas group"
+                    className="flex items-center justify-between min-h-[44px] py-2.5 px-3 rounded-lg text-sm font-semibold text-tc-ink hover:bg-tc-canvas group"
                   >
                     <div className="flex items-center gap-3">
                       <div className="w-8 h-8 rounded-lg bg-tc-surface-soft border border-[#C8D9F9] flex items-center justify-center text-tc-primary group-hover:bg-tc-primary group-hover:text-white transition-colors">

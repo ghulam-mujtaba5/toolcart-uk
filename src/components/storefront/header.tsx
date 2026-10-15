@@ -220,18 +220,26 @@ export function Header({ onOpenAiAssistant }: HeaderProps) {
 
           {/* Action Controls: AI Project Finder, Account, Mini-Basket */}
           <div className="flex items-center gap-2 sm:gap-3">
-            {/* Tool & Spec Advisor */}
+            {/* AI Project Finder Trigger with 3D Robot Mascot */}
             {onOpenAiAssistant && (
               <Button
                 variant="outline"
                 size="sm"
                 onClick={onOpenAiAssistant}
                 className="hidden md:inline-flex items-center gap-2 border-[#C8D9F9] bg-white hover:bg-tc-surface-soft text-tc-ink hover:text-tc-primary hover:border-tc-primary transition-all shadow-xs group px-3 h-10"
-                aria-label="Open Tool & Spec Advisor"
+                aria-label="Open AI Project Finder assistant"
               >
-                <IconToolbox size={16} className="text-tc-primary" />
+                <img
+                  src="/images/3d/icons/icon-ai-robot.webp"
+                  alt=""
+                  aria-hidden="true"
+                  className="w-5 h-5 object-contain drop-shadow-xs group-hover:scale-110 transition-transform"
+                />
                 <span className="font-semibold text-xs text-tc-ink group-hover:text-tc-primary">
-                  Tool Advisor
+                  AI Project Finder
+                </span>
+                <span className="text-[10px] px-1.5 py-0.5 rounded bg-tc-primary/10 text-tc-primary font-bold">
+                  AI
                 </span>
               </Button>
             )}
@@ -382,13 +390,17 @@ export function Header({ onOpenAiAssistant }: HeaderProps) {
 
             {onOpenAiAssistant && (
               <div className="mt-4 p-3.5 rounded-xl bg-tc-surface-soft border border-[#C8D9F9] flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-white border border-[#C8D9F9] flex items-center justify-center text-tc-primary shrink-0 shadow-2xs">
-                  <IconToolbox size={20} className="text-tc-primary" />
+                <div className="w-12 h-12 rounded-xl bg-white border border-[#C8D9F9] p-1 shrink-0 flex items-center justify-center shadow-xs">
+                  <img
+                    src="/images/3d/icons/icon-ai-robot.webp"
+                    alt="AI Project Finder Mascot"
+                    className="w-full h-full object-contain"
+                  />
                 </div>
                 <div className="flex-1 min-w-0">
-                  <p className="text-xs font-bold text-tc-primary mb-0.5">Tool &amp; Spec Advisor</p>
+                  <p className="text-xs font-bold text-tc-primary mb-0.5">AI Project Finder</p>
                   <p className="text-[11px] text-tc-graphite mb-2">
-                    Need help choosing sizes, pack counts, or BS ratings?
+                    Ask about verified specs, pack quantities, and trade tooling.
                   </p>
                   <Button
                     variant="primary"
@@ -399,7 +411,7 @@ export function Header({ onOpenAiAssistant }: HeaderProps) {
                       onOpenAiAssistant();
                     }}
                   >
-                    Open Advisor
+                    Launch Finder
                   </Button>
                 </div>
               </div>

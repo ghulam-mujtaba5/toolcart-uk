@@ -98,10 +98,14 @@ export function Header({ onOpenAiAssistant }: HeaderProps) {
             <Menu className="w-6 h-6" />
           </button>
 
-          {/* Brand Wordmark & Action Lime Cart Badge with IconToolbox Trade Emblem */}
+          {/* Brand Wordmark & Action Lime Cart Badge with 3D Master Logo */}
           <Link href="/" className="flex items-center gap-2.5 shrink-0 group">
-            <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-lg bg-tc-action-lime border-2 border-tc-ink flex items-center justify-center shadow-xs transition-transform group-hover:scale-105">
-              <IconToolbox size={24} className="text-tc-ink" />
+            <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-tc-action-lime border-2 border-tc-ink flex items-center justify-center shadow-xs transition-transform group-hover:scale-105 overflow-hidden p-0.5">
+              <img
+                src="/images/brand/logo-toolcart.webp"
+                alt="ToolCart 3D Logo"
+                className="w-full h-full object-contain drop-shadow-xs"
+              />
             </div>
             <div className="flex flex-col">
               <span className="font-heading font-extrabold text-2xl sm:text-3xl tracking-[-0.04em] text-tc-ink leading-none">
@@ -214,8 +218,31 @@ export function Header({ onOpenAiAssistant }: HeaderProps) {
             )}
           </div>
 
-          {/* Action Controls: Account, Mini-Basket */}
+          {/* Action Controls: AI Project Finder, Account, Mini-Basket */}
           <div className="flex items-center gap-2 sm:gap-3">
+            {/* AI Project Finder Trigger with 3D Robot Mascot */}
+            {onOpenAiAssistant && (
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={onOpenAiAssistant}
+                className="hidden md:inline-flex items-center gap-2 border-[#C8D9F9] bg-white hover:bg-tc-surface-soft text-tc-ink hover:text-tc-primary hover:border-tc-primary transition-all shadow-xs group px-3 h-10"
+                aria-label="Open AI Project Finder assistant"
+              >
+                <img
+                  src="/images/3d/icons/icon-ai-robot.webp"
+                  alt=""
+                  aria-hidden="true"
+                  className="w-5 h-5 object-contain drop-shadow-xs group-hover:scale-110 transition-transform"
+                />
+                <span className="font-semibold text-xs text-tc-ink group-hover:text-tc-primary">
+                  AI Project Finder
+                </span>
+                <span className="text-[10px] px-1 py-0.2 rounded bg-tc-primary/10 text-tc-primary font-bold">
+                  AI
+                </span>
+              </Button>
+            )}
 
             {/* Customer Account */}
             <Link
@@ -360,6 +387,35 @@ export function Header({ onOpenAiAssistant }: HeaderProps) {
                 <span>Trade Portal</span>
               </Link>
             </div>
+
+            {onOpenAiAssistant && (
+              <div className="mt-4 p-3.5 rounded-xl bg-tc-surface-soft border border-[#C8D9F9] flex items-center gap-3">
+                <div className="w-12 h-12 rounded-xl bg-white border border-[#C8D9F9] p-1 shrink-0 flex items-center justify-center shadow-xs">
+                  <img
+                    src="/images/3d/icons/icon-ai-robot.webp"
+                    alt="AI Project Finder Mascot"
+                    className="w-full h-full object-contain"
+                  />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p className="text-xs font-bold text-tc-primary mb-0.5">AI Project Finder</p>
+                  <p className="text-[11px] text-tc-ink mb-2">
+                    Ask about verified specs, pack quantities, and trade tooling.
+                  </p>
+                  <Button
+                    variant="primary"
+                    size="sm"
+                    className="w-full text-xs"
+                    onClick={() => {
+                      setIsMobileMenuOpen(false);
+                      onOpenAiAssistant();
+                    }}
+                  >
+                    Launch Finder
+                  </Button>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       )}

@@ -132,8 +132,12 @@ export function AIAssistantDrawer({ isOpen, onClose }: AIAssistantDrawerProps) {
         {/* Header: Cobalt accent, Brand V3 */}
         <div className="p-4 sm:p-5 bg-white border-b border-[#C8D9F9] flex items-center justify-between shrink-0">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-tc-surface-soft border border-[#C8D9F9] flex items-center justify-center text-tc-primary shadow-xs shrink-0">
-              <IconToolbox size={20} className="text-tc-primary" />
+            <div className="w-11 h-11 rounded-xl bg-tc-surface-soft border border-[#C8D9F9] p-1 flex items-center justify-center shadow-xs shrink-0 overflow-hidden group">
+              <img
+                src="/images/3d/ai/assistant-robot-avatar.webp"
+                alt="ToolCart AI Project Finder 3D Robot Mascot"
+                className="w-full h-full object-contain drop-shadow-xs group-hover:scale-110 transition-transform"
+              />
             </div>
             <div>
               <h2 id="ai-assistant-title" className="font-heading font-extrabold text-base text-tc-ink flex items-center gap-1.5">
@@ -250,6 +254,26 @@ export function AIAssistantDrawer({ isOpen, onClose }: AIAssistantDrawerProps) {
         {/* Starter Prompts (if chat is fresh) */}
         {messages.length === 1 && (
           <div className="p-4 bg-white/70 border-t border-[#C8D9F9] space-y-3 shrink-0">
+            <div className="rounded-xl overflow-hidden bg-gradient-to-r from-tc-surface-soft via-white to-tc-surface-soft border border-[#C8D9F9] p-3.5 flex items-center justify-between gap-3 shadow-xs">
+              <div className="space-y-1">
+                <span className="text-[10px] font-mono font-extrabold px-2 py-0.5 rounded-full bg-tc-primary/10 text-tc-primary uppercase tracking-wider inline-block">
+                  3D Trade AI Advisor
+                </span>
+                <p className="font-heading font-extrabold text-xs text-tc-ink">
+                  Hardware Advice &amp; Project Matching
+                </p>
+                <p className="text-[11px] text-tc-text-secondary">
+                  Ask about verified fixings, British Standards, or pack counts.
+                </p>
+              </div>
+              <div className="w-14 h-14 shrink-0 relative">
+                <img
+                  src="/images/3d/icons/icon-ai-robot.webp"
+                  alt="ToolCart AI 3D Mascot"
+                  className="w-full h-full object-contain drop-shadow-xs hover:scale-105 transition-transform"
+                />
+              </div>
+            </div>
             <p className="text-[11px] font-bold text-tc-text-secondary uppercase tracking-wider">
               Popular questions
             </p>

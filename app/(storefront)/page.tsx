@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { getAllProducts, getProjectKits, getBuyingGuides } from '@/lib/catalog';
 import { ProductCard } from '@/components/storefront/product-card';
 import { Button } from '@/components/ui/button';
+import { MasterTelemetryAnimation } from '@/components/storefront/master-telemetry-animation';
 import {
   Wrench,
   Shield,
@@ -189,12 +190,19 @@ export default async function StorefrontHomePage() {
 
                 {/* Technical Specification & Fixing Matcher */}
                 <div className="mt-2 p-3.5 rounded-xl bg-white border border-[#C8D9F9] flex gap-3.5 items-center shadow-xs">
-                  <div className="w-12 h-12 rounded-xl bg-tc-surface-soft border border-[#C8D9F9] shrink-0 flex items-center justify-center text-tc-primary shadow-xs">
-                    <IconStockRadar size={24} className="text-tc-primary" />
+                  <div className="w-12 h-12 rounded-xl bg-tc-surface-soft border border-[#C8D9F9] p-1 shrink-0 flex items-center justify-center shadow-xs group">
+                    <img
+                      src="/images/3d/icons/icon-ai-robot.webp"
+                      alt="AI Project Finder"
+                      className="w-full h-full object-contain drop-shadow-xs group-hover:scale-110 transition-transform"
+                    />
                   </div>
                   <div className="flex-1 min-w-0 space-y-1">
                     <div className="flex items-center gap-1.5 text-xs font-bold text-tc-primary">
-                      <span>Specification & Fixing Matcher</span>
+                      <span>AI Project Finder &amp; Fixing Matcher</span>
+                      <span className="text-[10px] px-1.5 py-0.2 rounded bg-tc-primary/10 text-tc-primary font-bold">
+                        Grounded
+                      </span>
                     </div>
                     <p className="text-[11px] text-tc-graphite italic truncate">
                       &quot;Fixings for a heavy shelf on brick wall?&quot;
@@ -341,6 +349,9 @@ export default async function StorefrontHomePage() {
           </div>
         </div>
       </section>
+
+      {/* Intelligent Trade Telemetry Engine & 3D Master Brand Animation */}
+      <MasterTelemetryAnimation />
 
       {/* Curated Project Kits Teaser */}
       <section className="bg-tc-surface-soft border-y border-[#C8D9F9] py-14">

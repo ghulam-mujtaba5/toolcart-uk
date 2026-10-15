@@ -8,60 +8,60 @@ export function Footer() {
   return (
     <footer className="bg-tc-ink text-white border-t border-tc-graphite pt-14 pb-10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Value Proposition Strip with Site Icons */}
+        {/* Value Proposition Strip with 3D Claymorphic Brand V3 Icons */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6 pb-12 mb-12 border-b border-white/10">
-          <div className="flex items-start gap-3">
-            <div className="w-10 h-10 rounded-lg bg-white/10 border border-white/20 p-2 shrink-0 flex items-center justify-center">
+          <div className="flex items-start gap-3 group">
+            <div className="w-12 h-12 rounded-xl bg-white/10 border border-white/20 p-1.5 shrink-0 flex items-center justify-center shadow-xs group-hover:scale-105 transition-transform">
               <img
-                src="/brand/07_Site_Icons/clear-specifications.svg"
+                src="/images/3d/icons/icon-specs.webp"
                 alt="Clear specifications"
-                className="w-full h-full object-contain filter invert"
+                className="w-full h-full object-contain drop-shadow-sm"
               />
             </div>
             <div>
-              <p className="font-heading font-bold text-xs text-white">Clear Specifications</p>
+              <p className="font-heading font-bold text-xs text-white group-hover:text-tc-action-lime transition-colors">Clear Specifications</p>
               <p className="text-[11px] text-[#DFE8F6]/70 mt-0.5">EAN-13 GTIN, MPN &amp; certified ratings</p>
             </div>
           </div>
 
-          <div className="flex items-start gap-3">
-            <div className="w-10 h-10 rounded-lg bg-white/10 border border-white/20 p-2 shrink-0 flex items-center justify-center">
+          <div className="flex items-start gap-3 group">
+            <div className="w-12 h-12 rounded-xl bg-white/10 border border-white/20 p-1.5 shrink-0 flex items-center justify-center shadow-xs group-hover:scale-105 transition-transform">
               <img
-                src="/brand/07_Site_Icons/trade-diy.svg"
+                src="/images/3d/icons/icon-trade-diy.webp"
                 alt="Trade & DIY"
-                className="w-full h-full object-contain filter invert"
+                className="w-full h-full object-contain drop-shadow-sm"
               />
             </div>
             <div>
-              <p className="font-heading font-bold text-xs text-white">Trade &amp; DIY Direct</p>
+              <p className="font-heading font-bold text-xs text-white group-hover:text-tc-action-lime transition-colors">Trade &amp; DIY Direct</p>
               <p className="text-[11px] text-[#DFE8F6]/70 mt-0.5">Tactile UK VAT rocker &amp; net terms</p>
             </div>
           </div>
 
-          <div className="flex items-start gap-3">
-            <div className="w-10 h-10 rounded-lg bg-white/10 border border-white/20 p-2 shrink-0 flex items-center justify-center">
+          <div className="flex items-start gap-3 group">
+            <div className="w-12 h-12 rounded-xl bg-white/10 border border-white/20 p-1.5 shrink-0 flex items-center justify-center shadow-xs group-hover:scale-105 transition-transform">
               <img
-                src="/brand/07_Site_Icons/project-guidance.svg"
+                src="/images/3d/icons/icon-project-guidance.webp"
                 alt="Project guidance"
-                className="w-full h-full object-contain filter invert"
+                className="w-full h-full object-contain drop-shadow-sm"
               />
             </div>
             <div>
-              <p className="font-heading font-bold text-xs text-white">Project Guidance</p>
+              <p className="font-heading font-bold text-xs text-white group-hover:text-tc-action-lime transition-colors">Project Guidance</p>
               <p className="text-[11px] text-[#DFE8F6]/70 mt-0.5">UK buying guides &amp; curated project kits</p>
             </div>
           </div>
 
-          <div className="flex items-start gap-3">
-            <div className="w-10 h-10 rounded-lg bg-white/10 border border-white/20 p-2 shrink-0 flex items-center justify-center">
+          <div className="flex items-start gap-3 group">
+            <div className="w-12 h-12 rounded-xl bg-white/10 border border-white/20 p-1.5 shrink-0 flex items-center justify-center shadow-xs group-hover:scale-105 transition-transform">
               <img
-                src="/brand/07_Site_Icons/product-options.svg"
+                src="/images/3d/icons/icon-pack-options.webp"
                 alt="Product options"
-                className="w-full h-full object-contain filter invert"
+                className="w-full h-full object-contain drop-shadow-sm"
               />
             </div>
             <div>
-              <p className="font-heading font-bold text-xs text-white">Verified Pack Options</p>
+              <p className="font-heading font-bold text-xs text-white group-hover:text-tc-action-lime transition-colors">Verified Pack Options</p>
               <p className="text-[11px] text-[#DFE8F6]/70 mt-0.5">Transparent unit vs carton quantities</p>
             </div>
           </div>
@@ -71,11 +71,15 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 pb-12 border-b border-white/10 text-sm">
           {/* Column 1: Brand & Identity */}
           <div className="lg:col-span-1 space-y-4">
-            <Link href="/" className="flex items-center gap-2.5">
-              <div className="w-8 h-8 rounded-lg bg-tc-action-lime text-tc-ink border-2 border-tc-ink flex items-center justify-center">
-                <ShoppingCart className="w-4 h-4 text-tc-ink stroke-[2.5]" />
+            <Link href="/" className="flex items-center gap-2.5 group">
+              <div className="w-10 h-10 rounded-xl bg-tc-action-lime text-tc-ink border border-tc-ink p-1 shrink-0 flex items-center justify-center group-hover:scale-105 transition-transform shadow-xs">
+                <img
+                  src="/images/brand/logo-toolcart.webp"
+                  alt="ToolCart 3D Logo"
+                  className="w-full h-full object-contain drop-shadow-xs"
+                />
               </div>
-              <span className="font-heading font-extrabold text-xl tracking-tight text-white">
+              <span className="font-heading font-extrabold text-xl tracking-tight text-white group-hover:text-tc-action-lime transition-colors">
                 TOOLCART
               </span>
             </Link>

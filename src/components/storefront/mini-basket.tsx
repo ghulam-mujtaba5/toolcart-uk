@@ -180,7 +180,7 @@ export function MiniBasket() {
 
                             <button
                               type="button"
-                              onClick={() => removeItem(item.product_id)}
+                              onClick={() => removeItem(item.product_id, item.is_case_quantity)}
                               className="min-w-[44px] min-h-[44px] flex items-center justify-center text-tc-text-secondary hover:text-tc-error"
                               title="Remove item"
                               aria-label={`Remove ${item.title} from basket`}
@@ -194,7 +194,7 @@ export function MiniBasket() {
                             <div className="flex items-center border border-tc-border rounded-md bg-tc-canvas h-11">
                               <button
                                 type="button"
-                                onClick={() => updateQuantity(item.product_id, item.quantity - 1)}
+                                onClick={() => updateQuantity(item.product_id, item.quantity - 1, item.is_case_quantity)}
                                 className="min-w-[44px] h-full flex items-center justify-center text-tc-text-secondary hover:text-tc-ink transition-colors"
                                 aria-label="Decrease quantity"
                               >
@@ -205,7 +205,7 @@ export function MiniBasket() {
                               </span>
                               <button
                                 type="button"
-                                onClick={() => updateQuantity(item.product_id, item.quantity + 1)}
+                                onClick={() => updateQuantity(item.product_id, item.quantity + 1, item.is_case_quantity)}
                                 className="min-w-[44px] h-full flex items-center justify-center text-tc-text-secondary hover:text-tc-ink transition-colors"
                                 aria-label="Increase quantity"
                               >

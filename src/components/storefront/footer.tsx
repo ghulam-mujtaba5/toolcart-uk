@@ -2,9 +2,12 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { ShieldCheck, CheckCircle2, Lock } from 'lucide-react';
+import { ShieldCheck, CheckCircle2, Lock, Cookie } from 'lucide-react';
+import { useCookieConsent } from '@/context/cookie-consent-context';
 
 export function Footer() {
+  const { openPreferences } = useCookieConsent();
+
   return (
     <footer className="bg-tc-ink text-white border-t border-tc-graphite pt-14 pb-10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -166,6 +169,21 @@ export function Footer() {
                 <Lock className="w-3.5 h-3.5 text-tc-action-lime shrink-0" />
                 <span>256-Bit SSL Encrypted Checkout</span>
               </li>
+              <li className="pt-2 border-t border-white/10 flex flex-col gap-1.5 text-[11px]">
+                <Link href="/cookies" className="hover:text-tc-action-lime transition-colors">
+                  UK Cookie Policy &amp; Disclosures
+                </Link>
+                <Link href="/privacy" className="hover:text-tc-action-lime transition-colors">
+                  Privacy Policy &amp; Data Rights
+                </Link>
+                <button
+                  type="button"
+                  onClick={openPreferences}
+                  className="text-left text-tc-action-lime hover:underline font-semibold focus-visible:outline-2 focus-visible:outline-tc-action-lime"
+                >
+                  Manage Cookie Preferences
+                </button>
+              </li>
             </ul>
           </div>
         </div>
@@ -179,12 +197,28 @@ export function Footer() {
             <span className="hidden sm:inline text-white/30">•</span>
             <p className="text-white/70 italic">ToolCart UK is a provisional demonstration platform. Staging and prototype only.</p>
           </div>
-          <div className="flex items-center gap-4 text-xs text-[#DFE8F6]">
+          <div className="flex flex-wrap items-center justify-center md:justify-end gap-x-3.5 gap-y-2 text-xs text-[#DFE8F6]">
             <span>Prices shown in Inc. &amp; Ex. VAT</span>
             <span className="text-white/30">•</span>
             <Link href="/trade" className="hover:text-tc-action-lime transition-colors">
               Trade Terms
             </Link>
+            <span className="text-white/30">•</span>
+            <Link href="/cookies" className="hover:text-tc-action-lime transition-colors">
+              Cookies
+            </Link>
+            <span className="text-white/30">•</span>
+            <Link href="/privacy" className="hover:text-tc-action-lime transition-colors">
+              Privacy
+            </Link>
+            <span className="text-white/30">•</span>
+            <button
+              type="button"
+              onClick={openPreferences}
+              className="hover:text-tc-action-lime transition-colors underline-offset-2 font-medium"
+            >
+              Cookie Settings
+            </button>
             <span className="text-white/30">•</span>
             <Link href="/checkout" className="hover:text-tc-action-lime transition-colors">
               Secure Checkout

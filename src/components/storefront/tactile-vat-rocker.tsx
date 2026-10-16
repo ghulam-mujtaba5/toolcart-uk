@@ -58,7 +58,7 @@ export function TactileVatRocker({ className, size = 'sm' }: TactileVatRockerPro
         }}
       >
         <span>Inc. VAT</span>
-        <span className={cn('ml-1 text-[10px] font-normal', isInc ? 'text-white/90' : 'text-tc-graphite')}>
+        <span className={cn('ml-1 text-[10px] font-normal hidden sm:inline', isInc ? 'text-white/90' : 'text-tc-graphite')}>
           (DIY)
         </span>
       </button>
@@ -73,7 +73,7 @@ export function TactileVatRocker({ className, size = 'sm' }: TactileVatRockerPro
         className={cn(
           'relative rounded-full transition-all duration-200 select-none cursor-pointer',
           'flex items-center justify-center font-body',
-          size === 'sm' ? 'px-3 py-1 text-xs' : 'px-4 py-1.5 text-sm',
+          size === 'sm' ? 'px-2.5 sm:px-3 py-1 text-xs' : 'px-3 sm:px-4 py-1.5 text-sm',
           isEx
             ? 'bg-tc-action-lime text-tc-ink font-extrabold border-2 border-tc-ink shadow-md transform scale-100 z-10'
             : 'text-tc-graphite hover:text-tc-ink hover:bg-black/5 font-semibold'
@@ -83,7 +83,7 @@ export function TactileVatRocker({ className, size = 'sm' }: TactileVatRockerPro
         }}
       >
         <span>Ex. VAT</span>
-        <span className={cn('ml-1 text-[10px] font-bold', isEx ? 'text-tc-ink/90' : 'text-tc-graphite')}>
+        <span className={cn('ml-1 text-[10px] font-bold hidden sm:inline', isEx ? 'text-tc-ink/90' : 'text-tc-graphite')}>
           (Trade)
         </span>
       </button>

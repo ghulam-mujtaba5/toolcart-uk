@@ -104,25 +104,25 @@ export function Header({ onOpenAiAssistant }: HeaderProps) {
   return (
     <header
       className={cn(
-        'sticky top-0 bg-white/95 border-b border-tc-border',
+        'sticky top-0 bg-white/95 border-b border-tc-border pt-[env(safe-area-inset-top,0px)]',
         isMobileMenuOpen ? 'z-50' : 'z-40 backdrop-blur-md'
       )}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between gap-4 h-20 sm:h-24">
+      <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between gap-2 sm:gap-4 h-16 sm:h-20">
           {/* Mobile hamburger */}
           <button
             type="button"
             onClick={() => setIsMobileMenuOpen(true)}
             aria-label="Open mobile navigation menu"
-            className="md:hidden min-w-[44px] min-h-[44px] p-2 rounded-lg text-tc-ink hover:bg-tc-canvas transition-colors flex items-center justify-center shrink-0"
+            className="md:hidden min-w-[40px] min-h-[40px] sm:min-w-[44px] sm:min-h-[44px] p-2 rounded-lg text-tc-ink hover:bg-tc-canvas transition-colors flex items-center justify-center shrink-0"
           >
-            <Menu className="w-6 h-6" />
+            <Menu className="w-5 h-5 sm:w-6 sm:h-6" />
           </button>
 
           {/* Brand Wordmark & Action Lime Cart Badge with 3D Master Logo */}
-          <Link href="/" className="flex items-center gap-3 sm:gap-3.5 shrink-0 group">
-            <div className="w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 rounded-2xl bg-tc-action-lime border-[2.5px] border-tc-ink flex items-center justify-center shadow-sm transition-transform group-hover:scale-105 overflow-hidden p-1 sm:p-1.5 shrink-0">
+          <Link href="/" className="flex items-center gap-2 sm:gap-3 shrink-0 group">
+            <div className="w-9 h-9 sm:w-11 sm:h-11 lg:w-14 lg:h-14 rounded-xl sm:rounded-2xl bg-tc-action-lime border-2 border-tc-ink flex items-center justify-center shadow-xs transition-transform group-hover:scale-105 overflow-hidden p-0.5 sm:p-1 shrink-0">
               <img
                 src="/images/brand/logo-toolcart.webp"
                 alt="ToolCart 3D Logo"
@@ -130,11 +130,11 @@ export function Header({ onOpenAiAssistant }: HeaderProps) {
               />
             </div>
             <div className="flex flex-col justify-center">
-              <span className="font-heading font-extrabold text-2xl sm:text-3xl lg:text-4xl tracking-[-0.04em] text-tc-ink leading-none">
+              <span className="font-heading font-extrabold text-xl sm:text-2xl lg:text-3xl tracking-[-0.04em] text-tc-ink leading-none">
                 TOOLCART
               </span>
-              <span className="text-[9px] sm:text-[10px] uppercase tracking-widest text-tc-primary font-mono font-extrabold mt-1">
-                UK Trade Direct · BS EN Spec
+              <span className="text-[8px] sm:text-[10px] uppercase tracking-widest text-tc-primary font-mono font-extrabold mt-0.5 sm:mt-1">
+                UK Trade Direct
               </span>
             </div>
           </Link>
@@ -241,7 +241,7 @@ export function Header({ onOpenAiAssistant }: HeaderProps) {
           </div>
 
           {/* Action Controls: Hardware Advice, Account, Mini-Basket */}
-          <div className="flex items-center gap-2 sm:gap-3">
+          <div className="flex items-center gap-1.5 sm:gap-3 shrink-0">
             {/* Hardware Advice Trigger with 3D Robot */}
             {onOpenAiAssistant && (
               <Button
@@ -264,7 +264,7 @@ export function Header({ onOpenAiAssistant }: HeaderProps) {
             <Link
               href="/account"
               aria-label="Customer Account & Orders"
-              className="min-w-[44px] min-h-[44px] p-1.5 sm:px-3 sm:py-2 rounded-lg text-tc-ink hover:bg-tc-canvas hover:text-tc-primary transition-colors flex items-center justify-center gap-2 group"
+              className="min-w-[40px] sm:min-w-[44px] min-h-[40px] sm:min-h-[44px] p-1.5 sm:px-3 sm:py-2 rounded-lg text-tc-ink hover:bg-tc-canvas hover:text-tc-primary transition-colors flex items-center justify-center gap-2 group shrink-0"
             >
               <div className="w-8 h-8 rounded-lg bg-tc-canvas border border-tc-border flex items-center justify-center text-tc-ink group-hover:text-tc-primary group-hover:border-tc-primary/40 group-hover:bg-tc-surface-soft transition-all shadow-2xs">
                 <User className="w-4.5 h-4.5 stroke-[2.25] group-hover:scale-110 transition-transform" />
@@ -279,7 +279,7 @@ export function Header({ onOpenAiAssistant }: HeaderProps) {
               type="button"
               onClick={openCart}
               aria-label={`Open Basket, ${summary.total_items_count} items`}
-              className="relative min-w-[44px] min-h-[44px] p-1.5 sm:px-3.5 sm:py-2 rounded-lg bg-tc-ink text-white hover:bg-tc-graphite transition-all flex items-center justify-center gap-2.5 shadow-xs group active:scale-95"
+              className="relative min-w-[40px] sm:min-w-[44px] min-h-[40px] sm:min-h-[44px] p-1.5 sm:px-3.5 sm:py-2 rounded-lg bg-tc-ink text-white hover:bg-tc-graphite transition-all flex items-center justify-center gap-2.5 shadow-xs group active:scale-95 shrink-0"
             >
               <div className="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center text-white group-hover:bg-white/20 transition-all">
                 <ShoppingCart className="w-4.5 h-4.5 stroke-[2.25] text-white group-hover:scale-110 transition-transform" />

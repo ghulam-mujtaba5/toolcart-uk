@@ -95,7 +95,21 @@ export function VatProvider({ children, initialMode = 'inc' }: VatProviderProps)
 export function useVAT(): VatContextValue {
   const context = useContext(VatContext);
   if (!context) {
-    throw new Error('useVAT must be used within a VatProvider');
+    return {
+      mode: 'inc',
+      isTradeMode: false,
+      setMode: () => {},
+      toggleVatMode: () => {},
+      formatPriceDisplay: (priceIncVat: number, priceExVat: number) => ({
+        primaryText: `£${priceIncVat.toFixed(2)} inc. VAT`,
+        secondaryText: `£${priceExVat.toFixed(2)} ex. VAT`,
+        primaryAmount: priceIncVat,
+        secondaryAmount: priceExVat,
+        primaryLabel: 'inc. VAT',
+        secondaryLabel: 'ex. VAT',
+      }),
+    };
   }
   return context;
 }
+

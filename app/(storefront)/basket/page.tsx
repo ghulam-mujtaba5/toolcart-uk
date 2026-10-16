@@ -173,7 +173,7 @@ export default function BasketPage() {
                             <div className="flex items-center border border-tc-border rounded-lg bg-tc-canvas h-11 min-h-[44px]">
                               <button
                                 type="button"
-                                onClick={() => updateQuantity(item.product_id, item.quantity - 1)}
+                                onClick={() => updateQuantity(item.product_id, item.quantity - 1, item.is_case_quantity)}
                                 className="w-11 h-11 min-w-[44px] min-h-[44px] flex items-center justify-center text-tc-text-secondary hover:text-tc-ink transition-colors"
                                 aria-label={`Decrease quantity of ${item.title}`}
                               >
@@ -184,7 +184,7 @@ export default function BasketPage() {
                               </span>
                               <button
                                 type="button"
-                                onClick={() => updateQuantity(item.product_id, item.quantity + 1)}
+                                onClick={() => updateQuantity(item.product_id, item.quantity + 1, item.is_case_quantity)}
                                 className="w-11 h-11 min-w-[44px] min-h-[44px] flex items-center justify-center text-tc-text-secondary hover:text-tc-ink transition-colors"
                                 aria-label={`Increase quantity of ${item.title}`}
                               >
@@ -203,7 +203,7 @@ export default function BasketPage() {
 
                             <button
                               type="button"
-                              onClick={() => removeItem(item.product_id)}
+                              onClick={() => removeItem(item.product_id, item.is_case_quantity)}
                               className="w-11 h-11 min-w-[44px] min-h-[44px] flex items-center justify-center rounded-lg hover:bg-red-50 text-tc-text-secondary hover:text-tc-error transition-colors"
                               aria-label={`Remove ${item.title} from basket`}
                               title="Remove item"

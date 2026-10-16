@@ -43,14 +43,14 @@ export function CompareDrawer() {
 
   // Extract all unique specification keys across comparing products
   const allSpecKeys = Array.from(
-    new Set(products.flatMap((p) => Object.keys(p.specifications)))
+    new Set(products.flatMap((p) => Object.keys(p.specifications || {})))
   );
 
   return (
     <>
       {/* Docked Floating Bottom Bar (visible when closed or minimized) */}
       {!isOpen && (
-        <div className="fixed bottom-[calc(1rem+env(safe-area-inset-bottom))] left-1/2 -translate-x-1/2 z-40 bg-tc-ink text-white px-4 py-2 rounded-full shadow-2xl border-2 border-tc-action-lime flex items-center gap-2 sm:gap-4 animate-in slide-in-from-bottom-4 max-w-[calc(100vw-2rem)]">
+        <div className="fixed bottom-[calc(4.5rem+env(safe-area-inset-bottom,0px))] md:bottom-[calc(1rem+env(safe-area-inset-bottom,0px))] left-1/2 -translate-x-1/2 z-40 bg-tc-ink text-white px-3.5 sm:px-4 py-2 rounded-full shadow-2xl border-2 border-tc-action-lime flex items-center gap-2 sm:gap-4 animate-in slide-in-from-bottom-4 max-w-[calc(100vw-2rem)]">
           <div className="flex items-center gap-2">
             <span className="w-6 h-6 rounded-full bg-tc-action-lime text-tc-ink font-bold text-xs flex items-center justify-center shrink-0">
               {products.length}
@@ -283,7 +283,7 @@ export function CompareDrawer() {
 
                   {/* Dynamic Technical Specs Rows */}
                   {allSpecKeys.map((key) => {
-                    const values = products.map((p) => p.specifications[key] || '—');
+                    const values = products.map((p) => p.specifications?.[key] || '—');
                     const hasVariation = new Set(values).size > 1;
 
                     return (
@@ -298,7 +298,7 @@ export function CompareDrawer() {
                         </td>
                         {products.map((p) => (
                           <td key={p.id} className="p-3 text-xs text-tc-graphite tabular-nums">
-                            {p.specifications[key] || '—'}
+                            {p.specifications?.[key] || '—'}
                           </td>
                         ))}
                       </tr>

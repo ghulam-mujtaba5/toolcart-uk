@@ -56,20 +56,20 @@ export function TradeSpecifierHero() {
   return (
     <section className="bg-white border-b border-tc-border overflow-hidden">
       {/* 1. Clean 4-Pillar Trust Strip (UK Standard Pattern) */}
-      <div className="bg-tc-surface-soft border-b border-tc-border/80 py-3 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-4 lg:gap-6">
+      <div className="bg-tc-surface-soft border-b border-tc-border/80 py-2 sm:py-3 px-3 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-2.5 sm:gap-4 lg:gap-6">
           {TRUST_PILLARS.map((p, idx) => {
             const Icon = p.icon;
             return (
-              <div key={idx} className="flex items-center gap-2.5 sm:gap-3">
-                <div className="w-8 h-8 rounded-lg bg-white border border-[#C8D9F9] flex items-center justify-center shrink-0 text-tc-primary shadow-2xs">
-                  <Icon className="w-4 h-4 stroke-[2]" />
+              <div key={idx} className="flex items-center gap-2 sm:gap-3">
+                <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-white border border-[#C8D9F9] flex items-center justify-center shrink-0 text-tc-primary shadow-2xs">
+                  <Icon className="w-3.5 h-3.5 sm:w-4 sm:h-4 stroke-[2]" />
                 </div>
                 <div className="min-w-0">
-                  <p className="font-heading font-bold text-xs text-tc-ink truncate">
+                  <p className="font-heading font-bold text-[11px] sm:text-xs text-tc-ink truncate">
                     {p.title}
                   </p>
-                  <p className="text-[11px] text-tc-text-secondary truncate hidden sm:block">
+                  <p className="text-[10px] sm:text-[11px] text-tc-text-secondary truncate hidden sm:block">
                     {p.subtitle}
                   </p>
                 </div>
@@ -80,38 +80,38 @@ export function TradeSpecifierHero() {
       </div>
 
       {/* 2. Hero Stage: Clean, Authoritative, High-Converting */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 lg:py-16">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-10 lg:py-16">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12 items-center">
           {/* Left Column: Authoritative Copy & Navigation (7 cols) */}
-          <div className="lg:col-span-7 space-y-6">
+          <div className="lg:col-span-7 space-y-4 sm:space-y-6">
             {/* Eyebrow */}
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-tc-surface-soft border border-tc-border text-xs font-semibold text-tc-ink">
+            <div className="inline-flex items-center gap-2 px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-full bg-tc-surface-soft border border-tc-border text-xs font-semibold text-tc-ink">
               <span className="w-2 h-2 rounded-full bg-tc-success animate-pulse" />
-              <span className="font-mono text-[11px] font-bold tracking-wider uppercase text-tc-primary">
+              <span className="font-mono text-[10px] sm:text-[11px] font-bold tracking-wider uppercase text-tc-primary">
                 BRITISH TRADE HARDWARE DIRECT
               </span>
               <span className="text-tc-border">|</span>
-              <span className="text-tc-text-secondary text-[11px]">115 SKUs In Stock</span>
+              <span className="text-tc-text-secondary text-[10px] sm:text-[11px]">115 SKUs In Stock</span>
             </div>
 
             {/* Headline */}
-            <h1 className="font-heading font-extrabold text-3xl sm:text-4xl lg:text-5xl text-tc-ink tracking-tight leading-[1.12]">
+            <h1 className="font-heading font-extrabold text-2xl sm:text-4xl lg:text-5xl text-tc-ink tracking-tight leading-[1.15]">
               The Hardware Standard <br className="hidden sm:inline" />
               <span className="text-tc-primary">for British Trades.</span>
             </h1>
 
             {/* Subtext */}
-            <p className="text-sm sm:text-base text-tc-graphite max-w-xl leading-relaxed">
+            <p className="text-xs sm:text-base text-tc-graphite max-w-xl leading-relaxed">
               Trade-grade hand tools, certified fixings, and site consumables. Guaranteed British Standards, transparent pack counts, and tracked next-day delivery to UK sites and workshops.
             </p>
 
             {/* Action Buttons */}
-            <div className="flex flex-wrap items-center gap-3 pt-2">
+            <div className="flex flex-wrap items-center gap-2.5 pt-1 sm:pt-2">
               <Button
                 variant="primary"
                 size="lg"
                 asChild
-                className="bg-tc-primary hover:bg-tc-primary-hover text-white min-h-[48px] px-6 text-sm font-bold shadow-xs"
+                className="bg-tc-primary hover:bg-tc-primary-hover text-white min-h-[44px] sm:min-h-[48px] px-4 sm:px-6 text-xs sm:text-sm font-bold shadow-xs"
               >
                 <Link href="/tools" className="flex items-center gap-2">
                   <span>Browse Full Catalog</span>

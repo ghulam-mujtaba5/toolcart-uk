@@ -41,8 +41,11 @@ export function PdpActions({ product }: PdpActionsProps) {
     product.retail_price_ex_vat_gbp * quantity * caseMultiplier
   );
 
+  const isOutOfStock = (product.stock_quantity ?? 0) <= 0 || product.availability_status === 'out_of_stock';
+
   const handleAdd = () => {
-    addItem(product, quantity * caseMultiplier, isCaseOrder);
+    if (isOutOfStock) return;
+    addItem(product, quantity, isCaseOrder);
 
     setIsSnapped(true);
     if (snapTimeoutRef.current) {
@@ -165,15 +168,25 @@ export function PdpActions({ product }: PdpActionsProps) {
         <button
           type="button"
           onClick={handleAdd}
+          disabled={isOutOfStock || isSnapped}
           aria-live="polite"
-          aria-label={isSnapped ? `Added to ToolCart: ${product.title}` : `Add to Basket: ${product.title}`}
+          aria-label={
+            isOutOfStock
+              ? `Out of Stock: ${product.title}`
+              : isSnapped
+              ? `Added to ToolCart: ${product.title}`
+              : `Add to Basket: ${product.title}`
+          }
           className={cn(
             'relative flex-1 flex items-center justify-center gap-2 h-11 px-6 rounded-button text-sm font-bold',
             'transition-all duration-200 select-none outline-none focus-visible:ring-2 focus-visible:ring-tc-primary',
-            'active:scale-[0.94] active:translate-y-[2px] active:shadow-[inset_0_2px_4px_rgba(24,35,54,0.25)]',
-            isSnapped
-              ? 'bg-tc-action-lime text-tc-ink border-2 border-tc-ink font-extrabold shadow-sm'
-              : 'bg-tc-primary text-white hover:bg-tc-primary-hover shadow-xs'
+            isOutOfStock
+              ? 'bg-tc-surface-soft text-tc-text-secondary cursor-not-allowed border border-tc-border'
+              : 'active:scale-[0.94] active:translate-y-[2px] active:shadow-[inset_0_2px_4px_rgba(24,35,54,0.25)]',
+            !isOutOfStock &&
+              (isSnapped
+                ? 'bg-tc-action-lime text-tc-ink border-2 border-tc-ink font-extrabold shadow-sm'
+                : 'bg-tc-primary text-white hover:bg-tc-primary-hover shadow-xs')
           )}
           style={{
             transitionTimingFunction: 'cubic-bezier(0.34, 1.56, 0.64, 1)',
@@ -187,7 +200,9 @@ export function PdpActions({ product }: PdpActionsProps) {
             />
           )}
 
-          {isSnapped ? (
+          {isOutOfStock ? (
+            <span>Out of Stock</span>
+          ) : isSnapped ? (
             <>
               <IconTradeVerified size={20} className="text-tc-ink" />
               <span>Added to ToolCart!</span>

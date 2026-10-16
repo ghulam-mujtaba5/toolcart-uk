@@ -75,6 +75,7 @@ export interface PricingRepository {
 export interface CustomerRepository {
   getAll(): Promise<TradeCustomerRecord[]>;
   getById(id: string): Promise<TradeCustomerRecord | null>;
+  create(record: Omit<TradeCustomerRecord, 'id' | 'created_at'>): Promise<TradeCustomerRecord>;
   updateStatus(id: string, status: 'approved' | 'rejected' | 'pending', creditLimitGbp?: number): Promise<TradeCustomerRecord | null>;
 }
 

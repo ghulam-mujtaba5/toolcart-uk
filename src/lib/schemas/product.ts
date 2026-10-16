@@ -32,13 +32,14 @@ export type ProductUpdateInput = z.infer<typeof ProductUpdateSchema>;
 
 export const BulkProductActionSchema = z.object({
   product_ids: z.array(z.string()).min(1, 'At least one product must be selected'),
-  action: z.enum(['status', 'price_adjust', 'stock_adjust']),
+  action: z.enum(['status', 'price_adjust', 'stock_adjust', 'category']),
   payload: z.object({
     status: SellabilityStatusEnum.optional(),
     price_percentage_change: z.number().optional(), // e.g. +5 for +5% or -10 for -10%
     price_fixed_change_gbp: z.number().optional(),
     stock_delta: z.number().int().optional(),
     stock_exact: z.number().int().nonnegative().optional(),
+    category: z.string().optional(),
   }),
 });
 

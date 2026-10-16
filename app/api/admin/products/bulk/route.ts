@@ -20,8 +20,9 @@ export async function POST(request: NextRequest) {
     const { product_ids, action, payload } = parseResult.data;
     const db = getDb();
     let updatedCount = 0;
+    const uniqueProductIds = Array.from(new Set(product_ids));
 
-    for (const id of product_ids) {
+    for (const id of uniqueProductIds) {
       const product = await db.products.getById(id);
       if (!product) continue;
 
@@ -33,7 +34,7 @@ export async function POST(request: NextRequest) {
       } else if (action === 'price_adjust') {
         let newIncPrice = product.retail_price_inc_vat_gbp;
         if (payload.price_percentage_change !== undefined) {
-          newIncPrice = Number((newIncPrice * (1 + payload.price_percentage_change / 100)).toFixed(2));
+          newIncPrice = Number(Math.max(0.01, newIncPrice * (1 + payload.price_percentage_change / 100)).toFixed(2));
         } else if (payload.price_fixed_change_gbp !== undefined) {
           newIncPrice = Number(Math.max(0.01, newIncPrice + payload.price_fixed_change_gbp).toFixed(2));
         }
@@ -53,6 +54,13 @@ export async function POST(request: NextRequest) {
         await db.products.update(id, {
           stock_quantity: newStock,
           availability_status: newStock > 0 ? 'in_stock' : 'out_of_stock',
+        });
+        updatedCount++;
+      } else if (action === 'category' && payload.category) {
+        const catSlug = payload.category.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+        await db.products.update(id, {
+          category: payload.category,
+          category_slug: catSlug,
         });
         updatedCount++;
       }

@@ -1,4 +1,4 @@
-# BRIEFING — 2026-10-15T13:13:39Z
+# BRIEFING — 2026-10-15T13:48:00Z
 
 ## Mission
 Implement Milestone M2 (High-Reliability Data Tables & Bulk Actions) in e:\ToolCart: reusable data table primitive (src/components/admin/data-table/), product table upgrade with row selection and docking BulkActionBar, POST /api/admin/products/bulk route, interactive OrdersTable with search/filters/pagination, PUT /api/admin/customers/[id] route with client wiring, and comprehensive test suite.
@@ -26,7 +26,7 @@ Implement Milestone M2 (High-Reliability Data Tables & Bulk Actions) in e:\ToolC
 
 ## Current Parent
 - Conversation ID: 616c35a2-dbd8-4d26-9bbc-5e7e26c1b91c
-- Updated: 2026-10-15T13:13:39Z
+- Updated: 2026-10-15T13:48:00Z
 
 ## Task Summary
 - **What to build**:
@@ -39,8 +39,9 @@ Implement Milestone M2 (High-Reliability Data Tables & Bulk Actions) in e:\ToolC
 - **Success criteria**: All tests pass (`npm test`), TypeScript check passes (`npm run typecheck`), Brand V3 static checks pass (`python qa/check_static.py`).
 
 ## Key Decisions Made
-- Build a robust zero-dependency headless React hook + accessible Radix/HTML primitives in `src/components/admin/data-table/` to avoid adding heavy unverified external dependencies, while fully supporting the required interface contracts.
-- Ensure wholesale costs remain completely isolated.
+- Built robust zero-dependency headless React hook + accessible primitives in `src/components/admin/data-table/` (`useDataTable`, `DataTable`, `DataTablePagination`, `DataTableColumnHeader`, `DataTableSearch`, `DataTableFacetedFilter`).
+- Created modular, docked `BulkActionBar` component and integrated it into `ProductTable` with optimistic state mutations.
+- Expanded `BulkProductActionSchema` and `POST /api/admin/products/bulk/route.ts` to support category batch assignment alongside status, price, and stock updates.
 
 ## Artifact Index
 - `handoff.md` — Final handoff report
@@ -48,14 +49,25 @@ Implement Milestone M2 (High-Reliability Data Tables & Bulk Actions) in e:\ToolC
 - `DISPATCH.md` — Assigned instructions
 
 ## Change Tracker
-- **Files modified**: [TBD]
-- **Build status**: [Pending]
+- **Files modified**:
+  - `src/components/admin/data-table/types.ts` — Data table TypeScript interfaces
+  - `src/components/admin/data-table/use-data-table.ts` — Headless data table hook
+  - `src/components/admin/data-table/data-table-column-header.tsx` — Sortable column header with aria-sort
+  - `src/components/admin/data-table/data-table-pagination.tsx` — Accessible pagination controls
+  - `src/components/admin/data-table/data-table-search.tsx` — Search input primitive
+  - `src/components/admin/data-table/data-table-faceted-filter.tsx` — Faceted status filter tabs
+  - `src/components/admin/data-table/data-table.tsx` — Generic data table component
+  - `src/components/admin/data-table/index.ts` — Primitives barrel export
+  - `src/components/admin/bulk-action-bar.tsx` — Modular docked bulk action toolbar
+  - `src/components/admin/product-table.tsx` — Upgraded with BulkActionBar and category bulk action
+  - `src/lib/schemas/product.ts` — BulkProductActionSchema with category action
+  - `app/api/admin/products/bulk/route.ts` — Category action handling
+  - `src/components/admin/index.ts` — Barrel exports for BulkActionBar and data table primitives
+  - `tests/ui/admin-data-tables-and-bulk-actions.test.tsx` — 26 unit and integration tests
+- **Build status**: Pass (npm test: 32 files / 741 tests pass; typecheck: exit 0; check_static: exit 0)
 - **Pending issues**: None
 
 ## Quality Status
-- **Build/test result**: [Pending]
-- **Lint status**: [Pending]
-- **Tests added/modified**: [TBD]
-
-## Loaded Skills
-- None
+- **Build/test result**: All 741 tests passing (exit 0)
+- **Lint status**: Static checks clean (exit 0)
+- **Tests added/modified**: 26 new tests covering data table primitives, bulk actions, orders table, customer approvals

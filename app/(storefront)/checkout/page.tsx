@@ -49,6 +49,8 @@ export default function CheckoutPage() {
     }
   };
 
+  const [checkoutError, setCheckoutError] = useState<string | null>(null);
+
   const handlePlaceOrder = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -58,15 +60,64 @@ export default function CheckoutPage() {
     }
 
     setIsSubmitting(true);
+    setCheckoutError(null);
 
-    // Simulate order creation in supplier order state machine
-    setTimeout(() => {
-      const orderId = `TC-${Date.now().toString().slice(-6)}`;
-      setCreatedOrderId(orderId);
+    const generatedOrderNumber = `TC-${Date.now().toString().slice(-6)}`;
+
+    try {
+      const payload = {
+        order_number: generatedOrderNumber,
+        customer_email: email,
+        shipping_address: {
+          full_name: fullName,
+          company_name: undefined,
+          address_line_1: addressLine1,
+          address_line_2: addressLine2 || undefined,
+          city,
+          postcode: postcode.toUpperCase(),
+          country: 'United Kingdom',
+        },
+        items: items.map((i) => ({
+          supplier_sku: i.supplier_sku,
+          title: i.title,
+          quantity: i.quantity,
+          unit_price_ex_vat: i.retail_price_ex_vat_gbp,
+          unit_price_inc_vat: i.retail_price_inc_vat_gbp,
+          total_ex_vat: Math.round(i.retail_price_ex_vat_gbp * i.quantity * 100) / 100,
+          total_inc_vat: Math.round(i.retail_price_inc_vat_gbp * i.quantity * 100) / 100,
+          is_case: i.is_case_quantity,
+          units_per_outer: i.units_per_case,
+        })),
+        subtotal_ex_vat_gbp: summary.subtotal_ex_vat_gbp,
+        subtotal_inc_vat_gbp: summary.subtotal_inc_vat_gbp,
+        shipping_ex_vat_gbp: summary.shipping_ex_vat_gbp,
+        shipping_inc_vat_gbp: summary.shipping_inc_vat_gbp,
+        vat_amount_gbp: summary.vat_amount_gbp,
+        total_inc_vat_gbp: summary.grand_total_inc_vat_gbp,
+        supplier_id: items[0]?.supplier_id || 'status-uk',
+        state: 'checkout_authorized',
+      };
+
+      const res = await fetch('/api/admin/orders', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+
+      if (!res.ok) {
+        const errorData = await res.json().catch(() => ({}));
+        throw new Error(errorData.error || 'Failed to authorize order');
+      }
+
+      const createdOrder = await res.json();
+      setCreatedOrderId(createdOrder.order_number || generatedOrderNumber);
       setIsSuccess(true);
-      setIsSubmitting(false);
       clearCart();
-    }, 1200);
+    } catch (err: unknown) {
+      setCheckoutError(err instanceof Error ? err.message : 'Order authorization failed');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   if (isSuccess) {
@@ -307,12 +358,18 @@ export default function CheckoutPage() {
                 </p>
               </div>
 
+              {checkoutError && (
+                <div role="alert" className="p-3 bg-red-50 border border-red-200 rounded-lg text-xs text-red-700">
+                  <strong>Authorization Error:</strong> {checkoutError}
+                </div>
+              )}
+
               <Button
                 type="submit"
                 variant="accent"
                 size="lg"
                 disabled={isSubmitting}
-                className="w-full min-h-[48px] text-sm sm:text-base font-bold flex items-center justify-center gap-2"
+                className="w-full min-h-[48px] text-sm sm:text-base font-bold flex items-center justify-center gap-2 text-tc-ink"
               >
                 {isSubmitting ? (
                   <span>Authorizing Supplier Order...</span>

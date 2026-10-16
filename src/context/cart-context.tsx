@@ -13,8 +13,8 @@ interface CartContextValue {
   closeCart: () => void;
   toggleCart: () => void;
   addItem: (product: PublicProductDTO, quantity?: number, isCase?: boolean) => void;
-  removeItem: (productId: string) => void;
-  updateQuantity: (productId: string, quantity: number) => void;
+  removeItem: (productId: string, isCase?: boolean) => void;
+  updateQuantity: (productId: string, quantity: number, isCase?: boolean) => void;
   clearCart: () => void;
 }
 
@@ -146,6 +146,10 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
           return updated;
         }
 
+        const priceMultiplier = isCase ? (product.units_per_case || 1) : 1;
+        const retailEx = Math.round(product.retail_price_ex_vat_gbp * priceMultiplier * 100) / 100;
+        const retailInc = Math.round(product.retail_price_inc_vat_gbp * priceMultiplier * 100) / 100;
+
         const newItem: CartItem = {
           product_id: product.id,
           supplier_id: product.supplier_id || 'status-uk',
@@ -155,8 +159,8 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
           slug: product.slug,
           image: product.images[0],
           category: product.category,
-          retail_price_ex_vat_gbp: product.retail_price_ex_vat_gbp,
-          retail_price_inc_vat_gbp: product.retail_price_inc_vat_gbp,
+          retail_price_ex_vat_gbp: retailEx,
+          retail_price_inc_vat_gbp: retailInc,
           units_per_pack: product.units_per_pack,
           units_per_case: product.units_per_case,
           quantity,
@@ -171,19 +175,34 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     []
   );
 
-  const removeItem = useCallback((productId: string) => {
-    setItems((prev) => prev.filter((i) => i.product_id !== productId));
-  }, []);
-
-  const updateQuantity = useCallback((productId: string, quantity: number) => {
-    if (quantity <= 0) {
-      setItems((prev) => prev.filter((i) => i.product_id !== productId));
-      return;
-    }
+  const removeItem = useCallback((productId: string, isCase?: boolean) => {
     setItems((prev) =>
-      prev.map((i) => (i.product_id === productId ? { ...i, quantity } : i))
+      prev.filter((i) =>
+        isCase !== undefined
+          ? !(i.product_id === productId && i.is_case_quantity === isCase)
+          : i.product_id !== productId
+      )
     );
   }, []);
+
+  const updateQuantity = useCallback(
+    (productId: string, quantity: number, isCase?: boolean) => {
+      if (quantity <= 0) {
+        removeItem(productId, isCase);
+        return;
+      }
+      setItems((prev) =>
+        prev.map((i) => {
+          const matches =
+            isCase !== undefined
+              ? i.product_id === productId && i.is_case_quantity === isCase
+              : i.product_id === productId;
+          return matches ? { ...i, quantity } : i;
+        })
+      );
+    },
+    [removeItem]
+  );
 
   const clearCart = useCallback(() => {
     setItems([]);

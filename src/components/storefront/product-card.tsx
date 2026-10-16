@@ -93,14 +93,14 @@ export function ProductCard({ product, className }: ProductCardProps) {
     >
       <div>
         {/* Top Image & Badge Box */}
-        <div className="relative bg-tc-surface-soft p-6 flex items-center justify-center border-b border-tc-border/60 aspect-4/3 overflow-hidden">
+        <div className="relative bg-tc-surface-soft p-3 sm:p-6 flex items-center justify-center border-b border-tc-border/60 aspect-square sm:aspect-4/3 overflow-hidden">
           {/* Live 24h Stock Freshness Radar Pulse Ring */}
           <div className="absolute top-2.5 left-2.5 z-10 max-w-[160px] sm:max-w-none">
             <StockRadarBadge
               status={product.availability_status}
               stockQuantity={product.stock_quantity}
               size="sm"
-              className="max-w-[160px] sm:max-w-none"
+              className="max-w-[160px] sm:max-w-none text-[10px] sm:text-xs"
             />
           </div>
 
@@ -117,19 +117,19 @@ export function ProductCard({ product, className }: ProductCardProps) {
             )}
           >
             {isCompared ? (
-              <Check className="w-3 h-3 text-white" />
+              <Check className="w-3.5 h-3.5 text-white" />
             ) : (
               <IconCaliper size={16} className="text-tc-primary" />
             )}
-            <span>Compare</span>
+            <span className="hidden sm:inline">Compare</span>
           </button>
 
           {/* Real Product Photography with Brand V3 Fallback */}
           <Link
             href={`/products/${product.slug}`}
-            className="w-full h-full flex flex-col items-center justify-center group-hover:scale-105 transition-transform p-2"
+            className="w-full h-full flex flex-col items-center justify-center group-hover:scale-105 transition-transform p-1 sm:p-2"
           >
-            <div className="relative w-full h-36 sm:h-40 flex items-center justify-center">
+            <div className="relative w-full h-28 sm:h-40 flex items-center justify-center">
               {product.images && product.images[0] ? (
                 // eslint-disable-next-line @next/next/no-img-element
                 <img
@@ -139,7 +139,7 @@ export function ProductCard({ product, className }: ProductCardProps) {
                   loading="lazy"
                 />
               ) : (
-                <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-white border border-[#C8D9F9] shadow-xs flex items-center justify-center text-tc-primary">
+                <div className="w-14 h-14 sm:w-20 sm:h-20 rounded-xl sm:rounded-2xl bg-white border border-[#C8D9F9] shadow-xs flex items-center justify-center text-tc-primary">
                   <CategoryIcon size={32} />
                 </div>
               )}
@@ -148,19 +148,17 @@ export function ProductCard({ product, className }: ProductCardProps) {
         </div>
 
         {/* Content Box */}
-        <div className="p-4 sm:p-5">
-          <div className="flex items-center gap-2 mb-1.5 text-xs text-tc-text-secondary">
-            <span className="text-[11px] font-bold uppercase tracking-wider text-tc-primary">
+        <div className="p-3 sm:p-5">
+          <div className="flex items-center gap-1.5 sm:gap-2 mb-1 sm:mb-1.5 text-xs text-tc-text-secondary">
+            <span className="text-[10px] sm:text-[11px] font-bold uppercase tracking-wider text-tc-primary truncate">
               {product.brand}
             </span>
-            <span className="text-tc-border-strong">•</span>
-            <span className="font-mono text-[11px] text-tc-text-secondary">{product.supplier_sku}</span>
-            <span className="text-tc-border-strong">•</span>
-            <span className="truncate">{product.category}</span>
+            <span className="text-tc-border-strong hidden sm:inline">•</span>
+            <span className="font-mono text-[10px] sm:text-[11px] text-tc-text-secondary hidden sm:inline">{product.supplier_sku}</span>
           </div>
 
           <Link href={`/products/${product.slug}`} className="block">
-            <h3 className="font-heading font-bold text-sm sm:text-base text-tc-ink group-hover:text-tc-primary transition-colors line-clamp-2 leading-snug">
+            <h3 className="font-heading font-bold text-xs sm:text-base text-tc-ink group-hover:text-tc-primary transition-colors line-clamp-2 leading-snug">
               {product.title}
             </h3>
           </Link>
@@ -184,13 +182,13 @@ export function ProductCard({ product, className }: ProductCardProps) {
       </div>
 
       {/* Pricing & Add to Basket Footer with Snap-to-Cart Tactile Button */}
-      <div className="p-4 sm:p-5 pt-0">
-        <div className="flex items-baseline justify-between mb-3">
+      <div className="p-3 sm:p-5 pt-0">
+        <div className="flex items-baseline justify-between mb-2 sm:mb-3">
           <div>
-            <div className="font-sans font-bold text-lg sm:text-xl text-tc-ink tabular-nums">
+            <div className="font-sans font-bold text-base sm:text-xl text-tc-ink tabular-nums">
               {price.primaryText}
             </div>
-            <div className="text-xs text-tc-text-secondary tabular-nums">
+            <div className="text-[10px] sm:text-xs text-tc-text-secondary tabular-nums">
               {price.secondaryText}
             </div>
           </div>
@@ -210,7 +208,7 @@ export function ProductCard({ product, className }: ProductCardProps) {
               : `Add to Basket: ${product.title}`
           }
           className={cn(
-            'relative w-full flex items-center justify-center gap-2 h-11 min-h-[44px] px-4 rounded-button text-xs sm:text-sm font-bold',
+            'relative w-full flex items-center justify-center gap-1.5 sm:gap-2 h-10 sm:h-11 min-h-[44px] px-2.5 sm:px-4 rounded-button text-xs sm:text-sm font-bold',
             'transition-all duration-200 select-none outline-none focus-visible:ring-2 focus-visible:ring-tc-primary',
             isOutOfStock
               ? 'bg-tc-surface-soft text-tc-text-secondary cursor-not-allowed border border-tc-border'
@@ -241,8 +239,9 @@ export function ProductCard({ product, className }: ProductCardProps) {
             </>
           ) : (
             <>
-              <ShoppingCart className="w-4 h-4 text-white" />
-              <span>Add to Basket</span>
+              <ShoppingCart className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white" />
+              <span className="hidden sm:inline">Add to Basket</span>
+              <span className="sm:hidden">Add</span>
             </>
           )}
         </button>

@@ -3,6 +3,7 @@ import { cookies } from 'next/headers';
 import { VatProvider, VatMode } from '@/context/vat-context';
 import { CartProvider } from '@/context/cart-context';
 import { CompareProvider } from '@/context/compare-context';
+import { CookieConsentProvider } from '@/context/cookie-consent-context';
 import { StorefrontLayoutClient } from '@/components/storefront/storefront-layout-client';
 
 export const dynamic = 'force-dynamic';
@@ -12,12 +13,14 @@ export default function StorefrontLayout({ children }: { children: React.ReactNo
   const initialVatMode = (cookieStore.get('toolcart_vat_mode')?.value as VatMode) || 'inc';
 
   return (
-    <VatProvider initialMode={initialVatMode}>
-      <CartProvider>
-        <CompareProvider>
-          <StorefrontLayoutClient>{children}</StorefrontLayoutClient>
-        </CompareProvider>
-      </CartProvider>
-    </VatProvider>
+    <CookieConsentProvider>
+      <VatProvider initialMode={initialVatMode}>
+        <CartProvider>
+          <CompareProvider>
+            <StorefrontLayoutClient>{children}</StorefrontLayoutClient>
+          </CompareProvider>
+        </CartProvider>
+      </VatProvider>
+    </CookieConsentProvider>
   );
 }

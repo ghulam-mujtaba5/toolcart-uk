@@ -75,7 +75,7 @@ export function ProjectKitCard({ kit }: ProjectKitCardProps) {
         supplier_name: 'Status International (UK) Ltd',
         category: kit.category,
         category_slug: 'tools',
-        images: [`/images/products/${item.product_slug}.svg`],
+        images: [`/images/products/${item.sku}.png`],
         retail_price_inc_vat_gbp: item.price_inc_vat,
         retail_price_ex_vat_gbp: item.price_ex_vat,
         units_per_pack: item.units_per_pack,

@@ -27,10 +27,40 @@ export default function TradePortalPage() {
   const [monthlySpend, setMonthlySpend] = useState('£1,000 – £5,000');
 
   const [submitted, setSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmitted(true);
+    try {
+      setIsSubmitting(true);
+      setSubmitError(null);
+
+      const res = await fetch('/api/trade', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          business_name: companyName,
+          contact_name: contactName,
+          email: contactEmail,
+          phone: contactPhone || '020 7946 0991',
+          trade_type: tradeSector,
+          vat_number: vatNumber || undefined,
+          company_number: companiesHouseNumber,
+        }),
+      });
+
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}));
+        throw new Error(data.error || 'Failed to submit trade application');
+      }
+
+      setSubmitted(true);
+    } catch (err: unknown) {
+      setSubmitError(err instanceof Error ? err.message : 'Application submission failed');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -221,7 +251,25 @@ export default function TradePortalPage() {
                   className="w-full h-11 min-h-[44px] px-3.5 rounded-lg border border-tc-border-strong text-base sm:text-xs text-tc-ink focus:outline-none focus:ring-2 focus:ring-tc-primary"
                 />
               </div>
+
+              <div>
+                <label className="block text-tc-ink font-semibold mb-1.5">Contact Telephone *</label>
+                <input
+                  type="tel"
+                  required
+                  value={contactPhone}
+                  onChange={(e) => setContactPhone(e.target.value)}
+                  placeholder="020 7946 0991"
+                  className="w-full h-11 min-h-[44px] px-3.5 rounded-lg border border-tc-border-strong text-base sm:text-xs text-tc-ink focus:outline-none focus:ring-2 focus:ring-tc-primary"
+                />
+              </div>
             </div>
+
+            {submitError && (
+              <div role="alert" className="p-3 bg-red-50 border border-red-200 rounded-lg text-xs text-red-700">
+                <strong>Error:</strong> {submitError}
+              </div>
+            )}
 
             <div className="pt-4 border-t border-tc-border flex flex-col sm:flex-row sm:items-center justify-between gap-4">
               <span className="text-xs text-tc-text-secondary">
@@ -232,7 +280,8 @@ export default function TradePortalPage() {
                 type="submit"
                 variant="accent"
                 size="lg"
-                className="font-bold flex items-center justify-center gap-2 text-sm w-full sm:w-auto"
+                isLoading={isSubmitting}
+                className="font-bold flex items-center justify-center gap-2 text-sm w-full sm:w-auto text-tc-ink"
               >
                 <span>Submit Trade Application</span>
                 <ArrowRight className="w-4 h-4" />

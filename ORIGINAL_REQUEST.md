@@ -335,3 +335,102 @@ Confirm all interactive controls (buttons, inputs, quantity steppers, drawer clo
 
 ### R3. Quality Gates & Final Reporting
 Execute full test suites (`npm test`), static checks (`python qa/check_static.py`), and TypeScript validation (`npm run typecheck`), delivering the final victory report and project documentation updates.
+
+
+## 2026-10-15T19:38:27Z
+
+Use a multi-agent finishing team to execute complete, high-value final polish and launch-readiness hardening across the ToolCart store (storefront and merchant admin portal), strictly adhering to Brand V3 tokens, WCAG AA contrast, responsive mobile/desktop layouts, and staging safety guardrails.
+
+Working directory: e:\ToolCart
+Integrity mode: development
+
+## Requirements
+
+### R1. Storefront & Customer Journey Final Polish
+Polish and verify the end-to-end storefront user experience:
+- Strictly apply Brand V3 design tokens (design/tokens.css, design/tokens.json) across Home, Catalog, PDP, Cart/Drawer, and Checkout placeholder.
+- Enforce authoritative colors: Ink (#182336), Cobalt (#2450B8), Action Lime (#DDF16A), Workshop White (#F7F8F5), Cloud Blue (#EAF0FF), Graphite (#252D30), and accessible Steel Text (#596B70) on pale surfaces.
+- Zero usage of prohibited palette elements: No copper (#B84C32), purple/violet/lavender, teal branding, or white text on Action Lime.
+- Guarantee clean responsive layouts without horizontal scrollbars or element collisions at 360px (mobile) and 1440px (desktop).
+
+### R2. Merchant Admin Portal & Bulk Data Actions Polish
+Complete and polish the retail merchant admin portal:
+- Verify data table sorting, filtering, row selection, pagination, and the floating BulkActionBar.
+- Ensure batch status updates, inventory changes, and pricing adjustments execute correctly and gracefully handle adversarial or null payloads.
+- Preserve authenticated admin API boundaries and ensure unauthorized access fails closed.
+
+### R3. Commerce Governance, Safety & Wholesale Price Isolation
+Enforce all prototype governance and launch blocker remediation rules:
+- Keep STAGING_ONLY=true active by default with prominent staging disclaimers.
+- Keep live checkout disabled and fail-closed for unapproved supplier draft records.
+- Protect wholesale costs and trade terms strictly server-side — ensure zero supplier cost or wholesale margin data is leaked into client-side Next.js JavaScript bundles or public API responses.
+- Maintain provisional brand notices (domain and trademark remain unverified).
+
+### R4. Automated Quality, Adversarial QA & Zero Regressions
+- Execute complete test suites (npm test -- --run), linting, and typechecking (npx tsc --noEmit).
+- Ensure all 798+ tests pass with zero regressions across unit, UI, micro-interaction, adapter, security, and adversarial suites.
+
+## Acceptance Criteria
+
+### Design System & Visual Integrity
+- [ ] No prohibited color hex codes (#B84C32, purple, violet, teal) in code or stylesheets.
+- [ ] Accessible Steel Text (#596B70) used on pale surfaces instead of legacy steel grey.
+- [ ] All interactive elements pass WCAG AA contrast ratios (>= 4.5:1 for body text, >= 3:1 for large text/icons).
+
+### Responsive Viewports
+- [ ] Header, mobile navigation drawer, product grid, PDP spec tables, and admin data table display cleanly at 360px viewport width without horizontal clipping or scrollbar leakage.
+- [ ] Desktop layout at 1440px renders full sidebar docking, clear typography hierarchy, and appropriate whitespace.
+
+### Security & Commerce Guardrails
+- [ ] Public customer bundles and client responses contain no supplier cost / trade pricing fields.
+- [ ] Live payment capture remains disabled in staging.
+- [ ] Admin API routes require authorization headers and fail closed.
+
+### Verification Suite
+- [ ] npm test -- --run exits with code 0 and 100% passing tests.
+- [ ] npx tsc --noEmit and npm run lint report 0 errors and 0 warnings.
+- [ ] Verification log generated confirming all checks completed.
+
+
+## 2026-10-15T20:18:52Z
+
+Deliver an end-to-end mobile-adaptive transformation for the ToolCart storefront across iOS Safari and Android Chrome, resolving visual clutter, correcting layout and sizing defects on the home screen, and establishing an app-grade touch experience.
+
+Working directory: e:\ToolCart
+Integrity mode: development
+
+## Requirements
+
+### R1. Mobile Screen De-cluttering & Visual Hierarchy
+Transform the home screen and primary storefront landing views for mobile screens (360px–430px):
+- Rationalize vertical screen estate: replace cumbersome single-column card stacks with compact 2-column mobile grids or fluid swipeable carousels.
+- Streamline the top announcement bar, utility microbar, and hero section so key shopping actions and product discovery appear immediately without excessive scrolling.
+- Balance typographical scale, card padding, and asset aspect ratios so text never truncates awkwardly or collides on small displays.
+- Strictly adhere to Brand V3 tokens (Ink #182336, Cobalt #2450B8, Action Lime #DDF16A, Workshop White #F7F8F5, Cloud Blue #EAF0FF; no copper, purple, or unapproved palettes).
+
+### R2. Mobile Navigation & Native Touch Ergonomics (iOS & Android)
+Provide an app-like navigation and touch interaction architecture:
+- Implement an ergonomic bottom navigation bar (Home, Catalog/Search, Advice, Compare/Kits, Basket) with active state indicators and badge counters.
+- Support device safe-area insets (`env(safe-area-inset-top)` and `env(safe-area-inset-bottom)`) to prevent content clipping under iOS dynamic islands/home indicators and Android navigation bars.
+- Ensure all interactive elements (buttons, filter chips, drawer toggles, quantity selectors) provide comfortable touch targets satisfying WCAG 2.1 AA (minimum 44×44px hit areas).
+
+### R3. Responsive Drawers, Modals & Fluid Viewport Integrity
+Harden all mobile overlays and interactive drawers (Mini-Basket, Compare Drawer, Hardware Advice Assistant, Filter Sidebar, Mobile Navigation):
+- Eliminate horizontal overflow (`scrollWidth === clientWidth`) across 360px, 390px, 412px, and 768px viewports.
+- Prevent background body scrolling and rubber-band layout shifts when drawers or modal sheets are active.
+- Ensure swipe gestures and tap-outside dismissals work reliably on both touch and pointer devices.
+
+## Acceptance Criteria
+
+### Viewport & Layout Integrity
+- [ ] Automated viewport checks confirm zero horizontal scrollbar overflow (`document.documentElement.scrollWidth <= window.innerWidth`) at 360px, 390px, 412px, and 768px.
+- [ ] Safe-area padding is applied to fixed/sticky elements ensuring no UI overlaps with native device indicators.
+
+### Visual Polish & Hierarchy
+- [ ] Above-the-fold content on mobile loads cleanly with immediate product discovery cues.
+- [ ] Category navigation and featured hardware cards render in compact, balanced mobile configurations without vertical bloating.
+- [ ] All storefront components comply with Brand V3 color tokens and pass WCAG AA contrast standards.
+
+### Touch & Accessibility Standards
+- [ ] All interactive touch targets measure at least 44×44px.
+- [ ] All automated test suites (`npm run test:ui`, `npm run test:storefront`, brand compliance, responsive tests) pass cleanly with zero regressions.

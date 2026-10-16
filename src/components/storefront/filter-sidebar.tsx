@@ -1,7 +1,8 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { useRouter, useSearchParams, usePathname } from 'next/navigation';
+import { useVAT } from '@/context/vat-context';
 import { Button } from '@/components/ui/button';
 import { RotateCcw, SlidersHorizontal, X, Check } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -17,6 +18,8 @@ export function FilterSidebar({ categories, brands, className }: FilterSidebarPr
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
+  const { isTradeMode } = useVAT();
+
   const [isMobileDrawerOpen, setIsMobileDrawerOpen] = useState(false);
 
   const currentCategory = searchParams.get('category') || '';
@@ -24,6 +27,48 @@ export function FilterSidebar({ categories, brands, className }: FilterSidebarPr
   const inStockOnly = searchParams.get('in_stock') === 'true';
   const minPrice = searchParams.get('min_price') || '';
   const maxPrice = searchParams.get('max_price') || '';
+
+  const [localMinPrice, setLocalMinPrice] = useState(minPrice);
+  const [localMaxPrice, setLocalMaxPrice] = useState(maxPrice);
+
+  const updateParam = useCallback(
+    (key: string, value: string | null) => {
+      const params = new URLSearchParams(searchParams.toString());
+      if (value) {
+        params.set(key, value);
+      } else {
+        params.delete(key);
+      }
+      router.push(`${pathname}?${params.toString()}`);
+    },
+    [pathname, router, searchParams]
+  );
+
+  useEffect(() => {
+    setLocalMinPrice(minPrice);
+  }, [minPrice]);
+
+  useEffect(() => {
+    setLocalMaxPrice(maxPrice);
+  }, [maxPrice]);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (localMinPrice !== minPrice) {
+        updateParam('min_price', localMinPrice || null);
+      }
+    }, 400);
+    return () => clearTimeout(timer);
+  }, [localMinPrice, minPrice, updateParam]);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (localMaxPrice !== maxPrice) {
+        updateParam('max_price', localMaxPrice || null);
+      }
+    }, 400);
+    return () => clearTimeout(timer);
+  }, [localMaxPrice, maxPrice, updateParam]);
 
   // Escape key and scroll lock for mobile filter drawer
   useEffect(() => {
@@ -41,15 +86,6 @@ export function FilterSidebar({ categories, brands, className }: FilterSidebarPr
     };
   }, [isMobileDrawerOpen]);
 
-  const updateParam = (key: string, value: string | null) => {
-    const params = new URLSearchParams(searchParams.toString());
-    if (value) {
-      params.set(key, value);
-    } else {
-      params.delete(key);
-    }
-    router.push(`${pathname}?${params.toString()}`);
-  };
 
   const handleReset = () => {
     const params = new URLSearchParams();
@@ -177,7 +213,7 @@ export function FilterSidebar({ categories, brands, className }: FilterSidebarPr
       {/* Price Range */}
       <div className="space-y-3 pt-4 border-t border-tc-border/60">
         <h4 className="text-xs font-bold text-tc-ink uppercase tracking-wider font-heading">
-          Price (Inc. VAT)
+          Price {isTradeMode ? '(Ex. VAT)' : '(Inc. VAT)'}
         </h4>
         <div className="grid grid-cols-2 gap-3 text-xs">
           <div>
@@ -185,8 +221,8 @@ export function FilterSidebar({ categories, brands, className }: FilterSidebarPr
             <input
               type="number"
               placeholder="0"
-              value={minPrice}
-              onChange={(e) => updateParam('min_price', e.target.value || null)}
+              value={localMinPrice}
+              onChange={(e) => setLocalMinPrice(e.target.value)}
               className="w-full h-11 min-h-[44px] px-3 rounded-lg border border-tc-border-strong text-base sm:text-xs tabular-nums focus:outline-none focus:ring-2 focus:ring-tc-primary"
             />
           </div>
@@ -195,8 +231,8 @@ export function FilterSidebar({ categories, brands, className }: FilterSidebarPr
             <input
               type="number"
               placeholder="100"
-              value={maxPrice}
-              onChange={(e) => updateParam('max_price', e.target.value || null)}
+              value={localMaxPrice}
+              onChange={(e) => setLocalMaxPrice(e.target.value)}
               className="w-full h-11 min-h-[44px] px-3 rounded-lg border border-tc-border-strong text-base sm:text-xs tabular-nums focus:outline-none focus:ring-2 focus:ring-tc-primary"
             />
           </div>

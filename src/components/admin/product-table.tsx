@@ -26,6 +26,7 @@ import {
   X,
 } from 'lucide-react';
 import { formatGbp } from '@/lib/catalog/pricing';
+import { BulkActionBar } from './bulk-action-bar';
 
 export interface ProductTableProps {
   products: PublicProductDTO[];
@@ -55,12 +56,8 @@ export function ProductTable({ products: initialProducts, wholesaleOffers = {} }
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
   const headerCheckboxRef = useRef<HTMLInputElement>(null);
 
-  // Bulk Action Drawer / Modal State
+  // Bulk Action State
   const [isBulkExecuting, setIsBulkExecuting] = useState(false);
-  const [bulkPriceChange, setBulkPriceChange] = useState<number | ''>('');
-  const [bulkStockExact, setBulkStockExact] = useState<number | ''>('');
-  const [showPriceAdjust, setShowPriceAdjust] = useState(false);
-  const [showStockAdjust, setShowStockAdjust] = useState(false);
   const [toastMessage, setToastMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
 
   // Synchronize when initialProducts changes
@@ -194,8 +191,6 @@ export function ProductTable({ products: initialProducts, wholesaleOffers = {} }
 
   const clearSelection = () => {
     setSelectedIds(new Set());
-    setShowPriceAdjust(false);
-    setShowStockAdjust(false);
   };
 
   const handleSort = (field: SortField) => {
@@ -220,7 +215,7 @@ export function ProductTable({ products: initialProducts, wholesaleOffers = {} }
 
   // Bulk Actions
   const executeBulkAction = async (
-    action: 'status' | 'price_adjust' | 'stock_adjust',
+    action: 'status' | 'price_adjust' | 'stock_adjust' | 'category',
     payload: any
   ) => {
     const ids = Array.from(selectedIds);
@@ -249,6 +244,13 @@ export function ProductTable({ products: initialProducts, wholesaleOffers = {} }
           if (!selectedIds.has(p.id)) return p;
           if (action === 'status' && payload.status) {
             return { ...p, sellability_status: payload.status };
+          }
+          if (action === 'category' && payload.category) {
+            return {
+              ...p,
+              category: payload.category,
+              category_slug: payload.category.toLowerCase().replace(/[^a-z0-9]+/g, '-'),
+            };
           }
           if (action === 'price_adjust') {
             let newPrice = p.retail_price_inc_vat_gbp;
@@ -429,156 +431,16 @@ export function ProductTable({ products: initialProducts, wholesaleOffers = {} }
       </div>
 
       {/* Floating Docked Bulk Actions Bar */}
-      {selectedIds.size > 0 && (
-        <div
-          role="region"
-          aria-label="Bulk actions bar"
-          className="sticky top-4 z-30 p-3.5 bg-tc-ink text-white border-2 border-tc-action-lime rounded-xl shadow-lg flex flex-wrap items-center justify-between gap-3 animate-in fade-in slide-in-from-top-2"
-        >
-          <div className="flex items-center gap-3">
-            <span className="bg-tc-action-lime text-tc-ink font-bold text-xs px-2.5 py-1 rounded-md">
-              {selectedIds.size} selected
-            </span>
-            <span className="text-xs text-tc-canvas/80 hidden sm:inline">
-              Choose a bulk operation across selected products:
-            </span>
-          </div>
-
-          <div className="flex flex-wrap items-center gap-2">
-            <Button
-              variant="outline"
-              size="sm"
-              disabled={isBulkExecuting}
-              onClick={() => executeBulkAction('status', { status: 'approved' })}
-              className="bg-white/10 hover:bg-white/20 text-white border-white/20 h-8 text-xs font-bold"
-            >
-              Approve
-            </Button>
-            <Button
-              variant="outline"
-              size="sm"
-              disabled={isBulkExecuting}
-              onClick={() => executeBulkAction('status', { status: 'draft' })}
-              className="bg-white/10 hover:bg-white/20 text-white border-white/20 h-8 text-xs font-bold"
-            >
-              Mark Draft
-            </Button>
-            <Button
-              variant="outline"
-              size="sm"
-              disabled={isBulkExecuting}
-              onClick={() => executeBulkAction('status', { status: 'needs_review' })}
-              className="bg-white/10 hover:bg-white/20 text-white border-white/20 h-8 text-xs font-bold"
-            >
-              Needs Review
-            </Button>
-
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => {
-                setShowPriceAdjust(!showPriceAdjust);
-                setShowStockAdjust(false);
-              }}
-              className="bg-white/10 hover:bg-white/20 text-white border-white/20 h-8 text-xs font-bold"
-            >
-              <TrendingUp className="w-3.5 h-3.5 mr-1 text-tc-action-lime" />
-              Adjust Price
-            </Button>
-
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => {
-                setShowStockAdjust(!showStockAdjust);
-                setShowPriceAdjust(false);
-              }}
-              className="bg-white/10 hover:bg-white/20 text-white border-white/20 h-8 text-xs font-bold"
-            >
-              <PackageCheck className="w-3.5 h-3.5 mr-1 text-tc-action-lime" />
-              Adjust Stock
-            </Button>
-
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={clearSelection}
-              className="text-tc-canvas/70 hover:text-white h-8 text-xs"
-            >
-              Deselect All
-            </Button>
-          </div>
-
-          {/* Price Adjust Sub-panel */}
-          {showPriceAdjust && (
-            <div className="w-full pt-3 mt-2 border-t border-white/10 flex flex-wrap items-center gap-3">
-              <span className="text-xs font-semibold text-tc-canvas">Percentage change:</span>
-              <input
-                type="number"
-                placeholder="e.g. 5 for +5%, -10 for -10%"
-                value={bulkPriceChange}
-                onChange={(e) => setBulkPriceChange(e.target.value === '' ? '' : Number(e.target.value))}
-                className="h-8 px-2.5 rounded bg-white/10 border border-white/20 text-xs text-white placeholder:text-white/40 focus:outline-none focus:ring-1 focus:ring-tc-action-lime w-48"
-              />
-              <Button
-                size="sm"
-                variant="primary"
-                disabled={bulkPriceChange === '' || isBulkExecuting}
-                onClick={() =>
-                  executeBulkAction('price_adjust', {
-                    price_percentage_change: Number(bulkPriceChange),
-                  })
-                }
-                className="h-8 text-xs"
-              >
-                Apply Price Adjustment
-              </Button>
-              <button
-                type="button"
-                onClick={() => setShowPriceAdjust(false)}
-                className="text-xs text-white/60 hover:text-white"
-              >
-                Cancel
-              </button>
-            </div>
-          )}
-
-          {/* Stock Adjust Sub-panel */}
-          {showStockAdjust && (
-            <div className="w-full pt-3 mt-2 border-t border-white/10 flex flex-wrap items-center gap-3">
-              <span className="text-xs font-semibold text-tc-canvas">Set exact stock:</span>
-              <input
-                type="number"
-                min="0"
-                placeholder="e.g. 50"
-                value={bulkStockExact}
-                onChange={(e) => setBulkStockExact(e.target.value === '' ? '' : Number(e.target.value))}
-                className="h-8 px-2.5 rounded bg-white/10 border border-white/20 text-xs text-white placeholder:text-white/40 focus:outline-none focus:ring-1 focus:ring-tc-action-lime w-36"
-              />
-              <Button
-                size="sm"
-                variant="primary"
-                disabled={bulkStockExact === '' || isBulkExecuting}
-                onClick={() =>
-                  executeBulkAction('stock_adjust', {
-                    stock_exact: Number(bulkStockExact),
-                  })
-                }
-                className="h-8 text-xs"
-              >
-                Apply Stock Quantity
-              </Button>
-              <button
-                type="button"
-                onClick={() => setShowStockAdjust(false)}
-                className="text-xs text-white/60 hover:text-white"
-              >
-                Cancel
-              </button>
-            </div>
-          )}
-        </div>
-      )}
+      <BulkActionBar
+        selectedCount={selectedIds.size}
+        isExecuting={isBulkExecuting}
+        categories={categories}
+        onStatusChange={(status) => executeBulkAction('status', { status })}
+        onPriceAdjust={(params) => executeBulkAction('price_adjust', params)}
+        onStockAdjust={(params) => executeBulkAction('stock_adjust', params)}
+        onCategoryAssign={(category) => executeBulkAction('category', { category })}
+        onClearSelection={clearSelection}
+      />
 
       {/* Product Table */}
       <div className="bg-white border border-tc-border rounded-xl shadow-xs overflow-hidden">

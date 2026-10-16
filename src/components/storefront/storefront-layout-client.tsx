@@ -8,6 +8,9 @@ import { Footer } from './footer';
 import { CompareDrawer } from './compare-drawer';
 import { MiniBasket } from './mini-basket';
 import { AIAssistantDrawer } from './ai-assistant-drawer';
+import { BottomNav } from './bottom-nav';
+import { CookieConsentBanner } from './cookie-consent-banner';
+import { CookiePreferencesModal } from './cookie-preferences-modal';
 
 export function StorefrontLayoutClient({ children }: { children: React.ReactNode }) {
   const [isAiOpen, setIsAiOpen] = useState(false);
@@ -17,11 +20,14 @@ export function StorefrontLayoutClient({ children }: { children: React.ReactNode
       <Microbar />
       <Header onOpenAiAssistant={() => setIsAiOpen(true)} />
       <NavBar />
-      <main className="flex-1">{children}</main>
+      <main className="flex-1 pb-20 md:pb-0">{children}</main>
       <CompareDrawer />
       <MiniBasket />
       <AIAssistantDrawer isOpen={isAiOpen} onClose={() => setIsAiOpen(false)} />
+      <BottomNav onOpenAiAssistant={() => setIsAiOpen(true)} />
       <Footer />
+      <CookieConsentBanner />
+      <CookiePreferencesModal />
     </div>
   );
 }

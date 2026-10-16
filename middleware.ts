@@ -1,11 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server';
-import crypto from 'node:crypto';
 
 function timingSafeEqualStr(a: string, b: string): boolean {
-  const bufA = Buffer.from(a);
-  const bufB = Buffer.from(b);
-  if (bufA.length !== bufB.length) return false;
-  return crypto.timingSafeEqual(bufA, bufB);
+  if (a.length !== b.length) return false;
+  let mismatch = 0;
+  for (let i = 0; i < a.length; i++) {
+    mismatch |= a.charCodeAt(i) ^ b.charCodeAt(i);
+  }
+  return mismatch === 0;
 }
 
 const DEFAULT_ADMIN_TOKEN = 'toolcart_admin_token_2026_live';

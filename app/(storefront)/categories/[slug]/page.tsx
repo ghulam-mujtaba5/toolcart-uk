@@ -6,6 +6,7 @@ import { ProductCard } from '@/components/storefront/product-card';
 import { FilterSidebar } from '@/components/storefront/filter-sidebar';
 import { SearchFilterChips } from '@/components/storefront/search-filter-chips';
 import { CatalogSortControl } from '@/components/storefront/catalog-sort-control';
+import { Button } from '@/components/ui/button';
 import { ShieldCheck } from 'lucide-react';
 
 export const dynamic = 'force-dynamic';
@@ -99,26 +100,38 @@ const CATEGORY_IMAGES: Record<string, string> = {
   'electrical-lighting': '/images/kits/electrical-kit.webp',
 };
 
-const CATEGORY_PROMOS: Record<string, { image: string; title: string; subtitle: string }> = {
+const CATEGORY_PROMOS: Record<string, { image: string; title: string; subtitle: string; link: string; linkText: string; badge: string }> = {
   decorating: {
     image: '/images/promos/promo-decorating-1600x650.webp',
     title: 'Trade Surface Preparation & Painting',
     subtitle: 'Crepe paper masking tapes, pure bristle sets, and heavy polythene floor protection.',
+    link: '/decorating',
+    linkText: 'Explore Decorating Range',
+    badge: 'TRADE SURFACE PREP',
   },
   measuring: {
     image: '/images/promos/promo-measuring-1600x650.webp',
     title: 'Precision Metric Measurement & Levels',
     subtitle: '5m/10m high-contrast tapes, 3-vial spirit levels, and stainless steel rules.',
+    link: '/categories/measuring',
+    linkText: 'Explore Measuring Range',
+    badge: 'CLASS II ACCURACY',
   },
   ppe: {
     image: '/images/promos/promo-safety-1600x650.webp',
     title: 'Workwear & EN166 Site Safety',
     subtitle: 'FFP2 dust filtration, abrasion-resistant grip gloves, and certified site eye protection.',
+    link: '/ppe',
+    linkText: 'Explore PPE & Safety',
+    badge: 'EN166 CERTIFIED',
   },
   'workwear-safety': {
     image: '/images/promos/promo-safety-1600x650.webp',
     title: 'Workwear & EN166 Site Safety',
     subtitle: 'FFP2 dust filtration, abrasion-resistant grip gloves, and certified site eye protection.',
+    link: '/ppe',
+    linkText: 'Explore PPE & Safety',
+    badge: 'EN166 CERTIFIED',
   },
 };
 
@@ -217,13 +230,37 @@ export default async function CategoryPage({ params, searchParams }: CategoryPag
         <div className="lg:col-span-3 space-y-6">
           {CATEGORY_PROMOS[catSlug] && (
             <div className="relative rounded-2xl overflow-hidden border border-tc-border shadow-xs group">
-              <div className="relative aspect-[21/7] min-h-[140px]">
+              <div className="relative aspect-[16/10] sm:aspect-[24/8] min-h-[170px] sm:min-h-[200px]">
                 <img
                   src={CATEGORY_PROMOS[catSlug].image}
                   alt={CATEGORY_PROMOS[catSlug].title}
                   className="w-full h-full object-cover"
                 />
-                
+                <div className="absolute inset-0 bg-gradient-to-r from-tc-ink/95 via-tc-ink/80 sm:via-tc-ink/60 to-transparent flex items-center p-5 sm:p-8">
+                  <div className="max-w-md sm:max-w-lg space-y-2">
+                    <span className="inline-block text-[10px] sm:text-[11px] font-extrabold tracking-wider text-tc-action-lime uppercase font-mono">
+                      {CATEGORY_PROMOS[catSlug].badge}
+                    </span>
+                    <h3 className="font-heading font-extrabold text-base sm:text-2xl text-white tracking-tight leading-snug">
+                      {CATEGORY_PROMOS[catSlug].title}
+                    </h3>
+                    <p className="text-xs sm:text-sm text-tc-canvas/90 leading-relaxed hidden sm:block">
+                      {CATEGORY_PROMOS[catSlug].subtitle}
+                    </p>
+                    <div className="pt-2">
+                      <Button
+                        variant="accent"
+                        size="sm"
+                        asChild
+                        className="text-xs font-bold bg-tc-action-lime hover:bg-tc-lime-hover text-tc-ink border border-tc-ink shadow-xs h-9 px-4"
+                      >
+                        <Link href={CATEGORY_PROMOS[catSlug].link}>
+                          {CATEGORY_PROMOS[catSlug].linkText} →
+                        </Link>
+                      </Button>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           )}

@@ -68,16 +68,6 @@ export function TradeSpecifierHero() {
                   className="object-cover group-hover:scale-102 transition-transform duration-500"
                   priority
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-tc-ink/80 via-transparent to-transparent" />
-
-                <div className="absolute bottom-3 left-4 right-4">
-                  <p className="font-mono text-[10px] font-bold text-tc-action-lime uppercase tracking-wider">
-                    CERTIFIED TRADE SPECIFICATION
-                  </p>
-                  <p className="font-heading font-bold text-base leading-snug text-white">
-                    VDE 1000V · BS 8539 · EN 14183 Rated
-                  </p>
-                </div>
               </div>
 
               {/* Bottom Quick Feature Highlights */}

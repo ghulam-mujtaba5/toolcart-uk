@@ -1,16 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
-import crypto from 'node:crypto';
-
-function timingSafeEqualStr(a: string, b: string): boolean {
-  const bufA = Buffer.from(a);
-  const bufB = Buffer.from(b);
-  if (bufA.length !== bufB.length) return false;
-  return crypto.timingSafeEqual(bufA, bufB);
-}
-
-export const DEFAULT_ADMIN_EMAIL = 'admin@toolcart.co.uk';
-export const DEFAULT_ADMIN_PASSWORD = 'ToolCart2026!Admin';
-export const DEFAULT_ADMIN_TOKEN = 'toolcart_admin_token_2026_live';
+import {
+  timingSafeEqualStr,
+  DEFAULT_ADMIN_EMAIL,
+  DEFAULT_ADMIN_PASSWORD,
+  DEFAULT_ADMIN_TOKEN,
+} from '@/lib/auth/admin';
 
 export async function POST(request: NextRequest) {
   try {
@@ -63,7 +57,7 @@ export async function POST(request: NextRequest) {
     });
 
     return response;
-  } catch (error) {
+  } catch {
     return NextResponse.json(
       { error: 'Authentication failed due to an unexpected error.' },
       { status: 500 }

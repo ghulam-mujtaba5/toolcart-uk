@@ -2,8 +2,6 @@ import React from 'react';
 import Link from 'next/link';
 import { getProjectKits } from '@/lib/catalog';
 import { ProjectKitCard } from '@/components/storefront/project-kit-card';
-import { ChronologicalAssemblyAnimation } from '@/components/storefront/chronological-assembly-animation';
-
 
 export const dynamic = 'force-dynamic';
 
@@ -35,9 +33,6 @@ export default async function ProjectsPage() {
           <span>• British Standards verified</span>
         </div>
       </div>
-
-      {/* Interactive 3D Chronological Assembly Visualization */}
-      <ChronologicalAssemblyAnimation />
 
       {/* Kit Cards Stack */}
       <div className="space-y-8">

@@ -43,11 +43,10 @@ export function Footer() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
         {/* Top Utility Row: Brand Reassurance & Ergonomic Back to Top */}
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pb-6 border-b border-white/10">
-          <div className="flex items-center gap-3 text-xs text-[#DFE8F6]">
-            <span className="w-2 h-2 rounded-full bg-tc-action-lime text-tc-ink animate-pulse shrink-0" />
-            <span className="font-heading font-bold text-white">UK Trade Distribution Network</span>
+          <div className="flex items-center gap-2 text-xs text-[#DFE8F6]">
+            <span className="font-heading font-bold text-white">ToolCart UK</span>
             <span className="text-white/30 hidden sm:inline">•</span>
-            <span className="text-white/70 hidden sm:inline">Trade counter speeds delivered direct to site</span>
+            <span className="text-[#DFE8F6]/80 hidden sm:inline">Trade hardware &amp; consumables direct to site</span>
           </div>
 
           <button
@@ -97,87 +96,31 @@ export function Footer() {
           </div>
         </div>
 
-        {/* Master Brand Showcase — Single Dedicated Logo Placement at Bigger Size */}
-        <div className="p-6 sm:p-8 rounded-2xl bg-gradient-to-br from-white/[0.08] via-white/[0.04] to-transparent border border-white/15 backdrop-blur-sm relative overflow-hidden">
-          <div className="absolute top-0 right-0 w-96 h-96 bg-tc-primary/10 rounded-full blur-3xl pointer-events-none" />
-          <div className="absolute bottom-0 left-1/3 w-64 h-64 bg-tc-action-lime/5 rounded-full blur-2xl pointer-events-none" />
-
-          <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-8 text-center md:text-left">
-            {/* Left: Bigger 3D Brand Logo with Action Lime Branding Accent */}
-            <div className="flex flex-col sm:flex-row items-center gap-6 sm:gap-8">
-              <div className="relative group shrink-0">
-                <div className="w-28 h-28 sm:w-36 sm:h-36 md:w-40 md:h-40 rounded-2xl sm:rounded-3xl bg-tc-action-lime text-tc-ink border-2 border-tc-ink p-2 sm:p-3 flex items-center justify-center shadow-xl transition-transform duration-300 group-hover:scale-105 overflow-hidden">
-                  <img
-                    src="/images/brand/logo-toolcart.webp"
-                    alt="ToolCart Official 3D Brand Logo"
-                    className="w-full h-full object-contain drop-shadow-[0_8px_16px_rgba(0,0,0,0.35)] transition-transform duration-500 group-hover:scale-110"
-                  />
-                </div>
-                {/* 3D Master Emblem Tag */}
-                <div className="absolute -bottom-2 -right-1 bg-tc-ink text-tc-action-lime border border-tc-action-lime/40 text-[10px] font-mono font-extrabold uppercase px-2 py-0.5 rounded shadow-md">
-                  Master Emblem
-                </div>
-              </div>
-
-              {/* Center: Brand Typography & Authority */}
-              <div className="space-y-3 max-w-xl">
-                <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2.5 sm:gap-3">
-                  <span className="font-heading font-black text-2xl sm:text-3xl lg:text-4xl tracking-tight text-white">
-                    TOOLCART
-                  </span>
-                  <span className="bg-tc-action-lime text-tc-ink text-[11px] sm:text-xs font-mono font-extrabold uppercase px-3 py-1 rounded-full border border-tc-ink tracking-wider">
-                    UK Trade Direct
-                  </span>
-                </div>
-                <p className="text-sm sm:text-base text-[#DFE8F6] leading-relaxed font-body">
-                  The right tools. The right advice. Direct UK distribution of trade-quality hardware, fixings, consumables, and site gear with verified stock telemetry.
-                </p>
-                <div className="flex flex-wrap items-center justify-center sm:justify-start gap-4 text-xs text-[#DFE8F6]/85 pt-1">
-                  <span className="inline-flex items-center gap-1.5 font-medium">
-                    <span className="w-2 h-2 rounded-full bg-tc-action-lime text-tc-ink inline-block" />
-                    Trade &amp; Consumer Distribution
-                  </span>
-                  <span className="inline-flex items-center gap-1.5 font-medium">
-                    <span className="w-2 h-2 rounded-full bg-tc-action-lime text-tc-ink inline-block" />
-                    BS EN IEC &amp; UKCA Standards
-                  </span>
-                  <span className="inline-flex items-center gap-1.5 font-medium">
-                    <span className="w-2 h-2 rounded-full bg-tc-action-lime text-tc-ink inline-block" />
-                    Direct Site Dispatch
-                  </span>
-                </div>
-              </div>
-            </div>
-
-            {/* Right: Trade Action CTA Buttons */}
-            <div className="flex flex-col sm:flex-row md:flex-col gap-3 w-full sm:w-auto md:w-56 shrink-0">
-              <Link
-                href="/trade"
-                className="w-full text-center px-5 py-3 rounded-xl bg-tc-action-lime text-tc-ink font-heading font-bold text-xs uppercase tracking-wider hover:bg-tc-action-lime-hover transition-all shadow-md active:scale-95 border border-tc-ink flex items-center justify-center min-h-[44px]"
-              >
-                Open Trade Account
-              </Link>
-              <Link
-                href="/guides"
-                className="w-full text-center px-5 py-3 rounded-xl bg-white/10 hover:bg-white/15 text-white font-heading font-bold text-xs uppercase tracking-wider transition-all border border-white/20 active:scale-95 flex items-center justify-center min-h-[44px]"
-              >
-                UK Technical Guides
-              </Link>
-            </div>
-          </div>
-        </div>
-
         {/* 5-Column Grid with Mobile Accordions (< md) & Static Desktop Columns (>= md) */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 pb-12 border-b border-white/10 text-sm">
-          {/* Column 1: Trade Network */}
+          {/* Column 1: Brand & Identity */}
           <div className="lg:col-span-1 space-y-4">
-            <p className="text-xs font-bold text-white uppercase tracking-wider font-heading">
-              Trade Direct
-            </p>
+            <Link href="/" className="inline-block group" aria-label="ToolCart Home">
+              <div className="w-20 h-20 sm:w-24 sm:h-24 transition-transform group-hover:scale-105">
+                <img
+                  src="/images/brand/logo-toolcart.webp"
+                  alt="ToolCart Logo"
+                  className="w-full h-full object-contain drop-shadow-md"
+                />
+              </div>
+              <div className="flex items-center gap-2 mt-2">
+                <span className="font-heading font-extrabold text-xl tracking-tight text-white group-hover:text-tc-action-lime transition-colors">
+                  TOOLCART
+                </span>
+                <span className="bg-tc-action-lime text-tc-ink text-[10px] font-mono font-bold uppercase px-1.5 py-0.5 rounded">
+                  UK
+                </span>
+              </div>
+            </Link>
             <p className="text-xs text-[#DFE8F6] leading-relaxed">
-              Direct trade supply for UK contractors, tradespeople, and serious DIYers. Guaranteed pack quantities and certified trade hardware.
+              The right tools. The right advice. Direct UK distribution of trade-quality hardware, fixings, consumables, and site gear.
             </p>
-            <div className="pt-2 text-xs text-[#DFE8F6] font-medium flex items-center gap-1.5">
+            <div className="pt-1 text-xs text-[#DFE8F6] font-medium flex items-center gap-1.5">
               <ShieldCheck className="w-4 h-4 text-tc-action-lime shrink-0" />
               <span>Direct UK Hardware Distribution</span>
             </div>

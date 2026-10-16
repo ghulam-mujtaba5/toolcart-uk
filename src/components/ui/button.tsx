@@ -4,7 +4,7 @@ import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '@/lib/utils';
 
 const buttonVariants = cva(
-  'inline-flex items-center justify-center whitespace-nowrap rounded-[10px] text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-tc-focus focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 select-none font-body',
+  'inline-flex items-center justify-center whitespace-nowrap rounded-[10px] text-sm font-semibold transition-all duration-150 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-tc-focus focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 select-none font-body',
   {
     variants: {
       variant: {
@@ -13,11 +13,11 @@ const buttonVariants = cva(
         accent:
           'bg-tc-action-lime text-tc-ink border-2 border-tc-ink hover:bg-tc-lime-hover active:bg-[#C2D146] focus-visible:ring-tc-ink shadow-sm',
         secondary:
-          'bg-tc-surface text-tc-ink border-2 border-tc-border-strong hover:bg-tc-canvas',
+          'bg-tc-surface text-tc-ink border-2 border-tc-border-strong hover:bg-tc-canvas active:bg-tc-border-strong/20',
         ghost:
-          'bg-transparent text-tc-ink border-2 border-transparent hover:bg-tc-surface-soft hover:text-tc-primary',
+          'bg-transparent text-tc-ink border-2 border-transparent hover:bg-tc-surface-soft hover:text-tc-primary active:bg-tc-surface-soft/80',
         outline:
-          'bg-white text-tc-primary border-2 border-tc-primary hover:bg-tc-surface-soft hover:text-tc-primary-hover hover:border-tc-primary-hover',
+          'bg-white text-tc-primary border-2 border-tc-primary hover:bg-tc-surface-soft hover:text-tc-primary-hover hover:border-tc-primary-hover active:bg-tc-surface-soft/80',
         danger:
           'bg-tc-error text-white border-2 border-tc-error hover:bg-[#991B1B] active:bg-[#7F1D1D]',
       },

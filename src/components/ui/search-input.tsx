@@ -35,7 +35,7 @@ const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
           onKeyDown={handleKeyDown}
           placeholder={placeholder}
           className={cn(
-            'w-full bg-white text-tc-ink font-body text-sm rounded-[var(--radius-button)]',
+            'w-full bg-white text-tc-ink font-body text-base sm:text-sm rounded-[var(--radius-button)]',
             'border-[1.8px] border-tc-border-strong pl-10 pr-10 py-2.5 min-h-[44px]',
             'placeholder:text-tc-text-secondary transition-colors',
             'focus:outline-none focus:border-tc-primary focus:ring-2 focus:ring-tc-primary/20',
@@ -45,16 +45,16 @@ const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
           )}
           {...props}
         />
-        <div className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center gap-1.5">
+        <div className="absolute right-1 top-1/2 -translate-y-1/2 flex items-center gap-1">
           {isLoading && (
-            <Loader2 className="h-4 w-4 animate-spin text-tc-primary" aria-label="Searching" />
+            <Loader2 className="h-4 w-4 animate-spin text-tc-primary mr-2" aria-label="Searching" />
           )}
           {!isLoading && hasValue && onClear && (
             <button
               type="button"
               onClick={onClear}
               disabled={disabled}
-              className="rounded p-1 text-tc-text-secondary hover:text-tc-ink hover:bg-tc-canvas focus:outline-none focus-visible:ring-2 focus-visible:ring-tc-focus"
+              className="min-w-[44px] min-h-[44px] flex items-center justify-center rounded text-tc-text-secondary hover:text-tc-ink hover:bg-tc-canvas focus:outline-none focus-visible:ring-2 focus-visible:ring-tc-focus transition-colors"
               aria-label="Clear search input"
             >
               <X className="h-4 w-4" />

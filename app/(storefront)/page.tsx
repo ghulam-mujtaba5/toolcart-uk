@@ -254,7 +254,7 @@ export default async function StorefrontHomePage() {
                   )}
 
                   <div className="flex items-center justify-between">
-                    <span className="text-[10px] sm:text-[11px] font-bold px-2 py-0.5 rounded-full bg-tc-primary/10 text-tc-primary">
+                    <span className="text-[10px] sm:text-[11px] font-bold px-2 py-0.5 rounded-md bg-tc-surface-soft border border-[#C8D9F9] text-tc-primary">
                       {kit.badge}
                     </span>
                     <span className="text-[11px] sm:text-xs font-extrabold text-tc-action-lime bg-tc-ink px-2 py-0.5 rounded border border-tc-ink">

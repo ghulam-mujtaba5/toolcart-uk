@@ -15,7 +15,7 @@ import {
   IconBolt,
   IconTapeMeasure,
 } from '@/components/ui/trade-icons';
-import { ShoppingCart, Check } from 'lucide-react';
+import { ShoppingCart } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 interface ProductCardProps {
@@ -87,7 +87,7 @@ export function ProductCard({ product, className }: ProductCardProps) {
   return (
     <div
       className={cn(
-        'group bg-white rounded-card border border-tc-border hover:border-[#94A8C9] hover:shadow-md transition-all duration-200 flex flex-col justify-between overflow-hidden',
+        'group bg-white rounded-card border border-tc-border hover:border-[#94A8C9] hover:shadow-md transition-all duration-200 active:scale-[0.98] flex flex-col justify-between overflow-hidden',
         className
       )}
     >
@@ -117,11 +117,13 @@ export function ProductCard({ product, className }: ProductCardProps) {
             )}
           >
             {isCompared ? (
-              <Check className="w-3.5 h-3.5 text-white" />
+              <span>Comparing</span>
             ) : (
-              <IconCaliper size={16} className="text-tc-primary" />
+              <>
+                <IconCaliper size={16} className="text-tc-primary" />
+                <span className="hidden sm:inline">Compare</span>
+              </>
             )}
-            <span className="hidden sm:inline">Compare</span>
           </button>
 
           {/* Real Product Photography with Brand V3 Fallback */}
@@ -234,7 +236,7 @@ export function ProductCard({ product, className }: ProductCardProps) {
             <span>Out of Stock</span>
           ) : isSnapped ? (
             <>
-              <IconTradeVerified size={16} className="text-tc-ink" />
+              <ShoppingCart className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-tc-ink" />
               <span>Added to ToolCart!</span>
             </>
           ) : (

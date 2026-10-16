@@ -219,8 +219,9 @@ export default function CheckoutPage() {
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
                 <div>
-                  <label className="block text-tc-text-secondary mb-1">Email Address *</label>
+                  <label htmlFor="checkout-email" className="block text-tc-text-secondary mb-1">Email Address *</label>
                   <input
+                    id="checkout-email"
                     type="email"
                     required
                     value={email}
@@ -231,8 +232,9 @@ export default function CheckoutPage() {
                 </div>
 
                 <div>
-                  <label className="block text-tc-text-secondary mb-1">Full Name *</label>
+                  <label htmlFor="checkout-fullname" className="block text-tc-text-secondary mb-1">Full Name *</label>
                   <input
+                    id="checkout-fullname"
                     type="text"
                     required
                     value={fullName}
@@ -243,8 +245,9 @@ export default function CheckoutPage() {
                 </div>
 
                 <div>
-                  <label className="block text-tc-text-secondary mb-1">Company / Trade Name (Optional)</label>
+                  <label htmlFor="checkout-company" className="block text-tc-text-secondary mb-1">Company / Trade Name (Optional)</label>
                   <input
+                    id="checkout-company"
                     type="text"
                     value={companyName}
                     onChange={(e) => setCompanyName(e.target.value)}
@@ -254,8 +257,9 @@ export default function CheckoutPage() {
                 </div>
 
                 <div>
-                  <label className="block text-tc-text-secondary mb-1">Mobile / Site Contact *</label>
+                  <label htmlFor="checkout-phone" className="block text-tc-text-secondary mb-1">Mobile / Site Contact *</label>
                   <input
+                    id="checkout-phone"
                     type="tel"
                     required
                     value={phone}
@@ -276,8 +280,9 @@ export default function CheckoutPage() {
 
               <div className="space-y-4 text-xs">
                 <div>
-                  <label className="block text-tc-text-secondary mb-1">Address Line 1 *</label>
+                  <label htmlFor="checkout-address1" className="block text-tc-text-secondary mb-1">Address Line 1 *</label>
                   <input
+                    id="checkout-address1"
                     type="text"
                     required
                     value={addressLine1}
@@ -288,8 +293,9 @@ export default function CheckoutPage() {
                 </div>
 
                 <div>
-                  <label className="block text-tc-text-secondary mb-1">Address Line 2 (Optional)</label>
+                  <label htmlFor="checkout-address2" className="block text-tc-text-secondary mb-1">Address Line 2 (Optional)</label>
                   <input
+                    id="checkout-address2"
                     type="text"
                     value={addressLine2}
                     onChange={(e) => setAddressLine2(e.target.value)}
@@ -300,8 +306,9 @@ export default function CheckoutPage() {
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-tc-text-secondary mb-1">Town / City *</label>
+                    <label htmlFor="checkout-city" className="block text-tc-text-secondary mb-1">Town / City *</label>
                     <input
+                      id="checkout-city"
                       type="text"
                       required
                       value={city}
@@ -312,11 +319,14 @@ export default function CheckoutPage() {
                   </div>
 
                   <div>
-                    <label className="block text-tc-text-secondary mb-1">UK Postcode *</label>
+                    <label htmlFor="checkout-postcode" className="block text-tc-text-secondary mb-1">UK Postcode *</label>
                     <input
+                      id="checkout-postcode"
                       type="text"
                       required
                       value={postcode}
+                      aria-invalid={Boolean(postcodeError)}
+                      aria-describedby={postcodeError ? 'checkout-postcode-error' : undefined}
                       onChange={(e) => {
                         setPostcode(e.target.value);
                         if (postcodeError) setPostcodeError('');
@@ -326,7 +336,7 @@ export default function CheckoutPage() {
                       className="w-full h-11 min-h-[44px] px-3.5 rounded-lg border border-tc-border-strong uppercase text-base sm:text-xs font-mono font-bold text-tc-ink focus:outline-none focus:ring-2 focus:ring-tc-primary"
                     />
                     {postcodeError && (
-                      <p className="text-[11px] text-tc-error mt-1 flex items-center gap-1 font-semibold">
+                      <p id="checkout-postcode-error" role="alert" aria-live="polite" className="text-[11px] text-tc-error mt-1 flex items-center gap-1 font-semibold">
                         <AlertCircle className="w-3.5 h-3.5" />
                         {postcodeError}
                       </p>
@@ -359,7 +369,7 @@ export default function CheckoutPage() {
               </div>
 
               {checkoutError && (
-                <div role="alert" className="p-3 bg-red-50 border border-red-200 rounded-lg text-xs text-red-700">
+                <div role="alert" className="p-3 bg-tc-surface-danger border border-[#FECDD3] rounded-lg text-xs text-tc-error">
                   <strong>Authorization Error:</strong> {checkoutError}
                 </div>
               )}

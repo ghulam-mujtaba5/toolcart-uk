@@ -25,6 +25,8 @@ import {
 import { cn } from '@/lib/utils';
 import { ChatbotRobot3DLazy } from '@/components/ui/3d';
 import { Button } from '@/components/ui/button';
+import { DragHandle } from '@/components/ui/drag-handle';
+import { useSwipeToDismiss } from '@/hooks/use-swipe-to-dismiss';
 import { PublicProductDTO } from '@/types/product';
 import { IconToolbox, IconStockRadar, IconTradeVerified } from '@/components/ui/trade-icons';
 
@@ -42,6 +44,16 @@ export function Header({ onOpenAiAssistant }: HeaderProps) {
   const [isOpenFlyout, setIsOpenFlyout] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const flyoutRef = useRef<HTMLDivElement>(null);
+
+  const {
+    sheetRef: mobileNavRef,
+    style: mobileNavStyle,
+    dragHandleProps: mobileNavDragProps,
+  } = useSwipeToDismiss({
+    onDismiss: () => setIsMobileMenuOpen(false),
+    threshold: 80,
+    direction: 'right',
+  });
 
   // Debounced search autocomplete
   useEffect(() => {
@@ -115,7 +127,7 @@ export function Header({ onOpenAiAssistant }: HeaderProps) {
             type="button"
             onClick={() => setIsMobileMenuOpen(true)}
             aria-label="Open mobile navigation menu"
-            className="md:hidden min-w-[40px] min-h-[40px] sm:min-w-[44px] sm:min-h-[44px] p-2 rounded-lg text-tc-ink hover:bg-tc-canvas transition-colors flex items-center justify-center shrink-0"
+            className="md:hidden min-w-[44px] min-h-[44px] p-2 rounded-lg text-tc-ink hover:bg-tc-canvas transition-colors flex items-center justify-center shrink-0"
           >
             <Menu className="w-5 h-5 sm:w-6 sm:h-6" />
           </button>
@@ -163,7 +175,8 @@ export function Header({ onOpenAiAssistant }: HeaderProps) {
                     setQuery('');
                     setIsOpenFlyout(false);
                   }}
-                  className="absolute right-12 top-3 text-tc-text-secondary hover:text-tc-ink p-0.5"
+                  aria-label="Clear search query"
+                  className="absolute right-14 top-1.5 h-8 min-w-[36px] flex items-center justify-center text-tc-text-secondary hover:text-tc-ink rounded p-1 transition-colors"
                 >
                   <X className="w-4 h-4" />
                 </button>
@@ -264,7 +277,7 @@ export function Header({ onOpenAiAssistant }: HeaderProps) {
             <Link
               href="/account"
               aria-label="Customer Account & Orders"
-              className="min-w-[40px] sm:min-w-[44px] min-h-[40px] sm:min-h-[44px] p-1.5 sm:px-3 sm:py-2 rounded-lg text-tc-ink hover:bg-tc-canvas hover:text-tc-primary transition-colors flex items-center justify-center gap-2 group shrink-0"
+              className="min-w-[44px] min-h-[44px] p-1.5 sm:px-3 sm:py-2 rounded-lg text-tc-ink hover:bg-tc-canvas hover:text-tc-primary transition-colors flex items-center justify-center gap-2 group shrink-0"
             >
               <div className="w-8 h-8 rounded-lg bg-tc-canvas border border-tc-border flex items-center justify-center text-tc-ink group-hover:text-tc-primary group-hover:border-tc-primary/40 group-hover:bg-tc-surface-soft transition-all shadow-2xs">
                 <User className="w-4.5 h-4.5 stroke-[2.25] group-hover:scale-110 transition-transform" />
@@ -279,7 +292,7 @@ export function Header({ onOpenAiAssistant }: HeaderProps) {
               type="button"
               onClick={openCart}
               aria-label={`Open Basket, ${summary.total_items_count} items`}
-              className="relative min-w-[40px] sm:min-w-[44px] min-h-[40px] sm:min-h-[44px] p-1.5 sm:px-3.5 sm:py-2 rounded-lg bg-tc-ink text-white hover:bg-tc-graphite transition-all flex items-center justify-center gap-2.5 shadow-xs group active:scale-95 shrink-0"
+              className="relative min-w-[44px] min-h-[44px] p-1.5 sm:px-3.5 sm:py-2 rounded-lg bg-tc-ink text-white hover:bg-tc-graphite transition-all flex items-center justify-center gap-2.5 shadow-xs group active:scale-95 shrink-0"
             >
               <div className="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center text-white group-hover:bg-white/20 transition-all">
                 <ShoppingCart className="w-4.5 h-4.5 stroke-[2.25] text-white group-hover:scale-110 transition-transform" />
@@ -326,11 +339,18 @@ export function Header({ onOpenAiAssistant }: HeaderProps) {
           />
 
           <div
+            ref={mobileNavRef}
+            style={mobileNavStyle}
             role="dialog"
             aria-modal="true"
             aria-label="Mobile navigation menu"
-            className="relative ml-auto w-full max-w-xs bg-white h-full shadow-2xl flex flex-col p-5 overflow-y-auto pb-[calc(1.5rem+env(safe-area-inset-bottom))]"
+            className="relative ml-auto w-full max-w-xs bg-white h-full shadow-2xl flex flex-col p-5 overflow-y-auto overscroll-y-contain pb-[calc(1.5rem+env(safe-area-inset-bottom))]"
           >
+            {/* Tactile Grab Handle */}
+            <div className="pb-2 flex justify-center">
+              <DragHandle label="Drag to dismiss navigation menu" {...mobileNavDragProps} />
+            </div>
+
             <div className="flex items-center justify-between pb-4 border-b border-tc-border">
               <div className="flex items-center gap-2">
                 <div className="w-7 h-7 rounded bg-tc-action-lime border border-tc-ink flex items-center justify-center">

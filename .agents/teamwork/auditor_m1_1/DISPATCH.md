@@ -1,38 +1,33 @@
-# DISPATCH — Forensic Auditor for Milestone M1
+# DISPATCH: auditor_m1_1
 
-## Role & Mission
-You are a Forensic Auditor (`teamwork_preview_auditor`). Perform integrity forensics on the Milestone M1 implementation in `e:\ToolCart`.
-
-## Verification Scope
-1. Implementation Authenticity:
-   - Verify that code in `src/components/admin/admin-layout.tsx`, `src/components/admin/admin-sidebar.tsx`, `src/components/admin/dashboard-quick-filters.tsx`, and `app/admin/page.tsx` is genuine, not mock facades or hardcoded values.
-   - Verify that KPI calculations actually compute values dynamically from `db.orders.getAll()` and `db.products.getAll()`.
-2. Brand V3 Invariants:
-   - Zero occurrences of retired copper `#B84C32`, `--tc-copper`, purple/violet, or teal.
-   - Action Lime `#DDF16A` paired strictly with dark Ink `#182336` text.
-   - Run `python qa/check_static.py`.
-3. Wholesale Cost Confidentiality:
-   - Ensure wholesale costs (`unit_cost_ex_vat_gbp`, `case_cost_ex_vat_gbp`) are not serialized to public storefront routes or client components.
-   - Run `npx vitest run tests/security/wholesale-isolation.test.ts`.
-4. Verdict:
-   - State verdict clearly: `CLEAN` or `INTEGRITY VIOLATION`.
-
-Write your report to `e:\ToolCart\.agents\teamwork\auditor_m1_1\handoff.md` and send message to parent `616c35a2-dbd8-4d26-9bbc-5e7e26c1b91c`.
-
-## 2026-10-15T12:55:34Z
-You are auditor_m1_1.
+## Identity & Mission
+You are a Forensic Auditor subagent (teamwork_preview_auditor).
 Your working directory is: e:\ToolCart\.agents\teamwork\auditor_m1_1
-Your parent is: 616c35a2-dbd8-4d26-9bbc-5e7e26c1b91c
+Your parent orchestrator is: orchestrator_mobile_ux_1 (conversation ID: 90f7f002-2562-4af1-b6d4-ce24843b9dd0)
+Authoritative user request: e:\ToolCart\.agents\teamwork\ORIGINAL_REQUEST.md (read header ## 2026-10-16T06:42:05Z).
+Scope document: e:\ToolCart\.agents\teamwork\orchestrator_mobile_ux_1\SCOPE.md
+Worker handoff: e:\ToolCart\.agents\teamwork\worker_m1_gestures_sheets\handoff.md
+Worker changes: e:\ToolCart\.agents\teamwork\worker_m1_gestures_sheets\changes.md
 
-Read and follow:
-1. e:\ToolCart\.agents\teamwork\ORIGINAL_REQUEST.md (specifically timestamp 2026-10-15T12:07:45Z)
-2. e:\ToolCart\.agents\teamwork\auditor_m1_1\DISPATCH.md
-3. e:\ToolCart\.agents\teamwork\worker_m1_2\handoff.md
-4. design/tokens.css
+## Forensic Integrity Audit Focus
+Execute a forensic integrity audit on Milestone 1 code changes:
+1. Verify genuine implementation:
+   - Check `src/hooks/use-swipe-to-dismiss.ts`: ensure real event listeners and state math, no hardcoded stubs or mocks.
+   - Check `src/components/ui/drag-handle.tsx`: ensure real JSX and styling, no dummy placeholders.
+   - Check drawer integrations in `CompareDrawer`, `MiniBasket`, `FilterSidebar`, `AIAssistantDrawer`, `Header`.
+2. Verify strict Brand V3 compliance:
+   - Run `python qa/check_static.py`. Ensure 0 occurrences of `#B84C32`, `--tc-copper`, or unapproved purple/teal.
+   - Check that Action Lime `#DDF16A` is never paired with white text.
+3. Verify test integrity:
+   - Inspect `tests/ui/touch-gestures-sheets.test.tsx`: ensure tests genuinely assert on hook outputs, drag events, and styles, rather than trivial `expect(true).toBe(true)` facades.
+4. Verify wholesale cost isolation:
+   - Ensure no changes to wholesale pricing or leaks of `wholesale_cost_pence`.
 
-Perform forensic integrity checks on Milestone M1:
-- Authenticity check: Verify calculations and UI are genuine, not mock facades.
-- Static brand check: python qa/check_static.py (zero copper/purple/teal; action lime with dark text).
-- Wholesale security isolation: npx vitest run tests/security/wholesale-isolation.test.ts.
-State your verdict (CLEAN or INTEGRITY VIOLATION) in e:\ToolCart\.agents\teamwork\auditor_m1_1\handoff.md.
-Send message to parent 616c35a2-dbd8-4d26-9bbc-5e7e26c1b91c upon completion.
+Deliver your structured forensic audit report to:
+`e:\ToolCart\.agents\teamwork\auditor_m1_1\handoff.md`
+Must state explicit binary verdict: `CLEAN` or `INTEGRITY VIOLATION`.
+Notify parent via `send_message` when done.
+
+
+## 2026-10-16T07:21:39Z
+Read e:\ToolCart\.agents\teamwork\ORIGINAL_REQUEST.md, e:\ToolCart\.agents\teamwork\orchestrator_mobile_ux_1\SCOPE.md, and e:\ToolCart\.agents\teamwork\auditor_m1_1\DISPATCH.md. Conduct a forensic integrity audit on Milestone 1 code changes to verify genuine implementations, zero dummy facades, Brand V3 static compliance (python qa/check_static.py), test assertion authenticity, and wholesale price isolation. Deliver your structured handoff to e:\ToolCart\.agents\teamwork\auditor_m1_1\handoff.md with an explicit CLEAN or INTEGRITY VIOLATION verdict, then notify parent via send_message.

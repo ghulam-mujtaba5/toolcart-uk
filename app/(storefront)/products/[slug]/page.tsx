@@ -92,17 +92,6 @@ export default async function ProductPage({ params }: ProductPageProps) {
               />
             </div>
 
-            {/* Compliance Verified Marks */}
-            <div className="absolute top-4 right-4 z-10 flex items-center gap-1.5">
-              <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-white/90 border border-[#C8D9F9] text-tc-primary flex items-center gap-1">
-                <IconTradeVerified size={16} />
-                UKCA
-              </span>
-              <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-white/90 border border-[#C8D9F9] text-tc-primary">
-                CE
-              </span>
-            </div>
-
             {/* Visual Real Product Photography with Fallback */}
             <div className="relative w-full h-56 sm:h-72 flex items-center justify-center p-4">
               {product.images && product.images[0] ? (
@@ -117,12 +106,6 @@ export default async function ProductPage({ params }: ProductPageProps) {
                   <CategoryIcon size={32} />
                 </div>
               )}
-            </div>
-
-            {/* Technical Identifiers with 1-Click Copy Badges */}
-            <div className="mt-2 text-center flex flex-wrap items-center justify-center gap-2">
-              <CopyBadge value={product.supplier_sku} label="SKU" size="sm" />
-              <CopyBadge value={product.gtin} label="EAN-13" size="sm" />
             </div>
           </div>
 
@@ -149,12 +132,16 @@ export default async function ProductPage({ params }: ProductPageProps) {
         {/* Right: Technical Details & Actions */}
         <div className="lg:col-span-6 space-y-6">
           <div>
-            <div className="flex items-center gap-2 mb-2">
-              <span className="text-xs font-extrabold uppercase tracking-wider text-tc-primary">
+            <div className="flex flex-wrap items-center gap-2 mb-2 text-xs text-tc-text-secondary">
+              <span className="font-extrabold uppercase tracking-wider text-tc-primary">
                 {product.brand}
               </span>
               <span className="text-tc-border-strong">•</span>
-              <span className="text-xs text-tc-text-secondary font-medium">{product.category}</span>
+              <span className="font-mono text-tc-ink font-semibold">SKU: {product.supplier_sku}</span>
+              <span className="text-tc-border-strong">•</span>
+              <span className="font-mono">EAN: {product.gtin}</span>
+              <span className="text-tc-border-strong">•</span>
+              <span className="font-medium">{product.category}</span>
             </div>
 
             <h1 className="font-heading font-extrabold text-2xl sm:text-3xl text-tc-ink tracking-tight leading-snug">

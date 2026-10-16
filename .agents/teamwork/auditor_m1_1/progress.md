@@ -1,21 +1,22 @@
-# Progress: Auditor M1 (Retail Merchant Admin Navigation & Core Dashboard)
-Last visited: 2026-10-15T13:13:00Z
-- [x] Initialized DISPATCH.md with parent message timestamp 2026-10-15T12:55:34Z
+# Progress: Auditor M1 (Mobile UX: Native Touch Gestures & Mobile Sheet Ergonomics)
+Last visited: 2026-10-16T07:44:00Z
+- [x] Initialized DISPATCH.md with parent message timestamp 2026-10-16T07:21:39Z
 - [x] Updated BRIEFING.md with append-only preservation
 - [x] Phase 1: Source Code & Authenticity Analysis
-  - [x] Audited `src/components/admin/admin-layout.tsx` (genuine client component, responsive drawer controls)
-  - [x] Audited `src/components/admin/admin-sidebar.tsx` (genuine desktop/mobile drawer, escape listener, scroll lock)
-  - [x] Audited `src/components/admin/dashboard-quick-filters.tsx` (genuine 3-tab operational triage console, accessible ARIA)
-  - [x] Audited `app/admin/page.tsx` (genuine dynamic KPI calculations from `db.orders.getAll()`, `db.products.getAll()`)
+  - [x] Audit `src/hooks/use-swipe-to-dismiss.ts` (genuine physics math, threshold, velocity calculation, spring reset)
+  - [x] Audit `src/components/ui/drag-handle.tsx` (genuine JSX, ARIA attributes, light/dark token variants)
+  - [x] Audit sheet integrations (`CompareDrawer`, `MiniBasket`, `FilterSidebar`, `AIAssistantDrawer`, `Header`, `Navigation`)
+  - [x] Audit micro-interactions (`button.tsx`, `product-card.tsx`, `bottom-nav.tsx`)
 - [x] Phase 2: Brand V3 Invariants & Security
-  - [x] Verified zero occurrences of `#B84C32`, `--tc-copper`, purple/violet, or teal
-  - [x] Verified Action Lime `#DDF16A` paired strictly with dark Ink `#182336` text
-  - [x] Executed `python qa/check_static.py` (Exit code 0, PASS)
-  - [x] Executed `npx vitest run tests/security/wholesale-isolation.test.ts` (Exit code 0, 6/6 tests passed)
-- [x] Phase 3: Empirical Test Execution & Stress Testing
-  - [x] Executed `tests/ui/admin-navigation-and-dashboard.test.tsx` (Exit code 0, 15/15 passed)
-  - [x] Executed `tests/adversarial/m1-admin-navigation-challenge.test.tsx` (Exit code 0, 24/24 passed)
-  - [x] Executed `tests/adversarial/m1-retail-kpi-and-triage-stress.test.tsx` (Exit code 0, 14/14 passed)
-  - [x] Verified zero pre-populated verification artifacts or log files
-- [x] Formulated Forensic Audit Report in `handoff.md` with binary verdict: CLEAN
-- [x] Sent completion notification to parent agent `616c35a2-dbd8-4d26-9bbc-5e7e26c1b91c`
+  - [x] Scanned for `#B84C32`, `--tc-copper`, purple/violet, teal (0 usages in code)
+  - [x] Verified Action Lime `#DDF16A` paired strictly with dark Ink `#182336` text (0 violations)
+  - [x] Ran `python qa/check_static.py` (Exit code 0, PASS)
+  - [x] Ran `npx vitest run tests/security/wholesale-isolation.test.ts` (6/6 tests passed)
+- [x] Phase 3: Empirical Test Execution & Test Authenticity
+  - [x] Inspected `tests/ui/touch-gestures-sheets.test.tsx` assertions (all 30 tests assert on real DOM/hook properties; zero facades)
+  - [x] Ran `npx vitest run tests/ui/touch-gestures-sheets.test.tsx` (30/30 passed)
+  - [x] Ran `npm run typecheck` (`tsc --noEmit`) (Exit code 0, 0 errors)
+  - [x] Checked for pre-populated artifacts or logs (CLEAN)
+- [x] Phase 4: Adversarial Stress Testing & Heuristic Challenge (cross-checked with challenger findings)
+- [x] Phase 5: Deliver Forensic Audit Report (`handoff.md`) with explicit verdict: CLEAN
+- [x] Notify parent orchestrator via send_message

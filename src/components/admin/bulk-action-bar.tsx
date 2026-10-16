@@ -107,7 +107,7 @@ export function BulkActionBar({
             size="sm"
             disabled={isExecuting}
             onClick={() => onStatusChange('approved')}
-            className="bg-white/10 hover:bg-white/20 text-white border-white/20 h-8 text-xs font-bold"
+            className="bg-white/10 hover:bg-white/20 text-white border-white/20 min-h-[36px] h-9 text-xs font-bold"
           >
             <CheckCircle2 className="w-3.5 h-3.5 mr-1 text-tc-action-lime" aria-hidden="true" />
             Approve
@@ -119,7 +119,7 @@ export function BulkActionBar({
             size="sm"
             disabled={isExecuting}
             onClick={() => onStatusChange('draft')}
-            className="bg-white/10 hover:bg-white/20 text-white border-white/20 h-8 text-xs font-bold"
+            className="bg-white/10 hover:bg-white/20 text-white border-white/20 min-h-[36px] h-9 text-xs font-bold"
           >
             <FileEdit className="w-3.5 h-3.5 mr-1" aria-hidden="true" />
             Mark Draft
@@ -131,7 +131,7 @@ export function BulkActionBar({
             size="sm"
             disabled={isExecuting}
             onClick={() => onStatusChange('needs_review')}
-            className="bg-white/10 hover:bg-white/20 text-white border-white/20 h-8 text-xs font-bold"
+            className="bg-white/10 hover:bg-white/20 text-white border-white/20 min-h-[36px] h-9 text-xs font-bold"
           >
             <AlertCircle className="w-3.5 h-3.5 mr-1 text-yellow-300" aria-hidden="true" />
             Needs Review
@@ -143,7 +143,7 @@ export function BulkActionBar({
             size="sm"
             disabled={isExecuting}
             onClick={() => onStatusChange('blocked')}
-            className="bg-red-950/40 hover:bg-red-900/60 text-red-200 border-red-500/30 h-8 text-xs font-bold"
+            className="bg-red-950/40 hover:bg-red-900/60 text-red-200 border-red-500/30 min-h-[36px] h-9 text-xs font-bold"
           >
             <Ban className="w-3.5 h-3.5 mr-1 text-red-400" aria-hidden="true" />
             Block
@@ -160,7 +160,7 @@ export function BulkActionBar({
               setShowStockAdjust(false);
               setShowCategoryAssign(false);
             }}
-            className={`h-8 text-xs font-bold border-white/20 ${
+            className={`min-h-[36px] h-9 text-xs font-bold border-white/20 ${
               showPriceAdjust ? 'bg-tc-primary text-white' : 'bg-white/10 hover:bg-white/20 text-white'
             }`}
           >
@@ -179,7 +179,7 @@ export function BulkActionBar({
               setShowPriceAdjust(false);
               setShowCategoryAssign(false);
             }}
-            className={`h-8 text-xs font-bold border-white/20 ${
+            className={`min-h-[36px] h-9 text-xs font-bold border-white/20 ${
               showStockAdjust ? 'bg-tc-primary text-white' : 'bg-white/10 hover:bg-white/20 text-white'
             }`}
           >
@@ -199,7 +199,7 @@ export function BulkActionBar({
                 setShowPriceAdjust(false);
                 setShowStockAdjust(false);
               }}
-              className={`h-8 text-xs font-bold border-white/20 ${
+              className={`min-h-[36px] h-9 text-xs font-bold border-white/20 ${
                 showCategoryAssign ? 'bg-tc-primary text-white' : 'bg-white/10 hover:bg-white/20 text-white'
               }`}
             >
@@ -214,7 +214,7 @@ export function BulkActionBar({
             variant="outline"
             size="sm"
             onClick={onClearSelection}
-            className="bg-transparent hover:bg-white/10 text-tc-canvas border-transparent h-8 text-xs"
+            className="bg-transparent hover:bg-white/10 text-tc-canvas border-transparent min-h-[36px] h-9 text-xs"
             aria-label="Clear selection"
           >
             <X className="w-3.5 h-3.5 mr-1" aria-hidden="true" />

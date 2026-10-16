@@ -34,7 +34,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
               error ? errorId : helperText ? helperId : undefined
             }
             className={cn(
-              'w-full bg-white text-tc-ink font-body text-sm rounded-[var(--radius-button)]',
+              'w-full bg-white text-tc-ink font-body text-base sm:text-sm rounded-[var(--radius-button)]',
               'border-[1.8px] border-tc-border-strong px-3.5 py-2.5 min-h-[44px]',
               'placeholder:text-tc-text-secondary transition-colors',
               'focus:outline-none focus:border-tc-primary focus:ring-2 focus:ring-tc-primary/20',
@@ -53,7 +53,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
           )}
         </div>
         {error && (
-          <p id={errorId} className="mt-1.5 text-xs font-medium text-tc-error">
+          <p id={errorId} role="alert" aria-live="polite" className="mt-1.5 text-xs font-medium text-tc-error">
             {error}
           </p>
         )}

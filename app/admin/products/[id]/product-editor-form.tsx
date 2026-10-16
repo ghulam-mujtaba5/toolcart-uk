@@ -329,7 +329,7 @@ export function ProductEditorForm({ product, wholesaleOffer }: ProductEditorForm
           <div className="space-y-4 max-w-2xl">
             <div>
               <label htmlFor="product-title" className="block text-xs font-bold text-tc-text-secondary uppercase mb-1">
-                Product Title <span className="text-red-500">*</span>
+                Product Title <span className="text-tc-error">*</span>
               </label>
               <input
                 id="product-title"
@@ -340,7 +340,7 @@ export function ProductEditorForm({ product, wholesaleOffer }: ProductEditorForm
                 required
               />
               {fieldErrors.title && (
-                <p className="text-[11px] text-red-600 mt-1">{fieldErrors.title[0]}</p>
+                <p role="alert" aria-live="polite" className="text-[11px] text-tc-error mt-1">{fieldErrors.title[0]}</p>
               )}
             </div>
 
@@ -409,7 +409,7 @@ export function ProductEditorForm({ product, wholesaleOffer }: ProductEditorForm
             <div className="space-y-4">
               <div>
                 <label htmlFor="retail-price-inc-vat" className="block text-xs font-bold text-tc-text-secondary uppercase mb-1">
-                  Retail Price (Inc. 20% VAT) <span className="text-red-500">*</span>
+                  Retail Price (Inc. 20% VAT) <span className="text-tc-error">*</span>
                 </label>
                 <div className="relative">
                   <span className="absolute left-3 top-2.5 text-xs font-bold text-tc-text-secondary">£</span>
@@ -424,7 +424,7 @@ export function ProductEditorForm({ product, wholesaleOffer }: ProductEditorForm
                   />
                 </div>
                 {fieldErrors.retail_price_inc_vat_gbp && (
-                  <p className="text-[11px] text-red-600 mt-1">
+                  <p role="alert" aria-live="polite" className="text-[11px] text-tc-error mt-1">
                     {fieldErrors.retail_price_inc_vat_gbp[0]}
                   </p>
                 )}

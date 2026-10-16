@@ -107,7 +107,7 @@ export function ProjectKitCard({ kit }: ProjectKitCardProps) {
         <div className="space-y-3 flex-1">
           <div className="flex flex-wrap items-center justify-between gap-2">
             <div className="flex items-center gap-2">
-              <span className="text-xs font-bold px-2.5 py-0.5 rounded-full bg-tc-primary/10 text-tc-primary">
+              <span className="text-xs font-bold px-2 py-0.5 rounded-md bg-tc-surface-soft border border-[#C8D9F9] text-tc-primary">
                 {kit.badge}
               </span>
               <span className="text-xs text-tc-text-secondary flex items-center gap-1">
@@ -148,9 +148,18 @@ export function ProjectKitCard({ kit }: ProjectKitCardProps) {
             return (
               <li
                 key={item.sku}
+                role="checkbox"
+                aria-checked={isChecked}
+                tabIndex={0}
                 onClick={() => toggleItem(item.sku)}
+                onKeyDown={(e) => {
+                  if (e.key === ' ' || e.key === 'Enter') {
+                    e.preventDefault();
+                    toggleItem(item.sku);
+                  }
+                }}
                 className={cn(
-                  'p-3.5 sm:p-4 flex items-center justify-between gap-4 cursor-pointer transition-colors',
+                  'p-3.5 sm:p-4 flex items-center justify-between gap-4 cursor-pointer transition-colors outline-none focus-visible:ring-2 focus-visible:ring-tc-primary focus-visible:ring-inset',
                   isChecked ? 'bg-white hover:bg-tc-surface-soft/40' : 'bg-tc-canvas/60 opacity-60'
                 )}
               >
@@ -208,8 +217,7 @@ export function ProjectKitCard({ kit }: ProjectKitCardProps) {
 
       {/* Instructions & Guidance Box */}
       <div className="p-4 rounded-xl bg-tc-surface-soft border border-[#C8D9F9] space-y-2 text-xs">
-        <p className="font-bold text-tc-primary flex items-center gap-1.5">
-          <ShieldCheck className="w-4 h-4" />
+        <p className="font-bold text-tc-primary">
           Trade Application &amp; HSE Steps
         </p>
         <ul className="list-disc pl-5 space-y-1 text-tc-graphite leading-relaxed">

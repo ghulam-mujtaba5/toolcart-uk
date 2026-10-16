@@ -6,6 +6,8 @@ import { useCompare } from '@/context/compare-context';
 import { useVAT } from '@/context/vat-context';
 import { useCart } from '@/context/cart-context';
 import { Button } from '@/components/ui/button';
+import { DragHandle } from '@/components/ui/drag-handle';
+import { useSwipeToDismiss } from '@/hooks/use-swipe-to-dismiss';
 import { X, ChevronUp, ChevronDown, ShoppingCart, Check, SlidersHorizontal, Trash2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -23,6 +25,12 @@ export function CompareDrawer() {
 
   const { formatPriceDisplay } = useVAT();
   const { addItem } = useCart();
+
+  const { sheetRef, style, dragHandleProps } = useSwipeToDismiss({
+    onDismiss: closeCompare,
+    threshold: 80,
+    direction: 'down',
+  });
 
   React.useEffect(() => {
     if (!isOpen) return;
@@ -105,11 +113,18 @@ export function CompareDrawer() {
           />
 
           <div
+            ref={sheetRef}
+            style={style}
             role="dialog"
             aria-modal="true"
             aria-labelledby="compare-drawer-title"
             className="relative bg-white rounded-t-2xl shadow-2xl max-h-[88vh] flex flex-col border-t border-tc-border animate-in slide-in-from-bottom-8 overflow-hidden"
           >
+            {/* Tactile Grab Handle */}
+            <div className="bg-tc-ink pt-1 flex flex-wrap justify-center">
+              <DragHandle variant="dark" {...dragHandleProps} />
+            </div>
+
             {/* Header */}
             <div className="bg-tc-ink text-white p-4 sm:px-6 sm:py-4 flex flex-wrap items-center justify-between gap-3 border-b border-white/10 shrink-0">
               <div className="flex items-center gap-2 sm:gap-3 min-w-0">
@@ -156,7 +171,7 @@ export function CompareDrawer() {
             </div>
 
             {/* Comparison Matrix Table */}
-            <div className="overflow-x-auto overflow-y-auto p-4 sm:p-6 max-h-[calc(88vh-72px)] pb-[calc(1.5rem+env(safe-area-inset-bottom))]">
+            <div className="overflow-x-auto overflow-y-auto overscroll-y-contain p-4 sm:p-6 max-h-[calc(88vh-72px)] pb-[calc(1.5rem+env(safe-area-inset-bottom))]">
               <table className="w-full border-collapse text-left text-sm">
                 <thead>
                   <tr className="border-b border-tc-border">

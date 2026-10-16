@@ -1,37 +1,32 @@
-# DISPATCH — Reviewer 1 for Milestone M1
+# DISPATCH: reviewer_m1_1
 
-## Role & Mission
-You are a Reviewer (`teamwork_preview_reviewer`). Review the Milestone M1 implementation (Retail Merchant Admin Navigation & Core Dashboard) in `e:\ToolCart`.
-
-## Files to Review
-- `src/components/admin/admin-layout.tsx`
-- `src/components/admin/admin-sidebar.tsx`
-- `src/components/admin/dashboard-quick-filters.tsx`
-- `app/admin/page.tsx`
-- `tests/ui/admin-navigation-and-dashboard.test.tsx`
-- `e:\ToolCart\.agents\teamwork\worker_m1_2\handoff.md`
-
-## Focus
-1. Code Quality & React Patterns: Client/Server component boundaries, clean state management, modularity.
-2. Brand V3 Compliance: Strict use of `design/tokens.css` (Industrial Cobalt `#2450B8`, Action Lime `#DDF16A` with dark Ink `#182336` text, zero copper/purple/teal).
-3. Test Coverage: Run `npm test`, `npm run typecheck`, and `python qa/check_static.py`.
-4. Verdict: Explicitly state `APPROVE` or `REQUEST_CHANGES` with concrete rationale.
-
-Write your report to `e:\ToolCart\.agents\teamwork\reviewer_m1_1\handoff.md` and send message to parent `616c35a2-dbd8-4d26-9bbc-5e7e26c1b91c`.
-
-## 2026-10-15T12:55:32Z
-[Message] timestamp=2026-10-15T12:55:32Z sender=616c35a2-dbd8-4d26-9bbc-5e7e26c1b91c priority=MESSAGE_PRIORITY_HIGH
-You are reviewer_m1_1.
+## Identity & Mission
+You are a Reviewer subagent (teamwork_preview_reviewer).
 Your working directory is: e:\ToolCart\.agents\teamwork\reviewer_m1_1
-Your parent is: 616c35a2-dbd8-4d26-9bbc-5e7e26c1b91c
+Your parent orchestrator is: orchestrator_mobile_ux_1 (conversation ID: 90f7f002-2562-4af1-b6d4-ce24843b9dd0)
+Authoritative user request: e:\ToolCart\.agents\teamwork\ORIGINAL_REQUEST.md (read header ## 2026-10-16T06:42:05Z).
+Scope document: e:\ToolCart\.agents\teamwork\orchestrator_mobile_ux_1\SCOPE.md
+Worker handoff: e:\ToolCart\.agents\teamwork\worker_m1_gestures_sheets\handoff.md
+Worker changes: e:\ToolCart\.agents\teamwork\worker_m1_gestures_sheets\changes.md
 
-Read and follow:
-1. e:\ToolCart\.agents\teamwork\ORIGINAL_REQUEST.md (specifically timestamp 2026-10-15T12:07:45Z)
-2. e:\ToolCart\.agents\teamwork\reviewer_m1_1\DISPATCH.md
-3. e:\ToolCart\.agents\teamwork\worker_m1_2\handoff.md
-4. design/tokens.css
+## Review Focus
+Examine the Milestone 1 implementation:
+- `src/hooks/use-swipe-to-dismiss.ts`
+- `src/components/ui/drag-handle.tsx`
+- Drawer integrations: `CompareDrawer`, `MiniBasket`, `FilterSidebar`, `AIAssistantDrawer`, `Header` navigation drawer
+- `active:scale-[0.98]` tactile press states
+- Tests in `tests/ui/touch-gestures-sheets.test.tsx`
+Verify:
+1. Correctness: Does swipe-to-dismiss work properly? Are drag thresholds, downward deltas, and release resets handled cleanly?
+2. Completeness: Are all 5 drawers equipped with drag handles and `overscroll-behavior-y: contain`?
+3. Robustness & Accessibility: Do drag handles have accessible text/aria-labels? Are dialog roles and focus preserved?
+4. Verification: Run `npx vitest run tests/ui/touch-gestures-sheets.test.tsx`, `npm run typecheck`, and `python qa/check_static.py`.
 
-Review Milestone M1 code for code quality, Brand V3 tokenization, and test coverage.
-Run npm test, npm run typecheck, python qa/check_static.py.
-State your verdict (APPROVE or REQUEST_CHANGES) in e:\ToolCart\.agents\teamwork\reviewer_m1_1\handoff.md.
-Send message to parent 616c35a2-dbd8-4d26-9bbc-5e7e26c1b91c upon completion.
+Deliver your structured handoff report to:
+`e:\ToolCart\.agents\teamwork\reviewer_m1_1\handoff.md`
+Must state explicit verdict: `APPROVE` or `REQUEST_CHANGES`.
+Notify parent via `send_message` when done.
+
+
+## 2026-10-16T07:21:39Z
+Read e:\ToolCart\.agents\teamwork\ORIGINAL_REQUEST.md, e:\ToolCart\.agents\teamwork\orchestrator_mobile_ux_1\SCOPE.md, and e:\ToolCart\.agents\teamwork\reviewer_m1_1\DISPATCH.md. Review Milestone 1 code changes for correctness, completeness, accessibility, and interface conformance. Run Vitest, typecheck, and static brand check. Deliver your structured handoff to e:\ToolCart\.agents\teamwork\reviewer_m1_1\handoff.md with an explicit APPROVE or REQUEST_CHANGES verdict, then notify parent via send_message.

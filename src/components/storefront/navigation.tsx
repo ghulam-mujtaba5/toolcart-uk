@@ -74,7 +74,7 @@ export function Navigation({ className }: NavigationProps) {
             role="dialog"
             aria-modal="true"
             aria-label="Mobile navigation menu"
-            className="relative ml-auto w-full max-w-xs bg-white h-full shadow-2xl flex flex-col p-5 overflow-y-auto pb-[calc(1.5rem+env(safe-area-inset-bottom))]"
+            className="relative ml-auto w-full max-w-xs bg-white h-full shadow-2xl flex flex-col p-5 overflow-y-auto overscroll-y-contain pb-[calc(1.5rem+env(safe-area-inset-bottom))]"
           >
             <div className="flex items-center justify-between pb-4 border-b border-tc-border">
               <div className="flex items-center gap-2">

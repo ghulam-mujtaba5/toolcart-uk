@@ -21,6 +21,11 @@ export function BottomNav({ onOpenAiAssistant }: BottomNavProps) {
   const isSearch = pathname === '/search' || pathname?.startsWith('/tools') || pathname?.startsWith('/categories');
   const isKits = pathname?.startsWith('/projects');
 
+  // D-01: Hide BottomNav on product detail pages so PDP sticky buy dock has unobstructed touch access
+  if (pathname?.startsWith('/products/')) {
+    return null;
+  }
+
   return (
     <nav
       aria-label="Mobile Navigation Dock"
@@ -32,7 +37,7 @@ export function BottomNav({ onOpenAiAssistant }: BottomNavProps) {
           href="/"
           aria-label="Home"
           className={cn(
-            'flex flex-col items-center justify-center min-h-[48px] py-1 px-1 rounded-lg transition-colors select-none group',
+            'flex flex-col items-center justify-center min-h-[48px] py-1 px-1 rounded-lg transition-all select-none group active:scale-[0.98]',
             isHome ? 'text-tc-primary font-bold' : 'text-tc-text-secondary hover:text-tc-ink'
           )}
         >
@@ -50,7 +55,7 @@ export function BottomNav({ onOpenAiAssistant }: BottomNavProps) {
           href="/search"
           aria-label="Search and Browse Catalog"
           className={cn(
-            'flex flex-col items-center justify-center min-h-[48px] py-1 px-1 rounded-lg transition-colors select-none group',
+            'flex flex-col items-center justify-center min-h-[48px] py-1 px-1 rounded-lg transition-all select-none group active:scale-[0.98]',
             isSearch ? 'text-tc-primary font-bold' : 'text-tc-text-secondary hover:text-tc-ink'
           )}
         >
@@ -68,7 +73,7 @@ export function BottomNav({ onOpenAiAssistant }: BottomNavProps) {
           type="button"
           onClick={onOpenAiAssistant}
           aria-label="Open Hardware Advice Assistant"
-          className="flex flex-col items-center justify-center min-h-[48px] py-1 px-1 rounded-lg text-tc-text-secondary hover:text-tc-primary transition-colors select-none group active:scale-95"
+          className="flex flex-col items-center justify-center min-h-[48px] py-1 px-1 rounded-lg text-tc-text-secondary hover:text-tc-primary transition-all select-none group active:scale-[0.98]"
         >
           <div className="relative flex items-center justify-center w-6 h-6">
             <div className="w-5 h-5 rounded-full bg-tc-surface-soft border border-[#C8D9F9] flex items-center justify-center text-tc-primary">
@@ -84,7 +89,7 @@ export function BottomNav({ onOpenAiAssistant }: BottomNavProps) {
           onClick={openCompare}
           aria-label={`Open Product Compare, ${compareProducts.length} items`}
           className={cn(
-            'flex flex-col items-center justify-center min-h-[48px] py-1 px-1 rounded-lg transition-colors select-none group relative active:scale-95',
+            'flex flex-col items-center justify-center min-h-[48px] py-1 px-1 rounded-lg transition-all select-none group relative active:scale-[0.98]',
             compareProducts.length > 0 ? 'text-tc-primary' : 'text-tc-text-secondary hover:text-tc-ink'
           )}
         >
@@ -105,7 +110,7 @@ export function BottomNav({ onOpenAiAssistant }: BottomNavProps) {
           onClick={openCart}
           aria-label={`Open Basket, ${summary.total_items_count} items`}
           className={cn(
-            'flex flex-col items-center justify-center min-h-[48px] py-1 px-1 rounded-lg transition-colors select-none group relative active:scale-95',
+            'flex flex-col items-center justify-center min-h-[48px] py-1 px-1 rounded-lg transition-all select-none group relative active:scale-[0.98]',
             summary.total_items_count > 0 ? 'text-tc-ink font-bold' : 'text-tc-text-secondary hover:text-tc-ink'
           )}
         >

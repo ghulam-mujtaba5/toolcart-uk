@@ -72,7 +72,7 @@ export function DataTablePagination({
           size="sm"
           disabled={!canPreviousPage}
           onClick={() => onPageChange(page - 1)}
-          className="h-8 px-2.5 text-xs bg-white text-tc-ink border-tc-border disabled:opacity-40"
+          className="min-h-[36px] h-9 px-3 text-xs bg-white text-tc-ink border-tc-border disabled:opacity-40"
           aria-label="Previous page"
         >
           <ChevronLeft className="w-3.5 h-3.5 mr-1" aria-hidden="true" />
@@ -87,7 +87,7 @@ export function DataTablePagination({
           size="sm"
           disabled={!canNextPage}
           onClick={() => onPageChange(page + 1)}
-          className="h-8 px-2.5 text-xs bg-white text-tc-ink border-tc-border disabled:opacity-40"
+          className="min-h-[36px] h-9 px-3 text-xs bg-white text-tc-ink border-tc-border disabled:opacity-40"
           aria-label="Next page"
         >
           Next

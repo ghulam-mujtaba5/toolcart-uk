@@ -20,7 +20,7 @@ export function StorefrontLayoutClient({ children }: { children: React.ReactNode
       <Microbar />
       <Header onOpenAiAssistant={() => setIsAiOpen(true)} />
       <NavBar />
-      <main className="flex-1 pb-20 md:pb-0">{children}</main>
+      <main className="flex-1 pb-[calc(5rem+env(safe-area-inset-bottom,0px))] md:pb-0">{children}</main>
       <CompareDrawer />
       <MiniBasket />
       <AIAssistantDrawer isOpen={isAiOpen} onClose={() => setIsAiOpen(false)} />

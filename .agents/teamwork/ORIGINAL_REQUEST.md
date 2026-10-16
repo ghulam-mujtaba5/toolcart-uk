@@ -434,3 +434,106 @@ Harden all mobile overlays and interactive drawers (Mini-Basket, Compare Drawer,
 ### Touch & Accessibility Standards
 - [ ] All interactive touch targets measure at least 44×44px.
 - [ ] All automated test suites (`npm run test:ui`, `npm run test:storefront`, brand compliance, responsive tests) pass cleanly with zero regressions.
+
+
+## 2026-10-16T06:42:05Z
+
+Deliver a comprehensive mobile-adaptive modernization for the ToolCart UK e-commerce storefront, implementing specialized mobile retail UX patterns, native touch gestures, sticky action docks, and fluid responsiveness across all device viewports.
+
+Working directory: e:\ToolCart
+Integrity mode: development
+
+## Requirements
+
+### R1. Native Touch Gestures & Mobile Sheet Ergonomics
+Transform mobile overlays, drawers, and modal sheets into native-feeling touch components:
+- Equip all bottom sheets (Compare Drawer, Mini-Basket, Filter Drawer, Hardware Advice Assistant) with tactile drag indicators/handles and swipe-to-dismiss gesture handling.
+- Ensure rubber-band and scroll-chaining prevention (`overscroll-behavior-y: contain`) so body background scrolling never interferes with active bottom sheets.
+- Implement responsive touch-down micro-interactions (`active:scale-[0.98]`, active press states) across all interactive product cards, CTA buttons, and bottom dock navigation tabs.
+
+### R2. Specialized Mobile E-Commerce UX Patterns (PDP & Catalog)
+Implement industry-standard mobile trade/retail conversion patterns modeled after Screwfix, Toolstation, and modern mobile commerce:
+- **Sticky PDP Action Dock**: On product detail pages (`/products/[slug]`), provide a fixed bottom action bar containing the current price (Inc./Ex. VAT), quantity stepper, and prominent 1-tap "Add to Basket" button with safe-area bottom padding, keeping purchasing within comfortable thumb reach regardless of scroll depth.
+- **Mobile Search Experience**: Enhance the search input into a dedicated focus state or full-screen search overlay on mobile devices with quick category tags, clear button, and recent search history cues.
+- **Mobile Filter & Sort Floating Pill**: On catalog and category pages (`/tools`, `/[slug]`), render a floating or sticky bottom filter/sort pill that opens the filter bottom sheet effortlessly without having to scroll back to the top.
+
+### R3. Mobile Cart & Checkout Thumb-Friendly Flow
+Optimize conversion paths on narrow screens:
+- Mobile checkout (`/checkout`) and basket (`/basket`) with compact sticky order summary accordions, clear express checkout styling (Apple Pay / Google Pay / Card), and large touch-friendly form fields satisfying WCAG AA (min 44×44px).
+- Zero horizontal overflow across all viewport widths (320px, 360px, 375px, 390px, 412px, 430px, 768px).
+
+### R4. Brand V3 & Technical Invariants
+- Maintain strict adherence to Brand V3 tokens (Industrial Cobalt `#2450B8`, Action Lime `#DDF16A`, Ink `#182336`, Workshop White `#F7F8F5`, Cloud Blue `#EAF0FF`).
+- Enforce strict server-side wholesale data isolation (`wholesale_cost_pence` never exposed).
+- Maintain 100% test coverage with zero regressions across the existing test suite.
+
+## Acceptance Criteria
+
+### Touch Gestures & Viewport Integrity
+- [ ] All bottom sheets (Compare, Cart, Filters, Advice) feature swipe-to-dismiss drag handles and touch-friendly dismissal.
+- [ ] Horizontal scroll width test passes with `document.documentElement.scrollWidth <= window.innerWidth` across 320px, 360px, 375px, 390px, 412px, 430px, and 768px.
+- [ ] Safe-area padding (`env(safe-area-inset-bottom)` and `env(safe-area-inset-top)`) verified on all fixed sticky elements (BottomNav, Sticky PDP Bar, Header, Drawers).
+
+### E-Commerce Interaction & UX Quality
+- [ ] PDP displays a thumb-accessible sticky bottom buy dock on mobile when scrolling past the primary buy box.
+- [ ] Catalog search and filter interactions operate cleanly with 1-tap touch access.
+- [ ] All touch targets meet or exceed WCAG 2.1 AA 44×44px hit dimensions.
+
+### Stability & Automated Verification
+- [ ] All Vitest test suites (`npx vitest run`) pass cleanly.
+- [ ] TypeScript compilation (`npm run typecheck`) passes with 0 errors.
+- [ ] Static brand compliance (`python qa/check_static.py`) passes without violation.
+- [ ] Production build (`npm run build`) completes successfully.
+
+
+## 2026-10-16T06:47:14Z
+
+Deploy a full specialized multi-agent swarm to execute an exhaustive full-stack defect hunt, deep UI/UX heuristics polish, backend API error boundary hardening, and e-commerce services verification across the ToolCart repository.
+
+Working directory: e:\ToolCart
+Integrity mode: benchmark
+
+## Requirements
+
+### R1. Frontend UI/UX Heuristics & Micro-Interaction Polish
+Perform a deep design-system and interaction audit across all storefront and admin screens:
+- Strictly adhere to Brand V3 tokens (design/tokens.css, design/tokens.json) with zero prohibited color codes (#B84C32, purple/violet, teal).
+- Ensure every interactive element provides visible, accessible states (hover, focus-visible, active, disabled, loading).
+- Guarantee responsive layout fidelity at 360px (mobile) and 1440px (desktop) with zero horizontal overflow or clipping, compliant touch targets (>= 44x44px), and zero cumulative layout shift (CLS).
+- Verify empty states, loading skeletons, and accessible form validation messages across search, catalog, product, and admin views.
+
+### R2. Backend API Error Boundaries & Input Sanitization
+Audit and harden all Next.js server actions, middleware, and API route handlers (/api/admin/*, /api/trade/*, /api/cart/*, etc.):
+- Validate input bounds and handle malformed, empty, negative, or adversarial payloads gracefully with structured JSON error responses.
+- Enforce strict fail-closed security for admin routes (HTTP 503 if unconfigured, HTTP 401 if unauthorized).
+- Prevent unhandled promise rejections, race conditions, or unhandled null/undefined accesses in data repositories.
+
+### R3. E-Commerce Core Services & Utilities Hardening
+Deeply inspect and harden core e-commerce utility domains:
+- Stock freshness and inventory allocation logic (handling out-of-stock, low-stock, and draft supplier rows).
+- Pricing calculations (VAT inclusion/exclusion, carriage grouping, trade volume discounts, price floors).
+- Server-side isolation of wholesale pricing (guaranteeing unit_cost_ex_vat_gbp, case_cost_ex_vat_gbp, and supplier terms are never leaked into client bundles or public API responses).
+- Catalog search, filter, and sort state synchronization.
+
+### R4. Adversarial QA, Defect Regression Suites & Verification
+- Author comprehensive adversarial test suites targeting any identified boundary defects or edge-case failures.
+- Maintain 100% green test pass rate across all test files (npm test -- --run).
+- Pass clean TypeScript compilation (npx tsc --noEmit), zero ESLint errors/warnings (npm run lint), static brand check (python qa/check_static.py), and successful Next.js production build (npm run build).
+
+## Acceptance Criteria
+
+### UI/UX & Accessibility
+- [ ] Zero WCAG AA contrast violations and zero prohibited color codes across all templates.
+- [ ] Responsive fidelity verified at 360px and 1440px with no horizontal scroll leakage.
+- [ ] All interactive controls have accessible labels and keyboard focus indicators.
+
+### Backend & Operational Stability
+- [ ] All API endpoints gracefully handle null, invalid, or oversized payloads with typed error responses.
+- [ ] Admin security perimeter fails closed (401/503) without authentication leaks.
+- [ ] Wholesale trade pricing strictly absent from client-side bundles and DTOs.
+
+### Verification & Quality Gate
+- [ ] All test suites pass 100% with exit code 0 (npm test -- --run).
+- [ ] npx tsc --noEmit and npm run lint report 0 errors and 0 warnings.
+- [ ] npm run build succeeds cleanly for all routes.
+- [ ] Independent clean-room audit executed and certified: VICTORY CONFIRMED.

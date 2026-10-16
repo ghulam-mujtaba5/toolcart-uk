@@ -4,6 +4,8 @@ import React, { useState } from 'react';
 import { useCart } from '@/context/cart-context';
 import { useVAT } from '@/context/vat-context';
 import { Button } from '@/components/ui/button';
+import { DragHandle } from '@/components/ui/drag-handle';
+import { useSwipeToDismiss } from '@/hooks/use-swipe-to-dismiss';
 import { X, Send, AlertTriangle, ShoppingCart } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { PublicProductDTO } from '@/types/product';
@@ -26,6 +28,12 @@ interface AIAssistantDrawerProps {
 export function AIAssistantDrawer({ isOpen, onClose }: AIAssistantDrawerProps) {
   const { addItem } = useCart();
   const { formatPriceDisplay } = useVAT();
+
+  const { sheetRef, style, dragHandleProps } = useSwipeToDismiss({
+    onDismiss: onClose,
+    threshold: 80,
+    direction: 'down',
+  });
 
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
@@ -114,11 +122,18 @@ export function AIAssistantDrawer({ isOpen, onClose }: AIAssistantDrawerProps) {
 
       {/* Drawer Container */}
       <div
+        ref={sheetRef}
+        style={style}
         role="dialog"
         aria-modal="true"
         aria-labelledby="ai-assistant-title"
         className="relative w-full max-w-lg bg-tc-surface-soft h-full shadow-2xl flex flex-col z-10 border-l border-[#C8D9F9] animate-in slide-in-from-right-full duration-300"
       >
+        {/* Tactile Grab Handle */}
+        <div className="bg-white pt-1 border-b border-[#C8D9F9]/40 flex justify-center">
+          <DragHandle {...dragHandleProps} />
+        </div>
+
         {/* Header: Cobalt accent, Brand V3 */}
         <div className="p-4 sm:p-5 bg-white border-b border-[#C8D9F9] flex items-center justify-between shrink-0">
           <div className="flex items-center gap-3">
@@ -152,7 +167,7 @@ export function AIAssistantDrawer({ isOpen, onClose }: AIAssistantDrawerProps) {
         </div>
 
         {/* Message History */}
-        <div className="flex-1 overflow-y-auto p-4 sm:p-5 space-y-4">
+        <div className="flex-1 overflow-y-auto overscroll-y-contain p-4 sm:p-5 space-y-4">
           {messages.map((m, idx) => (
             <div
               key={idx}

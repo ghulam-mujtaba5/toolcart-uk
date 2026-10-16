@@ -71,7 +71,7 @@ export function StockRadarBadge({
         onMouseLeave={() => showDetailsPopover && setIsPopoverOpen(false)}
         onClick={() => showDetailsPopover && setIsPopoverOpen((prev) => !prev)}
         className={cn(
-          'inline-flex items-center gap-1.5 rounded-full border shadow-2xs font-semibold select-none max-w-full',
+          'inline-flex items-center gap-1.5 rounded-md border shadow-2xs font-semibold select-none max-w-full',
           'transition-all duration-150',
           size === 'sm' ? 'px-2 py-0.5 text-[11px]' : 'px-2.5 py-1 text-xs',
           toneClasses,

@@ -4,6 +4,8 @@ import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { useRouter, useSearchParams, usePathname } from 'next/navigation';
 import { useVAT } from '@/context/vat-context';
 import { Button } from '@/components/ui/button';
+import { DragHandle } from '@/components/ui/drag-handle';
+import { useSwipeToDismiss } from '@/hooks/use-swipe-to-dismiss';
 import { RotateCcw, SlidersHorizontal, X, Check } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -21,6 +23,12 @@ export function FilterSidebar({ categories, brands, className }: FilterSidebarPr
   const { isTradeMode } = useVAT();
 
   const [isMobileDrawerOpen, setIsMobileDrawerOpen] = useState(false);
+
+  const { sheetRef, style, dragHandleProps } = useSwipeToDismiss({
+    onDismiss: () => setIsMobileDrawerOpen(false),
+    threshold: 80,
+    direction: 'down',
+  });
 
   const currentCategory = searchParams.get('category') || '';
   const currentBrand = searchParams.get('brand') || '';
@@ -121,7 +129,7 @@ export function FilterSidebar({ categories, brands, className }: FilterSidebarPr
               type="button"
               onClick={() => updateParam('category', null)}
               className={cn(
-                'w-full text-left min-h-[44px] py-2 px-3 rounded-lg transition-colors flex items-center justify-between',
+                'w-full text-left min-h-[44px] py-2 px-3 rounded-lg transition-all active:scale-[0.98] flex items-center justify-between',
                 !currentCategory
                   ? 'bg-tc-surface-soft text-tc-primary font-bold shadow-2xs'
                   : 'text-tc-text-secondary hover:text-tc-ink hover:bg-tc-canvas'
@@ -136,7 +144,7 @@ export function FilterSidebar({ categories, brands, className }: FilterSidebarPr
                 type="button"
                 onClick={() => updateParam('category', c.slug)}
                 className={cn(
-                  'w-full text-left min-h-[44px] py-2 px-3 rounded-lg transition-colors flex items-center justify-between',
+                  'w-full text-left min-h-[44px] py-2 px-3 rounded-lg transition-all active:scale-[0.98] flex items-center justify-between',
                   currentCategory === c.slug
                     ? 'bg-tc-surface-soft text-tc-primary font-bold shadow-2xs'
                     : 'text-tc-text-secondary hover:text-tc-ink hover:bg-tc-canvas'
@@ -163,7 +171,7 @@ export function FilterSidebar({ categories, brands, className }: FilterSidebarPr
               type="button"
               onClick={() => updateParam('brand', null)}
               className={cn(
-                'w-full text-left min-h-[44px] py-2 px-3 rounded-lg transition-colors flex items-center justify-between',
+                'w-full text-left min-h-[44px] py-2 px-3 rounded-lg transition-all active:scale-[0.98] flex items-center justify-between',
                 !currentBrand
                   ? 'bg-tc-surface-soft text-tc-primary font-bold shadow-2xs'
                   : 'text-tc-text-secondary hover:text-tc-ink hover:bg-tc-canvas'
@@ -178,7 +186,7 @@ export function FilterSidebar({ categories, brands, className }: FilterSidebarPr
                 type="button"
                 onClick={() => updateParam('brand', b.name)}
                 className={cn(
-                  'w-full text-left min-h-[44px] py-2 px-3 rounded-lg transition-colors flex items-center justify-between',
+                  'w-full text-left min-h-[44px] py-2 px-3 rounded-lg transition-all active:scale-[0.98] flex items-center justify-between',
                   currentBrand.toLowerCase() === b.name.toLowerCase()
                     ? 'bg-tc-surface-soft text-tc-primary font-bold shadow-2xs'
                     : 'text-tc-text-secondary hover:text-tc-ink hover:bg-tc-canvas'
@@ -217,9 +225,11 @@ export function FilterSidebar({ categories, brands, className }: FilterSidebarPr
         </h4>
         <div className="grid grid-cols-2 gap-3 text-xs">
           <div>
-            <span className="text-[11px] font-medium text-tc-text-secondary block mb-1">Min £</span>
+            <label htmlFor="filter-min-price" className="text-[11px] font-medium text-tc-text-secondary block mb-1">Min £</label>
             <input
+              id="filter-min-price"
               type="number"
+              aria-label="Minimum price in pounds"
               placeholder="0"
               value={localMinPrice}
               onChange={(e) => setLocalMinPrice(e.target.value)}
@@ -227,9 +237,11 @@ export function FilterSidebar({ categories, brands, className }: FilterSidebarPr
             />
           </div>
           <div>
-            <span className="text-[11px] font-medium text-tc-text-secondary block mb-1">Max £</span>
+            <label htmlFor="filter-max-price" className="text-[11px] font-medium text-tc-text-secondary block mb-1">Max £</label>
             <input
+              id="filter-max-price"
               type="number"
+              aria-label="Maximum price in pounds"
               placeholder="100"
               value={localMaxPrice}
               onChange={(e) => setLocalMaxPrice(e.target.value)}
@@ -287,11 +299,18 @@ export function FilterSidebar({ categories, brands, className }: FilterSidebarPr
           />
 
           <div
+            ref={sheetRef}
+            style={style}
             role="dialog"
             aria-modal="true"
             aria-labelledby="filter-drawer-title"
             className="relative w-full max-w-xs sm:max-w-sm bg-white h-full shadow-2xl flex flex-col z-10 animate-in slide-in-from-left duration-300"
           >
+            {/* Tactile Grab Handle */}
+            <div className="bg-tc-canvas pt-1 border-b border-tc-border/40 flex justify-center">
+              <DragHandle {...dragHandleProps} />
+            </div>
+
             {/* Drawer Header */}
             <div className="p-4 border-b border-tc-border flex items-center justify-between bg-tc-canvas shrink-0">
               <div className="flex items-center gap-2">
@@ -328,7 +347,7 @@ export function FilterSidebar({ categories, brands, className }: FilterSidebarPr
             </div>
 
             {/* Scrollable Filters Content */}
-            <div className="flex-1 overflow-y-auto p-4 sm:p-5">
+            <div className="flex-1 overflow-y-auto overscroll-y-contain p-4 sm:p-5">
               {renderFilterContent()}
             </div>
 

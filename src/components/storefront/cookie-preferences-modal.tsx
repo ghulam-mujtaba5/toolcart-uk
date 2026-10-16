@@ -71,7 +71,7 @@ export function CookiePreferencesModal() {
       className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-tc-ink/75 backdrop-blur-xs overflow-y-auto animate-in fade-in duration-200"
     >
       <div
-        className="relative w-full max-w-2xl bg-white rounded-card border-2 border-tc-ink shadow-2xl overflow-hidden my-auto max-h-[92vh] flex flex-col"
+        className="relative w-full max-w-2xl bg-white rounded-card border-2 border-tc-ink shadow-2xl overflow-hidden my-auto max-h-[92dvh] flex flex-col"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Modal Header */}
@@ -91,7 +91,7 @@ export function CookiePreferencesModal() {
             type="button"
             onClick={closePreferences}
             aria-label="Close cookie preferences modal"
-            className="w-9 h-9 rounded-lg flex items-center justify-center text-white/80 hover:text-white hover:bg-white/10 transition-colors focus-visible:outline-2 focus-visible:outline-tc-action-lime"
+            className="w-11 h-11 min-w-[44px] min-h-[44px] rounded-lg flex items-center justify-center text-white/80 hover:text-white hover:bg-white/10 transition-colors focus-visible:outline-2 focus-visible:outline-tc-action-lime"
           >
             <X className="w-5 h-5" />
           </button>
@@ -156,14 +156,14 @@ export function CookiePreferencesModal() {
                   aria-checked={functional}
                   onClick={() => setFunctional(!functional)}
                   aria-label="Toggle Functional and Trade Preferences cookies"
-                  className={`relative inline-flex h-7 w-12 shrink-0 cursor-pointer rounded-full transition-colors duration-200 ease-in-out border-2 ${
+                  className={`relative inline-flex min-h-[44px] min-w-[52px] h-8 w-13 shrink-0 cursor-pointer rounded-full transition-colors duration-200 ease-in-out border-2 items-center px-0.5 ${
                     functional
                       ? 'bg-tc-action-lime border-tc-ink'
                       : 'bg-tc-canvas border-tc-border-strong'
                   } focus-visible:outline-2 focus-visible:outline-tc-primary focus-visible:outline-offset-2`}
                 >
                   <span
-                    className={`pointer-events-none inline-block h-5 w-5 transform rounded-full bg-tc-ink shadow-md ring-0 transition duration-200 ease-in-out ${
+                    className={`pointer-events-none inline-block h-6 w-6 transform rounded-full bg-tc-ink shadow-md ring-0 transition duration-200 ease-in-out ${
                       functional ? 'translate-x-5' : 'translate-x-0.5'
                     }`}
                   />
@@ -191,14 +191,14 @@ export function CookiePreferencesModal() {
                   aria-checked={analytics}
                   onClick={() => setAnalytics(!analytics)}
                   aria-label="Toggle Analytics and Site Diagnostics cookies"
-                  className={`relative inline-flex h-7 w-12 shrink-0 cursor-pointer rounded-full transition-colors duration-200 ease-in-out border-2 ${
+                  className={`relative inline-flex min-h-[44px] min-w-[52px] h-8 w-13 shrink-0 cursor-pointer rounded-full transition-colors duration-200 ease-in-out border-2 items-center px-0.5 ${
                     analytics
                       ? 'bg-tc-action-lime border-tc-ink'
                       : 'bg-tc-canvas border-tc-border-strong'
                   } focus-visible:outline-2 focus-visible:outline-tc-primary focus-visible:outline-offset-2`}
                 >
                   <span
-                    className={`pointer-events-none inline-block h-5 w-5 transform rounded-full bg-tc-ink shadow-md ring-0 transition duration-200 ease-in-out ${
+                    className={`pointer-events-none inline-block h-6 w-6 transform rounded-full bg-tc-ink shadow-md ring-0 transition duration-200 ease-in-out ${
                       analytics ? 'translate-x-5' : 'translate-x-0.5'
                     }`}
                   />
@@ -226,14 +226,14 @@ export function CookiePreferencesModal() {
                   aria-checked={marketing}
                   onClick={() => setMarketing(!marketing)}
                   aria-label="Toggle Personalised Trade Recommendations cookies"
-                  className={`relative inline-flex h-7 w-12 shrink-0 cursor-pointer rounded-full transition-colors duration-200 ease-in-out border-2 ${
+                  className={`relative inline-flex min-h-[44px] min-w-[52px] h-8 w-13 shrink-0 cursor-pointer rounded-full transition-colors duration-200 ease-in-out border-2 items-center px-0.5 ${
                     marketing
                       ? 'bg-tc-action-lime border-tc-ink'
                       : 'bg-tc-canvas border-tc-border-strong'
                   } focus-visible:outline-2 focus-visible:outline-tc-primary focus-visible:outline-offset-2`}
                 >
                   <span
-                    className={`pointer-events-none inline-block h-5 w-5 transform rounded-full bg-tc-ink shadow-md ring-0 transition duration-200 ease-in-out ${
+                    className={`pointer-events-none inline-block h-6 w-6 transform rounded-full bg-tc-ink shadow-md ring-0 transition duration-200 ease-in-out ${
                       marketing ? 'translate-x-5' : 'translate-x-0.5'
                     }`}
                   />

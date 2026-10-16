@@ -9,9 +9,8 @@ import {
   IconToolbox,
   IconBolt,
   IconCaliper,
-  IconTradeVerified,
 } from '@/components/ui/trade-icons';
-import { ShoppingCart, Check, Plus, Minus, ShieldCheck } from 'lucide-react';
+import { ShoppingCart, Plus, Minus } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 interface PdpActionsProps {
@@ -204,7 +203,7 @@ export function PdpActions({ product }: PdpActionsProps) {
             <span>Out of Stock</span>
           ) : isSnapped ? (
             <>
-              <IconTradeVerified size={20} className="text-tc-ink" />
+              <ShoppingCart className="w-5 h-5 text-tc-ink" />
               <span>Added to ToolCart!</span>
             </>
           ) : (
@@ -229,10 +228,7 @@ export function PdpActions({ product }: PdpActionsProps) {
           )}
         >
           {isCompared ? (
-            <>
-              <Check className="w-4 h-4 text-white" />
-              <span>In Comparison List (Click to remove)</span>
-            </>
+            <span>In Comparison List (Click to remove)</span>
           ) : (
             <>
               <IconCaliper size={16} className="text-tc-primary" />
@@ -244,9 +240,8 @@ export function PdpActions({ product }: PdpActionsProps) {
 
       {/* Reassurance Notice */}
       <div className="p-3.5 rounded-xl bg-tc-surface-soft border border-[#C8D9F9] text-xs text-tc-ink space-y-1">
-        <div className="font-bold flex items-center gap-2 text-tc-primary">
-          <ShieldCheck className="w-4 h-4 text-tc-primary shrink-0" />
-          <span>UK Trade &amp; DIY Standards Assured</span>
+        <div className="font-bold text-tc-primary">
+          UK Trade &amp; DIY Standards Assured
         </div>
         <p className="text-[11px] text-tc-text-secondary leading-snug">
           Direct dispatch from UK distribution facility. Transparent pack counts, genuine specifications, and standard 30-day returns.
@@ -286,7 +281,7 @@ export function PdpActions({ product }: PdpActionsProps) {
         >
           {isSnapped ? (
             <>
-              <IconTradeVerified size={16} className="text-tc-ink" />
+              <ShoppingCart className="w-4 h-4 text-tc-ink" />
               <span>Added!</span>
             </>
           ) : (

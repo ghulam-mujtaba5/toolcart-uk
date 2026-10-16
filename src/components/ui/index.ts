@@ -8,3 +8,4 @@ export * from './drawer';
 export * from './spec-table';
 export * from './tabs';
 export * from './filter-pill';
+export * from './drag-handle';

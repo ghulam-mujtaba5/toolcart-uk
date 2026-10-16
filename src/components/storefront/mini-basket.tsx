@@ -5,6 +5,8 @@ import Link from 'next/link';
 import { useCart } from '@/context/cart-context';
 import { useVAT } from '@/context/vat-context';
 import { Button } from '@/components/ui/button';
+import { DragHandle } from '@/components/ui/drag-handle';
+import { useSwipeToDismiss } from '@/hooks/use-swipe-to-dismiss';
 import { EmptyToolChestVector } from '@/components/ui/vectors';
 import { IconTruckFreight, IconTradeVerified, IconToolbox } from '@/components/ui/trade-icons';
 import { CopyBadge } from '@/components/ui/copy-badge';
@@ -14,6 +16,12 @@ import { cn } from '@/lib/utils';
 export function MiniBasket() {
   const { items, summary, isOpen, closeCart, updateQuantity, removeItem, clearCart } = useCart();
   const { isTradeMode, formatPriceDisplay } = useVAT();
+
+  const { sheetRef, style, dragHandleProps } = useSwipeToDismiss({
+    onDismiss: closeCart,
+    threshold: 80,
+    direction: 'down',
+  });
 
   React.useEffect(() => {
     if (!isOpen) return;
@@ -43,11 +51,18 @@ export function MiniBasket() {
 
       {/* Slide-Over Drawer Container */}
       <div
+        ref={sheetRef}
+        style={style}
         role="dialog"
         aria-modal="true"
         aria-labelledby="mini-basket-title"
         className="relative w-full max-w-md bg-white h-full shadow-2xl flex flex-col z-10 animate-in slide-in-from-right-full duration-300"
       >
+        {/* Tactile Grab Handle */}
+        <div className="bg-tc-canvas pt-1 border-b border-tc-border/40 flex justify-center">
+          <DragHandle {...dragHandleProps} />
+        </div>
+
         {/* Drawer Header */}
         <div className="p-4 sm:p-5 border-b border-tc-border flex items-center justify-between bg-tc-canvas shrink-0">
           <div className="flex items-center gap-2">
@@ -82,7 +97,7 @@ export function MiniBasket() {
         </div>
 
         {/* Drawer Body: Line Items & Supplier Delivery Grouping */}
-        <div className="flex-1 overflow-y-auto p-4 sm:p-5 space-y-6">
+        <div className="flex-1 overflow-y-auto overscroll-y-contain p-4 sm:p-5 space-y-6">
           {items.length === 0 ? (
             <div className="h-full flex flex-col items-center justify-center text-center p-6 space-y-4">
               <div className="w-48 h-36 mx-auto flex items-center justify-center">

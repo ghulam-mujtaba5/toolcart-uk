@@ -1,7 +1,7 @@
-# BRIEFING — 2026-10-13T17:40:00Z
+# BRIEFING — 2026-10-16T07:29:00Z
 
 ## Mission
-Adversarially challenge and stress-test Milestone 1 deliverables: pure-CSS patterns (.tc-bg-dots, .tc-bg-blueprint, .tc-card-machined) and bespoke SVG vector components under extreme inputs, boundary conditions, and stress harnesses.
+Adversarially challenge and stress-test Milestone 1 Native Touch Gestures & Mobile Sheet Ergonomics (`useSwipeToDismiss`, `DragHandle`, bottom sheets) under extreme inputs, micro-drags, upward drags, rapid velocity flicks, and touchcancel event interruptions.
 
 ## 🔒 My Identity
 - Archetype: EMPIRICAL CHALLENGER
@@ -13,6 +13,8 @@ Adversarially challenge and stress-test Milestone 1 deliverables: pure-CSS patte
 - Current run parent: 080a93ac-e184-4734-a107-f062151cd3dc
 - Current run parent (2026-10-15): 616c35a2-dbd8-4d26-9bbc-5e7e26c1b91c
 - Current run milestone (2026-10-15): Retail Merchant Admin Navigation & Core Dashboard (Milestone M1)
+- Current run parent (2026-10-16): 90f7f002-2562-4af1-b6d4-ce24843b9dd0 (orchestrator_mobile_ux_1)
+- Current run milestone (2026-10-16): Native Touch Gestures & Mobile Sheet Ergonomics (Milestone M1)
 
 ## 🔒 Key Constraints
 - Review-only — do NOT modify implementation code
@@ -22,48 +24,46 @@ Adversarially challenge and stress-test Milestone 1 deliverables: pure-CSS patte
 - Milestone 1 Revamp: Stress-test pure-CSS patterns and bespoke SVG vector components under extreme inputs and edge cases
 - Report verdict: APPROVE or REQUEST_CHANGES
 - M1 Admin Navigation Stress: Adversarially test responsive navigation drawer, backdrop, Escape key, touch target size (44px), and 360px viewport scaling
+- M1 Mobile Touch Gestures Stress: Adversarially test touch gesture hook and drag handle implementations with upward drags, micro-drags, rapid velocity swipes, and touchcancel events in tests/ui/challenger-touch-gestures.test.tsx
 
 ## Current Parent
-- Conversation ID: 616c35a2-dbd8-4d26-9bbc-5e7e26c1b91c
-- Updated: 2026-10-15T12:55:33Z
+- Conversation ID: 90f7f002-2562-4af1-b6d4-ce24843b9dd0
+- Updated: 2026-10-16T07:21:39Z
 
 ## Review Scope
-- **Files to review**: `src/components/admin/admin-layout.tsx`, `src/components/admin/admin-sidebar.tsx`, `src/components/admin/dashboard-quick-filters.tsx`, `app/admin/page.tsx`
-- **Interface contracts**: `ORIGINAL_REQUEST.md`, `qa/contrast_matrix.json`, `docs/02_BRAND_IDENTITY.md`
-- **Review criteria**: Responsive navigation drawer, backdrop click dismissal, Escape key handling, touch target size (44px min), 360px viewport scaling, Brand V3 compliance
+- **Files to review**: `src/hooks/use-swipe-to-dismiss.ts`, `src/components/ui/drag-handle.tsx`, `src/components/storefront/compare-drawer.tsx`, `src/components/storefront/mini-basket.tsx`, `src/components/storefront/filter-sidebar.tsx`, `src/components/storefront/ai-assistant-drawer.tsx`, `src/components/storefront/header.tsx`
+- **Interface contracts**: `SCOPE.md`, `DISPATCH.md`
+- **Review criteria**: Upward drag containment (`deltaY < 0`), micro-drag resilience (< threshold), rapid swipe velocity (`velocity > 0.5px/ms`), `touchcancel` handling, multi-touch isolation
 
 ## Key Decisions Made
-- Confirmed baseline static check `python qa/check_static.py` passes cleanly.
-- Authored and executed dedicated empirical adversarial test suite `tests/adversarial/m1-admin-navigation-challenge.test.tsx` (24 tests).
-- All 24 adversarial tests passed cleanly (`2948ms` runtime).
-- Verified drawer lifecycle across 50 rapid open/close cycles with zero desync of `document.body.style.overflow`.
-- Verified click isolation between backdrop and drawer surface.
-- Verified Escape key listener attachment, 20 rapid-fire keydowns, and detachment on close.
-- Verified all interactive buttons (hamburger and close) and all 8 primary category links have >= 44px touch targets.
-- Verified 360px viewport scaling preserves 72px (20%) backdrop tap-out area via `w-72 max-w-[85vw]`.
-- Verified header breadcrumb truncation prevents horizontal layout blowout at 360px.
-- Verified automatic drawer dismissal on Next.js route transition.
-- Verdict: APPROVE. Documented in `handoff.md`.
+- Baseline checks: `python qa/check_static.py` passes (code 0), `npm run typecheck` passes (code 0).
+- Authored dedicated empirical adversarial test suite: `tests/ui/challenger-touch-gestures.test.tsx` (19 tests).
+- Executed `npx vitest run tests/ui/challenger-touch-gestures.test.tsx`:
+  - 16 tests passed cleanly.
+  - 3 tests failed, empirically confirming a defect in `src/hooks/use-swipe-to-dismiss.ts`:
+    - `dragHandleProps` and `sheetProps` omit `onTouchCancel`.
+    - No `handleTouchCancel` is implemented; `touchcancel` events leave `isDragging: true` and `translateY` permanently stuck.
+    - Interrupted touches past threshold must abort without calling `onDismiss`.
+- Verdict: REQUEST_CHANGES. Documented in `handoff.md`.
 
 ## Artifact Index
 - e:\ToolCart\.agents\teamwork\challenger_m1_1\DISPATCH.md — Parent instructions
 - e:\ToolCart\.agents\teamwork\challenger_m1_1\progress.md — Liveness heartbeat & progress
 - e:\ToolCart\.agents\teamwork\challenger_m1_1\BRIEFING.md — Persistent context & identity
-- e:\ToolCart\.agents\teamwork\challenger_m1_1\handoff.md — Final challenge report & verdict (APPROVE)
-- tests/adversarial/m1-admin-navigation-challenge.test.tsx — Empirical adversarial test suite (24 tests)
+- e:\ToolCart\.agents\teamwork\challenger_m1_1\handoff.md — Final challenge report & verdict (REQUEST_CHANGES)
+- tests/ui/challenger-touch-gestures.test.tsx — Empirical adversarial test suite (19 tests)
 
 ## Attack Surface
 - **Hypotheses tested**:
-  - Hypothesis 1: Does rapid toggling of `mobileOpen` cause event listener leaks or desynchronized body scroll lock (`overflow: hidden` stuck on unmount)? -> REJECTED (body overflow resets cleanly to '' in all 50 rapid cycles and on unmount).
-  - Hypothesis 2: Does clicking inside the drawer surface accidentally dismiss the drawer due to event bubbling? -> REJECTED (sibling overlay architecture prevents click bubbling to backdrop).
-  - Hypothesis 3: Does pressing Escape when `mobileOpen=false` inadvertently trigger `onClose` or error? -> REJECTED (listener is only attached when open; detached cleanly on close).
-  - Hypothesis 4: Are all interactive elements in the mobile drawer >= 44px? -> CONFIRMED for all buttons and category nav links; footer "View Storefront" link noted at 36px as an ergonomic observation.
-  - Hypothesis 5: At 360px viewport width, does the drawer surface (`w-72 max-w-[85vw]`) leave sufficient backdrop area to click-dismiss? -> CONFIRMED (leaves 72px tap-out margin, 20% of viewport).
-  - Hypothesis 6: Does header truncation prevent horizontal layout blow-out when long breadcrumbs or badges are rendered at 360px? -> CONFIRMED (`min-w-0` and `truncate` prevent blowout).
-- **Vulnerabilities found**: None critical; 1 minor ergonomic enhancement noted (drawer footer link `min-h-[36px]` vs `min-h-[44px]`).
-- **Untested angles**: None within M1 navigation scope.
-
+  - Hypothesis 1: Does an upward drag (`deltaY < 0`) displace the sheet upward or trigger premature dismissal? -> REJECTED (clamped cleanly to 0).
+  - Hypothesis 2: Does a micro-drag below threshold reset smoothly to 0 without dismissal? -> CONFIRMED (resets smoothly without dismissing).
+  - Hypothesis 3: Does rapid swipe velocity (> 0.5px/ms) dismiss even if distance is below threshold? -> CONFIRMED (flick detection triggers dismissal when >= minFlickDistance).
+  - Hypothesis 4: Does a second finger corrupt primary touch coordinate tracking? -> REJECTED (finger 0 is tracked independently).
+  - Hypothesis 5: Does a `touchcancel` event smoothly reset dragging state and displacement without stuck states or unwanted dismissal? -> CONFIRMED VULNERABILITY (fails; `onTouchCancel` is missing on `dragHandleProps`/`sheetProps`, leaving the sheet stuck in a dragging state).
+- **Vulnerabilities found**:
+  - Missing `onTouchCancel` on `dragHandleProps` and `sheetProps` in `src/hooks/use-swipe-to-dismiss.ts:129-141`.
+  - Missing `handleTouchCancel` in `useSwipeToDismiss` to abort dragging without dismissing.
+- **Untested angles**: None within M1 touch gestures and sheets scope.
 
 ## Loaded Skills
 None specified in dispatch.
-

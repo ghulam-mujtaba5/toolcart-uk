@@ -178,8 +178,9 @@ export default function TradePortalPage() {
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 text-xs">
               <div>
-                <label className="block text-tc-ink font-semibold mb-1.5">Registered Company Name *</label>
+                <label htmlFor="trade-company-name" className="block text-tc-ink font-semibold mb-1.5">Registered Company Name *</label>
                 <input
+                  id="trade-company-name"
                   type="text"
                   required
                   value={companyName}
@@ -190,8 +191,9 @@ export default function TradePortalPage() {
               </div>
 
               <div>
-                <label className="block text-tc-ink font-semibold mb-1.5">Companies House Number *</label>
+                <label htmlFor="trade-companies-house" className="block text-tc-ink font-semibold mb-1.5">Companies House Number *</label>
                 <input
+                  id="trade-companies-house"
                   type="text"
                   required
                   value={companiesHouseNumber}
@@ -202,8 +204,9 @@ export default function TradePortalPage() {
               </div>
 
               <div>
-                <label className="block text-tc-ink font-semibold mb-1.5">UK VAT Number (Optional)</label>
+                <label htmlFor="trade-vat-number" className="block text-tc-ink font-semibold mb-1.5">UK VAT Number (Optional)</label>
                 <input
+                  id="trade-vat-number"
                   type="text"
                   value={vatNumber}
                   onChange={(e) => setVatNumber(e.target.value)}
@@ -213,8 +216,9 @@ export default function TradePortalPage() {
               </div>
 
               <div>
-                <label className="block text-tc-ink font-semibold mb-1.5">Primary Trade Sector</label>
+                <label htmlFor="trade-sector" className="block text-tc-ink font-semibold mb-1.5">Primary Trade Sector</label>
                 <select
+                  id="trade-sector"
                   value={tradeSector}
                   onChange={(e) => setTradeSector(e.target.value)}
                   className="w-full h-11 min-h-[44px] px-3.5 rounded-lg border border-tc-border bg-white text-base sm:text-xs text-tc-ink focus:outline-none focus:ring-2 focus:ring-tc-primary font-semibold"
@@ -229,8 +233,9 @@ export default function TradePortalPage() {
               </div>
 
               <div>
-                <label className="block text-tc-ink font-semibold mb-1.5">Primary Contact Name *</label>
+                <label htmlFor="trade-contact-name" className="block text-tc-ink font-semibold mb-1.5">Primary Contact Name *</label>
                 <input
+                  id="trade-contact-name"
                   type="text"
                   required
                   value={contactName}
@@ -241,8 +246,9 @@ export default function TradePortalPage() {
               </div>
 
               <div>
-                <label className="block text-tc-ink font-semibold mb-1.5">Invoicing Email Address *</label>
+                <label htmlFor="trade-contact-email" className="block text-tc-ink font-semibold mb-1.5">Invoicing Email Address *</label>
                 <input
+                  id="trade-contact-email"
                   type="email"
                   required
                   value={contactEmail}
@@ -253,8 +259,9 @@ export default function TradePortalPage() {
               </div>
 
               <div>
-                <label className="block text-tc-ink font-semibold mb-1.5">Contact Telephone *</label>
+                <label htmlFor="trade-contact-phone" className="block text-tc-ink font-semibold mb-1.5">Contact Telephone *</label>
                 <input
+                  id="trade-contact-phone"
                   type="tel"
                   required
                   value={contactPhone}

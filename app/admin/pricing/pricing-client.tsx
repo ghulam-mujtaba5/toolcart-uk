@@ -169,22 +169,22 @@ export function PricingClient({ initialRules, initialMarginFloor }: PricingClien
             role="alert"
             className={`p-4 rounded-xl border text-xs flex items-center justify-between ${
               feedback.type === 'success'
-                ? 'bg-green-50 border-green-200 text-green-800'
-                : 'bg-red-50 border-red-200 text-red-800'
+                ? 'bg-[#E8F5E9] border-[#C8E6C9] text-[#1B5E20]'
+                : 'bg-tc-surface-danger border-[#FECDD3] text-tc-error'
             }`}
           >
             <div className="flex items-center gap-2 font-medium">
               {feedback.type === 'success' ? (
-                <CheckCircle2 className="w-4 h-4 text-green-600" />
+                <CheckCircle2 className="w-4 h-4 text-[#2E7D32]" />
               ) : (
-                <AlertTriangle className="w-4 h-4 text-red-600" />
+                <AlertTriangle className="w-4 h-4 text-tc-error" />
               )}
               <span>{feedback.message}</span>
             </div>
             <button
               type="button"
               onClick={() => setFeedback(null)}
-              className="text-xs underline hover:opacity-80"
+              className="text-xs underline hover:opacity-80 min-h-[44px] px-2 inline-flex items-center"
             >
               Dismiss
             </button>

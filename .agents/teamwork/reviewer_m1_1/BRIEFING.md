@@ -1,7 +1,7 @@
-# BRIEFING — 2026-10-15T13:07:00Z
+# BRIEFING — 2026-10-16T07:32:00Z
 
 ## Mission
-Review and adversarially stress-test Milestone M1 implementation (Retail Merchant Admin Navigation & Core Dashboard: admin-layout, admin-sidebar, dashboard-quick-filters, admin/page, tests), verifying code quality, Brand V3 tokenization, responsive mobile layouts, test coverage, and integrity.
+Review and adversarially stress-test Milestone 1 implementation (Native Touch Gestures & Mobile Sheet Ergonomics: use-swipe-to-dismiss, drag-handle, 5 bottom sheets, active press states, tests), verifying code quality, accessibility, touch ergonomics, overscroll containment, Brand V3 compliance, and integrity.
 
 ## 🔒 My Identity
 - Archetype: reviewer / critic
@@ -17,27 +17,37 @@ Review and adversarially stress-test Milestone M1 implementation (Retail Merchan
 - Brand V3 strictly enforced: zero copper (#B84C32 / --tc-copper), zero purple/violet/lavender, zero teal. Action Lime must never have white text and must have 2px Ink border on white.
 
 ## Current Parent
-- Conversation ID: 616c35a2-dbd8-4d26-9bbc-5e7e26c1b91c
-- Updated: 2026-10-15T13:07:00Z
+- Conversation ID: 90f7f002-2562-4af1-b6d4-ce24843b9dd0
+- Updated: 2026-10-16T07:32:00Z
 
 ## Review Scope
 - **Files to review**:
-  - `src/components/admin/admin-layout.tsx`
-  - `src/components/admin/admin-sidebar.tsx`
-  - `src/components/admin/dashboard-quick-filters.tsx`
-  - `app/admin/page.tsx`
-  - `tests/ui/admin-navigation-and-dashboard.test.tsx`
-  - `e:\ToolCart\.agents\teamwork\worker_m1_2\handoff.md`
-  - `design/tokens.css`
-- **Interface contracts**: `PROJECT.md`, `docs/02_BRAND_IDENTITY.md`, `design/tokens.css`, `qa/contrast_matrix.json`, `ORIGINAL_REQUEST.md` (section `## 2026-10-15T12:07:45Z`)
-- **Review criteria**: Correctness, Brand V3 tokenization, responsive design (360px & desktop), accessibility (WCAG AA, dialog, keyboard nav), error resilience, test quality & integrity violations check.
+  - `src/hooks/use-swipe-to-dismiss.ts`
+  - `src/components/ui/drag-handle.tsx`
+  - `src/components/storefront/compare-drawer.tsx`
+  - `src/components/storefront/mini-basket.tsx`
+  - `src/components/storefront/filter-sidebar.tsx`
+  - `src/components/storefront/ai-assistant-drawer.tsx`
+  - `src/components/storefront/header.tsx`
+  - `src/components/storefront/navigation.tsx`
+  - `src/components/ui/button.tsx`
+  - `src/components/storefront/bottom-nav.tsx`
+  - `src/components/storefront/product-card.tsx`
+  - `tests/ui/touch-gestures-sheets.test.tsx`
+  - `tests/ui/challenger-touch-gestures.test.tsx`
+  - `tests/ui/challenger-drawer-integration.test.tsx`
+  - `e:\ToolCart\.agents\teamwork\worker_m1_gestures_sheets\handoff.md`
+  - `e:\ToolCart\.agents\teamwork\challenger_m1_1\handoff.md`
+- **Interface contracts**: `PROJECT.md`, `SCOPE.md`, `ORIGINAL_REQUEST.md` (section `## 2026-10-16T06:42:05Z`)
+- **Review criteria**: Correctness, touch physics & threshold handling, completeness (all 5 sheets), accessibility (ARIA roles, labels, focus), overscroll containment, active:scale-[0.98] press states, Brand V3 conformance, test quality, integrity checks.
 
 ## Key Decisions Made
-- Confirmed zero integrity violations across all Milestone M1 files.
-- Confirmed Brand V3 tokenization passes `python qa/check_static.py`.
-- Verified 15/15 unit tests pass, 24/24 adversarial tests pass, and 700/700 total suite tests pass.
-- Isolated repository `tsc` failure to untracked/in-progress Milestone M2 files (`app/api/admin/products/bulk/route.ts` and `app/api/admin/products/[id]/route.ts`); M1 files are 100% type-clean.
-- Issued verdict: `APPROVE` in `handoff.md`.
+- Confirmed zero integrity violations (no hardcoded outputs, genuine touch mathematics, real CSS classes).
+- Confirmed Brand V3 static checks pass with 0 violations (`python qa/check_static.py`).
+- Confirmed TypeScript typecheck passes with 0 errors (`npm run typecheck`).
+- Confirmed 30/30 unit tests pass in `tests/ui/touch-gestures-sheets.test.tsx`.
+- Identified 1 Critical functional defect: Missing `touchcancel` event handling in `use-swipe-to-dismiss.ts`, confirmed by 3 failing tests in `tests/ui/challenger-touch-gestures.test.tsx` causing `npm test` to fail.
+- Issued verdict: `REQUEST_CHANGES` with concrete 4-step remediation plan for the Worker.
 
 ## Artifact Index
 - `e:\ToolCart\.agents\teamwork\reviewer_m1_1\progress.md` — Liveness & status tracking
@@ -45,24 +55,34 @@ Review and adversarially stress-test Milestone M1 implementation (Retail Merchan
 
 ## Review Checklist
 - **Items reviewed**:
-  - `src/components/admin/admin-layout.tsx`
-  - `src/components/admin/admin-sidebar.tsx`
-  - `src/components/admin/dashboard-quick-filters.tsx`
-  - `app/admin/page.tsx`
-  - `tests/ui/admin-navigation-and-dashboard.test.tsx`
-  - `tests/adversarial/m1-admin-navigation-challenge.test.tsx`
-- **Verdict**: APPROVE
-- **Unverified claims**: None. All verified via test execution and static check.
+  - `src/hooks/use-swipe-to-dismiss.ts`
+  - `src/components/ui/drag-handle.tsx`
+  - `src/components/storefront/compare-drawer.tsx`
+  - `src/components/storefront/mini-basket.tsx`
+  - `src/components/storefront/filter-sidebar.tsx`
+  - `src/components/storefront/ai-assistant-drawer.tsx`
+  - `src/components/storefront/header.tsx`
+  - `src/components/storefront/navigation.tsx`
+  - `src/components/ui/button.tsx`
+  - `src/components/storefront/bottom-nav.tsx`
+  - `src/components/storefront/product-card.tsx`
+  - `tests/ui/touch-gestures-sheets.test.tsx`
+  - `tests/ui/challenger-touch-gestures.test.tsx`
+  - `tests/ui/challenger-drawer-integration.test.tsx`
+- **Verdict**: REQUEST_CHANGES
+- **Unverified claims**: Worker claim of 100% test pass invalidated by 3 failures in `tests/ui/challenger-touch-gestures.test.tsx`.
 
 ## Attack Surface
 - **Hypotheses tested**:
-  - Integrity violations / facade logic: Passed (genuine interactive components).
-  - Prohibited colors (#B84C32, purple, teal): Passed (0 violations).
-  - White text on Action Lime: Passed (Action Lime exclusively uses dark Ink text with 2px borders).
-  - Mobile drawer dialog lifecycle & body scroll lock: Passed (24 adversarial stress tests passed).
-  - Division by zero / NaN in retail KPIs: Passed (safe guard handles empty DB).
+  - Integrity violations / facades: Passed (authentic logic).
+  - Brand V3 color violations: Passed (0 violations).
+  - Upward swipe clamping: Passed (`translateY = 0`).
+  - Small drag spring return: Passed.
+  - Rapid flick velocity: Passed (`velocity > 0.5px/ms`).
+  - OS interrupt `touchcancel` handling: FAILED (leaves modal permanently stuck with `isDragging: true`).
 - **Vulnerabilities found**:
-  - Minor: Raw hex `#182336` on `app/admin/page.tsx:327` instead of `bg-tc-ink`.
-  - Minor: Missing focus trap within mobile drawer dialog (`admin-sidebar.tsx:185`).
-  - Advisory / M2 blocker: Typecheck failure in concurrent untracked M2 bulk route.
-- **Untested angles**: Focus trap enforcement with Screen Reader on real device.
+  - [Critical] Missing `onTouchCancel` in `useSwipeToDismiss` causes bottom sheets to freeze in dragged position when OS interrupts touch.
+  - [Minor] Missing multi-touch finger isolation in `handleTouchStart`.
+  - [Minor] Missing `touch-pan-y` / `touch-none` on `DragHandle`.
+  - [Minor] `DragHandle` has `role="button"` and `tabIndex={0}` but lacks keyboard activation handler (`Enter`/`Space`).
+- **Untested angles**: Physical mobile hardware tactile testing on iOS Safari and Android Chrome.

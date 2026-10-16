@@ -63,7 +63,7 @@ export function SearchFilterChips() {
           <button
             type="button"
             onClick={() => removeChip(chip.key)}
-            className="hover:text-tc-ink transition-colors min-w-[28px] min-h-[28px] sm:min-w-0 sm:min-h-0 p-1 flex items-center justify-center rounded-full hover:bg-tc-canvas"
+            className="hover:text-tc-ink transition-colors min-w-[36px] min-h-[36px] p-1.5 flex items-center justify-center rounded-full hover:bg-tc-canvas"
             aria-label={`Remove filter ${chip.label}`}
           >
             <X className="w-3.5 h-3.5" />

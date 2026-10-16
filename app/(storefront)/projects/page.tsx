@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { getProjectKits } from '@/lib/catalog';
 import { ProjectKitCard } from '@/components/storefront/project-kit-card';
 import { ChronologicalAssemblyAnimation } from '@/components/storefront/chronological-assembly-animation';
-import { Layers, ShieldCheck, CheckCircle2 } from 'lucide-react';
+
 
 export const dynamic = 'force-dynamic';
 
@@ -20,12 +20,7 @@ export default async function ProjectsPage() {
       </div>
 
       {/* Header Banner */}
-      <div className="bg-white rounded-card border border-tc-border p-6 sm:p-8 space-y-4">
-        <div className="inline-flex items-center gap-1.5 text-xs font-extrabold text-tc-primary uppercase tracking-wider font-mono">
-          <Layers className="w-4 h-4" />
-          <span>CURATED PROJECT BASKETS</span>
-        </div>
-
+      <div className="bg-white rounded-card border border-tc-border p-6 sm:p-8 space-y-3">
         <h1 className="font-heading font-extrabold text-3xl sm:text-4xl text-tc-ink tracking-tight">
           Job-Ready Hardware Kits
         </h1>
@@ -34,19 +29,10 @@ export default async function ProjectsPage() {
           Pre-assembled multi-item kits designed to eliminate missed site components. Each bundle features trade-certified UK hardware with up to 18% bundle savings.
         </p>
 
-        <div className="flex flex-wrap items-center gap-6 pt-2 text-xs text-tc-ink font-medium">
-          <span className="flex items-center gap-1.5">
-            <CheckCircle2 className="w-4 h-4 text-tc-success" />
-            1-Click bundle population
-          </span>
-          <span className="flex items-center gap-1.5">
-            <CheckCircle2 className="w-4 h-4 text-tc-success" />
-            Checklist item customization
-          </span>
-          <span className="flex items-center gap-1.5">
-            <ShieldCheck className="w-4 h-4 text-tc-primary" />
-            Tested against British Standards
-          </span>
+        <div className="flex flex-wrap items-center gap-6 pt-2 text-xs text-tc-text-secondary font-medium">
+          <span>• 1-Click bundle population</span>
+          <span>• Checklist item customization</span>
+          <span>• British Standards verified</span>
         </div>
       </div>
 

@@ -2,7 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { ShieldCheck, CheckCircle2, Lock, Cookie } from 'lucide-react';
+import { Cookie } from 'lucide-react';
 import { useCookieConsent } from '@/context/cookie-consent-context';
 
 export function Footer() {
@@ -30,10 +30,9 @@ export function Footer() {
             <p className="text-xs text-[#DFE8F6] leading-relaxed">
               The right tools. The right advice. Direct UK distribution of trade-quality hardware, fixings, consumables, and site gear.
             </p>
-            <div className="pt-2 text-xs text-[#DFE8F6] font-medium flex items-center gap-1.5">
-              <ShieldCheck className="w-4 h-4 text-tc-action-lime shrink-0" />
-              <span>Direct UK Hardware Distribution</span>
-            </div>
+            <p className="pt-2 text-xs text-[#DFE8F6] font-medium">
+              Direct UK Hardware Distribution
+            </p>
           </div>
 
           {/* Column 2: Hardware Categories */}
@@ -153,22 +152,10 @@ export function Footer() {
               UK Standards
             </p>
             <ul className="space-y-2 text-xs text-[#DFE8F6]">
-              <li className="flex items-center gap-1.5">
-                <CheckCircle2 className="w-3.5 h-3.5 text-tc-action-lime shrink-0" />
-                <span>UKCA &amp; CE Certified Hardware</span>
-              </li>
-              <li className="flex items-center gap-1.5">
-                <CheckCircle2 className="w-3.5 h-3.5 text-tc-action-lime shrink-0" />
-                <span>1000V VDE &amp; British Standards</span>
-              </li>
-              <li className="flex items-center gap-1.5">
-                <CheckCircle2 className="w-3.5 h-3.5 text-tc-action-lime shrink-0" />
-                <span>EN 14183 150KG Duty Rated</span>
-              </li>
-              <li className="flex items-center gap-1.5">
-                <Lock className="w-3.5 h-3.5 text-tc-action-lime shrink-0" />
-                <span>256-Bit SSL Encrypted Checkout</span>
-              </li>
+              <li>UKCA &amp; CE Certified Hardware</li>
+              <li>1000V VDE &amp; British Standards</li>
+              <li>EN 14183 150KG Duty Rated</li>
+              <li>256-Bit SSL Encrypted Checkout</li>
               <li className="pt-2 border-t border-white/10 flex flex-col gap-1.5 text-[11px]">
                 <Link href="/cookies" className="hover:text-tc-action-lime transition-colors">
                   UK Cookie Policy &amp; Disclosures
@@ -179,7 +166,7 @@ export function Footer() {
                 <button
                   type="button"
                   onClick={openPreferences}
-                  className="text-left text-tc-action-lime hover:underline font-semibold focus-visible:outline-2 focus-visible:outline-tc-action-lime"
+                  className="text-left text-tc-action-lime hover:underline font-semibold focus-visible:outline-2 focus-visible:outline-tc-action-lime min-h-[44px] inline-flex items-center"
                 >
                   Manage Cookie Preferences
                 </button>
@@ -215,7 +202,7 @@ export function Footer() {
             <button
               type="button"
               onClick={openPreferences}
-              className="hover:text-tc-action-lime transition-colors underline-offset-2 font-medium"
+              className="hover:text-tc-action-lime transition-colors underline-offset-2 font-medium min-h-[44px] inline-flex items-center px-1"
             >
               Cookie Settings
             </button>

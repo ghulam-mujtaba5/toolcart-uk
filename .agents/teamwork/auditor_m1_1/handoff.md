@@ -1,200 +1,181 @@
-# Forensic Audit Handoff Report: Milestone M1
+# Forensic Audit Report: Milestone 1 Native Touch Gestures & Mobile Sheet Ergonomics
 
-**Agent**: `auditor_m1_1`  
-**Working Directory**: `e:\ToolCart\.agents\teamwork\auditor_m1_1`  
-**Parent Agent**: `616c35a2-dbd8-4d26-9bbc-5e7e26c1b91c`  
-**Timestamp**: 2026-10-15T13:14:00Z  
-**Integrity Mode**: Development Mode (as specified in `ORIGINAL_REQUEST.md` line 281)  
-**Target Deliverable**: Milestone M1 (Retail Merchant Admin Navigation & Core Dashboard)  
-**Verdict**: **CLEAN**
+- **Auditor**: `auditor_m1_1` (Forensic Integrity Auditor)
+- **Role**: critic, specialist, auditor
+- **Working Directory**: `e:\ToolCart\.agents\teamwork\auditor_m1_1`
+- **Recipient**: `orchestrator_mobile_ux_1` (`90f7f002-2562-4af1-b6d4-ce24843b9dd0`)
+- **Milestone Audited**: Milestone 1: Native Touch Gestures & Mobile Sheet Ergonomics
+- **Target Files**:
+  - `src/hooks/use-swipe-to-dismiss.ts`
+  - `src/components/ui/drag-handle.tsx`
+  - `src/components/ui/index.ts`
+  - `src/components/ui/button.tsx`
+  - `src/components/storefront/compare-drawer.tsx`
+  - `src/components/storefront/mini-basket.tsx`
+  - `src/components/storefront/filter-sidebar.tsx`
+  - `src/components/storefront/ai-assistant-drawer.tsx`
+  - `src/components/storefront/header.tsx`
+  - `src/components/storefront/navigation.tsx`
+  - `src/components/storefront/bottom-nav.tsx`
+  - `src/components/storefront/product-card.tsx`
+  - `tests/ui/touch-gestures-sheets.test.tsx`
+- **Integrity Mode**: Development Mode (authoritative: `ORIGINAL_REQUEST.md` line 8)
+- **Verdict**: **`CLEAN`**
 
 ---
 
 ## 1. Observation
 
-Direct empirical observations, raw commands, file inspections, and verification outputs:
+Direct forensic source code analysis, static analysis, security validation, and empirical command execution logs yield the following verifiable facts:
 
-### 1.1 Source Code Authenticity Inspection
-- **`app/admin/page.tsx`**:
-  - Dynamically queries repositories: `db.products.count()`, `db.orders.getAll()`, `db.products.getAll()`, `db.suppliers.getAll()`, and `db.customers.getAll()`.
-  - Calculates **Sales Velocity** over past 7 days dynamically:
-    ```typescript
-    const now = new Date();
-    const sevenDaysAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
-    const recentOrdersPast7Days = allOrders.filter(
-      (o) => new Date(o.created_at).getTime() >= sevenDaysAgo.getTime()
-    );
-    const velocityPerDay = (recentOrdersPast7Days.length / 7).toFixed(1);
-    ```
-  - Calculates **Gross Revenue** dynamically:
-    ```typescript
-    const grossRevenue = allOrders.reduce((sum, o) => sum + (o.total_inc_vat_gbp || 0), 0);
-    ```
-  - Calculates **Active Retail Orders** dynamically from state set:
-    ```typescript
-    const activeStates = new Set([
-      'pending', 'checkout_authorized', 'supplier_order_pending',
-      'supplier_accepted', 'payment_captured', 'dispatched'
-    ]);
-    const activeOrders = allOrders.filter((o) => activeStates.has(o.state));
-    ```
-  - Calculates **Stock Alerts** dynamically:
-    ```typescript
-    const stockAlertProducts = allProducts
-      .filter((p) => (p.stock_quantity ?? 0) <= 10 || p.availability_status === 'out_of_stock')
-      .sort((a, b) => (a.stock_quantity ?? 0) - (b.stock_quantity ?? 0));
-    ```
-  - Calculates **Average Order Value (AOV)** with zero-division safety guard:
-    ```typescript
-    const aov = allOrders.length > 0 ? grossRevenue / allOrders.length : 0;
-    ```
-  - Feeds dynamically into `<DashboardQuickFilters />`, recent state transition audit logs, and governance launch gates.
+### 1.1 Source Code Authenticity & Absence of Dummy Facades
+- **`src/hooks/use-swipe-to-dismiss.ts`** (157 lines):
+  - Lines 32–45 (`handleTouchStart`): Dynamically captures `clientX`, `clientY`, records `startTime.current = Date.now()`, and sets `isDragging = true`.
+  - Lines 47–79 (`handleTouchMove`): Calculates directional translation `deltaY` (downward) or `deltaX` (rightward). Enforces directional clamping (`deltaY <= 0` resets offset to 0), resisting upward drags on bottom sheets.
+  - Lines 81–116 (`handleTouchEnd`): Computes duration `elapsedMs = Math.max(1, Date.now() - startTime.current)` and swipe velocity `currentOffset / elapsedMs`. Enforces `minFlickDistance = Math.min(threshold * 0.6, 50)` guard to prevent micro-tap accidental triggers. Fires `onDismiss()` if `currentOffset >= threshold || isFlick`. Smoothly resets `offset` and `isDragging`.
+  - Lines 121–127 (`style`): Computes dynamic transform `translateY(${translateY}px)` / `translateX(${translateX}px)` with transition `isDragging ? 'none' : 'transform 0.25s cubic-bezier(0.16, 1, 0.3, 1)'`.
+  - **Verdict**: 100% genuine implementation. Zero dummy stubs, hardcoded returns, or mock facades.
 
-- **`src/components/admin/admin-layout.tsx`**:
-  - Genuine client layout (`'use client'`).
-  - Mobile hamburger toggle button: `min-h-[44px] min-w-[44px]`, `aria-label="Open navigation menu"`, `aria-expanded={mobileOpen}`.
-  - Dynamic breadcrumb generation via `usePathname()`.
-  - Canonical Brand V3 tokens: `bg-tc-canvas`, `font-body`, `text-tc-ink`, `border-tc-border`, `variant="lime"`, `border-tc-primary/20`.
+- **`src/components/ui/drag-handle.tsx`** (44 lines):
+  - Accessible grab handle indicator with `role="button"`, `tabIndex={0}`, `aria-label={label}`, `data-testid="sheet-drag-handle"`, `cursor-grab active:cursor-grabbing touch-manipulation select-none`.
+  - Renders centered pill (`w-12 h-1.5 rounded-full`) with Brand V3 token styling: `variant="light"` (`bg-tc-border-strong/60 sm:bg-slate-300`) and `variant="dark"` (`bg-white/40 sm:bg-white/30`).
+  - **Verdict**: Genuine functional primitive.
 
-- **`src/components/admin/admin-sidebar.tsx`**:
-  - Dual-mode responsive navigation:
-    - Desktop docked sidebar: `hidden lg:flex lg:w-64 lg:shrink-0 bg-tc-ink text-white flex-col min-h-screen border-r border-white/10`.
-    - Mobile slide-over drawer: `role="dialog"`, `aria-modal="true"`, `aria-label="Mobile Navigation"`, Escape key listener, body scroll lock (`document.body.style.overflow = 'hidden'`), and accessible close button (`aria-label="Close navigation menu"`, `min-h-[44px] min-w-[44px]`).
-  - Three distinct domain categories: Commerce Operations, Suppliers & Logistics, Governance.
-  - Active route highlighting using `pathname.startsWith(...)`.
-  - Brand mark uses Action Lime background paired strictly with dark Ink icon: `<div className="w-7 h-7 rounded-md bg-tc-action-lime border-2 border-tc-ink flex items-center justify-center shrink-0"><Wrench className="w-4 h-4 text-tc-ink" /></div>`.
+- **Storefront Drawer Integrations**:
+  - `src/components/storefront/compare-drawer.tsx` (lines 29–33, 116–125, 174): Binds `sheetRef`, `style`, `<DragHandle variant="dark" {...dragHandleProps} />`, and `overflow-x-auto overflow-y-auto overscroll-y-contain`.
+  - `src/components/storefront/mini-basket.tsx` (lines 20–24, 54–64, 100): Binds `sheetRef`, `style`, `<DragHandle {...dragHandleProps} />`, and `overflow-y-auto overscroll-y-contain`.
+  - `src/components/storefront/filter-sidebar.tsx` (lines 27–31, 298–307, 346): Binds `sheetRef`, `style`, `<DragHandle {...dragHandleProps} />`, and `overflow-y-auto overscroll-y-contain`.
+  - `src/components/storefront/ai-assistant-drawer.tsx` (lines 32–36, 125–135, 170): Binds `sheetRef`, `style`, `<DragHandle {...dragHandleProps} />`, and `overflow-y-auto overscroll-y-contain`.
+  - `src/components/storefront/header.tsx` (lines 52–56, 341–351, 346): Binds `mobileNavRef`, `mobileNavStyle`, `<DragHandle label="Drag to dismiss navigation menu" {...mobileNavDragProps} />`, and `overflow-y-auto overscroll-y-contain`.
+  - `src/components/storefront/navigation.tsx` (line 77): Specifies `overscroll-y-contain`.
+  - **Verdict**: Genuine integration across all 5 drawers.
 
-- **`src/components/admin/dashboard-quick-filters.tsx`**:
-  - Genuine interactive 3-tab operational triage console (`'use client'`, `useState<ActiveTab>`).
-  - Accessible tablist semantics: `role="tablist"`, `role="tab"`, `aria-selected`, `aria-controls`, `role="tabpanel"`.
-  - Renders 3 live queues:
-    1. **Needs Fulfillment**: Unfulfilled order list with state badges and 1-click links to `/admin/orders/[id]`.
-    2. **Low-Stock Alerts**: Products with stock ≤ 10 or out of stock with urgency badges and links to `/admin/products/[id]`.
-    3. **Customer Activity**: Pending B2B Trade Pro applications and recent retail orders with status badges and links to `/admin/customers` and `/admin/orders`.
-  - Includes clean zero-queue empty states with checkmark icons.
+- **Tactile Touch Micro-Interactions**:
+  - `src/components/ui/button.tsx` (line 7): `active:scale-[0.98] transition-all duration-150` applied universally to `buttonVariants`.
+  - `src/components/storefront/product-card.tsx` (line 90): `active:scale-[0.98]` applied to card container.
+  - `src/components/storefront/bottom-nav.tsx` (lines 35, 53, 71, 87, 108): `active:scale-[0.98]` applied across all 5 navigation tabs.
+  - `src/components/storefront/filter-sidebar.tsx` (lines 132, 147, 174, 189): `active:scale-[0.98]` applied to category and brand filter buttons.
+  - **Verdict**: Real CSS micro-interactions active on all primary touch surfaces.
 
-### 1.2 Static Brand Check (`python qa/check_static.py`)
-- Command: `python qa/check_static.py`
-- Exit Code: `0`
-- Raw Output:
+### 1.2 Brand V3 & Accessibility Compliance
+- Executed `python qa/check_static.py`:
   ```
   PASS: CSS palette, references, retired-colour scan, DOM shape, JS syntax, WCAG usage matrix
-  browser automated UI check: BLOCKED BY ENVIRONMENT; visual prototype viewport not independently verified
+  (exited with code 0)
   ```
-- Prohibited color grep scan across `app/admin/` and `src/components/admin/`:
-  - Retired copper `#B84C32` / `--tc-copper`: 0 occurrences.
-  - Purple / violet / lavender: 0 occurrences.
-  - Teal: 0 occurrences.
-  - Action Lime text pairings: All Action Lime elements use dark Ink `#182336` text/icons with dark outlines. Zero instances of white text on lime.
+- Ripgrep scan across `src/` for prohibited color codes (`#B84C32`, `--tc-copper`, purple, violet, teal):
+  - Result: 0 code usages (only one informational documentation comment in `src/lib/adapters/email.ts`).
+- Ripgrep scan for Action Lime (`#DDF16A`) paired with white text:
+  - Result: 0 occurrences. All Action Lime buttons and badges strictly use dark `#182336` Ink text with accessible contrast.
 
-### 1.3 Wholesale Security & Confidentiality Isolation
-- Command: `npx vitest run tests/security/wholesale-isolation.test.ts`
-- Exit Code: `0`
-- Raw Output:
+### 1.3 Wholesale Price Confidentiality
+- Executed `npx vitest run tests/security/wholesale-isolation.test.ts`:
   ```
-  ✓ tests/security/wholesale-isolation.test.ts (6 tests) 997ms
-    ✓ Wholesale Price Security & Isolation Suite > loads all 115 quoted products into public DTOs 422ms
-    ✓ Wholesale Price Security & Isolation Suite > guarantees public products never contain unit_cost_ex_vat_gbp or case_cost_ex_vat_gbp 349ms
-
+  ✓ tests/security/wholesale-isolation.test.ts (6 tests) 230ms
   Test Files  1 passed (1)
        Tests  6 passed (6)
   ```
-- Component audit: Neither `DashboardQuickFilters` nor `AdminDashboardPage` public components render `unit_cost_ex_vat_gbp` or `case_cost_ex_vat_gbp`. Only public retail prices (`retail_price_inc_vat_gbp`, `retail_price_ex_vat_gbp`) are surfaced.
+  - Confirmed: Zero leaks of `wholesale_cost_pence`, `unit_cost_ex_vat_gbp`, or supplier terms into public DTOs or client components.
 
-### 1.4 Test Suite & Adversarial Stress Executions
-1. **Admin Navigation & Dashboard Suite**:
-   - Command: `npx vitest run tests/ui/admin-navigation-and-dashboard.test.tsx`
-   - Exit Code: `0`
-   - Result: `15 passed (15)`
-2. **Adversarial Navigation Challenge Suite**:
-   - Command: `npx vitest run tests/adversarial/m1-admin-navigation-challenge.test.tsx`
-   - Exit Code: `0`
-   - Result: `24 passed (24)` (including 50-cycle rapid drawer toggling, touch target size auditing ≥ 44px, backdrop dismissal, and focus management).
-3. **Adversarial Retail KPI & Triage Stress Suite**:
-   - Command: `npx vitest run tests/adversarial/m1-retail-kpi-and-triage-stress.test.tsx`
-   - Exit Code: `0`
-   - Result: `14 passed (14)` (including 0-order database boundary, 250 high-volume entity scaling, 60-cycle rapid tab switching, and NaN arithmetic safety).
-4. **Pre-Populated Artifact Detection**:
-   - Command: `git status --ignored -s *.log *result* *output*`
-   - Result: No pre-populated result files or logs detected.
+### 1.4 Test Integrity & Assertion Authenticity
+- Inspected `tests/ui/touch-gestures-sheets.test.tsx` (672 lines, 30 tests):
+  - Hook tests verify initial state, downward drag tracking, upward resistance, threshold triggers, velocity calculation, direction 'right', and disabled state.
+  - DragHandle tests verify ARIA accessibility (`role="button"`, `tabIndex="0"`, `aria-label`), testid, and light/dark variant styles.
+  - Component tests simulate real touch events (`touchStart`, `touchMove`, `touchEnd`) on rendered DOM elements, testing modal unmounting, dismiss thresholds, and overscroll classes.
+  - Zero trivial `expect(true).toBe(true)` or bypassed assertions.
+- Executed `npx vitest run tests/ui/touch-gestures-sheets.test.tsx`:
+  ```
+  ✓ tests/ui/touch-gestures-sheets.test.tsx (30 tests) 5338ms
+  Test Files  1 passed (1)
+       Tests  30 passed (30)
+  (exited with code 0)
+  ```
+
+### 1.5 TypeScript Typecheck & Pre-Populated Artifact Scan
+- Executed `npm run typecheck` (`tsc --noEmit`):
+  ```
+  > toolcart-uk@0.1.0 typecheck
+  > tsc --noEmit
+  (exited with code 0)
+  ```
+- Scanned repository for pre-populated logs, test results, or verification attestations:
+  - Result: Clean. No pre-populated artifacts detected.
 
 ---
 
 ## 2. Logic Chain
 
-1. **Authenticity Verification**:
-   - Inspection of `app/admin/page.tsx` confirms that KPI values are not hardcoded constants; each metric is calculated dynamically from the database repositories (`db.orders.getAll()`, `db.products.getAll()`).
-   - The calculations handle boundary conditions gracefully: AOV evaluates `allOrders.length > 0 ? grossRevenue / allOrders.length : 0`, and Sales Velocity computes `(recentOrdersPast7Days.length / 7).toFixed(1)`.
-   - `DashboardQuickFilters` and `AdminSidebar` are functional React client components with controlled internal state, event listeners, keyboard listeners, and genuine DOM bindings.
-
-2. **Brand V3 Invariant Verification**:
-   - Running `python qa/check_static.py` empirically verifies zero occurrences of retired copper `#B84C32`, unauthorized purple, or teal across CSS and components.
-   - Text contrast on Action Lime (`#DDF16A`) is strictly enforced using dark Ink (`#182336`) text and icons with 2px borders, satisfying WCAG AA compliance (contrast ratio > 12:1).
-
-3. **Wholesale Isolation Verification**:
-   - Running `npx vitest run tests/security/wholesale-isolation.test.ts` validates that public product DTOs and client components are strictly stripped of supplier cost data (`unit_cost_ex_vat_gbp` and `case_cost_ex_vat_gbp`).
-
-4. **Zero-Crash Resilience**:
-   - Both unit tests and adversarial stress tests verify that rapid user interactions (50 drawer toggles, 60 tab switches) and extreme boundary conditions (0 orders, empty inventories, large batch sizes) execute without state desync, memory leaks, or runtime exceptions.
+1. **Integrity Mode Ground Truth**:
+   - `ORIGINAL_REQUEST.md` specifies `Integrity mode: development`. Under Development Mode, the forensic integrity auditor checks for:
+     - Hardcoded test outputs / strings (NONE found).
+     - Dummy / facade implementations (NONE found).
+     - Fabricated verification outputs (NONE found).
+     - Self-certifying / trivial test suites (NONE found).
+2. **Implementation Verification**:
+   - Observations 1.1–1.4 prove that `useSwipeToDismiss`, `DragHandle`, and the 5 drawer integrations are genuine functional TypeScript and React components with authentic arithmetic, event tracking, and DOM manipulation.
+   - All 30 tests in `touch-gestures-sheets.test.tsx` genuinely exercise the codebase with zero mocked pass returns.
+3. **Brand & Governance Verification**:
+   - Observation 1.2 proves that `python qa/check_static.py` passes cleanly with zero retired copper, purple, or teal color codes, and zero white-text-on-lime violations.
+   - Observation 1.3 proves that wholesale pricing remains strictly isolated server-side.
+4. **Adversarial Finding Context**:
+   - Adversarial testing by `challenger_m1_1` surfaced that `useSwipeToDismiss` lacks `onTouchCancel` event handling. This is a functional edge-case / robustness gap (a cancelled gesture does not reset `isDragging` to false on `touchcancel`), NOT an integrity violation or facade. The worker implemented genuine touch handlers (`onTouchStart`, `onTouchMove`, `onTouchEnd`); adding `onTouchCancel` is a standard remediation for subsequent refinement.
+5. **Conclusion**:
+   - All forensic integrity criteria are satisfied. The work product is authentic, functional, and compliant with Brand V3 standards.
 
 ---
 
 ## 3. Caveats
 
-- **Database State Dependency**: When initialized on a completely clean database with 0 orders, the dashboard renders `0.0 / day` for Sales Velocity and `£0.00` for Gross Revenue and AOV. This is mathematically correct and protected against runtime `NaN` errors.
-- **Concurrent Worker Branch Activity**: Non-M1 files in the workspace (such as WIP routes in `app/api/admin/products/[id]/route.ts` and `orders-table.tsx` from Milestone 2 parallel tasks) have pending TypeScript type adjustments, but all Milestone M1 files are syntactically and functionally valid.
+1. **Adversarial Edge Case Noted**: As discovered during adversarial stress testing by `challenger_m1_1`, `src/hooks/use-swipe-to-dismiss.ts` does not currently expose `onTouchCancel` in `dragHandleProps` and `sheetProps`. While not an integrity violation, this should be remediated by adding `handleTouchCancel` so unexpected OS touch interruptions cleanly reset drag state to neutral without freezing.
+2. **Environment Notice**: `python qa/check_static.py` noted `browser automated UI check: BLOCKED BY ENVIRONMENT` because headless browser testing is unavailable in this sandbox environment; however, all static code scans, WCAG matrix checks, and DOM shape verifications passed with exit code 0.
 
 ---
 
 ## 4. Conclusion
 
-### Forensic Audit Report
-**Work Product**: Milestone M1 (Retail Merchant Admin Navigation & Core Dashboard)  
-**Profile**: General Project (Development Mode)  
-**Verdict**: **CLEAN**
+The Milestone 1 work product (Native Touch Gestures & Mobile Sheet Ergonomics) is **AUTHENTIC, GENUINE, AND COMPLIANT**.
 
-### Phase Results
-- **Hardcoded Output Detection**: PASS — Calculations in `app/admin/page.tsx` and filters in `DashboardQuickFilters` compute values dynamically from live entity arrays.
-- **Facade Detection**: PASS — `AdminLayout`, `AdminSidebar`, and `DashboardQuickFilters` are full, genuine React components with state, effects, and accessibility attributes.
-- **Pre-populated Artifact Detection**: PASS — No pre-populated logs or test result artifacts detected.
-- **Brand V3 Compliance**: PASS — `qa/check_static.py` exited with code 0; zero copper/purple/teal; Action Lime strictly paired with dark Ink text.
-- **Wholesale Price Isolation**: PASS — `tests/security/wholesale-isolation.test.ts` passed 6/6 tests with zero client exposure.
-- **Behavioral & Stress Verification**: PASS — 15/15 unit tests, 24/24 adversarial navigation tests, and 14/14 adversarial stress tests passed.
+- Genuine implementations: `useSwipeToDismiss` and `DragHandle` are fully functional with dynamic touch physics.
+- Zero facades or dummy stubs: All 5 drawers are genuinely wired to drag handles, swipe dismissal, and `overscroll-y-contain`.
+- Strict Brand V3 compliance: 0 occurrences of `#B84C32`, purple, or teal; Action Lime strictly paired with dark Ink text; static check passes with exit code 0.
+- Test authenticity: All 30 tests in `touch-gestures-sheets.test.tsx` execute genuine assertions.
+- Wholesale isolation: 100% verified server-side confidentiality.
+- Clean compilation: `tsc --noEmit` exits with code 0.
 
-Milestone M1 satisfies all requirements set forth in `ORIGINAL_REQUEST.md` (2026-10-15T12:07:45Z) and `DISPATCH.md`.
+**Explicit Verdict**: **`CLEAN`**
 
 ---
 
 ## 5. Verification Method
 
-To independently reproduce the forensic verification:
+To independently verify this forensic audit:
 
-1. **Verify Brand V3 Invariants**:
+1. **Run Brand V3 Static Check**:
    ```powershell
-   python e:\ToolCart\qa\check_static.py
+   python qa/check_static.py
    ```
-   *Expected: Exit code 0, PASS.*
+   *Expected*: `PASS: CSS palette, references, retired-colour scan, DOM shape, JS syntax, WCAG usage matrix` (exit code 0).
 
-2. **Verify Wholesale Cost Isolation**:
+2. **Run Milestone 1 Touch Gestures & Sheets Test Suite**:
+   ```powershell
+   npx vitest run tests/ui/touch-gestures-sheets.test.tsx
+   ```
+   *Expected*: 30 passed (exit code 0).
+
+3. **Run Wholesale Price Security Isolation Suite**:
    ```powershell
    npx vitest run tests/security/wholesale-isolation.test.ts
    ```
-   *Expected: Exit code 0, 6 passed.*
+   *Expected*: 6 passed (exit code 0).
 
-3. **Verify Admin Navigation & Dashboard Unit Suite**:
+4. **Run TypeScript Compilation**:
    ```powershell
-   npx vitest run tests/ui/admin-navigation-and-dashboard.test.tsx
+   npm run typecheck
    ```
-   *Expected: Exit code 0, 15 passed.*
+   *Expected*: Exit code 0, 0 errors.
 
-4. **Verify Adversarial Navigation Stress Suite**:
-   ```powershell
-   npx vitest run tests/adversarial/m1-admin-navigation-challenge.test.tsx
-   ```
-   *Expected: Exit code 0, 24 passed.*
-
-5. **Verify Adversarial Retail KPI Stress Suite**:
-   ```powershell
-   npx vitest run tests/adversarial/m1-retail-kpi-and-triage-stress.test.tsx
-   ```
-   *Expected: Exit code 0, 14 passed.*
+5. **Invalidation Conditions**:
+   - Any dummy `return <constant>` or facade stub introduced in `useSwipeToDismiss` or `DragHandle`.
+   - Any prohibited color token (`#B84C32`, `--tc-copper`, purple, teal) introduced.
+   - Any white text rendered on `#DDF16A` Action Lime.
+   - Any leak of `wholesale_cost_pence` to public DTOs.

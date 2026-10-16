@@ -1,30 +1,28 @@
-# DISPATCH — Challenger 2 for Milestone M1
+# DISPATCH: challenger_m1_2
 
-## Role & Mission
-You are a Challenger (`teamwork_preview_challenger`). Adversarially test the retail operational KPI metrics and operational triage console in `app/admin/page.tsx` and `src/components/admin/dashboard-quick-filters.tsx`.
-
-## Focus & Stress Testing
-1. Boundary & Edge Case Testing:
-   - Empty order database (0 orders): verify velocity is 0, revenue is £0.00, AOV is £0.00, no NaN or crash.
-   - 1 single order, 1000 orders, orders with £0 total.
-   - Stock thresholds: products with stock = 0 (out of stock badge), stock = 1 (critical), stock = 10 (low), stock = 11 (not alert).
-   - Triage console tab transitions under rapid switching.
-2. Write and execute an empirical test script/harness to verify robustness.
-3. State your verdict clearly: `APPROVE` or `REQUEST_CHANGES`.
-
-Write your report to `e:\ToolCart\.agents\teamwork\challenger_m1_2\handoff.md` and send message to parent `616c35a2-dbd8-4d26-9bbc-5e7e26c1b91c`.
-
-## 2026-10-15T12:55:34Z
-You are challenger_m1_2.
+## Identity & Mission
+You are a Challenger subagent (teamwork_preview_challenger).
 Your working directory is: e:\ToolCart\.agents\teamwork\challenger_m1_2
-Your parent is: 616c35a2-dbd8-4d26-9bbc-5e7e26c1b91c
+Your parent orchestrator is: orchestrator_mobile_ux_1 (conversation ID: 90f7f002-2562-4af1-b6d4-ce24843b9dd0)
+Authoritative user request: e:\ToolCart\.agents\teamwork\ORIGINAL_REQUEST.md (read header ## 2026-10-16T06:42:05Z).
+Scope document: e:\ToolCart\.agents\teamwork\orchestrator_mobile_ux_1\SCOPE.md
+Worker handoff: e:\ToolCart\.agents\teamwork\worker_m1_gestures_sheets\handoff.md
+Worker changes: e:\ToolCart\.agents\teamwork\worker_m1_gestures_sheets\changes.md
 
-Read and follow:
-1. e:\ToolCart\.agents\teamwork\ORIGINAL_REQUEST.md (specifically timestamp 2026-10-15T12:07:45Z)
-2. e:\ToolCart\.agents\teamwork\challenger_m1_2\DISPATCH.md
-3. e:\ToolCart\.agents\teamwork\worker_m1_2\handoff.md
+## Challenge Focus: Empirical Testing of Drawer Accessibility & Viewport Integration
+Write an empirical test suite (`tests/ui/challenger-drawer-integration.test.tsx`) to verify:
+1. All 5 drawers render their DragHandle with `role="presentation"` or accessible label.
+2. In-panel containers have `overscroll-behavior-y: contain`.
+3. Accessibility: `aria-modal="true"` and `role="dialog"` are intact.
+4. Dismissal via Backdrop click and Escape key still functions alongside touch swipe.
+5. Zero regressions across existing drawer tests.
+6. Run your tests with `npx vitest run tests/ui/challenger-drawer-integration.test.tsx`.
 
-Adversarially stress-test retail KPI calculations and triage console under edge cases (0 orders, 1 order, large volumes, stock threshold boundaries, rapid tab toggling).
-Write and run empirical tests.
-State your verdict (APPROVE or REQUEST_CHANGES) in e:\ToolCart\.agents\teamwork\challenger_m1_2\handoff.md.
-Send message to parent 616c35a2-dbd8-4d26-9bbc-5e7e26c1b91c upon completion.
+Deliver your structured handoff report to:
+`e:\ToolCart\.agents\teamwork\challenger_m1_2\handoff.md`
+Must state explicit verdict: `APPROVE` or `REQUEST_CHANGES`.
+Notify parent via `send_message` when done.
+
+
+## 2026-10-16T07:21:39Z
+Read e:\ToolCart\.agents\teamwork\ORIGINAL_REQUEST.md, e:\ToolCart\.agents\teamwork\orchestrator_mobile_ux_1\SCOPE.md, and e:\ToolCart\.agents\teamwork\challenger_m1_2\DISPATCH.md. Adversarially test drawer accessibility, overscroll-containment, backdrop clicks, Escape key listeners, and DOM integration in tests/ui/challenger-drawer-integration.test.tsx. Run tests and deliver your structured handoff to e:\ToolCart\.agents\teamwork\challenger_m1_2\handoff.md with an explicit APPROVE or REQUEST_CHANGES verdict, then notify parent via send_message.

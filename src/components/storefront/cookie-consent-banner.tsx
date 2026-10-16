@@ -22,7 +22,7 @@ export function CookieConsentBanner() {
           type="button"
           onClick={openPreferences}
           aria-label="Open UK cookie preferences"
-          className="hidden md:flex fixed bottom-4 left-4 z-40 bg-white text-tc-ink border-2 border-tc-ink rounded-full px-3 py-2 text-xs font-bold shadow-lg hover:bg-tc-surface-soft hover:border-tc-primary items-center gap-2 transition-all focus-visible:outline-2 focus-visible:outline-tc-primary group"
+          className="hidden md:flex fixed bottom-[calc(1rem+env(safe-area-inset-bottom,0px))] left-[calc(1rem+env(safe-area-inset-left,0px))] z-40 bg-white text-tc-ink border-2 border-tc-ink rounded-full px-3 py-2 text-xs font-bold shadow-lg hover:bg-tc-surface-soft hover:border-tc-primary items-center gap-2 transition-all focus-visible:outline-2 focus-visible:outline-tc-primary group"
         >
           <div className="w-5 h-5 rounded-full bg-tc-action-lime text-tc-ink border border-tc-ink flex items-center justify-center shrink-0">
             <Cookie className="w-3 h-3" />
@@ -37,7 +37,7 @@ export function CookieConsentBanner() {
         <div
           role="region"
           aria-label="UK Cookie and Privacy Consent"
-          className="fixed bottom-0 inset-x-0 z-50 p-3 sm:p-4 md:p-6 pointer-events-none animate-in slide-in-from-bottom duration-300"
+          className="fixed bottom-0 inset-x-0 z-50 p-3 sm:p-4 md:p-6 pb-[calc(0.75rem+env(safe-area-inset-bottom,0px))] pointer-events-none animate-in slide-in-from-bottom duration-300"
         >
           <div className="max-w-4xl mx-auto bg-white rounded-card border-2 border-tc-ink shadow-2xl p-4 sm:p-6 pointer-events-auto">
             <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 md:gap-6">

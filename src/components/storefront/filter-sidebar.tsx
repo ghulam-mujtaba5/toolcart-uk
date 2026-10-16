@@ -6,8 +6,16 @@ import { useVAT } from '@/context/vat-context';
 import { Button } from '@/components/ui/button';
 import { DragHandle } from '@/components/ui/drag-handle';
 import { useSwipeToDismiss } from '@/hooks/use-swipe-to-dismiss';
-import { RotateCcw, SlidersHorizontal, X, Check } from 'lucide-react';
+import { RotateCcw, SlidersHorizontal, X, Check, ArrowUpDown } from 'lucide-react';
 import { cn } from '@/lib/utils';
+
+export const SORT_OPTIONS = [
+  { value: 'relevance', label: 'Relevance' },
+  { value: 'price_asc', label: 'Price: Low to High' },
+  { value: 'price_desc', label: 'Price: High to Low' },
+  { value: 'title_asc', label: 'Name: A to Z' },
+  { value: 'title_desc', label: 'Name: Z to A' },
+];
 
 interface FilterSidebarProps {
   categories: { name: string; slug: string; count: number }[];
@@ -35,6 +43,8 @@ export function FilterSidebar({ categories, brands, className }: FilterSidebarPr
   const inStockOnly = searchParams.get('in_stock') === 'true';
   const minPrice = searchParams.get('min_price') || '';
   const maxPrice = searchParams.get('max_price') || '';
+  const currentSort = searchParams.get('sort') || 'relevance';
+  const currentSortOption = SORT_OPTIONS.find((s) => s.value === currentSort) || SORT_OPTIONS[0];
 
   const [localMinPrice, setLocalMinPrice] = useState(minPrice);
   const [localMaxPrice, setLocalMaxPrice] = useState(maxPrice);
@@ -114,6 +124,48 @@ export function FilterSidebar({ categories, brands, className }: FilterSidebarPr
     (currentBrand ? 1 : 0) +
     (inStockOnly ? 1 : 0) +
     (minPrice || maxPrice ? 1 : 0);
+
+  // Sort content component with accessible radio controls for mobile drawer
+  const renderSortContent = () => (
+    <div className="space-y-3 pb-5 border-b border-tc-border" data-testid="mobile-drawer-sort-section">
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-2">
+          <ArrowUpDown className="w-4 h-4 text-tc-primary" />
+          <h4 className="text-xs font-bold text-tc-ink uppercase tracking-wider font-heading">
+            Sort By
+          </h4>
+        </div>
+        <span className="text-[11px] font-mono text-tc-text-secondary">{currentSortOption.label}</span>
+      </div>
+
+      <div className="grid grid-cols-1 gap-1.5" role="radiogroup" aria-label="Sort options">
+        {SORT_OPTIONS.map((opt) => (
+          <label
+            key={opt.value}
+            className={cn(
+              'flex items-center justify-between p-2.5 rounded-lg border text-xs font-semibold cursor-pointer min-h-[44px] transition-all select-none active:scale-[0.98]',
+              currentSort === opt.value
+                ? 'border-tc-primary bg-tc-surface-soft text-tc-primary shadow-2xs'
+                : 'border-tc-border hover:border-tc-ink text-tc-ink bg-white'
+            )}
+          >
+            <div className="flex items-center gap-2.5">
+              <input
+                type="radio"
+                name="mobile-drawer-sort"
+                value={opt.value}
+                checked={currentSort === opt.value}
+                onChange={() => updateParam('sort', opt.value)}
+                className="w-4 h-4 accent-tc-primary"
+              />
+              <span>{opt.label}</span>
+            </div>
+            {currentSort === opt.value && <Check className="w-4 h-4 text-tc-primary stroke-[2.5]" />}
+          </label>
+        ))}
+      </div>
+    </div>
+  );
 
   // Filter content component reused between desktop sidebar and mobile drawer
   const renderFilterContent = () => (
@@ -304,6 +356,7 @@ export function FilterSidebar({ categories, brands, className }: FilterSidebarPr
             role="dialog"
             aria-modal="true"
             aria-labelledby="filter-drawer-title"
+            data-testid="mobile-filter-drawer"
             className="relative w-full max-w-xs sm:max-w-sm bg-white h-full shadow-2xl flex flex-col z-10 animate-in slide-in-from-left duration-300"
           >
             {/* Tactile Grab Handle */}
@@ -347,7 +400,8 @@ export function FilterSidebar({ categories, brands, className }: FilterSidebarPr
             </div>
 
             {/* Scrollable Filters Content */}
-            <div className="flex-1 overflow-y-auto overscroll-y-contain p-4 sm:p-5">
+            <div className="flex-1 overflow-y-auto overscroll-y-contain p-4 sm:p-5 space-y-6">
+              {renderSortContent()}
               {renderFilterContent()}
             </div>
 
@@ -380,6 +434,47 @@ export function FilterSidebar({ categories, brands, className }: FilterSidebarPr
           </div>
         </div>
       )}
+
+      {/* Mobile Floating Filter & Sort Pill (Above BottomNav on Catalog/Search/Category) */}
+      <div
+        data-testid="mobile-floating-filter-pill"
+        className="fixed bottom-[calc(4.5rem+env(safe-area-inset-bottom,0px))] left-1/2 -translate-x-1/2 z-30 lg:hidden flex items-center bg-tc-ink text-white rounded-full border-2 border-tc-border-strong shadow-xl shadow-tc-ink/25 p-1 animate-in fade-in slide-in-from-bottom-2 duration-200"
+      >
+        <span data-testid="catalog-floating-filter-pill" className="sr-only">Catalog Filter and Sort</span>
+        {/* Filters Segment */}
+        <button
+          type="button"
+          onClick={() => setIsMobileDrawerOpen(true)}
+          aria-label={hasActiveFilters ? `Open filter drawer, ${activeCount} active` : 'Open filter drawer'}
+          data-testid="floating-pill-filter-btn"
+          className="min-h-[44px] px-3.5 py-1.5 flex items-center gap-1.5 text-xs font-bold rounded-full hover:bg-tc-graphite active:scale-95 transition-all text-white select-none"
+        >
+          <SlidersHorizontal className="w-3.5 h-3.5 text-tc-action-lime" />
+          <span>Filters</span>
+          {hasActiveFilters && (
+            <span
+              data-testid="floating-pill-active-count"
+              className="px-1.5 py-0.5 rounded-full bg-tc-action-lime text-tc-ink text-[10px] font-mono font-extrabold"
+            >
+              {activeCount}
+            </span>
+          )}
+        </button>
+
+        <span className="w-px h-5 bg-white/20 shrink-0" aria-hidden="true" />
+
+        {/* Sort By Segment */}
+        <button
+          type="button"
+          onClick={() => setIsMobileDrawerOpen(true)}
+          aria-label={`Sort by: ${currentSortOption.label}`}
+          data-testid="floating-pill-sort-btn"
+          className="min-h-[44px] px-3.5 py-1.5 flex items-center gap-1.5 text-xs font-bold rounded-full hover:bg-tc-graphite active:scale-95 transition-all text-white select-none max-w-[150px]"
+        >
+          <ArrowUpDown className="w-3.5 h-3.5 text-tc-action-lime shrink-0" />
+          <span className="truncate">{currentSortOption.label}</span>
+        </button>
+      </div>
 
       {/* Desktop Aside Sidebar (Visible on desktop >= lg) */}
       <aside className={cn('hidden lg:block bg-white p-5 rounded-card border border-tc-border space-y-6 shadow-xs', className)}>

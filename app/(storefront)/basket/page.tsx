@@ -1,11 +1,11 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import { useCart } from '@/context/cart-context';
 import { useVAT } from '@/context/vat-context';
+import { useToast } from '@/context/toast-context';
 import { Button } from '@/components/ui/button';
-import { EmptyToolChestVector } from '@/components/ui/vectors';
 import {
   ShoppingBag,
   Plus,
@@ -15,11 +15,33 @@ import {
   ShieldCheck,
   ArrowRight,
   ArrowLeft,
+  ChevronDown,
+  ChevronUp,
 } from 'lucide-react';
 
 export default function BasketPage() {
   const { items, summary, updateQuantity, removeItem, clearCart } = useCart();
   const { isTradeMode, formatPriceDisplay } = useVAT();
+  const { showToast } = useToast();
+  const [isMobileSummaryOpen, setIsMobileSummaryOpen] = useState(false);
+
+  const handleClearCart = () => {
+    clearCart();
+    showToast({
+      title: 'Basket Cleared',
+      message: 'All trade items have been removed from your basket.',
+      type: 'info',
+    });
+  };
+
+  const handleRemoveItem = (productId: string, isCase: boolean, title: string) => {
+    removeItem(productId, isCase);
+    showToast({
+      title: 'Item Removed',
+      message: `${title} was removed from your basket.`,
+      type: 'info',
+    });
+  };
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
@@ -46,7 +68,7 @@ export default function BasketPage() {
         {items.length > 0 && (
           <button
             type="button"
-            onClick={clearCart}
+            onClick={handleClearCart}
             className="text-xs text-tc-text-secondary hover:text-tc-error underline min-h-[44px] px-2 flex items-center gap-1.5"
           >
             <Trash2 className="w-3.5 h-3.5" />
@@ -169,7 +191,7 @@ export default function BasketPage() {
                         </div>
 
                           {/* Controls & Line Total */}
-                          <div className="flex items-center justify-between sm:justify-end gap-4 sm:gap-6">
+                          <div className="flex flex-wrap items-center justify-between sm:justify-end gap-2 sm:gap-4">
                             <div className="flex items-center border border-tc-border rounded-lg bg-tc-canvas h-11 min-h-[44px]">
                               <button
                                 type="button"
@@ -192,7 +214,7 @@ export default function BasketPage() {
                               </button>
                             </div>
 
-                            <div className="text-right min-w-[90px]">
+                            <div className="text-right min-w-0 sm:min-w-[90px]">
                               <div className="font-sans font-bold text-sm sm:text-base text-tc-ink tabular-nums">
                                 {lineTotal.primaryText}
                               </div>
@@ -203,7 +225,7 @@ export default function BasketPage() {
 
                             <button
                               type="button"
-                              onClick={() => removeItem(item.product_id, item.is_case_quantity)}
+                              onClick={() => handleRemoveItem(item.product_id, Boolean(item.is_case_quantity), item.title)}
                               className="w-11 h-11 min-w-[44px] min-h-[44px] flex items-center justify-center rounded-lg hover:bg-red-50 text-tc-text-secondary hover:text-tc-error transition-colors"
                               aria-label={`Remove ${item.title} from basket`}
                               title="Remove item"
@@ -315,6 +337,83 @@ export default function BasketPage() {
                 </div>
               </div>
             </div>
+          </div>
+        </div>
+      )}
+
+      {/* Sticky Mobile Summary Dock for Handhelds (< lg) */}
+      {items.length > 0 && (
+        <div
+          data-testid="basket-sticky-checkout-bar"
+          className="fixed bottom-0 left-0 right-0 z-40 lg:hidden bg-white border-t border-tc-border shadow-lg p-3 pb-[calc(0.75rem+env(safe-area-inset-bottom,0px))] animate-in slide-in-from-bottom duration-200"
+        >
+          {/* Expandable Breakdown Accordion */}
+          {isMobileSummaryOpen && (
+            <div
+              id="basket-mobile-summary-breakdown"
+              data-testid="basket-mobile-summary-breakdown"
+              className="mb-3 p-3 bg-tc-surface-soft rounded-lg border border-tc-border space-y-2 text-xs animate-in slide-in-from-bottom-2 duration-150"
+            >
+              <div className="flex justify-between text-tc-text-secondary">
+                <span>Goods Subtotal (ex. VAT)</span>
+                <span className="font-mono tabular-nums">£{summary.subtotal_ex_vat_gbp.toFixed(2)}</span>
+              </div>
+              <div className="flex justify-between text-tc-text-secondary">
+                <span>Total Delivery Carriage (ex. VAT)</span>
+                <span className="font-mono tabular-nums">£{summary.shipping_ex_vat_gbp.toFixed(2)}</span>
+              </div>
+              <div className="flex justify-between text-tc-text-secondary">
+                <span>UK Standard VAT (20%)</span>
+                <span className="font-mono tabular-nums">£{summary.vat_amount_gbp.toFixed(2)}</span>
+              </div>
+              <div className="pt-2 border-t border-tc-border flex justify-between font-bold text-tc-ink text-xs">
+                <span>Total ({isTradeMode ? 'Ex. VAT' : 'Inc. VAT'})</span>
+                <span className="font-mono tabular-nums">
+                  £{isTradeMode
+                    ? summary.grand_total_ex_vat_gbp.toFixed(2)
+                    : summary.grand_total_inc_vat_gbp.toFixed(2)}
+                </span>
+              </div>
+            </div>
+          )}
+
+          <div className="flex items-center justify-between gap-3">
+            <button
+              type="button"
+              onClick={() => setIsMobileSummaryOpen((prev) => !prev)}
+              aria-expanded={isMobileSummaryOpen}
+              aria-controls="basket-mobile-summary-breakdown"
+              className="flex-1 min-w-0 text-left min-h-[44px] flex flex-col justify-center rounded-lg pr-1"
+            >
+              <div className="flex items-center gap-1 text-[10px] font-bold text-tc-text-secondary uppercase tracking-wider">
+                <span>Grand Total ({isTradeMode ? 'Ex. VAT' : 'Inc. VAT'})</span>
+                {isMobileSummaryOpen ? (
+                  <ChevronDown className="w-3.5 h-3.5 text-tc-primary" />
+                ) : (
+                  <ChevronUp className="w-3.5 h-3.5 text-tc-primary" />
+                )}
+              </div>
+              <div className="font-heading font-extrabold text-base text-tc-ink tabular-nums leading-tight">
+                £{isTradeMode
+                  ? summary.grand_total_ex_vat_gbp.toFixed(2)
+                  : summary.grand_total_inc_vat_gbp.toFixed(2)}
+              </div>
+              <span className="text-[10px] text-tc-primary font-medium underline flex items-center gap-0.5">
+                {isMobileSummaryOpen ? 'Hide breakdown' : 'View breakdown'}
+              </span>
+            </button>
+
+            <Button
+              variant="accent"
+              size="lg"
+              asChild
+              className="shrink-0 min-h-[44px] px-4 font-bold text-xs sm:text-sm flex items-center gap-1.5 active:scale-95 text-tc-ink bg-tc-action-lime border border-tc-ink shadow-sm"
+            >
+              <Link href="/checkout">
+                <span>Proceed to Checkout</span>
+                <ArrowRight className="w-4 h-4" />
+              </Link>
+            </Button>
           </div>
         </div>
       )}

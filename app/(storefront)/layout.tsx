@@ -4,6 +4,7 @@ import { VatProvider, VatMode } from '@/context/vat-context';
 import { CartProvider } from '@/context/cart-context';
 import { CompareProvider } from '@/context/compare-context';
 import { CookieConsentProvider } from '@/context/cookie-consent-context';
+import { ToastProvider } from '@/context/toast-context';
 import { StorefrontLayoutClient } from '@/components/storefront/storefront-layout-client';
 
 export const dynamic = 'force-dynamic';
@@ -15,11 +16,13 @@ export default function StorefrontLayout({ children }: { children: React.ReactNo
   return (
     <CookieConsentProvider>
       <VatProvider initialMode={initialVatMode}>
-        <CartProvider>
-          <CompareProvider>
-            <StorefrontLayoutClient>{children}</StorefrontLayoutClient>
-          </CompareProvider>
-        </CartProvider>
+        <ToastProvider>
+          <CartProvider>
+            <CompareProvider>
+              <StorefrontLayoutClient>{children}</StorefrontLayoutClient>
+            </CompareProvider>
+          </CartProvider>
+        </ToastProvider>
       </VatProvider>
     </CookieConsentProvider>
   );

@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useCart } from '@/context/cart-context';
 import { useVAT } from '@/context/vat-context';
+import { useToast } from '@/context/toast-context';
 import { Button } from '@/components/ui/button';
 import {
   Lock,
@@ -16,6 +17,10 @@ import {
   Building2,
   User,
   ArrowLeft,
+  ShoppingBag,
+  ChevronDown,
+  ChevronUp,
+  Zap,
 } from 'lucide-react';
 
 const UK_POSTCODE_REGEX = /^[A-Z]{1,2}\d[A-Z\d]? ?\d[A-Z]{2}$/i;
@@ -24,6 +29,7 @@ export default function CheckoutPage() {
   const router = useRouter();
   const { items, summary, clearCart } = useCart();
   const { isTradeMode } = useVAT();
+  const { showToast } = useToast();
 
   const [email, setEmail] = useState('');
   const [fullName, setFullName] = useState('');
@@ -34,6 +40,7 @@ export default function CheckoutPage() {
   const [postcode, setPostcode] = useState('');
   const [phone, setPhone] = useState('');
 
+  const [isMobileSummaryOpen, setIsMobileSummaryOpen] = useState(false);
   const [postcodeError, setPostcodeError] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
@@ -110,11 +117,23 @@ export default function CheckoutPage() {
       }
 
       const createdOrder = await res.json();
-      setCreatedOrderId(createdOrder.order_number || generatedOrderNumber);
+      const confirmedNumber = createdOrder.order_number || generatedOrderNumber;
+      setCreatedOrderId(confirmedNumber);
       setIsSuccess(true);
       clearCart();
+      showToast({
+        title: 'Order Authorized',
+        message: `Quotation order #${confirmedNumber} authorized successfully in test mode.`,
+        type: 'success',
+      });
     } catch (err: unknown) {
-      setCheckoutError(err instanceof Error ? err.message : 'Order authorization failed');
+      const msg = err instanceof Error ? err.message : 'Order authorization failed';
+      setCheckoutError(msg);
+      showToast({
+        title: 'Checkout Error',
+        message: msg,
+        type: 'error',
+      });
     } finally {
       setIsSubmitting(false);
     }
@@ -206,10 +225,138 @@ export default function CheckoutPage() {
         <span className="text-tc-ink font-semibold">Checkout</span>
       </div>
 
+      {/* Collapsible Mobile Order Summary Accordion (< lg) */}
+      <div className="lg:hidden bg-white rounded-card border border-tc-border overflow-hidden shadow-xs">
+        <button
+          type="button"
+          onClick={() => setIsMobileSummaryOpen((prev) => !prev)}
+          className="w-full p-4 min-h-[48px] flex items-center justify-between text-left text-xs bg-tc-surface-soft hover:bg-tc-surface-soft/80 transition-colors"
+          aria-expanded={isMobileSummaryOpen}
+          aria-controls="mobile-order-summary-details"
+          data-testid="checkout-mobile-summary-toggle"
+        >
+          <div className="flex items-center gap-2">
+            <ShoppingBag className="w-4 h-4 text-tc-primary" />
+            <span className="font-bold text-tc-ink">
+              {isMobileSummaryOpen ? 'Hide order summary' : 'Show order summary'}
+            </span>
+            {isMobileSummaryOpen ? (
+              <ChevronUp className="w-4 h-4 text-tc-text-secondary" />
+            ) : (
+              <ChevronDown className="w-4 h-4 text-tc-text-secondary" />
+            )}
+          </div>
+          <div className="font-heading font-extrabold text-sm text-tc-ink tabular-nums">
+            £{summary.grand_total_inc_vat_gbp.toFixed(2)}
+          </div>
+        </button>
+
+        {isMobileSummaryOpen && (
+          <div
+            id="mobile-order-summary-details"
+            data-testid="checkout-mobile-summary-content"
+            className="p-4 border-t border-tc-border space-y-4 animate-in slide-in-from-top-2 duration-200"
+          >
+            {/* Items list */}
+            <div className="space-y-3 max-h-56 overflow-y-auto divide-y divide-tc-border/40">
+              {items.map((i) => (
+                <div key={i.product_id} className="pt-2 first:pt-0 flex items-center justify-between text-xs gap-3">
+                  <div className="flex items-center gap-2.5 min-w-0">
+                    <div className="w-10 h-10 rounded bg-tc-canvas border border-tc-border flex items-center justify-center shrink-0 p-1">
+                      <img src={`/images/products/${i.supplier_sku}.png`} alt={i.title} className="max-h-full max-w-full object-contain" />
+                    </div>
+                    <div className="min-w-0">
+                      <p className="font-bold text-tc-ink truncate text-[11px]">{i.title}</p>
+                      <p className="text-[10px] text-tc-text-secondary font-mono">Qty: {i.quantity} • {i.supplier_sku}</p>
+                    </div>
+                  </div>
+                  <span className="font-mono tabular-nums font-bold text-tc-ink shrink-0">
+                    £{(i.retail_price_inc_vat_gbp * i.quantity).toFixed(2)}
+                  </span>
+                </div>
+              ))}
+            </div>
+
+            {/* Cost breakdown */}
+            <div className="pt-3 border-t border-tc-border space-y-1.5 text-xs text-tc-text-secondary">
+              <div className="flex justify-between">
+                <span>Subtotal (ex. VAT)</span>
+                <span className="font-mono tabular-nums">£{summary.subtotal_ex_vat_gbp.toFixed(2)}</span>
+              </div>
+              <div className="flex justify-between">
+                <span>Carriage fee (ex. VAT)</span>
+                <span className="font-mono tabular-nums">£{summary.shipping_ex_vat_gbp.toFixed(2)}</span>
+              </div>
+              <div className="flex justify-between">
+                <span>VAT (20%)</span>
+                <span className="font-mono tabular-nums">£{summary.vat_amount_gbp.toFixed(2)}</span>
+              </div>
+              <div className="flex justify-between font-bold text-tc-ink pt-1.5 border-t border-tc-border text-sm">
+                <span>Total Due (inc. VAT)</span>
+                <span className="font-mono tabular-nums">£{summary.grand_total_inc_vat_gbp.toFixed(2)}</span>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
         {/* Left Column: Guest Address & Payment Form */}
         <div className="lg:col-span-7 space-y-6">
           <form onSubmit={handlePlaceOrder} className="space-y-6">
+            {/* Express 1-Tap Mobile Checkout */}
+            <div className="bg-white rounded-card border border-tc-border p-4 sm:p-5 shadow-xs space-y-2.5">
+              <div className="flex items-center justify-between text-xs">
+                <span className="font-bold text-tc-ink flex items-center gap-1.5">
+                  <Zap className="w-3.5 h-3.5 text-tc-primary fill-tc-primary" />
+                  Express 1-Tap Checkout
+                </span>
+                <span className="text-[10px] text-tc-text-secondary font-mono">Test Sandbox</span>
+              </div>
+              <div className="grid grid-cols-2 gap-2.5">
+                <button
+                  type="button"
+                  data-testid="express-apple-pay-btn"
+                  onClick={() => {
+                    setEmail('trade-pro@express.co.uk');
+                    setFullName('Express Tradesperson');
+                    setAddressLine1('1 Express Way');
+                    setCity('London');
+                    setPostcode('EC1A 1BB');
+                    setPhone('07700 900111');
+                    showToast({
+                      title: 'Apple Pay Details Filled',
+                      message: 'Verified mock delivery address filled for 1-tap test checkout',
+                      type: 'info',
+                    });
+                  }}
+                  className="h-11 min-h-[44px] rounded-lg bg-black text-white hover:bg-neutral-800 active:scale-95 transition-all text-xs font-bold flex items-center justify-center gap-1.5 shadow-xs"
+                >
+                  <span className="text-sm font-semibold tracking-tight">Pay</span>
+                </button>
+                <button
+                  type="button"
+                  data-testid="express-google-pay-btn"
+                  onClick={() => {
+                    setEmail('contractor@gpay.co.uk');
+                    setFullName('Google Pay Contractor');
+                    setAddressLine1('2 Industrial Lane');
+                    setCity('Manchester');
+                    setPostcode('M1 1AA');
+                    setPhone('07700 900222');
+                    showToast({
+                      title: 'Google Pay Details Filled',
+                      message: 'Verified mock delivery address filled for 1-tap test checkout',
+                      type: 'info',
+                    });
+                  }}
+                  className="h-11 min-h-[44px] rounded-lg border border-tc-border bg-white text-tc-ink hover:bg-tc-canvas active:scale-95 transition-all text-xs font-bold flex items-center justify-center gap-1.5 shadow-xs"
+                >
+                  <span className="font-bold">G</span><span className="font-medium text-tc-graphite">Pay</span>
+                </button>
+              </div>
+            </div>
+
             {/* Step 1: Customer Contact */}
             <div className="bg-white rounded-card border border-tc-border p-6 shadow-xs space-y-4">
               <h2 className="font-heading font-bold text-base text-tc-ink flex items-center gap-2">

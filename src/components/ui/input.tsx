@@ -3,6 +3,7 @@ import { cn } from '@/lib/utils';
 
 export interface InputProps
   extends React.InputHTMLAttributes<HTMLInputElement> {
+  label?: string;
   error?: string;
   helperText?: string;
   leftIcon?: React.ReactNode;
@@ -10,7 +11,7 @@ export interface InputProps
 }
 
 const Input = React.forwardRef<HTMLInputElement, InputProps>(
-  ({ className, type, error, helperText, leftIcon, rightIcon, id, disabled, ...props }, ref) => {
+  ({ className, type, label, error, helperText, leftIcon, rightIcon, id, disabled, ...props }, ref) => {
     const generatedId = React.useId();
     const inputId = id || generatedId;
     const errorId = `${inputId}-error`;
@@ -18,6 +19,11 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
 
     return (
       <div className="w-full">
+        {label && (
+          <label htmlFor={inputId} className="block text-xs font-bold text-tc-ink mb-1.5 font-heading">
+            {label}
+          </label>
+        )}
         <div className="relative flex items-center">
           {leftIcon && (
             <div className="pointer-events-none absolute left-3.5 flex items-center text-tc-text-secondary">

@@ -185,39 +185,6 @@ function extractStructuredSpecs(desc: string, r: RawCsvRow): Record<string, stri
   return specs;
 }
 
-function resolveProductImages(supplierSku: string, slug: string): string[] {
-  const images: string[] = [];
-  const baseDir = path.join(process.cwd(), 'public', 'images', 'products');
-
-  // 1. Primary Studio Image (Prefer high-res WebP over legacy PNG)
-  if (fs.existsSync(path.join(baseDir, `${supplierSku}.webp`))) {
-    images.push(`/images/products/${supplierSku}.webp`);
-  } else if (fs.existsSync(path.join(baseDir, `${supplierSku}.png`))) {
-    images.push(`/images/products/${supplierSku}.png`);
-  }
-
-  // 2. Secondary Packaging / Case Image
-  if (fs.existsSync(path.join(baseDir, `${supplierSku}-pack.webp`))) {
-    images.push(`/images/products/${supplierSku}-pack.webp`);
-  } else if (fs.existsSync(path.join(baseDir, `${supplierSku}-pack.png`))) {
-    images.push(`/images/products/${supplierSku}-pack.png`);
-  }
-
-  // 3. Technical Detail / In-Use Image
-  if (fs.existsSync(path.join(baseDir, `${supplierSku}-detail.webp`))) {
-    images.push(`/images/products/${supplierSku}-detail.webp`);
-  } else if (fs.existsSync(path.join(baseDir, `${supplierSku}-detail.png`))) {
-    images.push(`/images/products/${supplierSku}-detail.png`);
-  }
-
-  // Fallback placeholder if no images found
-  if (images.length === 0) {
-    images.push(`/images/products/${slug}.svg`);
-  }
-
-  return images;
-}
-
 // In-memory cache singleton
 let cachedPublicProducts: PublicProductDTO[] | null = null;
 let cachedWholesaleOffers: Map<string, WholesaleSupplierOffer> | null = null;
@@ -282,7 +249,30 @@ function loadAndParseCatalog(): {
       supplier_name: 'Status International (UK) Ltd',
       category: categoryInfo.name,
       category_slug: categoryInfo.slug,
-      images: resolveProductImages(r.supplier_sku, slug),
+      images: (() => {
+        const productImgs: string[] = [];
+        const baseDir = path.join(process.cwd(), 'public', 'images', 'products');
+
+        if (fs.existsSync(path.join(baseDir, `${r.supplier_sku}.webp`))) {
+          productImgs.push(`/images/products/${r.supplier_sku}.webp`);
+        } else if (fs.existsSync(path.join(baseDir, `${r.supplier_sku}.png`))) {
+          productImgs.push(`/images/products/${r.supplier_sku}.png`);
+        }
+
+        const variants = ['_detail', '_pack', '_angle', '_1', '_2'];
+        for (const v of variants) {
+          if (fs.existsSync(path.join(baseDir, `${r.supplier_sku}${v}.webp`))) {
+            productImgs.push(`/images/products/${r.supplier_sku}${v}.webp`);
+          } else if (fs.existsSync(path.join(baseDir, `${r.supplier_sku}${v}.png`))) {
+            productImgs.push(`/images/products/${r.supplier_sku}${v}.png`);
+          }
+        }
+
+        if (productImgs.length === 0) {
+          productImgs.push(`/images/products/${slug}.svg`);
+        }
+        return productImgs;
+      })(),
       retail_price_inc_vat_gbp: retailPrices.retail_price_inc_vat_gbp,
       retail_price_ex_vat_gbp: retailPrices.retail_price_ex_vat_gbp,
       units_per_pack: unitsPerPack,

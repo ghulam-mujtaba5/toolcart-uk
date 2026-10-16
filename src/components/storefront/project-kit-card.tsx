@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { ProjectKit } from '@/types/guides';
 import { useCart } from '@/context/cart-context';
 import { useVAT } from '@/context/vat-context';
+import { useToast } from '@/context/toast-context';
 import { Button } from '@/components/ui/button';
 import {
   Check,
@@ -24,6 +25,7 @@ interface ProjectKitCardProps {
 export function ProjectKitCard({ kit }: ProjectKitCardProps) {
   const { addItem, openCart } = useCart();
   const { formatPriceDisplay } = useVAT();
+  const { showToast } = useToast();
 
   // State: Set of selected item SKUs (all selected by default)
   const [selectedSkus, setSelectedSkus] = useState<Set<string>>(
@@ -88,6 +90,14 @@ export function ProjectKitCard({ kit }: ProjectKitCardProps) {
       };
       addItem(mockProduct, item.default_quantity);
     }
+
+    showToast({
+      title: 'Project Kit Added',
+      message: `${kit.title} (${selectedItems.length} items - ${priceDisplay.primaryText})`,
+      type: 'success',
+      action: { label: 'View Basket', onClick: openCart },
+    });
+
     openCart();
   };
 

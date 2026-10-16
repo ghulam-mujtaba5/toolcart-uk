@@ -21,8 +21,8 @@ export function BottomNav({ onOpenAiAssistant }: BottomNavProps) {
   const isSearch = pathname === '/search' || pathname?.startsWith('/tools') || pathname?.startsWith('/categories');
   const isKits = pathname?.startsWith('/projects');
 
-  // D-01: Hide BottomNav on product detail pages so PDP sticky buy dock has unobstructed touch access
-  if (pathname?.startsWith('/products/')) {
+  // D-01: Hide BottomNav on product detail pages and checkout so PDP sticky buy dock and checkout controls have unobstructed touch access
+  if (pathname?.startsWith('/products/') || pathname?.startsWith('/product/') || pathname === '/checkout' || pathname?.startsWith('/checkout/')) {
     return null;
   }
 

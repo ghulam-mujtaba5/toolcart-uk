@@ -6,7 +6,12 @@ import { X, ShieldCheck, Check, SlidersHorizontal, ChevronDown, ChevronUp, Lock 
 import { useCookieConsent } from '@/context/cookie-consent-context';
 import { TOOLCART_COOKIE_DEFINITIONS, CookieCategory } from '@/types/cookie-consent';
 
-export function CookiePreferencesModal() {
+export interface CookiePreferencesModalProps {
+  isOpen?: boolean;
+  onClose?: () => void;
+}
+
+export function CookiePreferencesModal({ isOpen, onClose }: CookiePreferencesModalProps = {}) {
   const {
     consent,
     isPreferencesOpen,
@@ -19,6 +24,9 @@ export function CookiePreferencesModal() {
   const titleId = useId();
   const descId = useId();
 
+  const activeIsOpen = isOpen !== undefined ? isOpen : isPreferencesOpen;
+  const handleClose = onClose || closePreferences;
+
   // Local draft state for toggles inside the modal
   const [functional, setFunctional] = useState<boolean>(consent.functional);
   const [analytics, setAnalytics] = useState<boolean>(consent.analytics);
@@ -28,26 +36,26 @@ export function CookiePreferencesModal() {
 
   // Synchronise draft state when modal opens
   useEffect(() => {
-    if (isPreferencesOpen) {
+    if (activeIsOpen) {
       setFunctional(consent.functional);
       setAnalytics(consent.analytics);
       setMarketing(consent.marketing);
     }
-  }, [isPreferencesOpen, consent]);
+  }, [activeIsOpen, consent]);
 
   // Handle Escape key to close modal
   useEffect(() => {
-    if (!isPreferencesOpen) return;
+    if (!activeIsOpen) return;
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
-        closePreferences();
+        handleClose();
       }
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [isPreferencesOpen, closePreferences]);
+  }, [activeIsOpen, handleClose]);
 
-  if (!isPreferencesOpen) return null;
+  if (!activeIsOpen) return null;
 
   const handleSave = () => {
     saveCustomConsent({
@@ -89,7 +97,7 @@ export function CookiePreferencesModal() {
           </div>
           <button
             type="button"
-            onClick={closePreferences}
+            onClick={handleClose}
             aria-label="Close cookie preferences modal"
             className="w-11 h-11 min-w-[44px] min-h-[44px] rounded-lg flex items-center justify-center text-white/80 hover:text-white hover:bg-white/10 transition-colors focus-visible:outline-2 focus-visible:outline-tc-action-lime"
           >
@@ -105,7 +113,7 @@ export function CookiePreferencesModal() {
             and project recommendation cookies. Choose your preferences below or read our{' '}
             <Link
               href="/cookies"
-              onClick={closePreferences}
+              onClick={handleClose}
               className="text-tc-primary font-semibold underline underline-offset-2 hover:text-tc-primary-hover"
             >
               UK Cookie Policy

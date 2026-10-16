@@ -5,7 +5,6 @@ import { ProductCard } from '@/components/storefront/product-card';
 import { FilterSidebar } from '@/components/storefront/filter-sidebar';
 import { SearchFilterChips } from '@/components/storefront/search-filter-chips';
 import { CatalogSortControl } from '@/components/storefront/catalog-sort-control';
-import { EmptyToolChestVector } from '@/components/ui/vectors';
 import { Search, AlertCircle } from 'lucide-react';
 
 export const dynamic = 'force-dynamic';

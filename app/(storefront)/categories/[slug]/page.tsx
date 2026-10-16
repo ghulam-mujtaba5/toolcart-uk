@@ -250,8 +250,27 @@ export default async function CategoryPage({ params, searchParams }: CategoryPag
               ))}
             </div>
           ) : (
-            <div className="bg-white rounded-card border border-tc-border p-12 text-center text-xs text-tc-text-secondary">
-              No products found matching the active filters in this category.
+            <div className="bg-white rounded-card tc-card-machined p-10 sm:p-12 text-center space-y-4">
+              <h3 className="font-heading font-bold text-lg text-tc-ink">
+                No products found matching active filters
+              </h3>
+              <p className="text-xs text-tc-text-secondary max-w-md mx-auto">
+                No items match your selected brand, price range, or stock filters in this category. Reset your filters or browse all tools.
+              </p>
+              <div className="pt-2 flex flex-wrap items-center justify-center gap-3">
+                <Link
+                  href={`/categories/${catSlug}`}
+                  className="inline-flex items-center justify-center min-h-[44px] px-4 py-2 rounded-lg bg-tc-primary text-white text-xs font-semibold hover:bg-tc-primary-hover active:scale-95 transition-all"
+                >
+                  Clear active filters
+                </Link>
+                <Link
+                  href="/tools"
+                  className="inline-flex items-center justify-center min-h-[44px] px-4 py-2 rounded-lg bg-white border border-tc-border-strong text-tc-ink text-xs font-semibold hover:bg-tc-canvas active:scale-95 transition-all"
+                >
+                  Browse all tools
+                </Link>
+              </div>
             </div>
           )}
         </div>

@@ -6,6 +6,7 @@ import { PublicProductDTO } from '@/types/product';
 import { useVAT } from '@/context/vat-context';
 import { useCart } from '@/context/cart-context';
 import { useCompare } from '@/context/compare-context';
+import { useToast } from '@/context/toast-context';
 import { StockRadarBadge } from '@/components/ui/stock-radar-badge';
 import {
   IconToolbox,
@@ -42,8 +43,9 @@ function getCategoryTradeIcon(categorySlug: string) {
 
 export function ProductCard({ product, className }: ProductCardProps) {
   const { formatPriceDisplay } = useVAT();
-  const { addItem } = useCart();
+  const { addItem, openCart } = useCart();
   const { isInCompare, addProduct, removeProduct, openCompare } = useCompare();
+  const { showToast } = useToast();
 
   const [isSnapped, setIsSnapped] = useState(false);
   const snapTimeoutRef = useRef<NodeJS.Timeout | null>(null);
@@ -61,8 +63,19 @@ export function ProductCard({ product, className }: ProductCardProps) {
     e.stopPropagation();
     if (isCompared) {
       removeProduct(product.id);
+      showToast({
+        title: 'Removed from Comparison',
+        message: product.title,
+        type: 'info',
+      });
     } else {
       addProduct(product);
+      showToast({
+        title: 'Added to Comparison',
+        message: product.title,
+        type: 'info',
+        action: { label: 'Compare Now', onClick: openCompare },
+      });
       openCompare();
     }
   };
@@ -74,6 +87,13 @@ export function ProductCard({ product, className }: ProductCardProps) {
     e.stopPropagation();
     if (isOutOfStock) return;
     addItem(product, 1);
+
+    showToast({
+      title: 'Added to Basket',
+      message: `${product.title} (${price.primaryText})`,
+      type: 'success',
+      action: { label: 'View Basket', onClick: openCart },
+    });
 
     setIsSnapped(true);
     if (snapTimeoutRef.current) {

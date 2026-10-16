@@ -84,44 +84,59 @@ export default function CustomerAccountPage() {
           </span>
         </div>
 
-        <div className="bg-white rounded-card border border-tc-border divide-y divide-tc-border/60 shadow-xs overflow-hidden">
-          {SAMPLE_ORDERS.map((order) => (
-            <div
-              key={order.id}
-              className="p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 hover:bg-tc-canvas/40 transition-colors"
-            >
-              <div className="space-y-1">
-                <div className="flex items-center gap-3">
-                  <span className="font-heading font-bold text-base text-tc-ink">
-                    Order #{order.id}
-                  </span>
-                  <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-tc-surface-soft text-tc-primary border border-[#C8D9F9]">
-                    {order.statusLabel}
-                  </span>
+        {SAMPLE_ORDERS.length > 0 ? (
+          <div className="bg-white rounded-card border border-tc-border divide-y divide-tc-border/60 shadow-xs overflow-hidden">
+            {SAMPLE_ORDERS.map((order) => (
+              <div
+                key={order.id}
+                className="p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 hover:bg-tc-canvas/40 transition-colors"
+              >
+                <div className="space-y-1">
+                  <div className="flex items-center gap-3">
+                    <span className="font-heading font-bold text-base text-tc-ink">
+                      Order #{order.id}
+                    </span>
+                    <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-tc-surface-soft text-tc-primary border border-[#C8D9F9]">
+                      {order.statusLabel}
+                    </span>
+                  </div>
+                  <div className="text-xs text-tc-text-secondary flex items-center gap-2">
+                    <span>Placed on {order.date}</span>
+                    <span>•</span>
+                    <span>{order.itemsCount} items</span>
+                    <span>•</span>
+                    <span>Supplier: {order.supplier}</span>
+                  </div>
                 </div>
-                <div className="text-xs text-tc-text-secondary flex items-center gap-2">
-                  <span>Placed on {order.date}</span>
-                  <span>•</span>
-                  <span>{order.itemsCount} items</span>
-                  <span>•</span>
-                  <span>Supplier: {order.supplier}</span>
-                </div>
-              </div>
 
-              <div className="flex items-center justify-between sm:justify-end gap-5">
-                <span className="font-heading font-extrabold text-base text-tc-ink tabular-nums">
-                  £{order.totalIncVat.toFixed(2)} inc. VAT
-                </span>
-                <Button variant="outline" size="sm" asChild>
-                  <Link href={`/account/orders/${order.id}`} className="flex items-center gap-1.5 text-xs font-semibold">
-                    <span>Track State Machine</span>
-                    <ArrowRight className="w-3.5 h-3.5" />
-                  </Link>
-                </Button>
+                <div className="flex items-center justify-between sm:justify-end gap-5">
+                  <span className="font-heading font-extrabold text-base text-tc-ink tabular-nums">
+                    £{order.totalIncVat.toFixed(2)} inc. VAT
+                  </span>
+                  <Button variant="outline" size="sm" asChild>
+                    <Link href={`/account/orders/${order.id}`} className="flex items-center gap-1.5 text-xs font-semibold">
+                      <span>Track State Machine</span>
+                      <ArrowRight className="w-3.5 h-3.5" />
+                    </Link>
+                  </Button>
+                </div>
               </div>
+            ))}
+          </div>
+        ) : (
+          <div className="bg-white rounded-card border border-tc-border p-12 text-center space-y-3">
+            <Package className="w-10 h-10 text-tc-text-secondary mx-auto" />
+            <h3 className="font-heading font-bold text-base text-tc-ink">No orders found</h3>
+            <p className="text-xs text-tc-text-secondary max-w-sm mx-auto">
+              You haven&apos;t placed any trade orders yet. Browse our verified tool catalog to get started.
+            </p>
+            <div className="pt-2">
+              <Button variant="primary" size="sm" asChild>
+                <Link href="/tools">Browse Tools</Link>
+              </Button>
             </div>
-          ))}
-        </div>
+          </div>
+        )}
       </div>
     </div>
   );

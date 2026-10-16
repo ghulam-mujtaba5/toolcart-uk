@@ -262,7 +262,7 @@ export function MobileSearchOverlay({
                     className="w-full min-h-[48px] p-3 text-left flex items-center gap-3 hover:bg-tc-canvas active:bg-tc-surface-soft transition-colors"
                   >
                     <div className="w-9 h-9 rounded-lg bg-tc-canvas border border-tc-border flex items-center justify-center shrink-0 text-tc-text-secondary">
-                      <IconToolbox size={16} className="text-tc-primary" />
+                      <IconToolbox size={20} className="text-tc-primary" />
                     </div>
 
                     <div className="flex-1 min-w-0">

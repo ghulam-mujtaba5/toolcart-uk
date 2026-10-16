@@ -7,7 +7,6 @@ import { useVAT } from '@/context/vat-context';
 import { Button } from '@/components/ui/button';
 import { DragHandle } from '@/components/ui/drag-handle';
 import { useSwipeToDismiss } from '@/hooks/use-swipe-to-dismiss';
-import { EmptyToolChestVector } from '@/components/ui/vectors';
 import { IconTruckFreight, IconTradeVerified, IconToolbox } from '@/components/ui/trade-icons';
 import { CopyBadge } from '@/components/ui/copy-badge';
 import { X, Plus, Minus, ArrowRight, Trash2 } from 'lucide-react';

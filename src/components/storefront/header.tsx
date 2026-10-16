@@ -29,6 +29,7 @@ import { DragHandle } from '@/components/ui/drag-handle';
 import { useSwipeToDismiss } from '@/hooks/use-swipe-to-dismiss';
 import { PublicProductDTO } from '@/types/product';
 import { IconToolbox, IconStockRadar, IconTradeVerified } from '@/components/ui/trade-icons';
+import { MobileSearchOverlay } from '@/components/storefront/mobile-search-overlay';
 
 interface HeaderProps {
   onOpenAiAssistant?: () => void;
@@ -43,6 +44,7 @@ export function Header({ onOpenAiAssistant }: HeaderProps) {
   const [suggestions, setSuggestions] = useState<PublicProductDTO[]>([]);
   const [isOpenFlyout, setIsOpenFlyout] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isMobileSearchOpen, setIsMobileSearchOpen] = useState(false);
   const flyoutRef = useRef<HTMLDivElement>(null);
 
   const {
@@ -176,7 +178,7 @@ export function Header({ onOpenAiAssistant }: HeaderProps) {
                     setIsOpenFlyout(false);
                   }}
                   aria-label="Clear search query"
-                  className="absolute right-14 top-1.5 h-8 min-w-[36px] flex items-center justify-center text-tc-text-secondary hover:text-tc-ink rounded p-1 transition-colors"
+                  className="absolute right-14 top-1 h-9 min-w-[44px] min-h-[44px] sm:min-w-[36px] sm:min-h-[36px] sm:top-1.5 sm:h-8 flex items-center justify-center text-tc-text-secondary hover:text-tc-ink rounded p-1 transition-colors active:scale-95"
                 >
                   <X className="w-4 h-4" />
                 </button>
@@ -310,18 +312,36 @@ export function Header({ onOpenAiAssistant }: HeaderProps) {
 
         {/* Mobile Search Input Row */}
         <div className="md:hidden pb-3">
-          <form onSubmit={handleSearchSubmit} className="relative flex items-center">
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              if (query.trim()) {
+                handleSearchSubmit(e);
+              } else {
+                setIsMobileSearchOpen(true);
+              }
+            }}
+            className="relative flex items-center"
+          >
             <input
               type="text"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
+              onFocus={() => setIsMobileSearchOpen(true)}
+              onClick={() => setIsMobileSearchOpen(true)}
               placeholder="Search 115 trade tools & hardware..."
-              className="w-full h-11 min-h-[44px] pl-10 pr-24 bg-tc-canvas border border-tc-border-strong rounded-lg text-base sm:text-xs text-tc-ink placeholder:text-tc-text-secondary focus:outline-none focus:ring-2 focus:ring-tc-primary"
+              className="w-full h-11 min-h-[44px] pl-10 pr-24 bg-tc-canvas border border-tc-border-strong rounded-lg text-base sm:text-xs text-tc-ink placeholder:text-tc-text-secondary focus:outline-none focus:ring-2 focus:ring-tc-primary cursor-pointer"
             />
             <Search className="w-4 h-4 text-tc-text-secondary absolute left-3.5 top-3.5 pointer-events-none stroke-[2.25]" />
             <button
               type="submit"
-              className="absolute right-0 inset-y-0 h-full min-h-[44px] min-w-[60px] px-3.5 rounded-r-lg bg-tc-primary text-white text-xs font-semibold hover:bg-tc-primary-hover flex items-center justify-center"
+              onClick={() => {
+                if (!query.trim()) {
+                  setIsMobileSearchOpen(true);
+                }
+              }}
+              aria-label="Search"
+              className="absolute right-0 inset-y-0 h-full min-h-[44px] min-w-[60px] px-3.5 rounded-r-lg bg-tc-primary text-white text-xs font-semibold hover:bg-tc-primary-hover flex items-center justify-center active:scale-95 transition-all"
             >
               Search
             </button>
@@ -460,6 +480,13 @@ export function Header({ onOpenAiAssistant }: HeaderProps) {
           </div>
         </div>
       )}
+
+      {/* Dedicated Mobile Search Overlay */}
+      <MobileSearchOverlay
+        isOpen={isMobileSearchOpen}
+        onClose={() => setIsMobileSearchOpen(false)}
+        initialQuery={query}
+      />
     </header>
   );
 }

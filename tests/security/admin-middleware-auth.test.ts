@@ -106,6 +106,58 @@ describe('Admin Middleware Fail-Closed Authentication Suite', () => {
       expect(res.status).toBe(200);
       expect(res.headers.get('x-middleware-next')).toBe('1');
     });
+
+    it('redirects unauthenticated browser requests for /admin to /admin/login', () => {
+      setNodeEnv('production');
+      process.env.ADMIN_API_TOKEN = 'secret-admin-token-123';
+
+      const req = new NextRequest('http://localhost:3000/admin');
+      const res = middleware(req);
+
+      expect(res.status).toBe(307);
+      expect(res.headers.get('location')).toBe('http://localhost:3000/admin/login?from=%2Fadmin');
+    });
+
+    it('allows unauthenticated access to /admin/login', () => {
+      setNodeEnv('production');
+      process.env.ADMIN_API_TOKEN = 'secret-admin-token-123';
+
+      const req = new NextRequest('http://localhost:3000/admin/login');
+      const res = middleware(req);
+
+      expect(res.status).toBe(200);
+      expect(res.headers.get('x-middleware-next')).toBe('1');
+    });
+
+    it('allows access to /admin pages when valid session cookie is present', () => {
+      setNodeEnv('production');
+      process.env.ADMIN_API_TOKEN = 'secret-admin-token-123';
+
+      const req = new NextRequest('http://localhost:3000/admin', {
+        headers: {
+          cookie: 'toolcart_admin_token=secret-admin-token-123',
+        },
+      });
+      const res = middleware(req);
+
+      expect(res.status).toBe(200);
+      expect(res.headers.get('x-middleware-next')).toBe('1');
+    });
+
+    it('whitelists /api/admin/login and /api/admin/logout', () => {
+      setNodeEnv('production');
+      delete process.env.ADMIN_API_TOKEN;
+
+      const reqLogin = new NextRequest('http://localhost:3000/api/admin/login');
+      const resLogin = middleware(reqLogin);
+      expect(resLogin.status).toBe(200);
+      expect(resLogin.headers.get('x-middleware-next')).toBe('1');
+
+      const reqLogout = new NextRequest('http://localhost:3000/api/admin/logout');
+      const resLogout = middleware(reqLogout);
+      expect(resLogout.status).toBe(200);
+      expect(resLogout.headers.get('x-middleware-next')).toBe('1');
+    });
   });
 
   describe('Route Matcher Config', () => {

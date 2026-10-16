@@ -15,6 +15,7 @@ import {
   Wrench,
   ExternalLink,
   X,
+  LogOut,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -88,6 +89,15 @@ export function AdminSidebar({ mobileOpen = false, onClose, className }: AdminSi
     };
   }, [mobileOpen]);
 
+  const handleSignOut = async () => {
+    try {
+      await fetch('/api/admin/logout', { method: 'POST' });
+    } catch {
+      // ignore
+    }
+    window.location.href = '/admin/login';
+  };
+
   const renderNavContent = (isMobile: boolean = false) => (
     <div className="flex-1 flex flex-col justify-between overflow-y-auto">
       <nav className="py-4 px-3 space-y-5" aria-label="Admin Navigation">
@@ -136,7 +146,7 @@ export function AdminSidebar({ mobileOpen = false, onClose, className }: AdminSi
       </nav>
 
       {/* Footer Info */}
-      <div className="p-4 border-t border-white/10 space-y-3 bg-black/20">
+      <div className="p-4 border-t border-white/10 space-y-2.5 bg-black/20">
         <Link
           href="/"
           target="_blank"
@@ -145,7 +155,15 @@ export function AdminSidebar({ mobileOpen = false, onClose, className }: AdminSi
           <span>View Storefront</span>
           <ExternalLink className="w-3.5 h-3.5 text-white/70" />
         </Link>
-        <div className="text-[11px] text-white/60 leading-tight px-1">
+        <button
+          type="button"
+          onClick={handleSignOut}
+          className="w-full flex items-center justify-between px-3 py-2 rounded bg-white/5 hover:bg-red-500/20 text-xs text-white/90 hover:text-white font-medium transition-colors min-h-[36px]"
+        >
+          <span>Sign Out</span>
+          <LogOut className="w-3.5 h-3.5 text-white/70" />
+        </button>
+        <div className="text-[11px] text-white/60 leading-tight px-1 pt-1">
           <p className="font-semibold text-white/90">ToolCart Engine v2.0</p>
           <p className="text-[10px]">Staging Environment: Active</p>
         </div>

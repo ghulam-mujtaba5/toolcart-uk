@@ -24,7 +24,9 @@ export function AdminLayout({ children }: AdminLayoutProps) {
   const segments = pathname.split('/').filter(Boolean);
   const breadcrumbText = segments
     .map((s) => s.charAt(0).toUpperCase() + s.slice(1))
-    .join(' > ');
+  if (pathname === '/admin/login') {
+    return <div className="min-h-screen bg-tc-canvas font-body text-tc-ink antialiased">{children}</div>;
+  }
 
   return (
     <div className="flex min-h-screen bg-tc-canvas font-body text-tc-ink antialiased">

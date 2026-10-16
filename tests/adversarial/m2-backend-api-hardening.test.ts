@@ -583,6 +583,8 @@ SKU-001,"Broken quote title without closing,10.50,12`;
         order_number: 'ORD-IDEMP-TEST',
         customer_email: 'idemp@example.com',
         state: 'checkout_authorized',
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString(),
         shipping_address: {
           full_name: 'Test',
           address_line_1: 'Line 1',
@@ -616,7 +618,7 @@ SKU-001,"Broken quote title without closing,10.50,12`;
       const result = await executeOrderTransition({
         order_id: order.id,
         to_state: 'checkout_authorized', // repeated state -> idempotency check 2
-        trigger: 'user_checkout',
+        trigger: 'customer',
         actor: 'user',
       });
 

@@ -1,14 +1,16 @@
 'use client';
 
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { PublicProductDTO } from '@/types/product';
 import { useCart } from '@/context/cart-context';
 import { useVAT } from '@/context/vat-context';
 import { useCompare } from '@/context/compare-context';
+import { useToast } from '@/context/toast-context';
 import {
   IconToolbox,
   IconBolt,
   IconCaliper,
+  IconTradeVerified,
 } from '@/components/ui/trade-icons';
 import { ShoppingCart, Plus, Minus } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -18,14 +20,47 @@ interface PdpActionsProps {
 }
 
 export function PdpActions({ product }: PdpActionsProps) {
-  const { addItem } = useCart();
+  const { addItem, openCart } = useCart();
   const { formatPriceDisplay } = useVAT();
   const { isInCompare, addProduct, removeProduct, openCompare } = useCompare();
+  const { showToast } = useToast();
 
   const [quantity, setQuantity] = useState(1);
   const [isCaseOrder, setIsCaseOrder] = useState(false);
   const [isSnapped, setIsSnapped] = useState(false);
   const snapTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  const primaryBuyBoxRef = useRef<HTMLDivElement>(null);
+  const [isScrolledPast, setIsScrolledPast] = useState(true);
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+
+    // Observe when the user scrolls past the primary buy box
+    if ('IntersectionObserver' in window && primaryBuyBoxRef.current) {
+      const observer = new IntersectionObserver(
+        ([entry]) => {
+          setIsScrolledPast(!entry.isIntersecting);
+        },
+        { threshold: 0.1 }
+      );
+      observer.observe(primaryBuyBoxRef.current);
+      return () => observer.disconnect();
+    }
+
+    const handleScroll = () => {
+      if (primaryBuyBoxRef.current) {
+        const rect = primaryBuyBoxRef.current.getBoundingClientRect();
+        setIsScrolledPast(rect.bottom < 0);
+      } else {
+        setIsScrolledPast(window.scrollY > 200);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const isCompared = isInCompare(product.id);
 
@@ -46,6 +81,13 @@ export function PdpActions({ product }: PdpActionsProps) {
     if (isOutOfStock) return;
     addItem(product, quantity, isCaseOrder);
 
+    showToast({
+      title: 'Added to Basket',
+      message: `${quantity}x ${product.title} (${totalPrice.primaryText})`,
+      type: 'success',
+      action: { label: 'View Basket', onClick: openCart },
+    });
+
     setIsSnapped(true);
     if (snapTimeoutRef.current) {
       clearTimeout(snapTimeoutRef.current);
@@ -58,20 +100,32 @@ export function PdpActions({ product }: PdpActionsProps) {
   const handleCompareToggle = () => {
     if (isCompared) {
       removeProduct(product.id);
+      showToast({
+        title: 'Removed from Comparison',
+        message: product.title,
+        type: 'info',
+      });
     } else {
       addProduct(product);
+      showToast({
+        title: 'Added to Comparison',
+        message: product.title,
+        type: 'info',
+        action: { label: 'Compare Now', onClick: openCompare },
+      });
       openCompare();
     }
   };
 
   return (
     <div className="space-y-6">
-      {/* Pricing Container */}
-      <div className="p-4 sm:p-5 rounded-xl bg-tc-canvas border border-tc-border space-y-1">
-        <div className="flex items-baseline justify-between">
-          <div className="font-heading font-extrabold text-2xl sm:text-3xl text-tc-ink tabular-nums">
-            {totalPrice.primaryText}
-          </div>
+      <div ref={primaryBuyBoxRef} className="space-y-6">
+        {/* Pricing Container */}
+        <div className="p-4 sm:p-5 rounded-xl bg-tc-canvas border border-tc-border space-y-1">
+          <div className="flex items-baseline justify-between">
+            <div className="font-heading font-extrabold text-2xl sm:text-3xl text-tc-ink tabular-nums">
+              {totalPrice.primaryText}
+            </div>
           <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-tc-action-lime text-tc-ink border-2 border-tc-ink">
             {isCaseOrder ? `Case of ${product.units_per_case}` : `Pack of ${product.units_per_pack}`}
           </span>
@@ -236,6 +290,7 @@ export function PdpActions({ product }: PdpActionsProps) {
             </>
           )}
         </button>
+        </div>
       </div>
 
       {/* Reassurance Notice */}
@@ -251,13 +306,16 @@ export function PdpActions({ product }: PdpActionsProps) {
       {/* Sticky Mobile Buy Bar (Visible on mobile/tablet viewports < lg) */}
       <div
         data-testid="pdp-sticky-buy-bar"
-        className="fixed bottom-0 inset-x-0 z-30 bg-white/95 backdrop-blur-md border-t border-tc-border px-4 py-3 shadow-[0_-4px_16px_rgba(24,35,54,0.10)] pb-[calc(0.75rem+env(safe-area-inset-bottom))] lg:hidden flex items-center justify-between gap-3 animate-in slide-in-from-bottom duration-200"
+        className={cn(
+          'fixed bottom-0 inset-x-0 z-40 bg-white/95 backdrop-blur-md border-t border-tc-border px-3 sm:px-4 py-2.5 shadow-[0_-4px_16px_rgba(24,35,54,0.10)] pb-[calc(0.75rem+env(safe-area-inset-bottom))] lg:hidden flex items-center justify-between gap-2 transition-all duration-300 ease-in-out',
+          isScrolledPast ? 'translate-y-0 opacity-100 pointer-events-auto' : 'translate-y-full opacity-0 pointer-events-none'
+        )}
       >
-        <div className="flex-1 min-w-0">
+        <div className="flex-1 min-w-0 pr-1">
           <div className="text-[10px] uppercase font-bold text-tc-text-secondary truncate">
             {isCaseOrder ? `Case of ${product.units_per_case}` : `Pack of ${product.units_per_pack}`}
           </div>
-          <div className="font-heading font-extrabold text-base text-tc-ink tabular-nums leading-tight">
+          <div className="font-heading font-extrabold text-sm sm:text-base text-tc-ink tabular-nums leading-tight truncate">
             {totalPrice.primaryText}
           </div>
           <div className="text-[10px] text-tc-text-secondary tabular-nums truncate">
@@ -265,29 +323,70 @@ export function PdpActions({ product }: PdpActionsProps) {
           </div>
         </div>
 
+        {/* Inline Quantity Stepper with 44x44px touch targets */}
+        <div className="flex items-center border border-tc-border-strong rounded-lg bg-white h-11 shrink-0">
+          <button
+            type="button"
+            onClick={() => setQuantity((q) => Math.max(1, q - 1))}
+            className="min-w-[44px] min-h-[44px] h-full flex items-center justify-center text-tc-text-secondary hover:text-tc-ink active:scale-95 transition-all"
+            aria-label="Step down quantity (sticky dock)"
+            data-testid="pdp-sticky-stepper-dec"
+          >
+            <Minus className="w-3.5 h-3.5" />
+          </button>
+          <span
+            className="px-1 text-xs font-bold text-tc-ink tabular-nums min-w-[20px] text-center"
+            data-testid="pdp-sticky-quantity"
+          >
+            {quantity}
+          </span>
+          <button
+            type="button"
+            onClick={() => setQuantity((q) => q + 1)}
+            className="min-w-[44px] min-h-[44px] h-full flex items-center justify-center text-tc-text-secondary hover:text-tc-ink active:scale-95 transition-all"
+            aria-label="Step up quantity (sticky dock)"
+            data-testid="pdp-sticky-stepper-inc"
+          >
+            <Plus className="w-3.5 h-3.5" />
+          </button>
+        </div>
+
+        {/* 1-Tap Add to Basket Button */}
         <button
           type="button"
           onClick={handleAdd}
+          disabled={isOutOfStock || isSnapped}
           aria-live="polite"
-          aria-label={isSnapped ? `Quick order placed: ${product.title}` : `Quick Order: ${product.title}`}
+          aria-label={
+            isOutOfStock
+              ? `Unavailable (Quick Order): ${product.title}`
+              : isSnapped
+              ? `Added to ToolCart: ${product.title}`
+              : `Quick Order: ${product.title}`
+          }
+          data-testid="pdp-sticky-add-to-basket"
           className={cn(
-            'relative shrink-0 flex items-center justify-center gap-2 h-11 px-5 rounded-button text-xs font-bold',
+            'relative shrink-0 flex items-center justify-center gap-1.5 h-11 px-3 sm:px-4 rounded-button text-xs font-bold',
             'transition-all duration-200 select-none outline-none focus-visible:ring-2 focus-visible:ring-tc-primary',
             'active:scale-[0.94] active:translate-y-[2px]',
-            isSnapped
+            isOutOfStock
+              ? 'bg-tc-surface-soft text-tc-text-secondary cursor-not-allowed border border-tc-border'
+              : isSnapped
               ? 'bg-tc-action-lime text-tc-ink border-2 border-tc-ink font-extrabold shadow-sm'
               : 'bg-tc-primary text-white hover:bg-tc-primary-hover shadow-xs'
           )}
         >
-          {isSnapped ? (
+          {isOutOfStock ? (
+            <span>Out of Stock</span>
+          ) : isSnapped ? (
             <>
-              <ShoppingCart className="w-4 h-4 text-tc-ink" />
+              <IconTradeVerified size={16} className="text-tc-ink" />
               <span>Added!</span>
             </>
           ) : (
             <>
               <ShoppingCart className="w-4 h-4 text-white" />
-              <span>Quick Order</span>
+              <span>Add to Basket</span>
             </>
           )}
         </button>

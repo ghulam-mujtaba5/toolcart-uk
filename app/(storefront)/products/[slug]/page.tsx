@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { getProductBySlug, getProductsByCategory } from '@/lib/catalog';
 import { PdpActions } from '@/components/storefront/pdp-actions';
+import { PDPImageGallery } from '@/components/storefront/pdp-image-gallery';
 import { ProductCard } from '@/components/storefront/product-card';
 import { SpecTable } from '@/components/ui/spec-table';
 import { StockRadarBadge } from '@/components/ui/stock-radar-badge';
@@ -79,11 +80,11 @@ export default async function ProductPage({ params }: ProductPageProps) {
 
       {/* Main 2-Column PDP Section */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
-        {/* Left: Product Image / Illustration Box */}
+        {/* Left: Product Image Gallery */}
         <div className="lg:col-span-6 space-y-4">
-          <div className="relative aspect-4/3 rounded-2xl bg-tc-surface-soft border border-[#C8D9F9] p-8 flex flex-col items-center justify-center shadow-xs overflow-hidden">
+          <div className="relative">
             {/* Live 24h Stock Freshness Telemetry Radar Badge */}
-            <div className="absolute top-4 left-4 z-10">
+            <div className="absolute top-4 left-4 z-20">
               <StockRadarBadge
                 status={product.availability_status}
                 stockQuantity={product.stock_quantity}
@@ -92,21 +93,11 @@ export default async function ProductPage({ params }: ProductPageProps) {
               />
             </div>
 
-            {/* Visual Real Product Photography with Fallback */}
-            <div className="relative w-full h-56 sm:h-72 flex items-center justify-center p-4">
-              {product.images && product.images[0] ? (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img
-                  src={product.images[0]}
-                  alt={product.title}
-                  className="max-h-full max-w-full object-contain filter drop-shadow-md transition-transform duration-200"
-                />
-              ) : (
-                <div className="w-28 h-28 sm:w-36 sm:h-36 rounded-3xl bg-white border border-[#C8D9F9] shadow-sm flex items-center justify-center text-tc-primary">
-                  <CategoryIcon size={32} />
-                </div>
-              )}
-            </div>
+            <PDPImageGallery
+              images={product.images}
+              title={product.title}
+              sku={product.supplier_sku}
+            />
           </div>
 
           {/* Delivery & Supplier Facility Card with Trade Duotone Icons */}

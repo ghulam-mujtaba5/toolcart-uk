@@ -5,7 +5,8 @@ import { usePathname } from 'next/navigation';
 import { AdminSidebar } from './admin-sidebar';
 import { AdminErrorBoundary } from './error-boundary';
 import { Badge } from '@/components/ui/badge';
-import { ShieldCheck, User, Menu } from 'lucide-react';
+import { ShieldCheck, User, Menu, Search } from 'lucide-react';
+import { CommandPalette } from './command-palette';
 
 export interface AdminLayoutProps {
   children: React.ReactNode;
@@ -13,6 +14,7 @@ export interface AdminLayoutProps {
 
 export function AdminLayout({ children }: AdminLayoutProps) {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [commandPaletteOpen, setCommandPaletteOpen] = useState(false);
   const pathname = usePathname();
 
   // Close mobile drawer on route navigation
@@ -20,10 +22,23 @@ export function AdminLayout({ children }: AdminLayoutProps) {
     setMobileOpen(false);
   }, [pathname]);
 
+  // Global Ctrl+K / Cmd+K listener to open Command Palette
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+        e.preventDefault();
+        setCommandPaletteOpen((prev) => !prev);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
+
   // Generate readable breadcrumb
   const segments = pathname.split('/').filter(Boolean);
   const breadcrumbText = segments
     .map((s) => s.charAt(0).toUpperCase() + s.slice(1))
+    .join(' > ');
   if (pathname === '/admin/login') {
     return <div className="min-h-screen bg-tc-canvas font-body text-tc-ink antialiased">{children}</div>;
   }
@@ -36,7 +51,7 @@ export function AdminLayout({ children }: AdminLayoutProps) {
       {/* Main Content Viewport */}
       <div className="flex-1 flex flex-col min-w-0">
         {/* Top Header */}
-        <header className="h-16 bg-white border-b border-tc-border px-4 sm:px-6 flex items-center justify-between sticky top-0 z-30 shadow-xs">
+        <header className="h-16 bg-white border-b border-tc-border px-4 sm:px-6 flex items-center justify-between sticky top-0 z-30 shadow-xs gap-3">
           {/* Left: Mobile Menu Button & Breadcrumb Path */}
           <div className="flex items-center gap-2 sm:gap-3 min-w-0">
             <button
@@ -60,9 +75,37 @@ export function AdminLayout({ children }: AdminLayoutProps) {
             </div>
           </div>
 
+          {/* Center: Universal Command Palette Trigger */}
+          <div className="flex-1 max-w-md mx-auto hidden sm:flex justify-center">
+            <button
+              type="button"
+              onClick={() => setCommandPaletteOpen(true)}
+              aria-label="Search admin portal (Ctrl+K)"
+              className="w-full flex items-center justify-between gap-2.5 px-3.5 py-1.5 rounded-xl bg-tc-surface-soft border border-tc-border text-xs text-tc-text-secondary hover:text-tc-ink hover:border-tc-primary/40 hover:bg-white transition-all shadow-2xs group min-h-[38px]"
+            >
+              <div className="flex items-center gap-2 truncate">
+                <Search className="w-3.5 h-3.5 text-tc-text-secondary group-hover:text-tc-primary shrink-0" />
+                <span className="truncate">Quick search products, orders, SKUs...</span>
+              </div>
+              <kbd className="font-mono text-[10px] font-bold px-1.5 py-0.5 rounded bg-white border border-tc-border text-tc-text-secondary shadow-2xs shrink-0">
+                ⌘K
+              </kbd>
+            </button>
+          </div>
+
           {/* Right Header Badges & User Status */}
           <div className="flex items-center gap-2 sm:gap-4 shrink-0">
-            <Badge variant="lime" size="sm" className="font-bold tracking-wide">
+            {/* Mobile Search Button */}
+            <button
+              type="button"
+              onClick={() => setCommandPaletteOpen(true)}
+              aria-label="Open search palette"
+              className="sm:hidden min-h-[44px] min-w-[44px] p-2 rounded-lg text-tc-ink hover:bg-tc-surface-soft flex items-center justify-center transition-colors"
+            >
+              <Search className="w-4 h-4 text-tc-ink" />
+            </button>
+
+            <Badge variant="lime" size="sm" className="font-bold tracking-wide hidden sm:inline-flex">
               STAGING_ONLY: ACTIVE
             </Badge>
 
@@ -95,6 +138,9 @@ export function AdminLayout({ children }: AdminLayoutProps) {
           </AdminErrorBoundary>
         </main>
       </div>
+
+      {/* Universal Command Palette Modal */}
+      <CommandPalette open={commandPaletteOpen} onClose={() => setCommandPaletteOpen(false)} />
     </div>
   );
 }

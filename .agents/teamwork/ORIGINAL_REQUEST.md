@@ -542,3 +542,51 @@ Deeply inspect and harden core e-commerce utility domains:
 ## 2026-10-16T10:21:15Z
 
 The user wants to continue the defect hunt. The Sentinel hit rate limits (429). Please resume the orchestrator and workers. The orchestrator_defect_hunt_1 was on Milestone 1 with worker_defect_m1_2 implementing D-01 through D-16. Milestones 2, 3, and 4 are still pending. Please resume and continue executing all milestones through to completion and victory audit.
+
+
+## 2026-10-16T12:41:40Z
+
+Build and deliver a high-polish, production-grade merchant Admin Portal experience for ToolCart UK matching top-tier e-commerce platforms (Shopify Polaris, Medusa v2, Saleor), with heavy emphasis on elite frontend UI/UX, workflow ergonomics, keyboard-driven velocity, data safety, and zero-breakage error recovery.
+
+Working directory: e:\ToolCart
+Integrity mode: development
+
+## Requirements
+
+### R1. Shopify Polaris-Style Contextual Save Bar & Form Safety (UI/UX Level)
+- Detect unsaved form dirty states across product details, pricing simulator, and governance settings.
+- Implement a floating/docked accessible contextual save bar with smooth mount transitions, "Discard", and "Save changes" (`Ctrl+S`/`Cmd+S` keyboard shortcut) that warns and prevents accidental route navigation data loss.
+- Granular Zod schema validation with inline field error guidance, auto-focus on first error, and optimistic UI updates with accessible toast notifications.
+
+### R2. Global Command Palette & Quick Search (Ctrl+K / Cmd+K)
+- Universal command palette dialog accessible from anywhere via `Ctrl+K` / `Cmd+K` or clicking the search bar in the top navigation header.
+- Instant search across catalog SKUs, product titles, order numbers, customer names, and admin views with keyboard navigation (Up/Down arrow keys, Enter to navigate, Esc to close).
+- Quick action shortcuts (e.g. "Create Product", "Export Orders", "View Low Stock", "View Storefront", "Sign Out").
+
+### R3. Advanced Table Ergonomics & Batch CSV Operations (Shopify / Medusa Pattern)
+- Direct client-side and server-side CSV export for filtered or selected products and orders with customizable column selections.
+- Multi-row bulk actions with interactive selection count, batch status toggle (Draft / Published / Archived), and confirmation dialogs.
+- Low-stock visual alert indicators and filter tab with 1-click supplier restocking draft generator.
+
+### R4. Complete Timeline Audit Logs & Activity Feed
+- Order timeline visualization showing state machine progression, actor attribution (admin/system/supplier webhook), timestamps, and transition metadata.
+- Activity feed widget on the main dashboard showing recent merchant updates and supplier dispatch actions.
+
+### R5. Elite Brand V3 Polish & Accessibility (WCAG AAA)
+- Strict adherence to ToolCart Brand V3 tokens (`design/tokens.css`): Industrial Cobalt `#2450B8`, Action Lime `#DDF16A` (dark text only), Ink `#182336`, Workshop White `#F7F8F5`, Steel Text `#596B70`.
+- Minimum 44x44px touch targets on mobile/tablet viewports, responsive drawer navigation, and robust error boundaries preventing component-level failures from crashing the admin portal shell.
+
+## Acceptance Criteria
+
+### Functionality & Usability
+- [ ] Contextual save bar appears whenever product, pricing, or settings forms are dirtied and blocks accidental navigation.
+- [ ] Command palette opens on `Ctrl+K`/`Cmd+K` and keyboard-navigates to matching products, orders, and subpages.
+- [ ] CSV export downloads valid formatted CSV files with active filters applied.
+- [ ] Low-stock notification center surfaces all SKUs below reorder threshold with 1-click PO draft action.
+- [ ] Order detail page renders visual timeline audit log with actor attribution.
+
+### Code Quality & Brand Integrity
+- [ ] 100% test pass rate across unit, integration, and security suites (`npm test`) with zero regressions.
+- [ ] Strict Brand V3 compliance (`design/tokens.css`, `python qa/check_static.py`) with 0 violations.
+- [ ] TypeScript compilation (`npm run typecheck`) and Next.js build (`npm run build`) pass cleanly.
+- [ ] Wholesale cost confidentiality strictly preserved server-side with zero leakage in client bundles.

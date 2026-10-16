@@ -1,10 +1,11 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
 import { PublicProductDTO, WholesaleSupplierOffer, SellabilityStatus } from '@/types/product';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
+import { ContextualSaveBar } from '@/components/admin/contextual-save-bar';
 import {
   Save,
   ArrowLeft,
@@ -87,6 +88,49 @@ export function ProductEditorForm({ product, wholesaleOffer }: ProductEditorForm
   const unitCost = wholesaleOffer ? wholesaleOffer.unit_cost_ex_vat_gbp : 0;
   const grossMarginPct =
     retailPriceExVat > 0 ? ((retailPriceExVat - unitCost) / retailPriceExVat) * 100 : 0;
+
+  // Track unsaved dirty state for Shopify Polaris Contextual Save Bar
+  const isDirty = useMemo(() => {
+    return (
+      title !== product.title ||
+      description !== (product.description || '') ||
+      category !== (product.category || 'General') ||
+      sellabilityStatus !== (product.sellability_status || 'draft') ||
+      retailPriceIncVat !== product.retail_price_inc_vat_gbp ||
+      stockQuantity !== (product.stock_quantity ?? 100) ||
+      unitsPerCase !== (product.units_per_case || 1) ||
+      gtin !== (product.gtin || '') ||
+      cartonBarcode !== (product.carton_barcode || '')
+    );
+  }, [
+    title,
+    description,
+    category,
+    sellabilityStatus,
+    retailPriceIncVat,
+    stockQuantity,
+    unitsPerCase,
+    gtin,
+    cartonBarcode,
+    product,
+  ]);
+
+  const handleDiscard = () => {
+    setTitle(product.title);
+    setDescription(product.description || '');
+    setCategory(product.category || 'General');
+    setSellabilityStatus(product.sellability_status || 'draft');
+    setRetailPriceIncVat(product.retail_price_inc_vat_gbp);
+    setRetailPriceExVat(
+      product.retail_price_ex_vat_gbp || Number((product.retail_price_inc_vat_gbp / 1.2).toFixed(2))
+    );
+    setStockQuantity(product.stock_quantity ?? 100);
+    setUnitsPerCase(product.units_per_case || 1);
+    setGtin(product.gtin || '');
+    setCartonBarcode(product.carton_barcode || '');
+    setFieldErrors({});
+    setFeedback(null);
+  };
 
   // Handle Dual VAT calculations
   const handleIncVatChange = (val: number) => {
@@ -859,6 +903,15 @@ export function ProductEditorForm({ product, wholesaleOffer }: ProductEditorForm
           </div>
         </div>
       )}
+
+      {/* Shopify Polaris-Style Contextual Save Bar */}
+      <ContextualSaveBar
+        isDirty={isDirty}
+        onSave={() => handleSubmit({ preventDefault: () => {} } as React.FormEvent)}
+        onDiscard={handleDiscard}
+        isLoading={loading}
+        message={`Unsaved edits for SKU: ${product.supplier_sku}`}
+      />
     </form>
   );
 }

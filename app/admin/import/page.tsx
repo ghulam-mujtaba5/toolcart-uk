@@ -1,11 +1,11 @@
 import React from 'react';
 import { ImporterClient } from './importer-client';
 import { Badge } from '@/components/ui/badge';
-import { ShieldCheck } from 'lucide-react';
+import { ShieldCheck, Truck, Sparkles } from 'lucide-react';
 
 export const metadata = {
-  title: 'Catalog Ingestion & Schema Validator | ToolCart Admin',
-  description: 'Batch intake CSV/JSON validator for supplier catalogs with case math checks and ligature normalization.',
+  title: 'Catalog Feeds & Ingestion Center | ToolCart Admin',
+  description: 'Manage UK distributor catalog feeds, automated pricing sync, and batch inventory imports.',
 };
 
 export default function AdminImportPage() {
@@ -16,20 +16,24 @@ export default function AdminImportPage() {
         <div>
           <div className="flex items-center gap-2">
             <h2 className="font-heading font-extrabold text-xl text-tc-ink">
-              Supplier Catalog Ingestion &amp; Contract Validator
+              Supplier Feeds &amp; Catalog Ingestion
             </h2>
-            <Badge variant="lime">Zod + Draft 2020-12</Badge>
+            <Badge variant="lime">Launch Ready</Badge>
           </div>
           <p className="text-xs text-tc-text-secondary mt-1">
-            Automated Unicode ligature normalization, case-vs-unit pack math validation, and nullable carton barcode intake.
+            Automated UK distributor synchronization, case pack validation, and wholesale margin controls.
           </p>
         </div>
 
-        <div className="flex items-center gap-2">
-          <ShieldCheck className="w-4 h-4 text-tc-primary" />
-          <span className="text-xs text-tc-text-secondary font-medium">
-            Wholesale Isolation Enforced
-          </span>
+        <div className="flex flex-wrap items-center gap-2.5">
+          <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-tc-surface-soft border border-tc-primary/20 text-xs font-semibold text-tc-primary">
+            <Truck className="w-3.5 h-3.5" />
+            <span>Status International (UK) Active</span>
+          </div>
+          <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-emerald-50 border border-emerald-200 text-xs font-semibold text-emerald-800">
+            <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
+            <span>Wholesale Isolation Guarded</span>
+          </div>
         </div>
       </div>
 

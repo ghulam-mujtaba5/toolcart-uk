@@ -24,6 +24,7 @@ import {
   PackageCheck,
   Layers,
   X,
+  Download,
 } from 'lucide-react';
 import { formatGbp } from '@/lib/catalog/pricing';
 import { BulkActionBar } from './bulk-action-bar';
@@ -89,6 +90,7 @@ export function ProductTable({ products: initialProducts, wholesaleOffers = {} }
     let needs_review = 0;
     let approved = 0;
     let blocked = 0;
+    let low_stock = 0;
 
     products.forEach((p) => {
       const s = p.sellability_status || 'draft';
@@ -96,6 +98,10 @@ export function ProductTable({ products: initialProducts, wholesaleOffers = {} }
       else if (s === 'needs_review') needs_review++;
       else if (s === 'blocked') blocked++;
       else draft++;
+
+      if ((p.stock_quantity ?? 0) <= 10 || p.availability_status === 'out_of_stock') {
+        low_stock++;
+      }
     });
 
     return {
@@ -104,8 +110,44 @@ export function ProductTable({ products: initialProducts, wholesaleOffers = {} }
       needs_review,
       approved,
       blocked,
+      low_stock,
     };
   }, [products]);
+
+  // Direct CSV Export
+  const handleExportCsv = () => {
+    const headers = [
+      'supplier_sku',
+      'title',
+      'category',
+      'retail_price_inc_vat_gbp',
+      'retail_price_ex_vat_gbp',
+      'stock_quantity',
+      'sellability_status',
+      'gtin',
+    ];
+    const rows = filteredProducts.map((p) => [
+      `"${p.supplier_sku}"`,
+      `"${p.title.replace(/"/g, '""')}"`,
+      `"${p.category}"`,
+      p.retail_price_inc_vat_gbp.toFixed(2),
+      p.retail_price_ex_vat_gbp.toFixed(2),
+      p.stock_quantity ?? 0,
+      `"${p.sellability_status || 'draft'}"`,
+      `"${p.gtin || ''}"`,
+    ]);
+
+    const csvContent = [headers.join(','), ...rows.map((r) => r.join(','))].join('\n');
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.setAttribute('download', `toolcart-products-${statusFilter}-${new Date().toISOString().slice(0, 10)}.csv`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+  };
 
   // Filtered & Sorted list
   const filteredProducts = useMemo(() => {
@@ -113,9 +155,15 @@ export function ProductTable({ products: initialProducts, wholesaleOffers = {} }
       if (selectedCategory !== 'all' && p.category !== selectedCategory) {
         return false;
       }
-      const currentStatus = p.sellability_status || 'draft';
-      if (statusFilter !== 'all' && currentStatus !== statusFilter) {
-        return false;
+      if (statusFilter === 'low_stock') {
+        if ((p.stock_quantity ?? 0) > 10 && p.availability_status !== 'out_of_stock') {
+          return false;
+        }
+      } else if (statusFilter !== 'all') {
+        const currentStatus = p.sellability_status || 'draft';
+        if (currentStatus !== statusFilter) {
+          return false;
+        }
       }
       if (debouncedSearch.trim()) {
         const q = debouncedSearch.toLowerCase().trim();
@@ -347,6 +395,7 @@ export function ProductTable({ products: initialProducts, wholesaleOffers = {} }
             { key: 'needs_review', label: 'Needs Review', count: statusCounts.needs_review },
             { key: 'approved', label: 'Approved', count: statusCounts.approved },
             { key: 'blocked', label: 'Blocked', count: statusCounts.blocked },
+            { key: 'low_stock', label: 'Low Stock (≤10)', count: statusCounts.low_stock },
           ].map((tab) => (
             <button
               key={tab.key}
@@ -426,6 +475,17 @@ export function ProductTable({ products: initialProducts, wholesaleOffers = {} }
                 <option value={100}>100</option>
               </select>
             </div>
+
+            <Button
+              type="button"
+              variant="secondary"
+              size="sm"
+              onClick={handleExportCsv}
+              className="h-10 px-3.5 text-xs font-semibold"
+            >
+              <Download className="w-3.5 h-3.5 mr-1 text-tc-primary" />
+              Export CSV ({filteredProducts.length})
+            </Button>
           </div>
         </div>
       </div>

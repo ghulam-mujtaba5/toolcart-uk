@@ -363,4 +363,76 @@ describe('Storefront Mobile E-Commerce UX & Feedback Suite', () => {
       expect(footer?.className).toContain('pb-[calc(5.5rem+env(safe-area-inset-bottom,0px))]');
     });
   });
+
+  describe('6. Mobile Category Navigation Bar (NavBar)', () => {
+    it('renders all 8 trade categories with min-h-[44px] touch targets', async () => {
+      const { NavBar } = await import('@/components/storefront/nav-bar');
+      const { container } = render(<NavBar />);
+
+      const categories = [
+        'Hand Tools',
+        'Fixings & Security',
+        'Decorating',
+        'Measuring',
+        'Workwear & Safety',
+        'Site Equipment',
+        'Project Kits',
+        'Buying Guides',
+      ];
+
+      for (const cat of categories) {
+        const link = screen.getByText(cat);
+        expect(link).toBeInTheDocument();
+        const anchor = link.closest('a');
+        expect(anchor).toBeDefined();
+        expect(anchor?.className).toContain('min-h-[44px]');
+      }
+
+      const scrollContainer = container.querySelector('[data-testid="navbar-scroll-container"]');
+      expect(scrollContainer).toBeDefined();
+      expect(scrollContainer?.className).toContain('overflow-x-auto');
+      expect(scrollContainer?.className).toContain('touch-pan-x');
+      expect(scrollContainer?.className).toContain('overscroll-x-contain');
+      expect(scrollContainer?.className).toContain('snap-x');
+    });
+
+    it('marks current route as aria-current="page" with Action Lime indicator', async () => {
+      const { NavBar } = await import('@/components/storefront/nav-bar');
+      const { container } = render(<NavBar />);
+
+      // mockPathname is '/tools'
+      const handToolsLink = screen.getByText('Hand Tools').closest('a');
+      expect(handToolsLink).toBeDefined();
+      expect(handToolsLink?.getAttribute('aria-current')).toBe('page');
+      expect(handToolsLink?.className).toContain('ring-tc-action-lime');
+
+      // Non-active links do not have aria-current
+      const fixingsLink = screen.getByText('Fixings & Security').closest('a');
+      expect(fixingsLink?.getAttribute('aria-current')).toBeNull();
+    });
+
+    it('supports horizontal scrollBy stepping', async () => {
+      const { NavBar } = await import('@/components/storefront/nav-bar');
+      const { container } = render(<NavBar />);
+
+      const scrollContainer = container.querySelector('[data-testid="navbar-scroll-container"]') as HTMLElement;
+      expect(scrollContainer).toBeDefined();
+
+      const scrollBySpy = vi.fn();
+      scrollContainer.scrollBy = scrollBySpy;
+
+      // Mock scroll boundaries so right button renders
+      Object.defineProperty(scrollContainer, 'scrollWidth', { value: 1000, configurable: true });
+      Object.defineProperty(scrollContainer, 'clientWidth', { value: 390, configurable: true });
+      Object.defineProperty(scrollContainer, 'scrollLeft', { value: 0, configurable: true });
+
+      // Trigger scroll event to update indicators
+      fireEvent.scroll(scrollContainer);
+
+      const rightBtn = screen.getByTestId('navbar-scroll-right-btn');
+      expect(rightBtn).toBeInTheDocument();
+      fireEvent.click(rightBtn);
+      expect(scrollBySpy).toHaveBeenCalledWith({ left: 220, behavior: 'smooth' });
+    });
+  });
 });

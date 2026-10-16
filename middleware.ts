@@ -1,10 +1,24 @@
 import { NextRequest, NextResponse } from 'next/server';
 
+/**
+ * Constant-time string comparison for Next.js Edge Runtime.
+ *
+ * Defense-in-depth model:
+ * Edge runtime uses standard Web API TextEncoder byte comparison without importing node:crypto,
+ * while Node.js server route handlers enforce native crypto.timingSafeEqual(Buffer.from(a), Buffer.from(b))
+ * via requireAdminAuth in src/lib/auth/admin.ts.
+ *
+ * Normalizes strings to UTF-8 byte arrays via Web API TextEncoder and performs bitwise XOR traversal
+ * over bytes without short-circuiting on mismatch, eliminating timing side-channels.
+ */
 function timingSafeEqualStr(a: string, b: string): boolean {
-  if (a.length !== b.length) return false;
+  const enc = new TextEncoder();
+  const bufA = enc.encode(a);
+  const bufB = enc.encode(b);
+  if (bufA.length !== bufB.length) return false;
   let mismatch = 0;
-  for (let i = 0; i < a.length; i++) {
-    mismatch |= a.charCodeAt(i) ^ b.charCodeAt(i);
+  for (let i = 0; i < bufA.length; i++) {
+    mismatch |= bufA[i] ^ bufB[i];
   }
   return mismatch === 0;
 }

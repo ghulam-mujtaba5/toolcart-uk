@@ -19,7 +19,6 @@ export function Footer() {
     catalog: false,
     solutions: false,
     trade: false,
-    standards: false,
   });
 
   const toggleSection = (key: string) => {
@@ -146,7 +145,7 @@ export function Footer() {
         </div>
 
         {/* 5-Column Grid with Mobile Accordions (< md) & Static Desktop Columns (>= md) */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 pb-12 border-b border-white/10 text-sm">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 pb-10 border-b border-white/10 text-sm">
           {/* Column 1: Brand & Identity */}
           <div className="lg:col-span-1 space-y-4">
             <Link href="/" className="inline-block group" aria-label="ToolCart Home">
@@ -366,69 +365,12 @@ export function Footer() {
               </li>
             </ul>
           </div>
-
-          {/* Column 5: Compliance & Legal Standards */}
-          <div className="space-y-3">
-            {/* Mobile Accordion Header */}
-            <button
-              type="button"
-              onClick={() => toggleSection('standards')}
-              aria-expanded={Boolean(openSections.standards)}
-              aria-controls="footer-section-standards"
-              data-testid="footer-accordion-toggle-standards"
-              className="w-full flex items-center justify-between py-3 md:hidden text-left border-b border-white/10 text-xs font-bold text-white uppercase tracking-wider font-heading min-h-[44px] active:text-tc-action-lime transition-colors"
-            >
-              <span>UK Standards &amp; Policy</span>
-              <ChevronDown
-                className={cn(
-                  'w-4 h-4 text-tc-action-lime transition-transform duration-200',
-                  openSections.standards && 'rotate-180'
-                )}
-              />
-            </button>
-
-            {/* Desktop Static Header */}
-            <p className="hidden md:block text-xs font-bold text-white uppercase tracking-wider font-heading">
-              UK Standards
-            </p>
-
-            {/* Links List */}
-            <ul
-              id="footer-section-standards"
-              className={cn(
-                'space-y-1 md:space-y-2 text-xs text-[#DFE8F6] pt-1 md:pt-0',
-                openSections.standards ? 'block' : 'hidden md:block'
-              )}
-            >
-              <li className="min-h-[36px] md:min-h-0 flex items-center">UKCA &amp; CE Certified Hardware</li>
-              <li className="min-h-[36px] md:min-h-0 flex items-center">1000V VDE &amp; British Standards</li>
-              <li className="min-h-[36px] md:min-h-0 flex items-center">EN 14183 150KG Duty Rated</li>
-              <li className="min-h-[36px] md:min-h-0 flex items-center">256-Bit SSL Encrypted Checkout</li>
-              <li className="pt-2 border-t border-white/10 flex flex-col gap-1 text-[11px]">
-                <Link href="/cookies" className="hover:text-tc-action-lime transition-colors min-h-[44px] md:min-h-0 flex items-center">
-                  UK Cookie Policy &amp; Disclosures
-                </Link>
-                <Link href="/privacy" className="hover:text-tc-action-lime transition-colors min-h-[44px] md:min-h-0 flex items-center">
-                  Privacy Policy &amp; Data Rights
-                </Link>
-                <button
-                  type="button"
-                  onClick={openPreferences}
-                  className="text-left text-tc-action-lime hover:underline font-semibold focus-visible:outline-2 focus-visible:outline-tc-action-lime min-h-[44px] inline-flex items-center"
-                >
-                  Manage Cookie Preferences
-                </button>
-              </li>
-            </ul>
-          </div>
         </div>
 
         {/* Bottom Strip: Legal disclaimers & Trade details */}
         <div className="pt-4 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-[#DFE8F6]">
           <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-4 text-center sm:text-left">
             <p>© 2026 ToolCart UK Ltd. All rights reserved.</p>
-            <span className="hidden sm:inline text-white/30">•</span>
-            <p>Direct trade distribution for UK tradespeople and DIYers.</p>
             <span className="hidden sm:inline text-white/30">•</span>
             <p className="text-white/70 italic">ToolCart UK is a provisional demonstration platform. Staging and prototype only.</p>
           </div>
@@ -439,12 +381,12 @@ export function Footer() {
               Trade Terms
             </Link>
             <span className="text-white/30">•</span>
-            <Link href="/cookies" className="hover:text-tc-action-lime transition-colors min-h-[44px] md:min-h-0 inline-flex items-center px-1">
-              Cookies
+            <Link href="/privacy" className="hover:text-tc-action-lime transition-colors min-h-[44px] md:min-h-0 inline-flex items-center px-1">
+              Privacy Policy
             </Link>
             <span className="text-white/30">•</span>
-            <Link href="/privacy" className="hover:text-tc-action-lime transition-colors min-h-[44px] md:min-h-0 inline-flex items-center px-1">
-              Privacy
+            <Link href="/cookies" className="hover:text-tc-action-lime transition-colors min-h-[44px] md:min-h-0 inline-flex items-center px-1">
+              Cookie Policy
             </Link>
             <span className="text-white/30">•</span>
             <button
@@ -454,10 +396,6 @@ export function Footer() {
             >
               Cookie Settings
             </button>
-            <span className="text-white/30">•</span>
-            <Link href="/checkout" className="hover:text-tc-action-lime transition-colors min-h-[44px] md:min-h-0 inline-flex items-center px-1">
-              Secure Checkout
-            </Link>
           </div>
         </div>
       </div>

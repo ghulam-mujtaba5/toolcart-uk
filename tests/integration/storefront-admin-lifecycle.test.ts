@@ -87,6 +87,7 @@ describe('Storefront to Admin Lifecycle Integration', () => {
         },
         items: [
           {
+            product_id: 'prod-torpedo-level-230',
             supplier_sku: 'S10484',
             title: 'Contractor Magnetic Torpedo Level 230mm',
             quantity: 2,

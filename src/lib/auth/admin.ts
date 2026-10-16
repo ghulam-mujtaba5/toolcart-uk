@@ -1,12 +1,16 @@
 import { NextResponse } from 'next/server';
+import crypto from 'node:crypto';
 
+/**
+ * Authentic constant-time string comparison for Node.js API route handlers.
+ * Normalizes input strings to UTF-8 Buffers and invokes native crypto.timingSafeEqual
+ * to prevent side-channel timing attacks with hardware-level guarantees.
+ */
 export function timingSafeEqualStr(a: string, b: string): boolean {
-  if (a.length !== b.length) return false;
-  let mismatch = 0;
-  for (let i = 0; i < a.length; i++) {
-    mismatch |= a.charCodeAt(i) ^ b.charCodeAt(i);
-  }
-  return mismatch === 0;
+  const bufA = Buffer.from(a, 'utf8');
+  const bufB = Buffer.from(b, 'utf8');
+  if (bufA.length !== bufB.length) return false;
+  return crypto.timingSafeEqual(bufA, bufB);
 }
 
 function parseCookie(cookieHeader: string, name: string): string | null {

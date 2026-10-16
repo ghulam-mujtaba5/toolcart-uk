@@ -1,16 +1,73 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { z } from 'zod';
 import { CartItem, CartSummary, SupplierDeliveryGroup } from '@/types/cart';
 import { UK_VAT_RATE } from '@/lib/catalog/pricing';
+import { parseJsonBody } from '@/lib/api/parse-json-body';
 
 export const dynamic = 'force-dynamic';
 
 const CARRIAGE_FEE_EX_VAT = 4.95;
 const FREE_CARRIAGE_THRESHOLD_EX_VAT = 50.0;
 
+const CartItemInputSchema = z
+  .object({
+    product_id: z.string().optional(),
+    productId: z.string().optional(),
+    supplier_id: z.string().optional().default('status-uk'),
+    supplier_name: z.string().optional().default('Status International (UK) Ltd'),
+    supplier_sku: z.string().optional().default(''),
+    title: z.string().optional().default(''),
+    slug: z.string().optional().default(''),
+    category: z.string().optional().default('Tools'),
+    retail_price_ex_vat_gbp: z
+      .number()
+      .refine((val) => Number.isFinite(val) && !isNaN(val) && val >= 0, {
+        message: 'retail_price_ex_vat_gbp must be a finite, non-negative number',
+      }),
+    retail_price_inc_vat_gbp: z.number().optional(),
+    units_per_pack: z.number().optional().default(1),
+    units_per_case: z.number().optional().default(1),
+    quantity: z
+      .number()
+      .int('Quantity must be an integer')
+      .min(1, 'Quantity must be at least 1')
+      .max(1000, 'Quantity cannot exceed 1000'),
+    is_case_quantity: z.boolean().optional(),
+  })
+  .refine(
+    (item) => Boolean((item.product_id && item.product_id.trim().length > 0) || (item.productId && item.productId.trim().length > 0)),
+    { message: 'Item must have a non-empty product_id or productId' }
+  );
+
+const CartPayloadSchema = z.object({
+  items: z.array(CartItemInputSchema).default([]),
+});
+
 export async function POST(req: NextRequest) {
   try {
-    const body = await req.json();
-    const items: CartItem[] = Array.isArray(body.items) ? body.items : [];
+    const parseResult = await parseJsonBody(req, CartPayloadSchema);
+    if (!parseResult.success) {
+      return parseResult.response;
+    }
+
+    const rawItems = parseResult.data.items || [];
+    const items: CartItem[] = rawItems.map((item) => ({
+      product_id: item.product_id || item.productId || '',
+      supplier_id: item.supplier_id || 'status-uk',
+      supplier_name: item.supplier_name || 'Status International (UK) Ltd',
+      supplier_sku: item.supplier_sku || '',
+      title: item.title || '',
+      slug: item.slug || '',
+      category: item.category || 'Tools',
+      retail_price_ex_vat_gbp: item.retail_price_ex_vat_gbp,
+      retail_price_inc_vat_gbp:
+        item.retail_price_inc_vat_gbp ??
+        Math.round(item.retail_price_ex_vat_gbp * (1 + UK_VAT_RATE) * 100) / 100,
+      units_per_pack: item.units_per_pack ?? 1,
+      units_per_case: item.units_per_case ?? 1,
+      quantity: item.quantity,
+      is_case_quantity: item.is_case_quantity,
+    }));
 
     const groupsMap = new Map<string, CartItem[]>();
 

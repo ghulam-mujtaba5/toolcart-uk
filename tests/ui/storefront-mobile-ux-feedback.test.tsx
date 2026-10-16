@@ -12,6 +12,7 @@ import { ToastProvider, useToast } from '@/context/toast-context';
 import { VatProvider } from '@/context/vat-context';
 import { CartProvider, useCart } from '@/context/cart-context';
 import { FilterSidebar } from '@/components/storefront/filter-sidebar';
+import { Footer } from '@/components/storefront/footer';
 import BasketPage from '@/app/(storefront)/basket/page';
 import CheckoutPage from '@/app/(storefront)/checkout/page';
 import { PublicProductDTO } from '@/types/product';
@@ -305,6 +306,61 @@ describe('Storefront Mobile E-Commerce UX & Feedback Suite', () => {
       // Mobile drawer should be rendered
       expect(screen.getByTestId('mobile-filter-drawer')).toBeDefined();
       expect(screen.getByTestId('mobile-drawer-sort-section')).toBeDefined();
+    });
+  });
+
+  // --------------------------------------------------------------------------
+  // 5. Mobile Adaptive Footer & Accordions
+  // --------------------------------------------------------------------------
+  describe('5. Mobile Adaptive Footer & Accordions', () => {
+    it('renders Back to Top button with smooth scroll on tap', () => {
+      const scrollToSpy = vi.fn();
+      window.scrollTo = scrollToSpy;
+
+      render(
+        <VatProvider>
+          <Footer />
+        </VatProvider>
+      );
+
+      const backToTopBtn = screen.getByTestId('footer-back-to-top-btn');
+      expect(backToTopBtn).toBeDefined();
+      expect(backToTopBtn.className).toContain('min-h-[44px]');
+
+      fireEvent.click(backToTopBtn);
+      expect(scrollToSpy).toHaveBeenCalledWith({ top: 0, behavior: 'smooth' });
+    });
+
+    it('renders collapsible accordion toggles for mobile with aria-expanded', () => {
+      render(
+        <VatProvider>
+          <Footer />
+        </VatProvider>
+      );
+
+      const catalogToggle = screen.getByTestId('footer-accordion-toggle-catalog');
+      expect(catalogToggle).toBeDefined();
+      expect(catalogToggle.getAttribute('aria-expanded')).toBe('false');
+
+      // Expand catalog accordion
+      fireEvent.click(catalogToggle);
+      expect(catalogToggle.getAttribute('aria-expanded')).toBe('true');
+
+      // Collapse catalog accordion
+      fireEvent.click(catalogToggle);
+      expect(catalogToggle.getAttribute('aria-expanded')).toBe('false');
+    });
+
+    it('guarantees safe-area bottom padding to prevent BottomNav occlusion', () => {
+      const { container } = render(
+        <VatProvider>
+          <Footer />
+        </VatProvider>
+      );
+
+      const footer = container.querySelector('footer');
+      expect(footer).toBeDefined();
+      expect(footer?.className).toContain('pb-[calc(5.5rem+env(safe-area-inset-bottom,0px))]');
     });
   });
 });

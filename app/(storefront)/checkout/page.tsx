@@ -214,7 +214,7 @@ export default function CheckoutPage() {
   }
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8 pb-[calc(2rem+env(safe-area-inset-bottom,0px))]">
       {/* Breadcrumb */}
       <div className="flex items-center gap-2 text-xs text-tc-text-secondary">
         <Link href="/basket" className="hover:text-tc-ink flex items-center gap-1">
@@ -239,6 +239,9 @@ export default function CheckoutPage() {
             <ShoppingBag className="w-4 h-4 text-tc-primary" />
             <span className="font-bold text-tc-ink">
               {isMobileSummaryOpen ? 'Hide order summary' : 'Show order summary'}
+            </span>
+            <span className="text-[11px] text-tc-text-secondary font-mono">
+              ({summary.total_items_count} item{summary.total_items_count === 1 ? '' : 's'})
             </span>
             {isMobileSummaryOpen ? (
               <ChevronUp className="w-4 h-4 text-tc-text-secondary" />
@@ -313,10 +316,11 @@ export default function CheckoutPage() {
                 </span>
                 <span className="text-[10px] text-tc-text-secondary font-mono">Test Sandbox</span>
               </div>
-              <div className="grid grid-cols-2 gap-2.5">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
                 <button
                   type="button"
                   data-testid="express-apple-pay-btn"
+                  aria-label="Pay with Apple Pay"
                   onClick={() => {
                     setEmail('trade-pro@express.co.uk');
                     setFullName('Express Tradesperson');
@@ -330,13 +334,14 @@ export default function CheckoutPage() {
                       type: 'info',
                     });
                   }}
-                  className="h-11 min-h-[44px] rounded-lg bg-black text-white hover:bg-neutral-800 active:scale-95 transition-all text-xs font-bold flex items-center justify-center gap-1.5 shadow-xs"
+                  className="h-12 min-h-[48px] min-h-[44px] rounded-lg bg-black text-white hover:bg-neutral-800 active:scale-95 transition-all text-xs font-bold flex items-center justify-center gap-1.5 shadow-xs"
                 >
                   <span className="text-sm font-semibold tracking-tight">Pay</span>
                 </button>
                 <button
                   type="button"
                   data-testid="express-google-pay-btn"
+                  aria-label="Pay with Google Pay"
                   onClick={() => {
                     setEmail('contractor@gpay.co.uk');
                     setFullName('Google Pay Contractor');
@@ -350,9 +355,31 @@ export default function CheckoutPage() {
                       type: 'info',
                     });
                   }}
-                  className="h-11 min-h-[44px] rounded-lg border border-tc-border bg-white text-tc-ink hover:bg-tc-canvas active:scale-95 transition-all text-xs font-bold flex items-center justify-center gap-1.5 shadow-xs"
+                  className="h-12 min-h-[48px] min-h-[44px] rounded-lg border border-tc-border bg-white text-tc-ink hover:bg-tc-canvas active:scale-95 transition-all text-xs font-bold flex items-center justify-center gap-1.5 shadow-xs"
                 >
                   <span className="font-bold">G</span><span className="font-medium text-tc-graphite">Pay</span>
+                </button>
+                <button
+                  type="button"
+                  data-testid="express-card-pay-btn"
+                  aria-label="Pay with 1-Click Card"
+                  onClick={() => {
+                    setEmail('trade-pro@express.co.uk');
+                    setFullName('Express Tradesperson');
+                    setAddressLine1('1 Express Way');
+                    setCity('London');
+                    setPostcode('EC1A 1BB');
+                    setPhone('07700 900111');
+                    showToast({
+                      title: '1-Click Card Details Filled',
+                      message: 'Verified mock delivery address filled for test checkout',
+                      type: 'info',
+                    });
+                  }}
+                  className="h-12 min-h-[48px] min-h-[44px] rounded-lg bg-tc-surface-soft text-tc-primary border border-tc-primary/30 hover:bg-tc-surface-soft/80 active:scale-95 transition-all text-xs font-bold flex items-center justify-center gap-1.5 shadow-xs"
+                >
+                  <CreditCard className="w-4 h-4 text-tc-primary" />
+                  <span>1-Click Card</span>
                 </button>
               </div>
             </div>
@@ -371,6 +398,9 @@ export default function CheckoutPage() {
                     id="checkout-email"
                     type="email"
                     required
+                    inputMode="email"
+                    autoComplete="email"
+                    autoCapitalize="none"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="tradesperson@company.co.uk"
@@ -384,6 +414,7 @@ export default function CheckoutPage() {
                     id="checkout-fullname"
                     type="text"
                     required
+                    autoComplete="name"
                     value={fullName}
                     onChange={(e) => setFullName(e.target.value)}
                     placeholder="Jane Doe"
@@ -396,6 +427,7 @@ export default function CheckoutPage() {
                   <input
                     id="checkout-company"
                     type="text"
+                    autoComplete="organization"
                     value={companyName}
                     onChange={(e) => setCompanyName(e.target.value)}
                     placeholder="Acme Electrical Ltd"
@@ -409,6 +441,8 @@ export default function CheckoutPage() {
                     id="checkout-phone"
                     type="tel"
                     required
+                    inputMode="tel"
+                    autoComplete="tel"
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
                     placeholder="07700 900077"
@@ -432,6 +466,7 @@ export default function CheckoutPage() {
                     id="checkout-address1"
                     type="text"
                     required
+                    autoComplete="street-address"
                     value={addressLine1}
                     onChange={(e) => setAddressLine1(e.target.value)}
                     placeholder="12 Commercial Way, Unit 4"
@@ -444,6 +479,7 @@ export default function CheckoutPage() {
                   <input
                     id="checkout-address2"
                     type="text"
+                    autoComplete="address-line2"
                     value={addressLine2}
                     onChange={(e) => setAddressLine2(e.target.value)}
                     placeholder="Industrial Estate"
@@ -458,6 +494,7 @@ export default function CheckoutPage() {
                       id="checkout-city"
                       type="text"
                       required
+                      autoComplete="address-level2"
                       value={city}
                       onChange={(e) => setCity(e.target.value)}
                       placeholder="Leeds"
@@ -471,6 +508,8 @@ export default function CheckoutPage() {
                       id="checkout-postcode"
                       type="text"
                       required
+                      autoComplete="postal-code"
+                      autoCapitalize="characters"
                       value={postcode}
                       aria-invalid={Boolean(postcodeError)}
                       aria-describedby={postcodeError ? 'checkout-postcode-error' : undefined}

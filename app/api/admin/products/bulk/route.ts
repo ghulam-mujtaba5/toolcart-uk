@@ -1,20 +1,17 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/db';
 import { BulkProductActionSchema } from '@/lib/schemas/product';
+import { parseJsonBody } from '@/lib/api/parse-json-body';
+import { requireAdminAuth } from '@/lib/auth/admin';
 
 export async function POST(request: NextRequest) {
-  try {
-    const rawBody = await request.json();
-    const parseResult = BulkProductActionSchema.safeParse(rawBody);
+  const auth = requireAdminAuth(request);
+  if (!auth.success) return auth.response;
 
+  try {
+    const parseResult = await parseJsonBody(request, BulkProductActionSchema);
     if (!parseResult.success) {
-      return NextResponse.json(
-        {
-          error: 'Validation failed',
-          issues: parseResult.error.flatten().fieldErrors,
-        },
-        { status: 400 }
-      );
+      return parseResult.response;
     }
 
     const { product_ids, action, payload } = parseResult.data;

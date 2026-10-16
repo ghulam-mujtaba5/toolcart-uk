@@ -17,13 +17,18 @@ interface Message {
   content: string;
   recommendedProducts?: PublicProductDTO[];
   safetyCaveat?: string;
+  suggestedActions?: string[];
+  projectPlan?: {
+    title: string;
+    steps: string[];
+    estimatedMaterials?: { name: string; quantity: string }[];
+  };
 }
 
 interface AIAssistantDrawerProps {
   isOpen: boolean;
   onClose: () => void;
 }
-
 
 export function AIAssistantDrawer({ isOpen, onClose }: AIAssistantDrawerProps) {
   const { addItem } = useCart();
@@ -37,11 +42,19 @@ export function AIAssistantDrawer({ isOpen, onClose }: AIAssistantDrawerProps) {
 
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
+  const [addedSkus, setAddedSkus] = useState<Record<string, boolean>>({});
+  const [addedAllIdx, setAddedAllIdx] = useState<number | null>(null);
   const [messages, setMessages] = useState<Message[]>([
     {
       role: 'assistant',
       content:
-        'Hello! How can I assist with your hardware requirements today? Ask about fixing sizes, British Standards, electrical ratings, or trade consumables.',
+        'Hello! I am your ToolCart AI Technical Agent. I can help calculate fixing counts for projects, verify British Standards (BS 7671, BS EN IEC 60900, BS EN 14183), check trade specs, or assemble complete toolkits.',
+      suggestedActions: [
+        'Fixings for heavy shelving into brick',
+        'BS 7671 safe electrical isolation tools',
+        '3-step ladder duty rating & site access',
+        'Crepe masking tape for clean paint lines',
+      ],
     },
   ]);
 
@@ -67,7 +80,8 @@ export function AIAssistantDrawer({ isOpen, onClose }: AIAssistantDrawerProps) {
     if (!text || loading) return;
 
     const userMessage: Message = { role: 'user', content: text };
-    setMessages((prev) => [...prev, userMessage]);
+    const updatedMessages = [...messages, userMessage];
+    setMessages(updatedMessages);
     setInput('');
     setLoading(true);
 
@@ -75,7 +89,10 @@ export function AIAssistantDrawer({ isOpen, onClose }: AIAssistantDrawerProps) {
       const res = await fetch('/api/store/assistant', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ prompt: text }),
+        body: JSON.stringify({
+          prompt: text,
+          history: updatedMessages.map((m) => ({ role: m.role, content: m.content })),
+        }),
       });
 
       if (res.ok) {
@@ -85,6 +102,8 @@ export function AIAssistantDrawer({ isOpen, onClose }: AIAssistantDrawerProps) {
           content: data.reply,
           recommendedProducts: data.recommendedProducts || [],
           safetyCaveat: data.safetyCaveat,
+          suggestedActions: data.suggestedActions || [],
+          projectPlan: data.projectPlan,
         };
         setMessages((prev) => [...prev, assistantMessage]);
       } else {
@@ -109,6 +128,22 @@ export function AIAssistantDrawer({ isOpen, onClose }: AIAssistantDrawerProps) {
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleAddProduct = (prod: PublicProductDTO) => {
+    addItem(prod, 1);
+    setAddedSkus((prev) => ({ ...prev, [prod.supplier_sku]: true }));
+    setTimeout(() => {
+      setAddedSkus((prev) => ({ ...prev, [prod.supplier_sku]: false }));
+    }, 2000);
+  };
+
+  const handleAddAllProducts = (products: PublicProductDTO[], messageIdx: number) => {
+    products.forEach((prod) => addItem(prod, 1));
+    setAddedAllIdx(messageIdx);
+    setTimeout(() => {
+      setAddedAllIdx(null);
+    }, 2500);
   };
 
   return (
@@ -147,7 +182,7 @@ export function AIAssistantDrawer({ isOpen, onClose }: AIAssistantDrawerProps) {
               <h2 id="ai-assistant-title" className="font-heading font-extrabold text-base text-tc-ink flex items-center gap-1.5">
                 ToolCart AI Assistant
                 <span className="text-[10px] px-1.5 py-0.5 rounded bg-tc-primary/10 text-tc-primary font-bold">
-                  Grounded
+                  Autonomous Agent
                 </span>
               </h2>
               <p className="text-[11px] text-tc-text-secondary">
@@ -172,13 +207,13 @@ export function AIAssistantDrawer({ isOpen, onClose }: AIAssistantDrawerProps) {
             <div
               key={idx}
               className={cn(
-                'flex flex-col space-y-2 max-w-[90%]',
+                'flex flex-col space-y-2 max-w-[95%]',
                 m.role === 'user' ? 'ml-auto items-end' : 'mr-auto items-start'
               )}
             >
               <div
                 className={cn(
-                  'p-4 rounded-2xl text-xs sm:text-sm leading-relaxed shadow-xs',
+                  'p-4 rounded-2xl text-xs sm:text-sm leading-relaxed shadow-xs whitespace-pre-line',
                   m.role === 'user'
                     ? 'bg-tc-primary text-white rounded-br-xs'
                     : 'bg-white text-tc-ink border border-[#C8D9F9] rounded-bl-xs'
@@ -189,56 +224,145 @@ export function AIAssistantDrawer({ isOpen, onClose }: AIAssistantDrawerProps) {
 
               {/* Safety Caveat Callout */}
               {m.safetyCaveat && (
-                <div className="p-3 rounded-xl bg-[#FFF7E8] border border-[#E8CB91] text-xs text-tc-ink flex items-start gap-2 shadow-xs">
+                <div className="p-3 rounded-xl bg-[#FFF7E8] border border-[#E8CB91] text-xs text-tc-ink flex items-start gap-2.5 shadow-xs w-full">
                   <AlertTriangle className="w-4 h-4 text-tc-warning shrink-0 mt-0.5" />
                   <div className="text-[11px] leading-snug">
-                    <span className="font-bold">Safety Standard Notice: </span>
-                    {m.safetyCaveat}
+                    <span className="font-bold text-tc-ink">British Safety Standard Notice: </span>
+                    <span className="text-tc-graphite">{m.safetyCaveat}</span>
                   </div>
+                </div>
+              )}
+
+              {/* Project Plan & Estimation Breakdown Card */}
+              {m.projectPlan && (
+                <div className="w-full bg-white rounded-xl border border-tc-primary/30 p-3.5 shadow-xs space-y-2.5">
+                  <div className="flex items-center justify-between border-b border-[#C8D9F9] pb-2">
+                    <div className="flex items-center gap-1.5">
+                      <span className="w-2 h-2 rounded-full bg-tc-primary animate-pulse" />
+                      <h4 className="text-xs font-bold font-heading text-tc-ink">
+                        {m.projectPlan.title || 'Project Method Statement & Estimator'}
+                      </h4>
+                    </div>
+                    <span className="text-[10px] uppercase font-bold text-tc-primary bg-tc-primary/10 px-2 py-0.5 rounded">
+                      Trade Checklist
+                    </span>
+                  </div>
+
+                  {m.projectPlan.steps && m.projectPlan.steps.length > 0 && (
+                    <div className="space-y-1.5">
+                      <p className="text-[11px] font-semibold text-tc-ink">Sequence of Work:</p>
+                      <ul className="space-y-1 text-[11px] text-tc-graphite">
+                        {m.projectPlan.steps.map((step, sIdx) => (
+                          <li key={sIdx} className="flex items-start gap-1.5">
+                            <span className="text-tc-primary font-bold shrink-0">{sIdx + 1}.</span>
+                            <span>{step}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+
+                  {m.projectPlan.estimatedMaterials && m.projectPlan.estimatedMaterials.length > 0 && (
+                    <div className="space-y-1.5 pt-2 border-t border-tc-border/60">
+                      <p className="text-[11px] font-semibold text-tc-ink">Estimated Fixings & Materials:</p>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5 text-[11px]">
+                        {m.projectPlan.estimatedMaterials.map((mat, mIdx) => (
+                          <div
+                            key={mIdx}
+                            className="p-1.5 bg-tc-canvas rounded border border-tc-border flex items-center justify-between"
+                          >
+                            <span className="truncate text-tc-graphite">{mat.name}</span>
+                            <span className="font-mono font-bold text-tc-primary shrink-0 ml-1">
+                              {mat.quantity}
+                            </span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
                 </div>
               )}
 
               {/* Recommended Catalog Products */}
               {m.recommendedProducts && m.recommendedProducts.length > 0 && (
                 <div className="w-full space-y-2 mt-2">
-                  <p className="text-[11px] font-bold text-tc-primary uppercase tracking-wider">
-                    Verified Matching Products ({m.recommendedProducts.length})
-                  </p>
+                  <div className="flex items-center justify-between">
+                    <p className="text-[11px] font-bold text-tc-primary uppercase tracking-wider">
+                      Verified UK Catalog Products ({m.recommendedProducts.length})
+                    </p>
+                    {m.recommendedProducts.length > 1 && (
+                      <Button
+                        variant="secondary"
+                        size="sm"
+                        className="text-[11px] h-7 px-2.5 font-bold"
+                        onClick={() => handleAddAllProducts(m.recommendedProducts!, idx)}
+                      >
+                        <ShoppingCart className="w-3 h-3 mr-1" />
+                        <span>
+                          {addedAllIdx === idx
+                            ? 'All Added ✓'
+                            : `Add All (${m.recommendedProducts.length})`}
+                        </span>
+                      </Button>
+                    )}
+                  </div>
+
                   <div className="space-y-2">
                     {m.recommendedProducts.map((prod) => {
                       const price = formatPriceDisplay(
                         prod.retail_price_inc_vat_gbp,
                         prod.retail_price_ex_vat_gbp
                       );
+                      const isAdded = !!addedSkus[prod.supplier_sku];
                       return (
                         <div
                           key={prod.id}
-                          className="p-3 bg-white rounded-xl border border-tc-border shadow-xs flex items-center justify-between gap-3"
+                          className="p-3 bg-white rounded-xl border border-tc-border shadow-xs flex items-center justify-between gap-3 hover:border-tc-primary/50 transition-colors"
                         >
                           <div className="flex-1 min-w-0">
                             <p className="text-xs font-bold text-tc-ink truncate">{prod.title}</p>
                             <div className="flex items-center gap-2 text-[11px] text-tc-text-secondary mt-0.5">
-                              <span className="font-mono">{prod.supplier_sku}</span>
+                              <span className="font-mono font-semibold">{prod.supplier_sku}</span>
                               <span>•</span>
                               <span className="font-semibold tabular-nums text-tc-ink">
                                 {price.primaryText}
+                              </span>
+                              <span className="text-[10px] text-[#2C6E49] bg-[#E8F5E9] px-1.5 py-0.2 rounded font-semibold">
+                                In Stock
                               </span>
                             </div>
                           </div>
 
                           <Button
-                            variant="primary"
+                            variant={isAdded ? 'secondary' : 'primary'}
                             size="sm"
-                            className="min-h-[44px] sm:min-h-[36px] text-xs px-3 shrink-0 flex items-center"
-                            onClick={() => addItem(prod, 1)}
+                            className="min-h-[44px] sm:min-h-[36px] text-xs px-3 shrink-0 flex items-center transition-all"
+                            onClick={() => handleAddProduct(prod)}
                           >
                             <ShoppingCart className="w-3 h-3 mr-1" />
-                            <span>Add</span>
+                            <span>{isAdded ? 'Added ✓' : 'Add'}</span>
                           </Button>
                         </div>
                       );
                     })}
                   </div>
+                </div>
+              )}
+
+              {/* Suggested Action Chips */}
+              {m.suggestedActions && m.suggestedActions.length > 0 && (
+                <div className="w-full flex flex-wrap gap-1.5 pt-1.5">
+                  {m.suggestedActions.map((action, aIdx) => (
+                    <button
+                      key={aIdx}
+                      type="button"
+                      disabled={loading}
+                      onClick={() => handleSend(action)}
+                      className="text-[11px] font-semibold text-tc-primary bg-white hover:bg-tc-surface-soft border border-[#C8D9F9] hover:border-tc-primary px-2.5 py-1.5 rounded-full shadow-2xs transition-all flex items-center gap-1 active:scale-95 disabled:opacity-50 text-left"
+                    >
+                      <span>💬 {action}</span>
+                    </button>
+                  ))}
                 </div>
               )}
             </div>
@@ -248,12 +372,15 @@ export function AIAssistantDrawer({ isOpen, onClose }: AIAssistantDrawerProps) {
             <div className="mr-auto p-4 rounded-2xl bg-white border border-[#C8D9F9] rounded-bl-xs text-xs text-tc-text-secondary flex items-center gap-3 shadow-xs">
               <AiScannerPulse size={40} className="shrink-0" />
               <div>
-                <p className="font-bold text-tc-ink text-xs">Scanning catalog specifications...</p>
-                <span className="text-[11px] text-tc-text-secondary">Filtering 115 quoted trade lines with zero safety hallucinations</span>
+                <p className="font-bold text-tc-ink text-xs">Consulting UK Trade Knowledge & Standards...</p>
+                <span className="text-[11px] text-tc-text-secondary">
+                  Calculating project requirements across 115 live catalog lines with zero safety hallucinations
+                </span>
               </div>
             </div>
           )}
         </div>
+
 
 
 

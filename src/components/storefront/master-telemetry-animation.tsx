@@ -207,10 +207,10 @@ export function MasterTelemetryAnimation() {
                     <div className="absolute inset-0 rounded-3xl bg-tc-primary/10 border border-white/10 -rotate-3" />
                     <div className="absolute inset-0 rounded-3xl bg-tc-action-lime/10 border border-tc-action-lime/20 rotate-3" />
 
-                    {/* Master 3D Brand Logo */}
+                    {/* Master 3D Specifications Emblem */}
                     <img
-                      src="/images/brand/logo-toolcart.webp"
-                      alt="ToolCart Master 3D Toolbox"
+                      src="/images/3d/icons/icon-specs.webp"
+                      alt="ToolCart Verified Specs"
                       className={cn(
                         'w-52 h-52 sm:w-60 sm:h-60 object-contain relative z-10 drop-shadow-[0_20px_30px_rgba(0,0,0,0.6)] transition-all duration-500',
                         isInspecting ? 'scale-110 rotate-6' : 'group-hover:scale-105'

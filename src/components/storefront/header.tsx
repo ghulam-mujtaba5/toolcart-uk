@@ -134,14 +134,10 @@ export function Header({ onOpenAiAssistant }: HeaderProps) {
             <Menu className="w-5 h-5 sm:w-6 sm:h-6" />
           </button>
 
-          {/* Brand Wordmark & Action Lime Cart Badge with 3D Master Logo */}
+          {/* Brand Wordmark & Action Lime Cart Badge with IconToolbox Trade Emblem */}
           <Link href="/" className="flex items-center gap-2 sm:gap-3 shrink-0 group">
-            <div className="w-9 h-9 sm:w-11 sm:h-11 lg:w-14 lg:h-14 rounded-xl sm:rounded-2xl bg-tc-action-lime border-2 border-tc-ink flex items-center justify-center shadow-xs transition-transform group-hover:scale-105 overflow-hidden p-0.5 sm:p-1 shrink-0">
-              <img
-                src="/images/brand/logo-toolcart.webp"
-                alt="ToolCart 3D Logo"
-                className="w-full h-full object-contain drop-shadow-xs"
-              />
+            <div className="w-9 h-9 sm:w-11 sm:h-11 lg:w-12 lg:h-12 rounded-xl sm:rounded-2xl bg-tc-action-lime border-2 border-tc-ink flex items-center justify-center shadow-xs transition-transform group-hover:scale-105 shrink-0 text-tc-ink">
+              <IconToolbox size={24} className="text-tc-ink" />
             </div>
             <div className="flex flex-col justify-center">
               <span className="font-heading font-extrabold text-xl sm:text-2xl lg:text-3xl tracking-[-0.04em] text-tc-ink leading-none">
@@ -364,7 +360,7 @@ export function Header({ onOpenAiAssistant }: HeaderProps) {
             role="dialog"
             aria-modal="true"
             aria-label="Mobile navigation menu"
-            className="relative ml-auto w-full max-w-xs bg-white h-full shadow-2xl flex flex-col p-5 overflow-y-auto overscroll-y-contain pb-[calc(1.5rem+env(safe-area-inset-bottom))]"
+            className="relative ml-auto w-full max-w-xs bg-white h-full shadow-2xl flex flex-col p-5 overflow-y-auto overscroll-y-contain pb-[calc(1.5rem+env(safe-area-inset-bottom,0px))]"
           >
             {/* Tactile Grab Handle */}
             <div className="pb-2 flex justify-center">
@@ -406,7 +402,7 @@ export function Header({ onOpenAiAssistant }: HeaderProps) {
                     key={c.href}
                     href={c.href}
                     onClick={() => setIsMobileMenuOpen(false)}
-                    className="flex items-center justify-between py-2.5 px-3 rounded-lg text-sm font-semibold text-tc-ink hover:bg-tc-canvas group"
+                    className="flex items-center justify-between min-h-[44px] py-2 px-3 rounded-lg text-sm font-semibold text-tc-ink hover:bg-tc-canvas group"
                   >
                     <div className="flex items-center gap-3">
                       <div className="w-8 h-8 rounded-lg bg-tc-surface-soft border border-[#C8D9F9] flex items-center justify-center text-tc-primary group-hover:bg-tc-primary group-hover:text-white transition-colors">

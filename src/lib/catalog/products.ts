@@ -59,43 +59,7 @@ export function getBaselineCatalogCsvText(): string {
 function classifyCategory(sku: string, desc: string): { name: string; slug: string } {
   const d = desc.toLowerCase();
 
-  if (
-    d.includes('ladder') ||
-    d.includes('tarpaulin') ||
-    d.includes('ratchet') ||
-    d.includes('rope') ||
-    d.includes('string') ||
-    d.includes('torch') ||
-    d.includes('lead') ||
-    d.includes('cable') ||
-    d.includes('bungee') ||
-    d.includes('radiator key')
-  ) {
-    return { name: 'Site Equipment', slug: 'site-equipment' };
-  }
-
-  if (
-    d.includes('glove') ||
-    d.includes('goggle') ||
-    d.includes('glasses') ||
-    d.includes('mask') ||
-    d.includes('ear') ||
-    d.includes('safety') ||
-    d.includes('knee')
-  ) {
-    return { name: 'Workwear & Safety', slug: 'ppe' };
-  }
-
-  if (
-    d.includes('measure') ||
-    d.includes('ruler') ||
-    d.includes('spirit') ||
-    d.includes('level') ||
-    d.includes('plumb')
-  ) {
-    return { name: 'Measuring', slug: 'measuring' };
-  }
-
+  // 1. Decorating (must precede PPE so 'masking' does not falsely match 'mask')
   if (
     d.includes('paint') ||
     d.includes('brush') ||
@@ -110,6 +74,49 @@ function classifyCategory(sku: string, desc: string): { name: string; slug: stri
     d.includes('float')
   ) {
     return { name: 'Decorating', slug: 'decorating' };
+  }
+
+  // 2. Measuring
+  if (
+    d.includes('measure') ||
+    d.includes('ruler') ||
+    d.includes('spirit') ||
+    d.includes('level') ||
+    d.includes('plumb')
+  ) {
+    return { name: 'Measuring', slug: 'measuring' };
+  }
+
+  // 3. Workwear & Safety (PPE) - specific tokens, preventing 'bearing steel' from matching 'ear'
+  if (
+    d.includes('glove') ||
+    d.includes('goggle') ||
+    d.includes('glasses') ||
+    d.includes('dust mask') ||
+    d.includes('respirator') ||
+    d.includes('ear plug') ||
+    d.includes('earplug') ||
+    d.includes('safety') ||
+    d.includes('knee') ||
+    d.includes('ffp2')
+  ) {
+    return { name: 'Workwear & Safety', slug: 'ppe' };
+  }
+
+  // 4. Site Equipment
+  if (
+    d.includes('ladder') ||
+    d.includes('tarpaulin') ||
+    d.includes('ratchet') ||
+    d.includes('rope') ||
+    d.includes('string') ||
+    d.includes('torch') ||
+    d.includes('lead') ||
+    d.includes('cable') ||
+    d.includes('bungee') ||
+    d.includes('radiator key')
+  ) {
+    return { name: 'Site Equipment', slug: 'site-equipment' };
   }
 
   if (

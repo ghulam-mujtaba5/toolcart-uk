@@ -31,7 +31,10 @@ export const ProductUpdateSchema = z.object({
 export type ProductUpdateInput = z.infer<typeof ProductUpdateSchema>;
 
 export const BulkProductActionSchema = z.object({
-  product_ids: z.array(z.string()).min(1, 'At least one product must be selected'),
+  product_ids: z
+    .array(z.string())
+    .min(1, 'At least one product must be selected')
+    .max(500, 'Cannot update more than 500 products at once'),
   action: z.enum(['status', 'price_adjust', 'stock_adjust', 'category']),
   payload: z.object({
     status: SellabilityStatusEnum.optional(),

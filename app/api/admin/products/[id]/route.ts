@@ -2,11 +2,16 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/db';
 import { ProductUpdateSchema } from '@/lib/schemas/product';
 import { PublicProductDTO } from '@/types/product';
+import { parseJsonBody } from '@/lib/api/parse-json-body';
+import { requireAdminAuth } from '@/lib/auth/admin';
 
 export async function GET(
   request: NextRequest,
   { params }: { params: { id: string } }
 ) {
+  const auth = requireAdminAuth(request);
+  if (!auth.success) return auth.response;
+
   try {
     const { id } = params;
     const db = getDb();
@@ -37,19 +42,14 @@ export async function PUT(
   request: NextRequest,
   { params }: { params: { id: string } }
 ) {
+  const auth = requireAdminAuth(request);
+  if (!auth.success) return auth.response;
+
   try {
     const { id } = params;
-    const rawBody = await request.json();
-
-    const parseResult = ProductUpdateSchema.safeParse(rawBody);
+    const parseResult = await parseJsonBody(request, ProductUpdateSchema);
     if (!parseResult.success) {
-      return NextResponse.json(
-        {
-          error: 'Validation failed',
-          issues: parseResult.error.flatten().fieldErrors,
-        },
-        { status: 400 }
-      );
+      return parseResult.response;
     }
 
     const body = parseResult.data;
@@ -89,6 +89,9 @@ export async function DELETE(
   request: NextRequest,
   { params }: { params: { id: string } }
 ) {
+  const auth = requireAdminAuth(request);
+  if (!auth.success) return auth.response;
+
   try {
     const { id } = params;
     const db = getDb();

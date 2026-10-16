@@ -1,9 +1,14 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/db';
-import { ProductFilters, SellabilityStatus } from '@/types/product';
+import { ProductFilters, SellabilityStatus, PublicProductDTO } from '@/types/product';
 import { ProductContractSchema } from '@/lib/catalog/contract-schema';
+import { parseJsonBody } from '@/lib/api/parse-json-body';
+import { requireAdminAuth } from '@/lib/auth/admin';
 
 export async function GET(request: NextRequest) {
+  const auth = requireAdminAuth(request);
+  if (!auth.success) return auth.response;
+
   try {
     const searchParams = request.nextUrl.searchParams;
     const category = searchParams.get('category') || undefined;
@@ -45,22 +50,19 @@ export async function GET(request: NextRequest) {
 }
 
 export async function POST(request: NextRequest) {
-  try {
-    const body = await request.json();
+  const auth = requireAdminAuth(request);
+  if (!auth.success) return auth.response;
 
-    // Validate contract
-    const parsed = ProductContractSchema.safeParse(body);
+  try {
+    const parsed = await parseJsonBody(request, ProductContractSchema);
     if (!parsed.success) {
-      return NextResponse.json(
-        { error: 'Schema validation failed', details: parsed.error.errors },
-        { status: 400 }
-      );
+      return parsed.response;
     }
 
     const item = parsed.data;
     const db = getDb();
 
-    const publicProduct = {
+    const publicProduct: PublicProductDTO = {
       id: `prod_${item.supplier_sku.toLowerCase()}`,
       slug: `${item.title.toLowerCase().replace(/[^a-z0-9]+/g, '-')}-${item.supplier_sku.toLowerCase()}`,
       title: item.title,
@@ -80,10 +82,10 @@ export async function POST(request: NextRequest) {
       units_per_case: item.units_per_case,
       case_pack_description: `Case of ${item.units_per_case} units`,
       specifications: {},
-      compliance_verified: item.compliance_verified,
-      image_license_verified: item.image_license_verified,
-      supplier_direct_dispatch_verified: item.supplier_direct_dispatch_verified,
-      sellability_status: item.sellability_status,
+      compliance_verified: Boolean(item.compliance_verified),
+      image_license_verified: Boolean(item.image_license_verified),
+      supplier_direct_dispatch_verified: Boolean(item.supplier_direct_dispatch_verified),
+      sellability_status: (item.sellability_status || 'draft') as any,
       availability_status: 'in_stock' as const,
       lead_time_days: '2-3 business days',
     };

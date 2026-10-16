@@ -24,7 +24,6 @@ const CATEGORIES = [
     slug: 'tools',
     description: 'Screwdrivers, pliers, hammers, saws, spanners & chisels.',
     icon: Wrench,
-    itemCount: '44 items',
     image: '/images/3d/categories/tools.webp',
   },
   {
@@ -32,7 +31,6 @@ const CATEGORIES = [
     slug: 'fixings',
     description: 'Padlocks, steel bolts, wall plugs, clips & hardware.',
     icon: Shield,
-    itemCount: '22 items',
     image: '/images/3d/categories/fixings.webp',
   },
   {
@@ -40,7 +38,6 @@ const CATEGORIES = [
     slug: 'decorating',
     description: 'Paint brushes, rollers, masking tapes, scrapers & sandpapers.',
     icon: Paintbrush,
-    itemCount: '15 items',
     image: '/images/3d/categories/decorating.webp',
   },
   {
@@ -48,7 +45,6 @@ const CATEGORIES = [
     slug: 'measuring',
     description: '5m/10m tape measures, spirit levels, metal rulers & plumb bobs.',
     icon: Ruler,
-    itemCount: '5 items',
     image: '/images/3d/categories/measuring.webp',
   },
   {
@@ -56,7 +52,6 @@ const CATEGORIES = [
     slug: 'ppe',
     description: 'EN166 eye protection, dust masks, ear plugs & safety gloves.',
     icon: HardHat,
-    itemCount: '10 items',
     image: '/images/3d/categories/ppe.webp',
   },
   {
@@ -64,7 +59,6 @@ const CATEGORIES = [
     slug: 'site-equipment',
     description: 'EN14183 step ladders, heavy tarpaulins, ropes & ratchet straps.',
     icon: Package,
-    itemCount: '19 items',
     image: '/images/3d/categories/site-equipment.webp',
   },
 ];
@@ -136,8 +130,7 @@ export default async function StorefrontHomePage() {
                   </div>
                 </div>
 
-                <div className="px-3 sm:px-5 pb-3 sm:pb-5 pt-2 sm:pt-3 border-t border-tc-border/60 flex items-center justify-between text-[11px] sm:text-xs font-semibold text-tc-primary">
-                  <span className="font-mono text-[10px] sm:text-xs text-tc-text-secondary">{cat.itemCount}</span>
+                <div className="px-3 sm:px-5 pb-3 sm:pb-5 pt-2 sm:pt-3 border-t border-tc-border/60 flex items-center justify-end text-[11px] sm:text-xs font-semibold text-tc-primary">
                   <span className="group-hover:translate-x-1 transition-transform flex items-center gap-1">
                     <span className="hidden sm:inline">Explore category</span>
                     <span className="sm:hidden">Explore</span> →
@@ -193,7 +186,7 @@ export default async function StorefrontHomePage() {
                 <h2 className="font-heading font-extrabold text-lg sm:text-3xl text-white tracking-tight leading-snug">
                   Precision Masking &amp; Surface Protection
                 </h2>
-                <p className="text-xs sm:text-sm text-tc-canvas leading-relaxed hidden sm:block">
+                <p className="text-xs sm:text-sm text-white/95 font-medium leading-relaxed drop-shadow-xs line-clamp-2 sm:line-clamp-none block">
                   Save on professional crepe paper masking tapes, pure bristle brushes, and heavy polythene dust sheets. Tested for sharp paint cutoff lines without plaster peeling.
                 </p>
                 <div className="pt-1.5 sm:pt-2 flex flex-wrap items-center gap-2 sm:gap-3">

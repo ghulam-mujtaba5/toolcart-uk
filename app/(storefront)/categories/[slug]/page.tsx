@@ -236,15 +236,15 @@ export default async function CategoryPage({ params, searchParams }: CategoryPag
                   alt={CATEGORY_PROMOS[catSlug].title}
                   className="w-full h-full object-cover"
                 />
-                <div className="absolute inset-0 bg-gradient-to-r from-tc-ink/95 via-tc-ink/80 sm:via-tc-ink/60 to-transparent flex items-center p-5 sm:p-8">
+                <div className="absolute inset-0 bg-gradient-to-r from-tc-ink/95 via-tc-ink/90 sm:via-tc-ink/85 to-tc-ink/40 sm:to-transparent flex items-center p-4 sm:p-8">
                   <div className="max-w-md sm:max-w-lg space-y-2">
                     <span className="inline-block text-[10px] sm:text-[11px] font-extrabold tracking-wider text-tc-action-lime uppercase font-mono">
                       {CATEGORY_PROMOS[catSlug].badge}
                     </span>
-                    <h3 className="font-heading font-extrabold text-base sm:text-2xl text-white tracking-tight leading-snug">
+                    <h3 className="font-heading font-extrabold text-base sm:text-2xl text-white tracking-tight leading-snug drop-shadow-xs">
                       {CATEGORY_PROMOS[catSlug].title}
                     </h3>
-                    <p className="text-xs sm:text-sm text-tc-canvas/90 leading-relaxed hidden sm:block">
+                    <p className="text-xs sm:text-sm text-white font-medium leading-relaxed drop-shadow-xs block">
                       {CATEGORY_PROMOS[catSlug].subtitle}
                     </p>
                     <div className="pt-2">

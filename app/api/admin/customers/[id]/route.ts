@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/db';
 import { renderTradeApplicationDecisionEmail, sendEmail } from '@/lib/adapters/email';
 import { z } from 'zod';
+import { parseJsonBody } from '@/lib/api/parse-json-body';
+import { requireAdminAuth } from '@/lib/auth/admin';
 
 const UpdateCustomerStatusSchema = z.object({
   status: z.enum(['approved', 'rejected', 'pending']),
@@ -12,6 +14,9 @@ export async function GET(
   request: NextRequest,
   { params }: { params: { id: string } }
 ) {
+  const auth = requireAdminAuth(request);
+  if (!auth.success) return auth.response;
+
   try {
     const { id } = params;
     const db = getDb();
@@ -34,19 +39,14 @@ export async function PUT(
   request: NextRequest,
   { params }: { params: { id: string } }
 ) {
+  const auth = requireAdminAuth(request);
+  if (!auth.success) return auth.response;
+
   try {
     const { id } = params;
-    const rawBody = await request.json();
-
-    const parseResult = UpdateCustomerStatusSchema.safeParse(rawBody);
+    const parseResult = await parseJsonBody(request, UpdateCustomerStatusSchema);
     if (!parseResult.success) {
-      return NextResponse.json(
-        {
-          error: 'Validation failed',
-          issues: parseResult.error.flatten().fieldErrors,
-        },
-        { status: 400 }
-      );
+      return parseResult.response;
     }
 
     const { status, credit_limit_gbp } = parseResult.data;

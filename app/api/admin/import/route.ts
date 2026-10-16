@@ -1,8 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { parseAndValidateCatalogCsv } from '@/lib/catalog/importer';
 import { getBaselineCatalogCsvText } from '@/lib/catalog/products';
+import { parseJsonBody } from '@/lib/api/parse-json-body';
+import { requireAdminAuth } from '@/lib/auth/admin';
 
 export async function GET(request: NextRequest) {
+  const auth = requireAdminAuth(request);
+  if (!auth.success) return auth.response;
+
   try {
     const searchParams = request.nextUrl.searchParams;
     if (searchParams.get('loadSample') === 'true') {
@@ -19,6 +24,9 @@ export async function GET(request: NextRequest) {
 }
 
 export async function POST(request: NextRequest) {
+  const auth = requireAdminAuth(request);
+  if (!auth.success) return auth.response;
+
   try {
     const searchParams = request.nextUrl.searchParams;
 
@@ -34,7 +42,15 @@ export async function POST(request: NextRequest) {
 
     const contentType = request.headers.get('content-type') || '';
     if (contentType.includes('application/json')) {
-      const body = await request.json();
+      const parseResult = await parseJsonBody<{
+        load_sample?: boolean;
+        csv_content?: string;
+        dryRun?: boolean;
+      }>(request);
+      if (!parseResult.success) {
+        return parseResult.response;
+      }
+      const body = parseResult.data;
       if (body.load_sample === true) {
         const sampleCsv = getBaselineCatalogCsvText();
         return NextResponse.json({ csv_content: sampleCsv }, { status: 200 });
@@ -66,9 +82,16 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const report = await parseAndValidateCatalogCsv(csvContent, dryRun);
-
-    return NextResponse.json(report, { status: 200 });
+    try {
+      const report = await parseAndValidateCatalogCsv(csvContent, dryRun);
+      return NextResponse.json(report, { status: 200 });
+    } catch (csvErr: unknown) {
+      const message = csvErr instanceof Error ? csvErr.message : String(csvErr);
+      return NextResponse.json(
+        { error: 'Invalid CSV format', details: message },
+        { status: 400 }
+      );
+    }
   } catch (error: unknown) {
     return NextResponse.json(
       { error: error instanceof Error ? error.message : 'Internal Server Error' },

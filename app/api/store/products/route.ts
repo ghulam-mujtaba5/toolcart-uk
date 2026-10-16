@@ -20,11 +20,35 @@ export async function GET(req: NextRequest) {
     const query = searchParams.get('q') || '';
     const category = searchParams.get('category') || undefined;
     const brand = searchParams.get('brand') || undefined;
-    const minPrice = searchParams.get('min_price') ? parseFloat(searchParams.get('min_price')!) : undefined;
-    const maxPrice = searchParams.get('max_price') ? parseFloat(searchParams.get('max_price')!) : undefined;
+
+    const minPriceRaw = searchParams.get('min_price');
+    const parsedMin = minPriceRaw !== null ? parseFloat(minPriceRaw) : NaN;
+    const minPrice = !isNaN(parsedMin) && parsedMin >= 0 ? parsedMin : undefined;
+
+    const maxPriceRaw = searchParams.get('max_price');
+    const parsedMax = maxPriceRaw !== null ? parseFloat(maxPriceRaw) : NaN;
+    const maxPrice = !isNaN(parsedMax) && parsedMax >= 0 ? parsedMax : undefined;
+
     const inStockOnly = searchParams.get('in_stock') === 'true';
     const sort = (searchParams.get('sort') as any) || 'relevance';
-    const limit = searchParams.get('limit') ? parseInt(searchParams.get('limit')!, 10) : undefined;
+
+    const limitRaw = searchParams.get('limit');
+    let limit: number | undefined;
+    if (limitRaw !== null) {
+      const parsedLimit = parseInt(limitRaw, 10);
+      if (!isNaN(parsedLimit)) {
+        limit = Math.max(1, Math.min(100, parsedLimit));
+      }
+    }
+
+    const offsetRaw = searchParams.get('offset');
+    let offset = 0;
+    if (offsetRaw !== null) {
+      const parsedOffset = parseInt(offsetRaw, 10);
+      if (!isNaN(parsedOffset)) {
+        offset = Math.max(0, parsedOffset);
+      }
+    }
 
     const result = await searchProducts(query, {
       category,
@@ -35,7 +59,12 @@ export async function GET(req: NextRequest) {
       sort,
     });
 
-    const products = limit ? result.products.slice(0, limit) : result.products;
+    const products =
+      limit !== undefined
+        ? result.products.slice(offset, offset + limit)
+        : offset > 0
+        ? result.products.slice(offset)
+        : result.products;
 
     return NextResponse.json({
       products,

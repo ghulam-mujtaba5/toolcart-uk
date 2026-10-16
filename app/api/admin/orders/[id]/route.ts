@@ -1,10 +1,14 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/db';
+import { requireAdminAuth } from '@/lib/auth/admin';
 
 export async function GET(
   request: NextRequest,
   { params }: { params: { id: string } }
 ) {
+  const auth = requireAdminAuth(request);
+  if (!auth.success) return auth.response;
+
   try {
     const { id } = params;
     const db = getDb();

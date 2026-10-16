@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
 import { getDb } from '@/lib/db';
+import { parseJsonBody } from '@/lib/api/parse-json-body';
+import { requireAdminAuth } from '@/lib/auth/admin';
 
 const UpdateRuleSchema = z.object({
   multiplier_under_1_pound: z.number().min(1.0, 'Multiplier must be at least 1.0x').max(10.0, 'Multiplier must be at most 10.0x').optional(),
@@ -13,23 +15,18 @@ export async function PATCH(
   request: NextRequest,
   { params }: { params: { id: string } }
 ) {
+  const auth = requireAdminAuth(request);
+  if (!auth.success) return auth.response;
+
   try {
     const { id } = params;
-    const json = await request.json();
-    const parsed = UpdateRuleSchema.safeParse(json);
-
-    if (!parsed.success) {
-      return NextResponse.json(
-        {
-          error: 'Validation failed',
-          issues: parsed.error.issues.map((i) => ({ field: i.path.join('.'), message: i.message })),
-        },
-        { status: 400 }
-      );
+    const parseResult = await parseJsonBody(request, UpdateRuleSchema);
+    if (!parseResult.success) {
+      return parseResult.response;
     }
 
     const db = getDb();
-    const updatedRule = await db.pricing.updateMarkupRule(id, parsed.data);
+    const updatedRule = await db.pricing.updateMarkupRule(id, parseResult.data);
 
     if (!updatedRule) {
       return NextResponse.json({ error: `Category rule ${id} not found` }, { status: 404 });

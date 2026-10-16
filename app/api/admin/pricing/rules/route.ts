@@ -1,7 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/db';
+import { requireAdminAuth } from '@/lib/auth/admin';
 
-export async function GET() {
+export async function GET(request: NextRequest) {
+  const auth = requireAdminAuth(request);
+  if (!auth.success) return auth.response;
+
   try {
     const db = getDb();
     const rules = await db.pricing.getMarkupRules();

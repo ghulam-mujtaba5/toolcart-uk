@@ -1,40 +1,35 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
 import { getDb } from '@/lib/db';
+import { parseJsonBody } from '@/lib/api/parse-json-body';
 
 const TradeApplicationSchema = z.object({
-  business_name: z.string().min(2, 'Company name is required'),
-  contact_name: z.string().min(2, 'Contact name is required'),
-  email: z.string().email('Valid email is required'),
-  phone: z.string().min(5, 'Valid telephone number is required'),
-  trade_type: z.string().min(2, 'Trade sector is required'),
-  vat_number: z.string().optional(),
-  company_number: z.string().min(2, 'Companies House registration number is required'),
+  business_name: z.string().min(2, 'Company name is required').max(255, 'Company name cannot exceed 255 characters'),
+  contact_name: z.string().min(2, 'Contact name is required').max(255, 'Contact name cannot exceed 255 characters'),
+  email: z.string().email('Valid email is required').max(255, 'Email cannot exceed 255 characters'),
+  phone: z.string().min(5, 'Valid telephone number is required').max(50, 'Telephone number cannot exceed 50 characters'),
+  trade_type: z.string().min(2, 'Trade sector is required').max(255, 'Trade sector cannot exceed 255 characters'),
+  vat_number: z.string().max(255).optional(),
+  company_number: z.string().min(2, 'Companies House registration number is required').max(255, 'Companies House registration number cannot exceed 255 characters'),
 });
 
 export async function POST(request: NextRequest) {
   try {
-    const json = await request.json();
-    const parsed = TradeApplicationSchema.safeParse(json);
-
-    if (!parsed.success) {
-      return NextResponse.json(
-        {
-          error: 'Validation failed',
-          issues: parsed.error.issues.map((i) => ({ field: i.path.join('.'), message: i.message })),
-        },
-        { status: 400 }
-      );
+    const parseResult = await parseJsonBody(request, TradeApplicationSchema);
+    if (!parseResult.success) {
+      return parseResult.response;
     }
+
+    const { data: parsedData } = parseResult;
 
     const db = getDb();
     const customer = await db.customers.create({
-      company_name: parsed.data.business_name,
-      contact_name: parsed.data.contact_name,
-      email: parsed.data.email,
-      phone: parsed.data.phone,
-      companies_house_number: parsed.data.company_number,
-      vat_number: parsed.data.vat_number || undefined,
+      company_name: parsedData.business_name,
+      contact_name: parsedData.contact_name,
+      email: parsedData.email,
+      phone: parsedData.phone,
+      companies_house_number: parsedData.company_number,
+      vat_number: parsedData.vat_number || undefined,
       status: 'pending',
       trade_tier: 'tier_1_5pct',
       credit_limit_gbp: 0,

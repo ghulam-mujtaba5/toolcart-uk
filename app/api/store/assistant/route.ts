@@ -1,8 +1,27 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { z } from 'zod';
 import { searchProducts, getAllProducts } from '@/lib/catalog';
 import { PublicProductDTO } from '@/types/product';
+import { parseJsonBody } from '@/lib/api/parse-json-body';
 
 export const dynamic = 'force-dynamic';
+
+const AssistantPayloadSchema = z.object({
+  prompt: z
+    .string({ required_error: 'Prompt is required' })
+    .transform((s) => s.trim())
+    .refine((s) => s.length >= 1, { message: 'Prompt is required' })
+    .refine((s) => s.length <= 2000, { message: 'Prompt must not exceed 2000 characters' }),
+  history: z
+    .array(
+      z.object({
+        role: z.enum(['user', 'assistant']),
+        content: z.string(),
+      })
+    )
+    .optional()
+    .default([]),
+});
 
 export interface ChatMessage {
   role: 'user' | 'assistant';
@@ -125,12 +144,12 @@ Respond with valid JSON only.`;
 
 export async function POST(req: NextRequest) {
   try {
-    const body = await req.json();
-    const { prompt, history } = body;
-
-    if (!prompt || typeof prompt !== 'string') {
-      return NextResponse.json({ error: 'Prompt is required' }, { status: 400 });
+    const parseResult = await parseJsonBody(req, AssistantPayloadSchema);
+    if (!parseResult.success) {
+      return parseResult.response;
     }
+
+    const { prompt, history } = parseResult.data;
 
     const lower = prompt.toLowerCase();
     const allProducts = await getAllProducts();

@@ -9,19 +9,9 @@ export async function POST(request: NextRequest) {
   if (!auth.success) return auth.response;
 
   try {
-    let raw: unknown;
-    try {
-      raw = await request.json();
-    } catch {
-      return NextResponse.json({ error: 'Malformed JSON' }, { status: 400 });
-    }
-
-    const parseResult = BulkProductActionSchema.safeParse(raw);
+    const parseResult = await parseJsonBody(request, BulkProductActionSchema);
     if (!parseResult.success) {
-      return NextResponse.json(
-        { error: 'Validation failed', issues: parseResult.error.flatten().fieldErrors },
-        { status: 400 }
-      );
+      return parseResult.response;
     }
 
     const { product_ids, action, payload } = parseResult.data;

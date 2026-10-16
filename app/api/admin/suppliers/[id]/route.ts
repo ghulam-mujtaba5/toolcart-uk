@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
 import { getDb } from '@/lib/db';
+import { parseJsonBody } from '@/lib/api/parse-json-body';
+import { requireAdminAuth } from '@/lib/auth/admin';
 
 const UpdateSupplierSchema = z.object({
   direct_dispatch_agreement_signed: z.boolean().optional(),
@@ -14,23 +16,18 @@ export async function PATCH(
   request: NextRequest,
   { params }: { params: { id: string } }
 ) {
+  const auth = requireAdminAuth(request);
+  if (!auth.success) return auth.response;
+
   try {
     const { id } = params;
-    const json = await request.json();
-    const parsed = UpdateSupplierSchema.safeParse(json);
-
-    if (!parsed.success) {
-      return NextResponse.json(
-        {
-          error: 'Validation failed',
-          issues: parsed.error.issues.map((i) => ({ field: i.path.join('.'), message: i.message })),
-        },
-        { status: 400 }
-      );
+    const parseResult = await parseJsonBody(request, UpdateSupplierSchema);
+    if (!parseResult.success) {
+      return parseResult.response;
     }
 
     const db = getDb();
-    const updated = await db.suppliers.update(id, parsed.data);
+    const updated = await db.suppliers.update(id, parseResult.data);
 
     if (!updated) {
       return NextResponse.json({ error: `Supplier ${id} not found` }, { status: 404 });

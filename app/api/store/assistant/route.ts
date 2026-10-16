@@ -81,37 +81,43 @@ Respond with valid JSON only.`;
       },
     ];
 
-    const res = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent?key=${encodeURIComponent(apiKey)}`,
-      {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          systemInstruction: { parts: [{ text: systemInstruction }] },
-          contents,
-          generationConfig: {
-            temperature: 0.2,
-            maxOutputTokens: 600,
-            responseMimeType: 'application/json',
-          },
-        }),
-        signal: controller.signal,
+    const modelsToTry = ['gemini-3.8-flash', 'gemini-1.5-flash'];
+    for (const model of modelsToTry) {
+      try {
+        const res = await fetch(
+          `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${encodeURIComponent(apiKey)}`,
+          {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              systemInstruction: { parts: [{ text: systemInstruction }] },
+              contents,
+              generationConfig: {
+                temperature: 0.2,
+                maxOutputTokens: 600,
+                responseMimeType: 'application/json',
+              },
+            }),
+            signal: controller.signal,
+          }
+        );
+
+        if (!res.ok) continue;
+
+        const data = await res.json();
+        const rawJson = data?.candidates?.[0]?.content?.parts?.[0]?.text?.trim();
+        if (!rawJson) continue;
+
+        const cleanJson = rawJson.replace(/^```json\s*/i, '').replace(/```$/i, '').trim();
+        clearTimeout(timeoutId);
+        return JSON.parse(cleanJson) as GeminiAgentOutput;
+      } catch {
+        continue;
       }
-    );
-
-    clearTimeout(timeoutId);
-
-    if (!res.ok) {
-      return null;
     }
 
-    const data = await res.json();
-    const rawJson = data?.candidates?.[0]?.content?.parts?.[0]?.text?.trim();
-    if (!rawJson) return null;
-
-    // Clean JSON markdown fences if present
-    const cleanJson = rawJson.replace(/^```json\s*/i, '').replace(/```$/i, '').trim();
-    return JSON.parse(cleanJson) as GeminiAgentOutput;
+    clearTimeout(timeoutId);
+    return null;
   } catch {
     return null;
   }
@@ -322,8 +328,7 @@ export async function POST(req: NextRequest) {
 
     // Always sanitize against wholesale cost disclosure (commercial confidentiality invariant)
     const sanitizedProducts = recommendedProducts.map((p) => {
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const { ...safeProduct } = p as any;
+      const safeProduct = { ...(p as any) };
       delete safeProduct.unit_cost_ex_vat_gbp;
       delete safeProduct.case_cost_ex_vat_gbp;
       delete safeProduct.supplier_margin_gbp;

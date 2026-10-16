@@ -12,7 +12,12 @@ interface CartContextValue {
   openCart: () => void;
   closeCart: () => void;
   toggleCart: () => void;
-  addItem: (product: PublicProductDTO, quantity?: number, isCase?: boolean) => void;
+  addItem: (
+    product: PublicProductDTO,
+    quantity?: number,
+    isCase?: boolean,
+    options?: { openDrawer?: boolean }
+  ) => void;
   removeItem: (productId: string, isCase?: boolean) => void;
   updateQuantity: (productId: string, quantity: number, isCase?: boolean) => void;
   clearCart: () => void;
@@ -134,7 +139,12 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   const toggleCart = useCallback(() => setIsOpen((prev) => !prev), []);
 
   const addItem = useCallback(
-    (product: PublicProductDTO, quantity: number = 1, isCase: boolean = false) => {
+    (
+      product: PublicProductDTO,
+      quantity: number = 1,
+      isCase: boolean = false,
+      options: { openDrawer?: boolean } = {}
+    ) => {
       setItems((prev) => {
         const existingIndex = prev.findIndex((i) => i.product_id === product.id && i.is_case_quantity === isCase);
         if (existingIndex > -1) {
@@ -170,7 +180,9 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
         return [...prev, newItem];
       });
 
-      setIsOpen(true);
+      if (options.openDrawer !== false) {
+        setIsOpen(true);
+      }
     },
     []
   );

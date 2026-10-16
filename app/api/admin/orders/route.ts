@@ -24,7 +24,7 @@ const OrderStateEnum = z.enum([
 ]);
 
 const OrderItemSchema = z.object({
-  product_id: z.string().min(1, 'Product ID is required'),
+  product_id: z.string().optional().default(''),
   title: z.string().default(''),
   supplier_sku: z.string().default(''),
   quantity: z.number().int().min(1, 'Item quantity must be at least 1'),
@@ -101,7 +101,7 @@ export async function POST(request: NextRequest) {
       customer_email: body.customer_email,
       shipping_address: body.shipping_address,
       items: (body.items || []).map((it) => ({
-        product_id: it.product_id,
+        product_id: it.product_id || it.supplier_sku || 'prod_unknown',
         quantity: it.quantity,
         title: it.title || '',
         supplier_sku: it.supplier_sku || '',

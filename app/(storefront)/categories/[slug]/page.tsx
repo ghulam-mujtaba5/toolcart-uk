@@ -6,7 +6,6 @@ import { ProductCard } from '@/components/storefront/product-card';
 import { FilterSidebar } from '@/components/storefront/filter-sidebar';
 import { SearchFilterChips } from '@/components/storefront/search-filter-chips';
 import { CatalogSortControl } from '@/components/storefront/catalog-sort-control';
-import { CategoryCadAccent } from '@/components/ui/vectors';
 import { ShieldCheck } from 'lucide-react';
 
 export const dynamic = 'force-dynamic';
@@ -197,8 +196,6 @@ export default async function CategoryPage({ params, searchParams }: CategoryPag
               />
             </div>
           )}
-          <CategoryCadAccent categorySlug={catSlug} className="w-28 h-16 sm:w-36 sm:h-20 opacity-60 shrink-0 hidden lg:block" />
-
           {/* Sort via Client Component */}
           <Suspense fallback={<div className="h-9 w-32 bg-tc-canvas rounded-lg animate-pulse" />}>
             <CatalogSortControl currentSort={sort} />
@@ -226,19 +223,7 @@ export default async function CategoryPage({ params, searchParams }: CategoryPag
                   alt={CATEGORY_PROMOS[catSlug].title}
                   className="w-full h-full object-cover"
                 />
-                <div className="absolute inset-0 bg-gradient-to-r from-tc-ink/90 via-tc-ink/60 to-transparent flex items-center p-6">
-                  <div className="max-w-md space-y-1.5 text-white">
-                    <span className="text-[10px] font-extrabold uppercase tracking-widest text-tc-action-lime font-mono">
-                      CATEGORY HIGHLIGHT
-                    </span>
-                    <h3 className="font-heading font-extrabold text-lg sm:text-xl leading-tight">
-                      {CATEGORY_PROMOS[catSlug].title}
-                    </h3>
-                    <p className="text-xs text-[#DFE8F6] leading-relaxed hidden sm:block">
-                      {CATEGORY_PROMOS[catSlug].subtitle}
-                    </p>
-                  </div>
-                </div>
+                
               </div>
             </div>
           )}

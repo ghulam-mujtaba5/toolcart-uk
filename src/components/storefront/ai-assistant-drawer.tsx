@@ -131,7 +131,7 @@ export function AIAssistantDrawer({ isOpen, onClose }: AIAssistantDrawerProps) {
   };
 
   const handleAddProduct = (prod: PublicProductDTO) => {
-    addItem(prod, 1);
+    addItem(prod, 1, false, { openDrawer: false });
     setAddedSkus((prev) => ({ ...prev, [prod.supplier_sku]: true }));
     setTimeout(() => {
       setAddedSkus((prev) => ({ ...prev, [prod.supplier_sku]: false }));
@@ -139,7 +139,7 @@ export function AIAssistantDrawer({ isOpen, onClose }: AIAssistantDrawerProps) {
   };
 
   const handleAddAllProducts = (products: PublicProductDTO[], messageIdx: number) => {
-    products.forEach((prod) => addItem(prod, 1));
+    products.forEach((prod) => addItem(prod, 1, false, { openDrawer: false }));
     setAddedAllIdx(messageIdx);
     setTimeout(() => {
       setAddedAllIdx(null);
@@ -182,7 +182,7 @@ export function AIAssistantDrawer({ isOpen, onClose }: AIAssistantDrawerProps) {
               <h2 id="ai-assistant-title" className="font-heading font-extrabold text-base text-tc-ink flex items-center gap-1.5">
                 ToolCart AI Assistant
                 <span className="text-[10px] px-1.5 py-0.5 rounded bg-tc-primary/10 text-tc-primary font-bold">
-                  Autonomous Agent
+                  Grounded
                 </span>
               </h2>
               <p className="text-[11px] text-tc-text-secondary">

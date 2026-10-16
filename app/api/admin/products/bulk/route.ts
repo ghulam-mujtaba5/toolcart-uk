@@ -9,9 +9,19 @@ export async function POST(request: NextRequest) {
   if (!auth.success) return auth.response;
 
   try {
-    const parseResult = await parseJsonBody(request, BulkProductActionSchema);
+    let raw: unknown;
+    try {
+      raw = await request.json();
+    } catch {
+      return NextResponse.json({ error: 'Malformed JSON' }, { status: 400 });
+    }
+
+    const parseResult = BulkProductActionSchema.safeParse(raw);
     if (!parseResult.success) {
-      return parseResult.response;
+      return NextResponse.json(
+        { error: 'Validation failed', issues: parseResult.error.flatten().fieldErrors },
+        { status: 400 }
+      );
     }
 
     const { product_ids, action, payload } = parseResult.data;

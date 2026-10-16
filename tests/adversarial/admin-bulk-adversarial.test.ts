@@ -609,13 +609,12 @@ describe('Adversarial Stress Suite: Bulk Operations & Bulk Update API Route', ()
       expect(body.error).toBe('Validation failed');
     });
 
-    it('catches malformed JSON string and returns 500 without crashing node process', async () => {
+    it('catches malformed JSON string and returns 400 without crashing node process', async () => {
       const req = makePostRequest('{ invalid json string ...');
 
       const res = await bulkProductPost(req);
-      expect(res.status).toBe(500);
-
       const body = await res.json();
+      expect(res.status).toBe(400);
       expect(body.error).toBeDefined();
     });
   });

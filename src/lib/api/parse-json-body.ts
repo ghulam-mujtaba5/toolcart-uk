@@ -57,13 +57,18 @@ export async function parseJsonBody<T = any>(
     if (schema) {
       const parsed = schema.safeParse(rawData);
       if (!parsed.success) {
+        const fieldErrors = parsed.error.flatten().fieldErrors;
         return {
           success: false,
           response: NextResponse.json(
             {
               error: 'Validation failed',
               code: 'INVALID_INPUT',
-              issues: parsed.error.flatten().fieldErrors,
+              issues: {
+                ...fieldErrors,
+                length: parsed.error.issues.length,
+              },
+              fieldErrors,
               details: parsed.error.issues,
             },
             { status: 400 }

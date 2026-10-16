@@ -7,7 +7,6 @@ import { useVAT } from '@/context/vat-context';
 import { useCart } from '@/context/cart-context';
 import { useCompare } from '@/context/compare-context';
 import { useToast } from '@/context/toast-context';
-import { StockRadarBadge } from '@/components/ui/stock-radar-badge';
 import {
   IconToolbox,
   IconCaliper,
@@ -112,18 +111,8 @@ export function ProductCard({ product, className }: ProductCardProps) {
       )}
     >
       <div>
-        {/* Top Image & Badge Box */}
+        {/* Top Image Box */}
         <div className="relative bg-tc-surface-soft p-3 sm:p-6 flex items-center justify-center border-b border-tc-border/60 aspect-square sm:aspect-4/3 overflow-hidden">
-          {/* Live 24h Stock Freshness Radar Pulse Ring */}
-          <div className="absolute top-2.5 left-2.5 z-10 max-w-[160px] sm:max-w-none">
-            <StockRadarBadge
-              status={product.availability_status}
-              stockQuantity={product.stock_quantity}
-              size="sm"
-              className="max-w-[160px] sm:max-w-none text-[10px] sm:text-xs"
-            />
-          </div>
-
           {/* Compare toggle button with precision caliper icon */}
           <button
             type="button"

@@ -197,16 +197,15 @@ describe('Milestone 2 Storefront Test Suite', () => {
   });
 
   describe('Storefront Components', () => {
-    it('renders Microbar with staging disclaimer and VAT toggle', () => {
+    it('renders Microbar with VAT toggle and delivery note', () => {
       render(
         <VatProvider>
           <Microbar />
         </VatProvider>
       );
 
-      expect(screen.getByText(/STAGING PROTOTYPE/i)).toBeInTheDocument();
-      expect(screen.getByText(/TOOLCART BRAND PROVISIONAL/i)).toBeInTheDocument();
       expect(screen.getByRole('radiogroup')).toBeInTheDocument();
+      expect(screen.getByText(/Free UK delivery/i)).toBeInTheDocument();
     });
 
     it('renders NavBar with category links in Cobalt', () => {
@@ -220,7 +219,7 @@ describe('Milestone 2 Storefront Test Suite', () => {
       expect(screen.getByText('Site Equipment')).toBeInTheDocument();
     });
 
-    it('renders ProductCard with dual VAT pricing and honest stock badge', async () => {
+    it('renders ProductCard with dual VAT pricing and clean presentation', async () => {
       const products = await getAllProducts();
       const product = products[0];
 
@@ -235,7 +234,6 @@ describe('Milestone 2 Storefront Test Suite', () => {
       );
 
       expect(screen.getByText(product.title)).toBeInTheDocument();
-      expect(screen.getByText(/Confirmed in stock/i)).toBeInTheDocument();
       expect(screen.getByText(/Add to Basket/i)).toBeInTheDocument();
       expect(screen.getByText(/Compare/i)).toBeInTheDocument();
     });

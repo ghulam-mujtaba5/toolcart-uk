@@ -18,10 +18,11 @@ export async function executeOrderTransition(req: TransitionRequest): Promise<Tr
 
   const previousState = order.state;
   const targetState = req.to_state;
+  const auditLogs = order.audit_logs || [];
 
   // Idempotency check 1: Request with matching idempotency key already processed in audit logs
   if (req.idempotency_key) {
-    const matchingLog = order.audit_logs.find(
+    const matchingLog = auditLogs.find(
       (log) => log.metadata?.idempotency_key === req.idempotency_key
     );
     if (matchingLog) {
@@ -40,9 +41,19 @@ export async function executeOrderTransition(req: TransitionRequest): Promise<Tr
   // Idempotency check 2: repeated request with same target state
   if (previousState === targetState) {
     const existingLog =
-      order.audit_logs.find(
+      auditLogs.find(
         (log) => log.to_state === targetState && log.metadata?.idempotency_key === req.idempotency_key
-      ) || order.audit_logs[order.audit_logs.length - 1];
+      ) || auditLogs[auditLogs.length - 1];
+
+    const fallbackLog: OrderAuditLog = existingLog || {
+      id: `synthetic_${order.id}`,
+      order_id: order.id,
+      from_state: previousState,
+      to_state: previousState,
+      trigger: req.trigger || 'system',
+      actor: req.actor || 'system',
+      created_at: new Date().toISOString(),
+    };
 
     return {
       success: true,
@@ -50,7 +61,7 @@ export async function executeOrderTransition(req: TransitionRequest): Promise<Tr
       previous_state: previousState,
       current_state: previousState,
       idempotent_replay: true,
-      audit_log: existingLog,
+      audit_log: fallbackLog,
       side_effects_executed: ['IDEMPOTENT_NOOP'],
     };
   }

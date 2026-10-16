@@ -16,14 +16,14 @@ export class InMemoryProductRepository implements ProductRepository {
       const cat = filters.category.toLowerCase();
       list = list.filter(
         (p) =>
-          p.category_slug.toLowerCase() === cat ||
-          p.category.toLowerCase() === cat
+          (p.category_slug || '').toLowerCase() === cat ||
+          (p.category || '').toLowerCase() === cat
       );
     }
 
     if (filters.brand) {
       const b = filters.brand.toLowerCase();
-      list = list.filter((p) => p.brand.toLowerCase() === b);
+      list = list.filter((p) => (p.brand || '').toLowerCase() === b);
     }
 
     if (filters.sellability_status) {
@@ -39,26 +39,26 @@ export class InMemoryProductRepository implements ProductRepository {
     }
 
     if (filters.complianceOnly) {
-      list = list.filter((p) => p.compliance_verified);
+      list = list.filter((p) => Boolean(p.compliance_verified));
     }
 
-    if (filters.minPrice !== undefined) {
-      list = list.filter((p) => p.retail_price_inc_vat_gbp >= filters.minPrice!);
+    if (filters.minPrice !== undefined && !isNaN(filters.minPrice)) {
+      list = list.filter((p) => (p.retail_price_inc_vat_gbp ?? 0) >= filters.minPrice!);
     }
 
-    if (filters.maxPrice !== undefined) {
-      list = list.filter((p) => p.retail_price_inc_vat_gbp <= filters.maxPrice!);
+    if (filters.maxPrice !== undefined && !isNaN(filters.maxPrice)) {
+      list = list.filter((p) => (p.retail_price_inc_vat_gbp ?? 0) <= filters.maxPrice!);
     }
 
     if (filters.query) {
       const q = filters.query.toLowerCase().trim();
       list = list.filter((p) => {
         return (
-          p.title.toLowerCase().includes(q) ||
-          p.description.toLowerCase().includes(q) ||
-          p.supplier_sku.toLowerCase().includes(q) ||
-          p.gtin.toLowerCase().includes(q) ||
-          (p.mpn && p.mpn.toLowerCase().includes(q))
+          (p.title || '').toLowerCase().includes(q) ||
+          (p.description || '').toLowerCase().includes(q) ||
+          (p.supplier_sku || '').toLowerCase().includes(q) ||
+          (p.gtin || '').toLowerCase().includes(q) ||
+          ((p.mpn || '').toLowerCase().includes(q))
         );
       });
     }
@@ -66,16 +66,16 @@ export class InMemoryProductRepository implements ProductRepository {
     if (filters.sort) {
       switch (filters.sort) {
         case 'price_asc':
-          list.sort((a, b) => a.retail_price_inc_vat_gbp - b.retail_price_inc_vat_gbp);
+          list.sort((a, b) => (a.retail_price_inc_vat_gbp ?? 0) - (b.retail_price_inc_vat_gbp ?? 0));
           break;
         case 'price_desc':
-          list.sort((a, b) => b.retail_price_inc_vat_gbp - a.retail_price_inc_vat_gbp);
+          list.sort((a, b) => (b.retail_price_inc_vat_gbp ?? 0) - (a.retail_price_inc_vat_gbp ?? 0));
           break;
         case 'title_asc':
-          list.sort((a, b) => a.title.localeCompare(b.title));
+          list.sort((a, b) => (a.title || '').localeCompare(b.title || ''));
           break;
         case 'title_desc':
-          list.sort((a, b) => b.title.localeCompare(a.title));
+          list.sort((a, b) => (b.title || '').localeCompare(a.title || ''));
           break;
       }
     }
@@ -88,15 +88,17 @@ export class InMemoryProductRepository implements ProductRepository {
   }
 
   async getBySlug(slug: string): Promise<PublicProductDTO | null> {
+    const cleanSlug = (slug || '').toLowerCase();
     for (const p of this.productsMap.values()) {
-      if (p.slug === slug) return p;
+      if ((p.slug || '').toLowerCase() === cleanSlug) return p;
     }
     return null;
   }
 
   async getBySupplierSku(sku: string): Promise<PublicProductDTO | null> {
+    const cleanSku = (sku || '').toLowerCase();
     for (const p of this.productsMap.values()) {
-      if (p.supplier_sku.toLowerCase() === sku.toLowerCase()) return p;
+      if ((p.supplier_sku || '').toLowerCase() === cleanSku) return p;
     }
     return null;
   }

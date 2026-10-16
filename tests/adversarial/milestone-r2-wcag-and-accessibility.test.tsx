@@ -35,6 +35,7 @@ import { SearchFilterChips } from '@/components/storefront/search-filter-chips';
 import { MiniBasket } from '@/components/storefront/mini-basket';
 import { CompareDrawer } from '@/components/storefront/compare-drawer';
 import { AIAssistantDrawer } from '@/components/storefront/ai-assistant-drawer';
+import { StockRadarBadge } from '@/components/ui/stock-radar-badge';
 import { PublicProductDTO } from '@/types/product';
 
 vi.mock('next/navigation', () => ({
@@ -259,18 +260,17 @@ describe('Milestone R2: Brand V3, WCAG AA & Viewport Accessibility', () => {
   describe('Feature 18: Stock radar badge mobile overflow', () => {
     it('StockRadarBadge container and text are constrained with max-w on mobile', () => {
       const { container } = render(
-        <VatProvider>
-          <CartProvider>
-            <CompareProvider>
-              <ProductCard product={mockProduct} />
-            </CompareProvider>
-          </CartProvider>
-        </VatProvider>
+        <StockRadarBadge
+          status="in_stock"
+          stockQuantity={25}
+          size="sm"
+          className="max-w-[160px] sm:max-w-none text-[10px] sm:text-xs"
+        />
       );
 
-      const radarContainer = container.querySelector('.top-2\\.5.left-2\\.5');
-      expect(radarContainer?.className).toContain('max-w-[160px]');
-      expect(radarContainer?.className).toContain('sm:max-w-none');
+      const statusText = container.querySelector('.truncate');
+      expect(statusText?.className).toContain('max-w-[140px]');
+      expect(statusText?.className).toContain('sm:max-w-none');
     });
   });
 

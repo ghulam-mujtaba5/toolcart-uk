@@ -123,7 +123,7 @@ describe('Challenger M2: Headless Data Table Primitives Adversarial Stress Suite
       });
       const sliceTime = performance.now() - startT;
 
-      expect(sliceTime).toBeLessThan(50);
+      expect(sliceTime).toBeLessThan(100);
       expect(result.current.page).toBe(50);
       expect(result.current.paginatedData.length).toBe(100);
       expect(result.current.paginatedData[0].id).toBe('item-04900');

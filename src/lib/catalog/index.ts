@@ -49,14 +49,14 @@ export async function searchProducts(
     if (!q) return true;
     const tokens = q.split(/\s+/).filter(Boolean);
     const haystack = [
-      p.title,
-      p.supplier_sku,
-      p.gtin,
+      p.title || '',
+      p.supplier_sku || '',
+      p.gtin || '',
       p.carton_barcode || '',
-      p.brand,
-      p.category,
-      p.description,
-      ...Object.values(p.specifications),
+      p.brand || '',
+      p.category || '',
+      p.description || '',
+      ...Object.values(p.specifications || {}),
     ]
       .join(' ')
       .toLowerCase();
@@ -141,15 +141,15 @@ export async function searchProducts(
       return b.retail_price_inc_vat_gbp - a.retail_price_inc_vat_gbp;
     }
     if (sort === 'title_asc') {
-      return a.title.localeCompare(b.title);
+      return (a.title || '').localeCompare(b.title || '');
     }
     if (sort === 'title_desc') {
-      return b.title.localeCompare(a.title);
+      return (b.title || '').localeCompare(a.title || '');
     }
     // Relevance: exact SKU or title match comes first
     if (cleanQuery) {
-      const aExact = a.supplier_sku.toLowerCase() === cleanQuery || a.title.toLowerCase().startsWith(cleanQuery);
-      const bExact = b.supplier_sku.toLowerCase() === cleanQuery || b.title.toLowerCase().startsWith(cleanQuery);
+      const aExact = (a.supplier_sku || '').toLowerCase() === cleanQuery || (a.title || '').toLowerCase().startsWith(cleanQuery);
+      const bExact = (b.supplier_sku || '').toLowerCase() === cleanQuery || (b.title || '').toLowerCase().startsWith(cleanQuery);
       if (aExact && !bExact) return -1;
       if (!aExact && bExact) return 1;
     }
@@ -161,15 +161,17 @@ export async function searchProducts(
   const brandCounts = new Map<string, number>();
 
   for (const p of matchedProducts) {
-    const existingCat = categoryCounts.get(p.category_slug) || {
-      name: p.category,
-      slug: p.category_slug,
+    const slug = p.category_slug || 'other';
+    const existingCat = categoryCounts.get(slug) || {
+      name: p.category || 'Other',
+      slug,
       count: 0,
     };
     existingCat.count += 1;
-    categoryCounts.set(p.category_slug, existingCat);
+    categoryCounts.set(slug, existingCat);
 
-    brandCounts.set(p.brand, (brandCounts.get(p.brand) || 0) + 1);
+    const b = p.brand || 'Other';
+    brandCounts.set(b, (brandCounts.get(b) || 0) + 1);
   }
 
   return {

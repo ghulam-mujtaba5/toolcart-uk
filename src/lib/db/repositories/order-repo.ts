@@ -15,11 +15,11 @@ export class InMemoryOrderRepository implements OrderRepository {
 
     if (filters.customer_email) {
       const email = filters.customer_email.toLowerCase();
-      list = list.filter((o) => o.customer_email.toLowerCase() === email);
+      list = list.filter((o) => (o.customer_email || '').toLowerCase() === email);
     }
 
     // Sort descending by created_at
-    list.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
+    list.sort((a, b) => new Date(b.created_at || 0).getTime() - new Date(a.created_at || 0).getTime());
 
     return list;
   }
@@ -30,7 +30,7 @@ export class InMemoryOrderRepository implements OrderRepository {
 
     // Fallback search across records
     for (const o of this.ordersMap.values()) {
-      if (o.id === id || o.order_number === id) {
+      if (o.id === id || (o.order_number && o.order_number === id)) {
         return o;
       }
     }
@@ -39,8 +39,9 @@ export class InMemoryOrderRepository implements OrderRepository {
   }
 
   async getByOrderNumber(orderNumber: string): Promise<OrderRecord | null> {
+    const target = (orderNumber || '').toLowerCase();
     for (const o of this.ordersMap.values()) {
-      if (o.order_number.toLowerCase() === orderNumber.toLowerCase()) {
+      if ((o.order_number || '').toLowerCase() === target) {
         return o;
       }
     }
@@ -72,6 +73,9 @@ export class InMemoryOrderRepository implements OrderRepository {
 
     order.state = newState;
     order.updated_at = new Date().toISOString();
+    if (!order.audit_logs) {
+      order.audit_logs = [];
+    }
     order.audit_logs.push(auditLog);
 
     this.ordersMap.set(order.id, order);

@@ -44,7 +44,7 @@ export function Footer() {
         {/* Top Utility Row: Brand Reassurance & Ergonomic Back to Top */}
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pb-6 border-b border-white/10">
           <div className="flex items-center gap-3 text-xs text-[#DFE8F6]">
-            <span className="w-2 h-2 rounded-full bg-tc-action-lime animate-pulse shrink-0" />
+            <span className="w-2 h-2 rounded-full bg-tc-action-lime text-tc-ink animate-pulse shrink-0" />
             <span className="font-heading font-bold text-white">UK Trade Distribution Network</span>
             <span className="text-white/30 hidden sm:inline">•</span>
             <span className="text-white/70 hidden sm:inline">Trade counter speeds delivered direct to site</span>
@@ -134,15 +134,15 @@ export function Footer() {
                 </p>
                 <div className="flex flex-wrap items-center justify-center sm:justify-start gap-4 text-xs text-[#DFE8F6]/85 pt-1">
                   <span className="inline-flex items-center gap-1.5 font-medium">
-                    <span className="w-2 h-2 rounded-full bg-tc-action-lime inline-block" />
+                    <span className="w-2 h-2 rounded-full bg-tc-action-lime text-tc-ink inline-block" />
                     Trade &amp; Consumer Distribution
                   </span>
                   <span className="inline-flex items-center gap-1.5 font-medium">
-                    <span className="w-2 h-2 rounded-full bg-tc-action-lime inline-block" />
+                    <span className="w-2 h-2 rounded-full bg-tc-action-lime text-tc-ink inline-block" />
                     BS EN IEC &amp; UKCA Standards
                   </span>
                   <span className="inline-flex items-center gap-1.5 font-medium">
-                    <span className="w-2 h-2 rounded-full bg-tc-action-lime inline-block" />
+                    <span className="w-2 h-2 rounded-full bg-tc-action-lime text-tc-ink inline-block" />
                     Direct Site Dispatch
                   </span>
                 </div>

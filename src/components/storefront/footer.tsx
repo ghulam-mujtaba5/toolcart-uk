@@ -7,9 +7,6 @@ import {
   ChevronDown,
   ArrowUp,
   ShieldCheck,
-  Truck,
-  CheckCircle2,
-  Lock,
 } from 'lucide-react';
 import { useCookieConsent } from '@/context/cookie-consent-context';
 import { cn } from '@/lib/utils';
@@ -61,39 +58,91 @@ export function Footer() {
           </button>
         </div>
 
-        {/* Trade Trust Badges Strip */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 pb-8 border-b border-white/10 text-xs">
-          <div className="p-3 rounded-xl bg-white/5 border border-white/10 flex items-start gap-2.5">
-            <Truck className="w-4 h-4 text-tc-action-lime shrink-0 mt-0.5" />
-            <div>
-              <p className="font-bold text-white">Free UK Delivery</p>
-              <p className="text-[11px] text-[#DFE8F6]">On orders over £50 ex. VAT</p>
+        {/* Trade Value Pillars Strip with 3D Claymorphic Icons */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 pb-8 border-b border-white/10 text-xs">
+          <Link
+            href="/tools"
+            className="p-3.5 rounded-xl bg-white/5 border border-white/10 hover:border-tc-action-lime/60 hover:bg-white/[0.08] transition-all flex items-center gap-3.5 group"
+          >
+            <div className="w-12 h-12 rounded-xl bg-white/10 border border-white/15 p-1 shrink-0 flex items-center justify-center group-hover:scale-110 transition-transform shadow-xs">
+              <img
+                src="/images/3d/icons/icon-specs.webp"
+                alt="Clear Specifications"
+                className="w-full h-full object-contain drop-shadow-sm"
+              />
             </div>
-          </div>
+            <div className="min-w-0">
+              <p className="font-heading font-bold text-white text-sm group-hover:text-tc-action-lime transition-colors">
+                Clear Specifications
+              </p>
+              <p className="text-[11px] text-[#DFE8F6]/85 mt-0.5 leading-snug">
+                GTIN-13 barcodes &amp; BS EN ratings
+              </p>
+            </div>
+          </Link>
 
-          <div className="p-3 rounded-xl bg-white/5 border border-white/10 flex items-start gap-2.5">
-            <ShieldCheck className="w-4 h-4 text-tc-action-lime shrink-0 mt-0.5" />
-            <div>
-              <p className="font-bold text-white">Direct Trade Supply</p>
-              <p className="text-[11px] text-[#DFE8F6]">VAT invoices &amp; 30-day terms</p>
+          <Link
+            href="/trade"
+            className="p-3.5 rounded-xl bg-white/5 border border-white/10 hover:border-tc-action-lime/60 hover:bg-white/[0.08] transition-all flex items-center gap-3.5 group"
+          >
+            <div className="w-12 h-12 rounded-xl bg-white/10 border border-white/15 p-1 shrink-0 flex items-center justify-center group-hover:scale-110 transition-transform shadow-xs">
+              <img
+                src="/images/3d/icons/icon-trade-diy.webp"
+                alt="Trade & DIY Direct"
+                className="w-full h-full object-contain drop-shadow-sm"
+              />
             </div>
-          </div>
+            <div className="min-w-0">
+              <p className="font-heading font-bold text-white text-sm group-hover:text-tc-action-lime transition-colors">
+                Trade &amp; DIY Direct
+              </p>
+              <p className="text-[11px] text-[#DFE8F6]/85 mt-0.5 leading-snug">
+                Ex. VAT toggle &amp; 30-day trade credit
+              </p>
+            </div>
+          </Link>
 
-          <div className="p-3 rounded-xl bg-white/5 border border-white/10 flex items-start gap-2.5">
-            <CheckCircle2 className="w-4 h-4 text-tc-action-lime shrink-0 mt-0.5" />
-            <div>
-              <p className="font-bold text-white">UKCA &amp; CE Certified</p>
-              <p className="text-[11px] text-[#DFE8F6]">1000V VDE tested hardware</p>
+          <Link
+            href="/projects"
+            className="p-3.5 rounded-xl bg-white/5 border border-white/10 hover:border-tc-action-lime/60 hover:bg-white/[0.08] transition-all flex items-center gap-3.5 group"
+          >
+            <div className="w-12 h-12 rounded-xl bg-white/10 border border-white/15 p-1 shrink-0 flex items-center justify-center group-hover:scale-110 transition-transform shadow-xs">
+              <img
+                src="/images/3d/icons/icon-project-guidance.webp"
+                alt="Project Guidance"
+                className="w-full h-full object-contain drop-shadow-sm"
+              />
             </div>
-          </div>
+            <div className="min-w-0">
+              <p className="font-heading font-bold text-white text-sm group-hover:text-tc-action-lime transition-colors">
+                Project Guidance
+              </p>
+              <p className="text-[11px] text-[#DFE8F6]/85 mt-0.5 leading-snug">
+                Curated kits &amp; technical advice
+              </p>
+            </div>
+          </Link>
 
-          <div className="p-3 rounded-xl bg-white/5 border border-white/10 flex items-start gap-2.5">
-            <Lock className="w-4 h-4 text-tc-action-lime shrink-0 mt-0.5" />
-            <div>
-              <p className="font-bold text-white">Encrypted Checkout</p>
-              <p className="text-[11px] text-[#DFE8F6]">256-Bit SSL trade gateway</p>
+          <Link
+            href="/trade"
+            className="p-3.5 rounded-xl bg-white/5 border border-white/10 hover:border-tc-action-lime/60 hover:bg-white/[0.08] transition-all flex items-center gap-3.5 group"
+          >
+            <div className="w-12 h-12 rounded-xl bg-white/10 border border-white/15 p-1 shrink-0 flex items-center justify-center group-hover:scale-110 transition-transform shadow-xs">
+              <img
+                src="/images/3d/icons/icon-pack-options.webp"
+                alt="Verified Pack Options"
+                className="w-full h-full object-contain drop-shadow-sm"
+              />
             </div>
-          </div>
+            <div className="min-w-0">
+              <p className="font-heading font-bold text-white text-sm group-hover:text-tc-action-lime transition-colors">
+                Verified Pack Options
+              </p>
+              <p className="text-[11px] text-[#DFE8F6]/85 mt-0.5 leading-snug">
+                Unit, pack &amp; master carton savings
+              </p>
+            </div>
+          </Link>
         </div>
 
         {/* 5-Column Grid with Mobile Accordions (< md) & Static Desktop Columns (>= md) */}

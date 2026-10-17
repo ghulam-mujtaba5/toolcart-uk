@@ -318,13 +318,24 @@
   }
 }
 
+@keyframes tc-float {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-8px) rotate(0.6deg);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .tc-animate-scan,
   .tc-animate-stamp,
   .tc-animate-snap,
   .tc-animate-road,
-  .tc-animate-radar {
+  .tc-animate-radar,
+  [class*="tc-float"] {
     animation: none !important;
     transform: none !important;
   }
 }
+

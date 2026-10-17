@@ -5,7 +5,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { HeroLottieStage } from '@/components/storefront/hero-lottie-stage';
+import { HeroHardwareStage } from '@/components/storefront/hero-hardware-stage';
 
 export function TradeSpecifierHero() {
   return (
@@ -114,9 +114,9 @@ export function TradeSpecifierHero() {
             </div>
           </div>
 
-          {/* Right Column: Dynamic Lottie Animation Stage */}
+          {/* Right Column: Dynamic 3D Hardware Specifier Stage */}
           <div className="lg:col-span-5 flex justify-center items-center">
-            <HeroLottieStage />
+            <HeroHardwareStage />
           </div>
         </div>
       </div>

@@ -3,7 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { ArrowRight, ShieldCheck, CheckCircle2, Truck, FileText } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 export function TradeSpecifierHero() {
@@ -27,47 +27,65 @@ export function TradeSpecifierHero() {
       </div>
 
       {/* Hero Content Stage */}
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-24">
-        <div className="max-w-2xl space-y-5 sm:space-y-6">
-          {/* Eyebrow Badge */}
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-tc-action-lime/15 border border-tc-action-lime/40 text-tc-action-lime text-xs font-mono font-bold uppercase tracking-wider backdrop-blur-xs">
-            <span className="w-2 h-2 rounded-full bg-tc-action-lime animate-pulse" />
-            <span>Direct UK Hardware Supply · DIY &amp; Trade</span>
-          </div>
-
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-20 lg:py-28">
+        <div className="max-w-2xl space-y-6">
           {/* Master Headline */}
           <h1 className="font-heading font-extrabold text-3xl sm:text-5xl lg:text-6xl text-white tracking-tight leading-[1.12]">
-            The Hardware Standard <br />
-            <span className="text-tc-action-lime">for British Homes &amp; Trades.</span>
+            Proper kit. Trade prices. <br />
+            <span className="text-tc-action-lime">On time, every time.</span>
           </h1>
 
           {/* Subtitle */}
           <p className="text-sm sm:text-base lg:text-lg text-[#DFE8F6] max-w-xl leading-relaxed font-body">
-            Trade-grade hand tools, certified fixings, and home renovation consumables. Guaranteed British Standards, transparent pack counts, and tracked next-day delivery to your door.
+            No inflated counter markups, no flimsy tools, and no missing fixings. Certified BS EN &amp; UKCA hardware, guaranteed exact pack counts, and tracked next-day delivery straight to site or doorstep.
           </p>
 
-          {/* 4 Conversion & Trust Pillars */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1 text-xs text-[#DFE8F6]">
-            <div className="flex items-center gap-2">
-              <ShieldCheck className="w-4 h-4 text-tc-action-lime shrink-0" />
-              <span>BS EN IEC &amp; UKCA Certified</span>
+          {/* 4 Conversion & Trust Pillars with Bespoke 3D Claymorphic Icons */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2 text-xs sm:text-sm text-[#DFE8F6] font-medium">
+            <div className="flex items-center gap-2.5">
+              <Image
+                src="/images/3d/icons/icon-specs.webp"
+                alt="BS EN & UKCA Certified"
+                width={24}
+                height={24}
+                className="w-6 h-6 object-contain shrink-0"
+              />
+              <span>BS EN &amp; UKCA Certified Specs</span>
             </div>
-            <div className="flex items-center gap-2">
-              <CheckCircle2 className="w-4 h-4 text-tc-action-lime shrink-0" />
+            <div className="flex items-center gap-2.5">
+              <Image
+                src="/images/3d/icons/icon-pack-options.webp"
+                alt="Exact GTIN-13 Pack Counts"
+                width={24}
+                height={24}
+                className="w-6 h-6 object-contain shrink-0"
+              />
               <span>Exact GTIN-13 Pack Counts</span>
             </div>
-            <div className="flex items-center gap-2">
-              <Truck className="w-4 h-4 text-tc-action-lime shrink-0" />
+            <div className="flex items-center gap-2.5">
+              <Image
+                src="/images/3d/icons/icon-kits.webp"
+                alt="Free Tracked 24 over £50"
+                width={24}
+                height={24}
+                className="w-6 h-6 object-contain shrink-0"
+              />
               <span>Free Tracked 24 over £50 ex. VAT</span>
             </div>
-            <div className="flex items-center gap-2">
-              <FileText className="w-4 h-4 text-tc-action-lime shrink-0" />
+            <div className="flex items-center gap-2.5">
+              <Image
+                src="/images/3d/icons/icon-trade-diy.webp"
+                alt="30-Day Trade Credit & DIY Direct"
+                width={24}
+                height={24}
+                className="w-6 h-6 object-contain shrink-0"
+              />
               <span>30-Day Trade Credit &amp; DIY Direct</span>
             </div>
           </div>
 
           {/* Action CTAs */}
-          <div className="flex flex-wrap items-center gap-3 pt-3">
+          <div className="flex flex-wrap items-center gap-3 pt-4">
             <Button
               variant="accent"
               size="lg"
@@ -90,32 +108,6 @@ export function TradeSpecifierHero() {
                 <span>Open Trade Account</span>
               </Link>
             </Button>
-          </div>
-        </div>
-
-        {/* Quick Category Jump Bar */}
-        <div className="mt-10 sm:mt-14 pt-6 border-t border-white/15">
-          <p className="text-[11px] font-mono font-bold uppercase tracking-wider text-tc-action-lime mb-3">
-            Popular DIY &amp; Trade Categories
-          </p>
-          <div className="flex flex-wrap gap-2 sm:gap-2.5">
-            {[
-              { name: 'Hand Tools', href: '/tools' },
-              { name: 'Fixings & Wall Plugs', href: '/fixings' },
-              { name: 'Painting & Decorating', href: '/decorating' },
-              { name: 'Measuring & Levels', href: '/measuring' },
-              { name: 'Safety & PPE', href: '/ppe' },
-              { name: 'Site Tarpaulins & Ladders', href: '/site-equipment' },
-              { name: 'Job-Ready Project Kits', href: '/projects' },
-            ].map((cat) => (
-              <Link
-                key={cat.href}
-                href={cat.href}
-                className="px-3 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 hover:border-tc-action-lime text-[#DFE8F6] hover:text-white text-xs font-semibold border border-white/15 transition-all active:scale-95 backdrop-blur-xs"
-              >
-                {cat.name}
-              </Link>
-            ))}
           </div>
         </div>
       </div>
